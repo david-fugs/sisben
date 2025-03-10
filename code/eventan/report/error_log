@@ -1,0 +1,7 @@
+[14-Mar-2024 15:37:45 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/report/report1.php on line 11
+[14-Mar-2024 15:38:33 America/Bogota] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user ''@'localhost' (using password: NO) in /home4/aprendad/sisben.softepu.com/code/eventan/report/conexion.php:25
+Stack trace:
+#0 /home4/aprendad/sisben.softepu.com/code/eventan/report/conexion.php(25): mysqli_connect(NULL, NULL, Object(SensitiveParameterValue), NULL)
+#1 /home4/aprendad/sisben.softepu.com/code/eventan/report/report2.php(10): Conexion->conectarse()
+#2 {main}
+  thrown in /home4/aprendad/sisben.softepu.com/code/eventan/report/conexion.php on line 25

@@ -1,0 +1,93 @@
+[23-Jan-2024 10:52:16 America/Chicago] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/report/report13.php:19) in /home4/aprendad/sisben.softepu.com/code/report/report13.php on line 124
+[26-Jan-2024 14:34:58 America/Chicago] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/report/report7.php:19) in /home4/aprendad/sisben.softepu.com/code/report/report7.php on line 131
+[26-Jan-2024 14:34:58 America/Chicago] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/report/report7.php:19) in /home4/aprendad/sisben.softepu.com/code/report/report7.php on line 203
+[29-Jan-2024 15:49:56 America/Chicago] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/report/report7.php:19) in /home4/aprendad/sisben.softepu.com/code/report/report7.php on line 131
+[29-Jan-2024 15:49:56 America/Chicago] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/report/report7.php:19) in /home4/aprendad/sisben.softepu.com/code/report/report7.php on line 203
+[11-Apr-2024 10:02:40 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/report/report1.php on line 11
+[11-Apr-2024 10:02:40 America/Chicago] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/report/report1.php:19) in /home4/aprendad/sisben.softepu.com/code/report/report1.php on line 131
+[11-Apr-2024 10:02:40 America/Chicago] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/report/report1.php:19) in /home4/aprendad/sisben.softepu.com/code/report/report1.php on line 203
+[11-Apr-2024 10:03:54 America/Bogota] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user ''@'localhost' (using password: NO) in /home4/aprendad/sisben.softepu.com/code/report/conexion.php:25
+Stack trace:
+#0 /home4/aprendad/sisben.softepu.com/code/report/conexion.php(25): mysqli_connect(NULL, NULL, Object(SensitiveParameterValue), NULL)
+#1 /home4/aprendad/sisben.softepu.com/code/report/report2.php(10): Conexion->conectarse()
+#2 {main}
+  thrown in /home4/aprendad/sisben.softepu.com/code/report/conexion.php on line 25
+[11-Apr-2024 10:03:56 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/report/report1.php on line 11
+[11-Apr-2024 10:03:56 America/Chicago] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/report/report1.php:19) in /home4/aprendad/sisben.softepu.com/code/report/report1.php on line 131
+[11-Apr-2024 10:03:56 America/Chicago] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/report/report1.php:19) in /home4/aprendad/sisben.softepu.com/code/report/report1.php on line 203
+[11-Apr-2024 10:04:06 America/Bogota] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user ''@'localhost' (using password: NO) in /home4/aprendad/sisben.softepu.com/code/report/conexion.php:25
+Stack trace:
+#0 /home4/aprendad/sisben.softepu.com/code/report/conexion.php(25): mysqli_connect(NULL, NULL, Object(SensitiveParameterValue), NULL)
+#1 /home4/aprendad/sisben.softepu.com/code/report/report3.php(10): Conexion->conectarse()
+#2 {main}
+  thrown in /home4/aprendad/sisben.softepu.com/code/report/conexion.php on line 25
+[11-Apr-2024 10:04:14 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/report/report1.php on line 11
+[11-Apr-2024 10:04:14 America/Chicago] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/report/report1.php:19) in /home4/aprendad/sisben.softepu.com/code/report/report1.php on line 131
+[11-Apr-2024 10:04:14 America/Chicago] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/report/report1.php:19) in /home4/aprendad/sisben.softepu.com/code/report/report1.php on line 203
+[11-Apr-2024 10:04:25 America/Bogota] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user ''@'localhost' (using password: NO) in /home4/aprendad/sisben.softepu.com/code/report/conexion.php:25
+Stack trace:
+#0 /home4/aprendad/sisben.softepu.com/code/report/conexion.php(25): mysqli_connect(NULL, NULL, Object(SensitiveParameterValue), NULL)
+#1 /home4/aprendad/sisben.softepu.com/code/report/report4.php(10): Conexion->conectarse()
+#2 {main}
+  thrown in /home4/aprendad/sisben.softepu.com/code/report/conexion.php on line 25
+[11-Apr-2024 10:04:27 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/report/report1.php on line 11
+[11-Apr-2024 10:04:27 America/Chicago] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/report/report1.php:19) in /home4/aprendad/sisben.softepu.com/code/report/report1.php on line 131
+[11-Apr-2024 10:04:27 America/Chicago] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/report/report1.php:19) in /home4/aprendad/sisben.softepu.com/code/report/report1.php on line 203
+[11-Apr-2024 10:04:32 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/report/report7.php on line 11
+[11-Apr-2024 10:04:32 America/Chicago] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/report/report7.php:19) in /home4/aprendad/sisben.softepu.com/code/report/report7.php on line 131
+[11-Apr-2024 10:04:32 America/Chicago] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/report/report7.php:19) in /home4/aprendad/sisben.softepu.com/code/report/report7.php on line 203
+[11-Apr-2024 10:04:34 America/Bogota] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user ''@'localhost' (using password: NO) in /home4/aprendad/sisben.softepu.com/code/report/conexion.php:25
+Stack trace:
+#0 /home4/aprendad/sisben.softepu.com/code/report/conexion.php(25): mysqli_connect(NULL, NULL, Object(SensitiveParameterValue), NULL)
+#1 /home4/aprendad/sisben.softepu.com/code/report/report8.php(10): Conexion->conectarse()
+#2 {main}
+  thrown in /home4/aprendad/sisben.softepu.com/code/report/conexion.php on line 25
+[11-Apr-2024 10:04:35 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/report/report7.php on line 11
+[11-Apr-2024 10:04:35 America/Chicago] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/report/report7.php:19) in /home4/aprendad/sisben.softepu.com/code/report/report7.php on line 131
+[11-Apr-2024 10:04:35 America/Chicago] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/report/report7.php:19) in /home4/aprendad/sisben.softepu.com/code/report/report7.php on line 203
+[11-Apr-2024 10:04:42 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/report/report13.php on line 11
+[11-Apr-2024 10:04:42 America/Chicago] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/report/report13.php:19) in /home4/aprendad/sisben.softepu.com/code/report/report13.php on line 124
+[11-Apr-2024 10:04:44 America/Bogota] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user ''@'localhost' (using password: NO) in /home4/aprendad/sisben.softepu.com/code/report/conexion.php:25
+Stack trace:
+#0 /home4/aprendad/sisben.softepu.com/code/report/conexion.php(25): mysqli_connect(NULL, NULL, Object(SensitiveParameterValue), NULL)
+#1 /home4/aprendad/sisben.softepu.com/code/report/report14.php(10): Conexion->conectarse()
+#2 {main}
+  thrown in /home4/aprendad/sisben.softepu.com/code/report/conexion.php on line 25
+[11-Apr-2024 10:04:47 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/report/report13.php on line 11
+[11-Apr-2024 10:04:47 America/Chicago] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/report/report13.php:19) in /home4/aprendad/sisben.softepu.com/code/report/report13.php on line 124
+[11-Apr-2024 10:04:51 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/report/report17.php on line 11
+[11-Apr-2024 10:04:51 America/Chicago] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/report/report17.php:19) in /home4/aprendad/sisben.softepu.com/code/report/report17.php on line 131
+[11-Apr-2024 10:04:51 America/Chicago] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/report/report17.php:19) in /home4/aprendad/sisben.softepu.com/code/report/report17.php on line 203
+[11-Apr-2024 10:05:00 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/report/report1.php on line 11
+[11-Apr-2024 10:05:00 America/Chicago] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/report/report1.php:19) in /home4/aprendad/sisben.softepu.com/code/report/report1.php on line 131
+[11-Apr-2024 10:05:00 America/Chicago] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/report/report1.php:19) in /home4/aprendad/sisben.softepu.com/code/report/report1.php on line 203
+[11-Apr-2024 10:05:12 America/Bogota] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user ''@'localhost' (using password: NO) in /home4/aprendad/sisben.softepu.com/code/report/conexion.php:25
+Stack trace:
+#0 /home4/aprendad/sisben.softepu.com/code/report/conexion.php(25): mysqli_connect(NULL, NULL, Object(SensitiveParameterValue), NULL)
+#1 /home4/aprendad/sisben.softepu.com/code/report/report2.php(10): Conexion->conectarse()
+#2 {main}
+  thrown in /home4/aprendad/sisben.softepu.com/code/report/conexion.php on line 25
+[11-Apr-2024 10:06:12 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/report/report1.php on line 11
+[11-Apr-2024 10:06:12 America/Chicago] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/report/report1.php:19) in /home4/aprendad/sisben.softepu.com/code/report/report1.php on line 131
+[11-Apr-2024 10:06:12 America/Chicago] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/report/report1.php:19) in /home4/aprendad/sisben.softepu.com/code/report/report1.php on line 203
+[11-Apr-2024 10:57:12 America/Chicago] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/report/report1.php:19) in /home4/aprendad/sisben.softepu.com/code/report/report1.php on line 131
+[11-Apr-2024 10:57:12 America/Chicago] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/report/report1.php:19) in /home4/aprendad/sisben.softepu.com/code/report/report1.php on line 203
+[11-Apr-2024 10:58:38 America/Chicago] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/report/report1.php:19) in /home4/aprendad/sisben.softepu.com/code/report/report1.php on line 131
+[11-Apr-2024 10:58:38 America/Chicago] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/report/report1.php:19) in /home4/aprendad/sisben.softepu.com/code/report/report1.php on line 203
+[11-Apr-2024 11:00:51 America/Bogota] PHP Warning:  mysqli_stmt_bind_param(): Number of variables doesn't match number of parameters in prepared statement in /home4/aprendad/sisben.softepu.com/code/report/rep_esp_1.php on line 73
+[11-Apr-2024 11:01:37 America/Chicago] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/report/report13.php:19) in /home4/aprendad/sisben.softepu.com/code/report/report13.php on line 124
+[11-Apr-2024 11:04:31 America/Chicago] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/report/report17.php:19) in /home4/aprendad/sisben.softepu.com/code/report/report17.php on line 131
+[11-Apr-2024 11:04:31 America/Chicago] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/report/report17.php:19) in /home4/aprendad/sisben.softepu.com/code/report/report17.php on line 203
+[11-Apr-2024 12:51:48 America/Chicago] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/report/report1.php:19) in /home4/aprendad/sisben.softepu.com/code/report/report1.php on line 131
+[11-Apr-2024 12:51:48 America/Chicago] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/report/report1.php:19) in /home4/aprendad/sisben.softepu.com/code/report/report1.php on line 203
+[11-Apr-2024 12:52:43 America/Chicago] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/report/report7.php:19) in /home4/aprendad/sisben.softepu.com/code/report/report7.php on line 131
+[11-Apr-2024 12:52:43 America/Chicago] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/report/report7.php:19) in /home4/aprendad/sisben.softepu.com/code/report/report7.php on line 203
+[11-Apr-2024 12:53:10 America/Chicago] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/report/report13.php:19) in /home4/aprendad/sisben.softepu.com/code/report/report13.php on line 124
+[26-Feb-2025 09:18:03 America/Chicago] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/report/report1.php:19) in /home4/aprendad/sisben.softepu.com/code/report/report1.php on line 131
+[26-Feb-2025 09:18:03 America/Chicago] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/report/report1.php:19) in /home4/aprendad/sisben.softepu.com/code/report/report1.php on line 203
+[27-Feb-2025 09:03:48 America/Chicago] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/report/report1.php:19) in /home4/aprendad/sisben.softepu.com/code/report/report1.php on line 131
+[27-Feb-2025 09:03:48 America/Chicago] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/report/report1.php:19) in /home4/aprendad/sisben.softepu.com/code/report/report1.php on line 203
+[27-Feb-2025 10:05:33 America/Bogota] PHP Warning:  mysqli_stmt_bind_param(): Number of variables doesn't match number of parameters in prepared statement in /home4/aprendad/sisben.softepu.com/code/report/rep_esp_1.php on line 73
+[27-Feb-2025 10:49:36 America/Chicago] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/report/report1.php:19) in /home4/aprendad/sisben.softepu.com/code/report/report1.php on line 131
+[27-Feb-2025 10:49:36 America/Chicago] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/report/report1.php:19) in /home4/aprendad/sisben.softepu.com/code/report/report1.php on line 203
+[27-Feb-2025 11:50:25 America/Bogota] PHP Warning:  mysqli_stmt_bind_param(): Number of variables doesn't match number of parameters in prepared statement in /home4/aprendad/sisben.softepu.com/code/report/rep_esp_1.php on line 73

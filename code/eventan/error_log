@@ -1,0 +1,674 @@
+[24-Jan-2024 12:30:30 America/Bogota] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php:17) in /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php on line 129
+[24-Jan-2024 12:30:30 America/Bogota] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php:17) in /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php on line 149
+[24-Jan-2024 12:30:30 America/Bogota] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php:17) in /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php on line 169
+[24-Jan-2024 12:30:30 America/Bogota] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php:17) in /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php on line 199
+[01-Feb-2024 09:59:10 America/Bogota] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php:17) in /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php on line 129
+[01-Feb-2024 09:59:10 America/Bogota] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php:17) in /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php on line 149
+[01-Feb-2024 09:59:10 America/Bogota] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php:17) in /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php on line 169
+[01-Feb-2024 09:59:10 America/Bogota] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php:17) in /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php on line 199
+[04-Feb-2024 22:57:00 America/Bogota] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php:17) in /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php on line 129
+[04-Feb-2024 22:57:00 America/Bogota] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php:17) in /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php on line 149
+[04-Feb-2024 22:57:00 America/Bogota] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php:17) in /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php on line 169
+[04-Feb-2024 22:57:00 America/Bogota] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php:17) in /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php on line 199
+[04-Feb-2024 23:05:27 America/Bogota] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php:17) in /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php on line 129
+[04-Feb-2024 23:05:27 America/Bogota] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php:17) in /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php on line 149
+[04-Feb-2024 23:05:27 America/Bogota] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php:17) in /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php on line 169
+[04-Feb-2024 23:05:27 America/Bogota] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php:17) in /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php on line 199
+[04-Feb-2024 23:06:03 America/Bogota] PHP Warning:  mysqli_num_rows() expects parameter 1 to be mysqli_result, bool given in /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanillaFamily.php on line 64
+[04-Feb-2024 23:06:03 America/Bogota] PHP Warning:  mysqli_fetch_array() expects parameter 1 to be mysqli_result, bool given in /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanillaFamily.php on line 85
+[07-Feb-2024 13:58:39 America/Bogota] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php:17) in /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php on line 129
+[07-Feb-2024 13:58:39 America/Bogota] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php:17) in /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php on line 149
+[07-Feb-2024 13:58:39 America/Bogota] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php:17) in /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php on line 169
+[07-Feb-2024 13:58:39 America/Bogota] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php:17) in /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php on line 199
+[14-Feb-2024 09:56:31 America/Bogota] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php:17) in /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php on line 129
+[14-Feb-2024 09:56:31 America/Bogota] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php:17) in /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php on line 149
+[14-Feb-2024 09:56:31 America/Bogota] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php:17) in /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php on line 169
+[14-Feb-2024 09:56:31 America/Bogota] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php:17) in /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php on line 199
+[19-Feb-2024 08:10:54 America/Bogota] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php:17) in /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php on line 129
+[19-Feb-2024 08:10:54 America/Bogota] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php:17) in /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php on line 149
+[19-Feb-2024 08:10:54 America/Bogota] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php:17) in /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php on line 169
+[19-Feb-2024 08:10:54 America/Bogota] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php:17) in /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php on line 199
+[19-Feb-2024 11:27:15 America/Bogota] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php:17) in /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php on line 129
+[19-Feb-2024 11:27:15 America/Bogota] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php:17) in /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php on line 149
+[19-Feb-2024 11:27:15 America/Bogota] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php:17) in /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php on line 169
+[19-Feb-2024 11:27:15 America/Bogota] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php:17) in /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php on line 199
+[19-Feb-2024 11:27:54 America/Bogota] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php:17) in /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php on line 129
+[19-Feb-2024 11:27:54 America/Bogota] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php:17) in /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php on line 149
+[19-Feb-2024 11:27:54 America/Bogota] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php:17) in /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php on line 169
+[19-Feb-2024 11:27:54 America/Bogota] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php:17) in /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php on line 199
+[19-Feb-2024 11:29:20 America/Bogota] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php:17) in /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php on line 129
+[19-Feb-2024 11:29:20 America/Bogota] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php:17) in /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php on line 149
+[19-Feb-2024 11:29:20 America/Bogota] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php:17) in /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php on line 169
+[19-Feb-2024 11:29:20 America/Bogota] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php:17) in /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php on line 199
+[19-Feb-2024 11:29:47 America/Bogota] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php:17) in /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php on line 129
+[19-Feb-2024 11:29:47 America/Bogota] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php:17) in /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php on line 149
+[19-Feb-2024 11:29:47 America/Bogota] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php:17) in /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php on line 169
+[19-Feb-2024 11:29:47 America/Bogota] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php:17) in /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php on line 199
+[19-Feb-2024 15:17:11 America/Bogota] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php:17) in /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php on line 129
+[19-Feb-2024 15:17:11 America/Bogota] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php:17) in /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php on line 149
+[19-Feb-2024 15:17:11 America/Bogota] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php:17) in /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php on line 169
+[19-Feb-2024 15:17:11 America/Bogota] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php:17) in /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php on line 199
+[22-Feb-2024 09:22:52 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[22-Feb-2024 10:22:52 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[22-Feb-2024 09:26:39 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[22-Feb-2024 09:28:52 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/showsurvey.php on line 11
+[22-Feb-2024 09:28:57 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/showsurvey.php on line 11
+[22-Feb-2024 09:45:45 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[22-Feb-2024 10:45:45 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[22-Feb-2024 09:49:12 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[22-Feb-2024 09:49:16 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[22-Feb-2024 10:49:16 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[22-Feb-2024 09:59:16 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[22-Feb-2024 10:59:16 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[22-Feb-2024 10:04:54 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[22-Feb-2024 10:04:59 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[22-Feb-2024 11:04:59 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[22-Feb-2024 10:25:39 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[22-Feb-2024 10:25:43 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[22-Feb-2024 11:25:43 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[22-Feb-2024 10:29:44 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[22-Feb-2024 11:29:44 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[22-Feb-2024 10:30:40 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[22-Feb-2024 11:30:40 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[22-Feb-2024 10:40:46 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[22-Feb-2024 10:43:51 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[22-Feb-2024 11:43:51 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[22-Feb-2024 10:51:55 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[22-Feb-2024 10:51:58 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[22-Feb-2024 11:51:58 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[22-Feb-2024 12:12:39 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[22-Feb-2024 13:12:39 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[22-Feb-2024 12:19:58 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[22-Feb-2024 12:20:07 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[22-Feb-2024 13:20:07 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[22-Feb-2024 12:53:58 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[22-Feb-2024 12:54:02 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[22-Feb-2024 13:54:02 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[22-Feb-2024 13:04:52 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[22-Feb-2024 13:12:32 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[22-Feb-2024 14:12:32 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[22-Feb-2024 13:14:28 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[22-Feb-2024 13:14:32 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[22-Feb-2024 14:14:32 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[22-Feb-2024 13:27:22 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[22-Feb-2024 13:54:23 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[22-Feb-2024 14:54:23 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[22-Feb-2024 14:14:01 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[22-Feb-2024 14:29:47 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[22-Feb-2024 15:29:47 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[22-Feb-2024 14:37:28 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[24-Feb-2024 14:16:01 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/showsurvey.php on line 11
+[24-Feb-2024 14:16:14 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/showsurvey.php on line 11
+[24-Feb-2024 14:16:21 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/showsurvey.php on line 11
+[24-Feb-2024 14:16:28 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/showsurvey.php on line 11
+[24-Feb-2024 14:17:40 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/eliminarVentanilla.php on line 11
+[24-Feb-2024 14:17:40 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/showsurvey.php on line 11
+[24-Feb-2024 14:48:40 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[24-Feb-2024 15:48:40 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[24-Feb-2024 14:50:36 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[24-Feb-2024 14:50:54 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[24-Feb-2024 15:50:54 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[24-Feb-2024 14:54:01 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[24-Feb-2024 15:54:01 America/Bogota] PHP Fatal error:  Uncaught mysqli_sql_exception: Cannot add or update a child row: a foreign key constraint fails (`aprendad_sisben`.`encVentanilla`, CONSTRAINT `fk_encVenta_bar` FOREIGN KEY (`id_bar`) REFERENCES `barrios` (`id_bar`) ON DELETE CASCADE ON UPDATE CASCADE) in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php:44
+Stack trace:
+#0 /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php(44): mysqli->query('INSERT INTO enc...')
+#1 {main}
+  thrown in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 44
+[24-Feb-2024 14:54:43 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/showsurvey.php on line 11
+[24-Feb-2024 14:54:49 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/showsurvey.php on line 11
+[24-Feb-2024 14:55:07 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php on line 11
+[24-Feb-2024 15:55:07 America/Bogota] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php:17) in /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php on line 129
+[24-Feb-2024 15:55:07 America/Bogota] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php:17) in /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php on line 149
+[24-Feb-2024 15:55:07 America/Bogota] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php:17) in /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php on line 169
+[24-Feb-2024 15:55:07 America/Bogota] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php:17) in /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php on line 199
+[24-Feb-2024 14:55:16 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/showsurvey.php on line 11
+[24-Feb-2024 14:55:23 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[24-Feb-2024 15:55:23 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[24-Feb-2024 14:57:11 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[24-Feb-2024 15:17:22 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/showsurvey.php on line 11
+[24-Feb-2024 15:17:26 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/showsurvey.php on line 11
+[24-Feb-2024 15:17:45 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[24-Feb-2024 16:17:45 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[24-Feb-2024 15:20:01 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[24-Feb-2024 15:20:07 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[24-Feb-2024 16:20:07 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[24-Feb-2024 15:22:47 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[26-Feb-2024 06:57:58 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[26-Feb-2024 07:57:58 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[26-Feb-2024 07:03:01 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[26-Feb-2024 07:10:52 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[26-Feb-2024 08:10:52 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[26-Feb-2024 07:13:37 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[26-Feb-2024 07:17:02 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[26-Feb-2024 08:17:02 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[26-Feb-2024 07:20:40 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[26-Feb-2024 07:23:58 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[26-Feb-2024 08:23:58 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[26-Feb-2024 07:30:12 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/showsurvey.php on line 11
+[26-Feb-2024 07:30:16 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/showsurvey.php on line 11
+[26-Feb-2024 07:30:25 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/showsurvey.php on line 11
+[26-Feb-2024 07:30:35 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/eliminarVentanilla.php on line 11
+[26-Feb-2024 07:30:35 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/showsurvey.php on line 11
+[26-Feb-2024 07:30:41 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/showsurvey.php on line 11
+[26-Feb-2024 07:35:36 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[26-Feb-2024 08:35:36 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[26-Feb-2024 07:37:25 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[26-Feb-2024 07:41:20 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[26-Feb-2024 08:41:21 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[26-Feb-2024 07:44:19 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[26-Feb-2024 07:47:51 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[26-Feb-2024 08:47:51 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[26-Feb-2024 07:50:23 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[26-Feb-2024 07:50:26 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[26-Feb-2024 08:50:26 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[26-Feb-2024 07:55:03 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[26-Feb-2024 08:55:03 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[26-Feb-2024 08:08:58 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[26-Feb-2024 08:12:54 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[26-Feb-2024 09:12:54 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[26-Feb-2024 08:24:27 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[26-Feb-2024 08:25:00 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[26-Feb-2024 09:25:00 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[26-Feb-2024 08:29:37 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[26-Feb-2024 08:29:40 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[26-Feb-2024 09:29:40 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[26-Feb-2024 08:43:41 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[26-Feb-2024 08:52:43 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[26-Feb-2024 09:52:43 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[26-Feb-2024 08:53:37 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[26-Feb-2024 09:53:37 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[26-Feb-2024 09:02:43 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[26-Feb-2024 09:20:08 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[26-Feb-2024 10:20:08 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[26-Feb-2024 09:22:48 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[26-Feb-2024 09:37:43 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[26-Feb-2024 10:37:43 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[26-Feb-2024 09:41:11 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[26-Feb-2024 09:48:40 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[26-Feb-2024 10:48:40 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[26-Feb-2024 09:51:02 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[26-Feb-2024 09:51:07 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[26-Feb-2024 10:51:07 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[26-Feb-2024 09:54:33 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/showsurvey.php on line 11
+[26-Feb-2024 09:54:37 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/showsurvey.php on line 11
+[26-Feb-2024 10:17:02 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[26-Feb-2024 11:17:02 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[26-Feb-2024 10:21:29 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[26-Feb-2024 10:30:05 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[26-Feb-2024 11:30:05 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[26-Feb-2024 10:31:24 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[26-Feb-2024 10:52:51 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[26-Feb-2024 11:52:51 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[26-Feb-2024 10:58:06 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[26-Feb-2024 11:00:21 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[26-Feb-2024 12:00:21 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[26-Feb-2024 11:11:53 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[26-Feb-2024 11:17:32 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[26-Feb-2024 12:17:32 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[26-Feb-2024 12:03:14 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[26-Feb-2024 13:03:14 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[26-Feb-2024 12:19:30 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[26-Feb-2024 12:29:56 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[26-Feb-2024 13:29:56 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[26-Feb-2024 12:44:34 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[26-Feb-2024 12:44:41 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[26-Feb-2024 13:44:41 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[26-Feb-2024 13:00:48 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[26-Feb-2024 13:01:11 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[26-Feb-2024 14:01:11 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[26-Feb-2024 13:08:17 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[26-Feb-2024 13:12:55 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[26-Feb-2024 14:12:55 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[26-Feb-2024 13:15:59 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[26-Feb-2024 13:30:01 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[26-Feb-2024 14:30:01 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[26-Feb-2024 13:37:49 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[26-Feb-2024 13:37:54 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[26-Feb-2024 14:37:54 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[26-Feb-2024 13:40:19 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[26-Feb-2024 14:40:19 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[26-Feb-2024 13:56:39 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[26-Feb-2024 14:56:39 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[26-Feb-2024 14:03:14 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[26-Feb-2024 14:03:19 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[26-Feb-2024 15:03:19 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[26-Feb-2024 14:19:38 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[26-Feb-2024 14:21:59 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/showsurvey.php on line 11
+[26-Feb-2024 14:22:04 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/showsurvey.php on line 11
+[26-Feb-2024 14:29:58 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[26-Feb-2024 15:29:58 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[26-Feb-2024 14:33:39 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[26-Feb-2024 14:36:26 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[26-Feb-2024 15:36:26 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[26-Feb-2024 14:41:21 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[26-Feb-2024 14:41:26 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[26-Feb-2024 15:41:26 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[26-Feb-2024 15:30:29 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/showsurvey.php on line 11
+[26-Feb-2024 15:30:33 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/showsurvey.php on line 11
+[26-Feb-2024 15:30:44 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/showsurvey.php on line 11
+[26-Feb-2024 15:31:08 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[26-Feb-2024 16:31:08 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[26-Feb-2024 15:33:32 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[26-Feb-2024 15:34:41 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[26-Feb-2024 16:34:41 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[26-Feb-2024 16:14:50 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[26-Feb-2024 17:14:50 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[26-Feb-2024 16:20:39 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[26-Feb-2024 16:24:02 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/showsurvey.php on line 11
+[26-Feb-2024 16:24:05 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/showsurvey.php on line 11
+[26-Feb-2024 16:24:18 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/eliminarVentanilla.php on line 11
+[26-Feb-2024 16:24:18 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/showsurvey.php on line 11
+[27-Feb-2024 07:20:39 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[27-Feb-2024 08:20:39 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[27-Feb-2024 07:20:48 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/showsurvey.php on line 11
+[27-Feb-2024 07:20:54 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/showsurvey.php on line 11
+[27-Feb-2024 07:21:20 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/eliminarVentanilla.php on line 11
+[27-Feb-2024 07:21:20 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/showsurvey.php on line 11
+[27-Feb-2024 07:25:10 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[27-Feb-2024 08:25:10 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[27-Feb-2024 07:35:37 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[27-Feb-2024 07:49:52 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[27-Feb-2024 08:49:52 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[27-Feb-2024 07:53:14 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[27-Feb-2024 07:53:18 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[27-Feb-2024 08:53:18 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[27-Feb-2024 08:09:32 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[27-Feb-2024 08:18:29 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[27-Feb-2024 09:18:29 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[27-Feb-2024 08:18:31 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[27-Feb-2024 09:18:31 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[27-Feb-2024 08:26:01 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[27-Feb-2024 08:30:25 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[27-Feb-2024 09:30:25 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[27-Feb-2024 08:39:00 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[27-Feb-2024 09:39:00 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[27-Feb-2024 08:41:34 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[27-Feb-2024 08:41:44 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[27-Feb-2024 09:41:44 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[27-Feb-2024 08:59:58 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[27-Feb-2024 09:05:32 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[27-Feb-2024 10:05:32 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[27-Feb-2024 09:07:53 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[27-Feb-2024 09:10:50 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[27-Feb-2024 10:10:50 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[27-Feb-2024 09:13:23 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[27-Feb-2024 09:17:15 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[27-Feb-2024 10:17:15 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[27-Feb-2024 09:21:03 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[27-Feb-2024 09:27:05 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[27-Feb-2024 10:27:05 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[27-Feb-2024 09:32:37 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[27-Feb-2024 09:35:37 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[27-Feb-2024 10:35:37 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[27-Feb-2024 09:38:09 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[27-Feb-2024 09:45:51 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[27-Feb-2024 10:45:51 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[27-Feb-2024 09:48:44 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[27-Feb-2024 09:51:50 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[27-Feb-2024 10:51:50 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[27-Feb-2024 09:53:34 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[27-Feb-2024 10:02:13 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[27-Feb-2024 11:02:13 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[27-Feb-2024 10:05:07 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[27-Feb-2024 10:14:43 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[27-Feb-2024 11:14:43 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[27-Feb-2024 10:17:13 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[27-Feb-2024 10:17:49 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[27-Feb-2024 11:17:49 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[27-Feb-2024 10:17:58 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/showsurvey.php on line 11
+[27-Feb-2024 10:18:02 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/showsurvey.php on line 11
+[27-Feb-2024 10:18:14 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/eliminarVentanilla.php on line 11
+[27-Feb-2024 10:18:14 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/showsurvey.php on line 11
+[27-Feb-2024 10:18:26 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/showsurvey.php on line 11
+[27-Feb-2024 10:27:52 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[27-Feb-2024 11:27:52 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[27-Feb-2024 10:30:26 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[27-Feb-2024 10:33:28 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[27-Feb-2024 11:33:28 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[27-Feb-2024 10:43:52 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[27-Feb-2024 10:44:59 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[27-Feb-2024 11:44:59 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[27-Feb-2024 10:54:24 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[27-Feb-2024 10:59:21 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[27-Feb-2024 11:59:21 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[27-Feb-2024 11:01:04 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[27-Feb-2024 11:05:32 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[27-Feb-2024 12:05:32 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[27-Feb-2024 11:09:17 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[27-Feb-2024 12:12:21 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[27-Feb-2024 13:12:21 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[27-Feb-2024 12:20:04 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[27-Feb-2024 12:29:06 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[27-Feb-2024 13:29:06 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[27-Feb-2024 12:32:21 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[27-Feb-2024 12:32:30 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[27-Feb-2024 13:32:30 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[27-Feb-2024 12:41:24 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[27-Feb-2024 13:41:24 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[27-Feb-2024 12:51:54 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[27-Feb-2024 12:59:59 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[27-Feb-2024 13:59:59 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[27-Feb-2024 13:02:19 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[27-Feb-2024 14:02:19 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[27-Feb-2024 13:08:02 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[27-Feb-2024 13:13:12 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[27-Feb-2024 14:13:12 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[27-Feb-2024 13:15:35 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[27-Feb-2024 13:19:59 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[27-Feb-2024 14:19:59 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[27-Feb-2024 13:23:26 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[27-Feb-2024 13:34:18 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[27-Feb-2024 14:34:18 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[27-Feb-2024 13:38:57 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[27-Feb-2024 13:46:37 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[27-Feb-2024 14:46:37 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[27-Feb-2024 13:57:34 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[27-Feb-2024 14:57:34 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[27-Feb-2024 14:02:39 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[27-Feb-2024 15:02:39 America/Bogota] PHP Fatal error:  Uncaught mysqli_sql_exception: Cannot add or update a child row: a foreign key constraint fails (`aprendad_sisben`.`encVentanilla`, CONSTRAINT `fk_encVenta_bar` FOREIGN KEY (`id_bar`) REFERENCES `barrios` (`id_bar`) ON DELETE CASCADE ON UPDATE CASCADE) in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php:44
+Stack trace:
+#0 /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php(44): mysqli->query('INSERT INTO enc...')
+#1 {main}
+  thrown in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 44
+[27-Feb-2024 14:03:08 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/showsurvey.php on line 11
+[27-Feb-2024 14:03:13 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/showsurvey.php on line 11
+[27-Feb-2024 14:03:18 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/showsurvey.php on line 11
+[27-Feb-2024 14:03:42 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[27-Feb-2024 15:03:42 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[27-Feb-2024 14:06:10 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[27-Feb-2024 14:06:15 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/showsurvey.php on line 11
+[27-Feb-2024 14:06:20 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/showsurvey.php on line 11
+[27-Feb-2024 14:41:58 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[27-Feb-2024 15:41:58 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[27-Feb-2024 14:45:44 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[27-Feb-2024 14:49:33 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[27-Feb-2024 15:49:33 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[27-Feb-2024 14:53:21 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[27-Feb-2024 14:56:48 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[27-Feb-2024 15:56:48 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[27-Feb-2024 15:01:33 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[27-Feb-2024 15:08:24 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[27-Feb-2024 16:08:24 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[27-Feb-2024 15:10:33 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[27-Feb-2024 15:10:39 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[27-Feb-2024 16:10:39 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[27-Feb-2024 15:12:04 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/showsurvey.php on line 11
+[27-Feb-2024 15:12:08 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/showsurvey.php on line 11
+[27-Feb-2024 15:20:10 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[27-Feb-2024 16:20:10 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[27-Feb-2024 15:56:55 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[27-Feb-2024 15:59:54 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[27-Feb-2024 16:59:54 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[27-Feb-2024 16:04:15 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[27-Feb-2024 16:05:35 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[27-Feb-2024 17:05:35 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[28-Feb-2024 07:39:58 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[28-Feb-2024 08:39:58 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[28-Feb-2024 07:49:03 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[28-Feb-2024 07:49:19 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[28-Feb-2024 08:49:19 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[28-Feb-2024 07:56:47 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[28-Feb-2024 08:09:30 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[28-Feb-2024 09:09:30 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[28-Feb-2024 08:11:44 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[28-Feb-2024 08:15:43 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[28-Feb-2024 09:15:43 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[28-Feb-2024 08:18:12 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[28-Feb-2024 08:28:30 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[28-Feb-2024 09:28:30 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[28-Feb-2024 08:35:03 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[28-Feb-2024 08:36:41 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[28-Feb-2024 09:36:41 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[28-Feb-2024 08:45:42 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[28-Feb-2024 08:47:04 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[28-Feb-2024 09:47:04 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[28-Feb-2024 08:53:13 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[28-Feb-2024 08:55:34 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[28-Feb-2024 09:55:34 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[28-Feb-2024 09:02:33 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[28-Feb-2024 09:06:46 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[28-Feb-2024 10:06:46 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[28-Feb-2024 09:11:06 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[28-Feb-2024 09:28:59 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[28-Feb-2024 10:28:59 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[28-Feb-2024 09:31:46 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[28-Feb-2024 09:41:03 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[28-Feb-2024 10:41:03 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[28-Feb-2024 09:44:58 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[28-Feb-2024 09:50:10 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[28-Feb-2024 10:50:10 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[28-Feb-2024 09:51:44 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[28-Feb-2024 10:08:06 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[28-Feb-2024 11:08:06 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[28-Feb-2024 10:11:52 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[28-Feb-2024 10:18:39 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[28-Feb-2024 11:18:39 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[28-Feb-2024 10:26:07 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[28-Feb-2024 10:32:21 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[28-Feb-2024 11:32:21 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[28-Feb-2024 10:34:34 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[28-Feb-2024 10:45:09 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[28-Feb-2024 11:45:09 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[28-Feb-2024 10:49:52 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[28-Feb-2024 10:54:14 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[28-Feb-2024 11:54:14 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[28-Feb-2024 10:57:55 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[28-Feb-2024 11:03:03 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[28-Feb-2024 12:03:03 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[28-Feb-2024 11:05:20 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[28-Feb-2024 12:28:52 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[28-Feb-2024 13:28:52 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[28-Feb-2024 12:33:42 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[28-Feb-2024 12:34:43 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[28-Feb-2024 13:34:43 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[28-Feb-2024 12:48:09 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[28-Feb-2024 12:50:45 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/showsurvey.php on line 11
+[28-Feb-2024 12:50:50 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/showsurvey.php on line 11
+[28-Feb-2024 12:51:03 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/eliminarVentanilla.php on line 11
+[28-Feb-2024 12:51:03 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/showsurvey.php on line 11
+[28-Feb-2024 12:52:14 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[28-Feb-2024 13:52:14 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[28-Feb-2024 12:55:26 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[28-Feb-2024 12:58:07 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[28-Feb-2024 13:58:07 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[28-Feb-2024 13:24:15 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[28-Feb-2024 14:24:15 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[28-Feb-2024 13:32:04 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[28-Feb-2024 13:32:10 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[28-Feb-2024 14:32:10 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[28-Feb-2024 13:36:38 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[28-Feb-2024 14:36:38 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[28-Feb-2024 13:52:26 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[28-Feb-2024 13:57:27 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[28-Feb-2024 14:57:27 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[28-Feb-2024 14:03:32 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[28-Feb-2024 14:03:40 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[28-Feb-2024 15:03:40 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[28-Feb-2024 14:14:01 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[28-Feb-2024 14:18:47 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[28-Feb-2024 15:18:47 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[28-Feb-2024 14:24:32 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[28-Feb-2024 14:32:39 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[28-Feb-2024 15:32:39 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[28-Feb-2024 14:38:11 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[28-Feb-2024 15:12:04 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[28-Feb-2024 16:12:04 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[28-Feb-2024 15:16:08 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[28-Feb-2024 15:17:04 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[28-Feb-2024 16:17:04 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[28-Feb-2024 15:19:45 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[28-Feb-2024 15:23:06 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[28-Feb-2024 16:23:06 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[28-Feb-2024 15:25:14 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[28-Feb-2024 16:25:14 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[28-Feb-2024 15:33:04 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[28-Feb-2024 15:36:26 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[28-Feb-2024 16:36:26 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[28-Feb-2024 15:38:51 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[28-Feb-2024 15:39:05 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[28-Feb-2024 16:39:05 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[28-Feb-2024 15:44:33 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[28-Feb-2024 15:58:06 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[28-Feb-2024 16:58:06 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[29-Feb-2024 07:28:19 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[29-Feb-2024 08:28:19 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[29-Feb-2024 07:28:55 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[29-Feb-2024 08:28:55 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[29-Feb-2024 07:45:20 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[29-Feb-2024 08:00:31 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[29-Feb-2024 09:00:31 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[29-Feb-2024 08:01:45 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[29-Feb-2024 08:08:33 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[29-Feb-2024 09:08:33 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[29-Feb-2024 08:11:41 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[29-Feb-2024 08:12:04 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[29-Feb-2024 09:12:04 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[29-Feb-2024 08:17:42 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[29-Feb-2024 08:27:08 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[29-Feb-2024 09:27:08 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[29-Feb-2024 08:28:56 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[29-Feb-2024 08:29:00 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[29-Feb-2024 09:29:00 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[29-Feb-2024 08:36:16 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[29-Feb-2024 08:36:20 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[29-Feb-2024 09:36:20 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[29-Feb-2024 08:44:08 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[29-Feb-2024 09:44:08 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[29-Feb-2024 08:51:44 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[29-Feb-2024 08:52:51 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[29-Feb-2024 09:52:51 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[29-Feb-2024 09:01:42 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[29-Feb-2024 10:01:42 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[29-Feb-2024 09:05:23 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[29-Feb-2024 09:22:24 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[29-Feb-2024 10:22:24 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[29-Feb-2024 09:25:41 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[29-Feb-2024 09:31:14 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[29-Feb-2024 10:31:14 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[29-Feb-2024 09:31:23 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/showsurvey.php on line 11
+[29-Feb-2024 09:31:29 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php on line 11
+[29-Feb-2024 10:31:29 America/Bogota] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php:17) in /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php on line 129
+[29-Feb-2024 10:31:29 America/Bogota] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php:17) in /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php on line 149
+[29-Feb-2024 10:31:29 America/Bogota] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php:17) in /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php on line 169
+[29-Feb-2024 10:31:29 America/Bogota] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php:17) in /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php on line 199
+[29-Feb-2024 09:31:42 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/showsurvey.php on line 11
+[29-Feb-2024 09:31:44 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/showsurvey.php on line 11
+[29-Feb-2024 09:31:47 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/showsurvey.php on line 11
+[29-Feb-2024 09:55:14 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[29-Feb-2024 10:55:14 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[29-Feb-2024 09:58:17 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[29-Feb-2024 10:21:08 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[29-Feb-2024 11:21:08 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[29-Feb-2024 10:25:54 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[29-Feb-2024 10:32:31 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[29-Feb-2024 11:32:31 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[29-Feb-2024 10:35:56 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[29-Feb-2024 10:36:04 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[29-Feb-2024 11:36:04 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[29-Feb-2024 11:11:48 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[29-Feb-2024 12:11:48 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[29-Feb-2024 11:14:49 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[29-Feb-2024 11:14:53 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[29-Feb-2024 12:14:53 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[29-Feb-2024 11:31:14 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[29-Feb-2024 11:31:20 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[29-Feb-2024 12:31:20 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[29-Feb-2024 12:25:38 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[29-Feb-2024 13:25:38 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[29-Feb-2024 12:25:41 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[29-Feb-2024 13:25:41 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[29-Feb-2024 12:30:28 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[29-Feb-2024 12:35:07 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[29-Feb-2024 13:35:07 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[29-Feb-2024 12:39:03 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[29-Feb-2024 12:39:07 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[29-Feb-2024 13:39:07 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[29-Feb-2024 12:50:03 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[29-Feb-2024 13:50:03 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[29-Feb-2024 13:00:52 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[29-Feb-2024 13:00:56 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[29-Feb-2024 14:00:56 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[29-Feb-2024 13:05:57 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[29-Feb-2024 13:14:20 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[29-Feb-2024 14:14:20 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[29-Feb-2024 13:18:41 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[29-Feb-2024 13:23:11 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[29-Feb-2024 14:23:11 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[29-Feb-2024 13:25:16 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[29-Feb-2024 13:36:14 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[29-Feb-2024 14:36:14 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[29-Feb-2024 13:38:07 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[29-Feb-2024 13:54:43 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[29-Feb-2024 14:54:43 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[29-Feb-2024 14:00:01 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[29-Feb-2024 14:09:47 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[29-Feb-2024 15:09:47 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[29-Feb-2024 14:39:09 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[29-Feb-2024 15:39:09 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[29-Feb-2024 14:42:29 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[29-Feb-2024 14:44:21 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[29-Feb-2024 15:44:21 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[29-Feb-2024 14:57:04 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[29-Feb-2024 15:57:04 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[29-Feb-2024 15:00:56 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[29-Feb-2024 15:07:24 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/showsurvey.php on line 11
+[29-Feb-2024 15:07:28 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/showsurvey.php on line 11
+[29-Feb-2024 15:07:45 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/showsurvey.php on line 11
+[29-Feb-2024 15:08:12 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/eliminarVentanilla.php on line 11
+[29-Feb-2024 15:08:12 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/showsurvey.php on line 11
+[29-Feb-2024 15:17:16 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[29-Feb-2024 16:17:16 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[29-Feb-2024 15:32:26 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[29-Feb-2024 15:33:48 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[29-Feb-2024 16:33:48 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[01-Mar-2024 07:42:01 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[01-Mar-2024 08:42:01 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[01-Mar-2024 07:44:46 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[01-Mar-2024 07:53:08 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[01-Mar-2024 08:53:08 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[01-Mar-2024 07:59:02 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[01-Mar-2024 08:59:02 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[01-Mar-2024 07:59:48 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[01-Mar-2024 08:59:48 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[01-Mar-2024 08:14:52 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[01-Mar-2024 08:26:14 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[01-Mar-2024 09:26:14 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[01-Mar-2024 08:28:03 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[01-Mar-2024 08:28:09 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[01-Mar-2024 09:28:09 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[01-Mar-2024 08:45:11 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[01-Mar-2024 09:45:11 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[01-Mar-2024 08:46:35 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[01-Mar-2024 08:57:23 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[01-Mar-2024 09:57:23 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[01-Mar-2024 09:01:10 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[01-Mar-2024 10:01:10 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[01-Mar-2024 09:17:57 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[01-Mar-2024 10:17:57 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[01-Mar-2024 09:19:32 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[01-Mar-2024 09:29:17 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[01-Mar-2024 10:29:17 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[01-Mar-2024 09:30:49 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[01-Mar-2024 09:34:21 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[01-Mar-2024 10:34:21 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[01-Mar-2024 09:37:46 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[01-Mar-2024 09:37:57 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[01-Mar-2024 10:37:57 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[01-Mar-2024 09:52:54 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[01-Mar-2024 10:04:40 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[01-Mar-2024 11:04:40 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[01-Mar-2024 10:12:15 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey2.php on line 11
+[01-Mar-2024 14:15:30 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/showsurvey.php on line 11
+[01-Mar-2024 14:15:36 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/showsurvey.php on line 11
+[04-Mar-2024 07:56:56 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[04-Mar-2024 08:56:56 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[14-Mar-2024 15:37:33 America/Chicago] PHP Warning:  Undefined array key "usuario" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 12
+[14-Mar-2024 15:37:33 America/Bogota] PHP Warning:  Undefined array key "id_usu" in /home4/aprendad/sisben.softepu.com/code/eventan/addsurvey1.php on line 169
+[27-Feb-2025 10:13:52 America/Bogota] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php:17) in /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php on line 129
+[27-Feb-2025 10:13:52 America/Bogota] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php:17) in /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php on line 149
+[27-Feb-2025 10:13:52 America/Bogota] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php:17) in /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php on line 169
+[27-Feb-2025 10:13:52 America/Bogota] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php:17) in /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php on line 199
+[05-Mar-2025 09:41:43 America/Bogota] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php:17) in /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php on line 129
+[05-Mar-2025 09:41:43 America/Bogota] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php:17) in /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php on line 149
+[05-Mar-2025 09:41:43 America/Bogota] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php:17) in /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php on line 169
+[05-Mar-2025 09:41:43 America/Bogota] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php:17) in /home4/aprendad/sisben.softepu.com/code/eventan/showencVentanilla.php on line 199
