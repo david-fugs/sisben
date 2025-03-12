@@ -236,16 +236,6 @@ header("Content-Type: text/html;charset=utf-8");
             <div class="form-group">
                 <div class="row">
                     <div class="form-group col-md-4">
-                        <label for="id_bar">* BARRIO:</label>
-                        <select id="id_bar" name="id_bar" class="form-control" disabled="disabled" required>
-                            <option value="">* SELECCIONE EL BARRIO:</option>
-                        </select>
-                    </div>
-                    <div class="form-group col-md-4" id="otro_barrio_container" style="display: none;">
-                        <label for="otro_barrio">Especifique el barrio:</label>
-                        <input type="text" id="otro_barrio" name="otro_barrio" class="form-control" placeholder="Ingrese el barrio">
-                    </div>
-                    <div class="form-group col-md-4">
                         <label for="id_correg">* CORREGIMIENTO:</label>
                         <select id="id_correg" class="form-control" name="id_correg" required>
                             <?php
@@ -267,6 +257,18 @@ header("Content-Type: text/html;charset=utf-8");
                             <option value="">* SELECCIONE LA VEREDA:</option>
                         </select>
                     </div>
+
+
+                    <div class="form-group col-md-4">
+                        <label for="id_bar">* BARRIO:</label>
+                        <select id="id_bar" name="id_bar" class="form-control" disabled="disabled" required>
+                            <option value="">* SELECCIONE EL BARRIO:</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4" id="otro_barrio_container" style="display: none;">
+                        <label for="otro_bar_ver_encVenta">ESPECIFIQUE BARRIO O VEREDA:</label>
+                        <input type="text" id="otro_bar_ver_encVenta" name="otro_bar_ver_encVenta" class="form-control" placeholder="Ingrese el barrio">
+                    </div>
                 </div>
             </div>
             <script>
@@ -280,10 +282,6 @@ header("Content-Type: text/html;charset=utf-8");
 
             <div class="form-group">
                 <div class="row">
-                    <div class="form-group col-md-4">
-                        <label for="otro_bar_ver_encVenta">OTRO BARRIO y/o VEREDA:</label>
-                        <input type='text' id='otro_bar_ver_encVenta' name='otro_bar_ver_encVenta' class='form-control' style="text-transform:uppercase;" />
-                    </div>
                     <div class="form-group col-md-3">
                         <label for="tram_solic_encVenta">* TRÁMITE SOLICITADO:</label>
                         <select class="form-control" name="tram_solic_encVenta" id="selectEF" required>
