@@ -68,46 +68,48 @@ header("Content-Type: text/html;charset=utf-8");
         });
 
         $(document).ready(function() {
-            // Función para agregar integrantes dinámicamente.
+            function actualizarTotal() {
+                let total = 0;
+                $("input[name='cant_integVenta[]']").each(function() {
+                    let valor = parseInt($(this).val()) || 0;
+                    total += valor;
+                });
+                $("#total_integrantes").val(total);
+            }
+
             $("#agregar").click(function() {
                 var inputCantidad = $("#cant_integVenta");
-                var cantidadValor = inputCantidad.val();
+                var cantidadValor = parseInt(inputCantidad.val());
 
-                // Validar que se haya ingresado una cantidad válida
                 if (!cantidadValor || cantidadValor <= 0) {
                     alert("Por favor, ingresa una cantidad válida de integrantes.");
                     return;
                 }
 
-                // Eliminar los integrantes existentes
                 $("#integrantes-container").empty();
 
-                // Crear los campos para la cantidad especificada de integrantes
                 for (var i = 0; i < cantidadValor; i++) {
                     var integranteDiv = $("<div>").addClass("formulario-dinamico");
 
-                    // Agregar campo de cantidad individual
                     var cantidadInput = $("<input>")
                         .attr("type", "number")
                         .attr("name", "cant_integVenta[]")
                         .addClass("form-control smaller-input")
-                        .attr("placeholder", "Cantidad");
+                        .attr("placeholder", "Cantidad")
+                        .val(1) // Por defecto 1 para que se cuente automáticamente
+                        .on("input", actualizarTotal);
 
-                    // Agregar campo de género
                     var generoSelect = $("<select>")
                         .attr("name", "gen_integVenta[]")
                         .addClass("form-control smaller-input")
-                        .addClass("form-control")
                         .append('<option value="">Género</option>')
                         .append('<option value="F">F</option>')
                         .append('<option value="M">M</option>')
-                        .append('<option value="O">Otro</option>'); // Agregamos "Otro" para opciones no binarias
+                        .append('<option value="O">Otro</option>');
 
-                    // Agregar campo de rango de edad
                     var rangoEdadSelect = $("<select>")
                         .attr("name", "rango_integVenta[]")
                         .addClass("form-control smaller-input")
-                        .addClass("form-control")
                         .append('<option value="">Rango de edad</option>')
                         .append('<option value="0 - 6">0 - 6</option>')
                         .append('<option value="7 - 12">7 - 12</option>')
@@ -123,18 +125,14 @@ header("Content-Type: text/html;charset=utf-8");
                         .text("Eliminar")
                         .click(function() {
                             $(this).closest(".formulario-dinamico").remove();
+                            actualizarTotal();
                         });
 
-                    integranteDiv.append(cantidadInput);
-                    integranteDiv.append(generoSelect);
-                    integranteDiv.append(rangoEdadSelect);
-                    integranteDiv.append(eliminarBtn);
-
-                    // Agregar una línea horizontal para separar los integrantes
-                    //integranteDiv.append($("<hr>"));
-
+                    integranteDiv.append(cantidadInput, generoSelect, rangoEdadSelect, eliminarBtn);
                     $("#integrantes-container").append(integranteDiv);
                 }
+
+                actualizarTotal();
             });
         });
     </script>
@@ -266,7 +264,7 @@ header("Content-Type: text/html;charset=utf-8");
                         </select>
                     </div>
                     <div class="form-group col-md-4" id="otro_barrio_container" style="display: none;">
-                        <label for="otro_bar_ver_encVenta">ESPECIFIQUE BARRIO O VEREDA:</label>
+                        <label for="otro_bar_ver_encVenta">ESPECIFIQUE BARRIO,VEREDA O INVASION:</label>
                         <input type="text" id="otro_bar_ver_encVenta" name="otro_bar_ver_encVenta" class="form-control" placeholder="Ingrese el barrio">
                     </div>
                 </div>
@@ -291,15 +289,16 @@ header("Content-Type: text/html;charset=utf-8");
                             <option value="ENCUESTA NUEVA DESCENTRALIZADO">ENCUESTA NUEVA DESCENTRALIZADO</option>
                         </select>
                     </div>
-                    <div class="form-group col-md-2">
-                        <label for="integra_encVenta">INTEGRANTES:</label>
-                        <input type='number' id='integra_encVenta' name='integra_encVenta' class='form-control' value="1" required />
-                    </div>
                     <div class="form-group col-md-3">
                         <label for="num_ficha_encVenta">* No. FICHA o RADICADO:</label>
                         <input type='number' name='num_ficha_encVenta' class='form-control' required />
                     </div>
+                    <div class="form-group col-md-2">
+                        <label for="integra_encVenta">INTEGRANTES:</label>
+                        <input type='number' id='total_integrantes' name='integra_encVenta' class='form-control' value="" required  readonly/>
+                    </div>
                 </div>
+
             </div>
 
             <div class="form-group">
@@ -402,7 +401,6 @@ header("Content-Type: text/html;charset=utf-8");
 <script src="../ecampo/js/jquery-3.1.1.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
-
         $('#id_com').on('change', function() {
             if ($('#id_com').val() == "") {
                 $('#id_bar').empty();
@@ -417,7 +415,7 @@ header("Content-Type: text/html;charset=utf-8");
             }
         });
 
-        // 🔥 Agregar LOGS para ver qué tiene id_bar al cambiar
+        //  Agregar LOGS para ver qué tiene id_bar al cambiar
         $('#id_bar').on('change', function() {
             $('#id_bar option:selected').each(function() {
                 console.log("Valor:", $(this).val(), "Texto:", $(this).text());

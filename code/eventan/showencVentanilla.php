@@ -212,7 +212,7 @@
                             </select>
                         </div>
                         <div class="form-group col-md-4">
-                            <label for="otro_bar_ver_encVenta">OTRO BARRIO:</label>
+                            <label for="otro_bar_ver_encVenta">OTRO BARRIO,VEREDA O INVASION:</label>
                             <input type='text' id='otro_bar_ver_encVenta' name='otro_bar_ver_encVenta' class='form-control' value='<?php echo $row['otro_bar_ver_encVenta']; ?>' />
                         </div>
                         <div class="col-12 col-sm-5">
@@ -236,7 +236,7 @@
                     <div class="row">
                         <div class="form-group col-md-2">
                             <label for="integra_encVenta">* INTEGRANTES:</label>
-                            <input type='number' id='integra_encVenta' name='integra_encVenta' class='form-control' value='<?php echo $row['integra_encVenta']; ?>' required/>
+                            <input type='number' id='integra_encVenta' name='integra_encVenta' class='form-control' value='<?php echo $row['integra_encVenta']; ?>' required readonly/>
                         </div>
                         <div class="col-12 col-sm-4">
                             <label for="num_ficha_encVenta">* No. FICHA:</label>
