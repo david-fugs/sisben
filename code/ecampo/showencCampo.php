@@ -246,7 +246,7 @@
                     <div class="row">
                         <div class="form-group col-md-2">
                             <label for="integra_encCampo">* INTEGRANTES:</label>
-                            <input type='number' id='integra_encCampo' name='integra_encCampo' class='form-control' value='<?php echo $row['integra_encCampo']; ?>' required/>
+                            <input type='number' id='integra_encCampo' name='integra_encCampo' class='form-control' value='<?php echo $row['integra_encCampo']; ?>' readonly/>
                         </div>
                         <div class="col-12 col-sm-4">
                             <label for="num_ficha_encCampo">* No. FICHA:</label>
