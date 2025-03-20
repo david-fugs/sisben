@@ -1,105 +1,104 @@
 <?php
-     
-    session_start();
-    
-    if(!isset($_SESSION['id_usu']))
-    {
-        header("Location: ../../index.php");
-        exit();  // Asegúrate de salir del script después de redirigir
-    }
 
-    $usuario    = $_SESSION['usuario'];
-    $nombre     = $_SESSION['nombre'];
-    $tipo_usu   = $_SESSION['tipo_usu'];
-    
-    include("../../conexion.php");
-    date_default_timezone_set("America/Bogota");
-    header("Content-Type: text/html;charset=utf-8");
+session_start();
 
-    if ($_SERVER["REQUEST_METHOD"] == "POST")
-    {
-        // Captura de datos enviados por POST
-        $fec_reg_encMovim       = $_POST['fec_reg_encMovim'];
-        $doc_encMovim           = $_POST['doc_encMovim'];
-        $nom_encMovim           = mb_strtoupper($_POST['nom_encMovim']);
-        $dir_encMovim           = mb_strtoupper($_POST['dir_encMovim']);
-        $zona_encMovim          = $_POST['zona_encMovim'];
-        $id_com                 = $_POST['id_com'];
-        $id_bar                 = $_POST['id_bar'];
-        $id_correg              = $_POST['id_correg'];
-        $id_vere                = $_POST['id_vere'];
-        $otro_bar_ver_encMovim  = mb_strtoupper($_POST['otro_bar_ver_encMovim']);
-        $tram_solic_encMovim    = $_POST['tram_solic_encMovim'];
-        $integra_encMovim       = $_POST['integra_encMovim'];
-        $num_ficha_encMovim     = $_POST['num_ficha_encMovim'];
-        $obs_encMovim           = mb_strtoupper($_POST['obs_encMovim']);
-        $estado_encMovim        = 1;
-        $fecha_alta_encMovim    = date('Y-m-d h:i:s');
-        $fecha_edit_encMovim    = '0000-00-00 00:00:00';
-        $id_usu                 = $_SESSION['id_usu'];
+if (!isset($_SESSION['id_usu'])) {
+    header("Location: ../../index.php");
+    exit();  // Asegúrate de salir del script después de redirigir
+}
 
-        $sql = "INSERT INTO encMovimientos (fec_reg_encMovim, doc_encMovim, nom_encMovim,  dir_encMovim, zona_encMovim, id_com, id_bar, id_correg, id_vere, otro_bar_ver_encMovim, tram_solic_encMovim, integra_encMovim, num_ficha_encMovim, obs_encMovim, estado_encMovim, fecha_alta_encMovim, fecha_edit_encMovim, id_usu) 
+$usuario    = $_SESSION['usuario'];
+$nombre     = $_SESSION['nombre'];
+$tipo_usu   = $_SESSION['tipo_usu'];
+
+include("../../conexion.php");
+date_default_timezone_set("America/Bogota");
+header("Content-Type: text/html;charset=utf-8");
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Captura de datos enviados por POST
+    $fec_reg_encMovim       = $_POST['fec_reg_encMovim'];
+    $doc_encMovim           = $_POST['doc_encMovim'];
+    $nom_encMovim           = mb_strtoupper($_POST['nom_encMovim']);
+    $dir_encMovim           = mb_strtoupper($_POST['dir_encMovim']);
+    $zona_encMovim          = $_POST['zona_encMovim'];
+    $id_com                 = $_POST['id_com'];
+    $id_bar                 = $_POST['id_bar'];
+    $id_correg              = $_POST['id_correg'];
+    $id_vere                = $_POST['id_vere'];
+    $otro_bar_ver_encMovim  = mb_strtoupper($_POST['otro_bar_ver_encMovim']);
+    $tram_solic_encMovim    = $_POST['tram_solic_encMovim'];
+    $integra_encMovim       = $_POST['integra_encMovim'];
+    $num_ficha_encMovim     = $_POST['num_ficha_encMovim'];
+    $obs_encMovim           = mb_strtoupper($_POST['obs_encMovim']);
+    $estado_encMovim        = 1;
+    $fecha_alta_encMovim    = date('Y-m-d h:i:s');
+    $fecha_edit_encMovim    = '0000-00-00 00:00:00';
+    $id_usu                 = $_SESSION['id_usu'];
+
+    $sql = "INSERT INTO encMovimientos (fec_reg_encMovim, doc_encMovim, nom_encMovim,  dir_encMovim, zona_encMovim, id_com, id_bar, id_correg, id_vere, otro_bar_ver_encMovim, tram_solic_encMovim, integra_encMovim, num_ficha_encMovim, obs_encMovim, estado_encMovim, fecha_alta_encMovim, fecha_edit_encMovim, id_usu) 
         VALUES ('$fec_reg_encMovim', '$doc_encMovim', '$nom_encMovim', '$dir_encMovim', '$zona_encMovim', '$id_com', '$id_bar', '$id_correg', '$id_vere', '$otro_bar_ver_encMovim', '$tram_solic_encMovim', '$integra_encMovim', '$num_ficha_encMovim', '$obs_encMovim', '$estado_encMovim', '$fecha_alta_encMovim', '$fecha_edit_encMovim', '$id_usu')";
-        
-        $resultado = $mysqli->query($sql);
 
-        $id_encMovim = $mysqli->insert_id;
-        
-        // Verificar si se ha enviado el formulario
-        if ($_SERVER["REQUEST_METHOD"] == "POST")
-        {
-            // Obtener los arreglos de integrantes
-            $cant_integMovim        = $_POST['cant_integMovim'] ?? array();
-            $gen_integMovim         = $_POST['gen_integMovim'] ?? array();
-            $rango_integMovim       = $_POST['rango_integMovim'] ?? array();
+    $resultado = $mysqli->query($sql);
 
-            // Otras variables
-            $id_usu                 = $_SESSION['id_usu'];
-            $estado_integMovim      = 1;
-            $fecha_alta_integMovim  = date('Y-m-d h:i:s');
-            $fecha_edit_integMovim  = '0000-00-00 00:00:00';
+    $id_encMovim = $mysqli->insert_id;
 
-            // Mapeo de descripción del rango de integrantes a valor numérico
-            $rango_edad_map = array(
-                "0 - 6"                 => 1,
-                "7 - 12"                => 2,
-                "13 - 17"               => 3,
-                "18 - 28"               => 4,
-                "29 - 45"               => 5,
-                "46 - 64"               => 6,
-                "Mayor o igual a 65"    => 7
-            );
+    // Verificar si se ha enviado el formulario
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        // Obtener los arreglos de integrantes
+        $cant_integMovim        = $_POST['cant_integMovim'] ?? array();
+        $gen_integMovim         = $_POST['gen_integMovim'] ?? array();
+        $rango_integMovim       = $_POST['rango_integMovim'] ?? array();
+        $condicionDispacapacidad = $_POST['condicionDispacapacidad'] ?? array();
+        $grupoEtnico            = $_POST['grupoEtnico'] ?? array();
+        $orientacionSexual      = $_POST['orientacionSexual'] ?? array();
 
-            foreach ($gen_integMovim as $key => $genero) 
-            {
-                // Verificar que los valores estén definidos y no sean null
-                if (isset($cant_integMovim[$key]) && isset($rango_integMovim[$key])) 
-                {
-                    // Obtener los valores individuales para el integrante actual
-                    $cantidad           = $cant_integMovim[$key];
-                    $rango_descripcion  = $rango_integMovim[$key];
+        // Otras variables
+        $id_usu                 = $_SESSION['id_usu'];
+        $estado_integMovim      = 1;
+        $fecha_alta_integMovim  = date('Y-m-d h:i:s');
+        $fecha_edit_integMovim  = '0000-00-00 00:00:00';
 
-          
-                    // Obtener el valor numérico del rango a partir del mapeo
-                    $rango_valor = isset($rango_edad_map[$rango_descripcion]) ? $rango_edad_map[$rango_descripcion] : 'Valor_predeterminado';
+        // Mapeo de descripción del rango de integrantes a valor numérico
+        $rango_edad_map = array(
+            "0 - 6"                 => 1,
+            "7 - 12"                => 2,
+            "13 - 17"               => 3,
+            "18 - 28"               => 4,
+            "29 - 45"               => 5,
+            "46 - 64"               => 6,
+            "Mayor o igual a 65"    => 7
+        );
 
-                    // Crear la consulta de inserción para el integrante actual
-                    $sql = "INSERT INTO integMovimientos (cant_integMovim, gen_integMovim, rango_integMovim, estado_integMovim, fecha_alta_integMovim, fecha_edit_integMovim, id_usu, id_encMovim) 
-                    VALUES ('$cantidad', '$genero', '$rango_valor', '$estado_integMovim', '$fecha_alta_integMovim', '$fecha_edit_integMovim', '$id_usu', '$id_encMovim')";
+        foreach ($gen_integMovim as $key => $genero) {
+            // Verificar que los valores estén definidos y no sean null
+            if (isset($cant_integMovim[$key]) && isset($rango_integMovim[$key])) {
+                // Obtener los valores individuales para el integrante actual
+                $cantidad           = $cant_integMovim[$key];
+                $rango_descripcion  = $rango_integMovim[$key];
+                $discapacidad           = $condicionDispacapacidad[$key];
+                $grupo                  = $grupoEtnico[$key];
+                $orientacion            = $orientacionSexual[$key];
 
-                    // Ejecutar la consulta
-                    if ($mysqli->query($sql) === TRUE) 
-                    {
-                        // Éxito al insertar el integrante
-                        //echo "El integrante $key se insertó correctamente.<br>";
-                    } else 
-                    {
-                        echo "Error al insertar el integrante $key: " . $mysqli->error . "<br>";
-                    }
+
+                // Obtener el valor numérico del rango a partir del mapeo
+                $rango_valor = isset($rango_edad_map[$rango_descripcion]) ? $rango_edad_map[$rango_descripcion] : 'Valor_predeterminado';
+
+                // Crear la consulta de inserción para el integrante actual
+                $sql = "INSERT INTO integMovimientos (cant_integMovim, gen_integMovim, rango_integMovim,condicionDiscapacidad, grupoEtnico, orientacionSexual, estado_integMovim, fecha_alta_integMovim, fecha_edit_integMovim, id_usu, id_encMovim) 
+                    VALUES ('$cantidad', '$genero', '$rango_valor', '$discapacidad' , '$grupo' , '$orientacion' ,'$estado_integMovim', '$fecha_alta_integMovim', '$fecha_edit_integMovim', '$id_usu', '$id_encMovim')";
+
+                // Ejecutar la consulta
+                if ($mysqli->query($sql) === TRUE) {
+                    // Éxito al insertar el integrante
+                    //echo "El integrante $key se insertó correctamente.<br>";
+                } else {
+                    echo "Error al insertar el integrante $key: " . $mysqli->error . "<br>";
                 }
             }
         }
     }
+}
 
 echo "
     <!DOCTYPE html>
@@ -132,4 +131,3 @@ echo "
         </body>
     </html>
 ";
-?>

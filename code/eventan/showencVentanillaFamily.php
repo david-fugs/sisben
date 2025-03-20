@@ -88,7 +88,7 @@
                         <tr>
                             <td data-label="No.">'.$i++.'</td>
                             <td data-label="CANTIDAD">'.$row['cant_integVenta'].'</td>
-                            <td data-label="GÉNERO">
+                            <td data-label="IDENTIDAD GENERO">
                                 <select class="form-control" name="gen_integVenta" disabled >
                                     <option value="">SELECCIONE:</option>   
                                     <option value="M" '; if($row['gen_integVenta']=='M'){echo 'selected';} echo '>MASCULINO</option>
@@ -106,6 +106,16 @@
                                     <option value=5 '; if($row['rango_integVenta']==5){echo 'selected';} echo '>29 - 45</option>
                                     <option value=6 '; if($row['rango_integVenta']==6){echo 'selected';} echo '>46 - 64</option>
                                     <option value=7 '; if($row['rango_integVenta']==7){echo 'selected';} echo '>Mayor o igual a 65</option>
+                                </select>
+                            </td>
+                               <td data-label="GRUPO ETNICO">
+                                <select class="form-control" name="grupoEtnico" disabled >
+                                    <option value="">SELECCIONE:</option>   
+                                    <option value=1 '; if($row['grupoEtnico']=="Indigena"){echo 'selected';} echo '>Indigena</option>
+                                    <option value=2 '; if($row['grupoEtnico']=="Negra / Afrocolombiana"){echo 'selected';} echo '>Negra / Afrocolombiana</option>
+                                    <option value=3 '; if($row['grupoEtnico']=="Raizal"){echo 'selected';} echo '>Raizal</option>
+                                    <option value=4 '; if($row['grupoEtnico']=="Palenquero"){echo 'selected';} echo '>Palenquero</option>
+                                    <option value=5 '; if($row['grupoEtnico']=="Gitano (rom)"){echo 'selected';} echo '>Gitano (rom)</option>
                                 </select>
                             </td>
                             <td data-label="EDIT"><a href="showencVentanillaFamily1.php?id_integVenta='.$row['id_integVenta'].'" ><img src="../../img/editar.png" width=28 height=28></a></td>

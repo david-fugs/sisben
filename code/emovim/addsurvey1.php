@@ -30,6 +30,25 @@ header("Content-Type: text/html;charset=utf-8");
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <style>
+        #integrantes-container {
+            display: flex;
+            flex-wrap: wrap;
+            /* Permite que los elementos pasen a la siguiente línea si no caben */
+            gap: 10px;
+        }
+
+        .formulario-dinamico {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border: 1px solid #ccc;
+            /* Opcional: agregar un borde */
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            /* Opcional: fondo para cada elemento */
+        }
+
         .responsive {
             max-width: 100%;
             height: auto;
@@ -91,24 +110,33 @@ header("Content-Type: text/html;charset=utf-8");
                 for (var i = 0; i < cantidadValor; i++) {
                     var integranteDiv = $("<div>").addClass("formulario-dinamico");
 
-                    // Agregar campo de cantidad individual
                     var cantidadInput = $("<input>")
                         .attr("type", "number")
                         .attr("name", "cant_integMovim[]")
                         .addClass("form-control smaller-input")
                         .attr("placeholder", "Cantidad")
-                        .on("input", actualizarTotal);
+                        .val(1) // Establecer el valor inicial en 1
+                        .attr("readonly", true) // Hacer el campo de solo lectura
+                        .on("blur", actualizarTotal); // Llamar a actualizarTotal cuando pierde el foco
+
 
                     // Agregar campo de género
                     var generoSelect = $("<select>")
                         .attr("name", "gen_integMovim[]")
                         .addClass("form-control smaller-input")
                         .addClass("form-control")
-                        .append('<option value="">Género</option>')
+                        .append('<option value="">Identidad Genero</option>')
                         .append('<option value="F">F</option>')
                         .append('<option value="M">M</option>')
                         .append('<option value="O">Otro</option>'); // Agregamos "Otro" para opciones no binarias
 
+                    var OrientacionSexual = $("<select>")
+                        .attr("name", "orientacionSexual[]")
+                        .addClass("form-control smaller-input")
+                        .append('<option value="">Orientiacion Sexual</option>')
+                        .append('<option value="Heterosexual">Heterosexual</option>')
+                        .append('<option value="Homosexual">Homosexual</option>')
+                        .append('<option value="Otro">Otro</option>');
                     // Agregar campo de rango de edad
                     var rangoEdadSelect = $("<select>")
                         .attr("name", "rango_integMovim[]")
@@ -122,6 +150,22 @@ header("Content-Type: text/html;charset=utf-8");
                         .append('<option value="29 - 45">29 - 45</option>')
                         .append('<option value="46 - 64">46 - 64</option>')
                         .append('<option value="Mayor o igual a 65">Mayor o igual a 65</option>');
+                    var condicionDispacapacidad = $("<select>")
+                        .attr("name", "condicionDispacapacidad[]")
+                        .addClass("form-control smaller-input")
+                        .append('<option value="">Condicion Discapacidad</option>')
+                        .append('<option value="Si">Si</option>')
+                        .append('<option value="No">No</option>');
+
+                    var GrupoEtnico = $("<select>")
+                        .attr("name", "grupoEtnico[]")
+                        .addClass("form-control smaller-input")
+                        .append('<option value="">Grupo Etnico</option>')
+                        .append('<option value="Indigena">Indigena</option>')
+                        .append('<option value="Negra / Afrocolombiana">Negra / Afrocolombiana</option>')
+                        .append('<option value="Raizal">Raizal</option>')
+                        .append('<option value="Palenquero">Palenquero</option>')
+                        .append('<option value="Gitano (rom)">Gitano (rom)</option>');
 
                     var eliminarBtn = $("<button>")
                         .attr("type", "button")
@@ -135,7 +179,11 @@ header("Content-Type: text/html;charset=utf-8");
                     integranteDiv.append(cantidadInput);
                     integranteDiv.append(generoSelect);
                     integranteDiv.append(rangoEdadSelect);
+                    integranteDiv.append(condicionDispacapacidad);
+                    integranteDiv.append(GrupoEtnico);
+                    integranteDiv.append(OrientacionSexual);
                     integranteDiv.append(eliminarBtn);
+                    
 
                     // Agregar una línea horizontal para separar los integrantes
                     //integranteDiv.append($("<hr>"));

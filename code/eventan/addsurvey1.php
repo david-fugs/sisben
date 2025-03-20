@@ -32,6 +32,25 @@ header("Content-Type: text/html;charset=utf-8");
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <style>
+        #integrantes-container {
+            display: flex;
+            flex-wrap: wrap;
+            /* Permite que los elementos pasen a la siguiente línea si no caben */
+            gap: 10px;
+        }
+
+        .formulario-dinamico {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border: 1px solid #ccc;
+            /* Opcional: agregar un borde */
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            /* Opcional: fondo para cada elemento */
+        }
+
         .responsive {
             max-width: 100%;
             height: auto;
@@ -95,17 +114,26 @@ header("Content-Type: text/html;charset=utf-8");
                         .attr("type", "number")
                         .attr("name", "cant_integVenta[]")
                         .addClass("form-control smaller-input")
-                        .attr("placeholder", "Cantidad")
                         .val(1) // Por defecto 1 para que se cuente automáticamente
-                        .on("input", actualizarTotal);
+                        .on("input", actualizarTotal)
+                        .attr("placeholder", "Cantidad")
+                        .attr("readonly", true) // Hacer el campo de solo lectura;
 
                     var generoSelect = $("<select>")
                         .attr("name", "gen_integVenta[]")
                         .addClass("form-control smaller-input")
-                        .append('<option value="">Género</option>')
+                        .append('<option value="">Identidad Genero</option>')
                         .append('<option value="F">F</option>')
                         .append('<option value="M">M</option>')
                         .append('<option value="O">Otro</option>');
+
+                    var OrientacionSexual = $("<select>")
+                        .attr("name", "orientacionSexual[]")
+                        .addClass("form-control smaller-input")
+                        .append('<option value="">Orientiacion Sexual</option>')
+                        .append('<option value="Heterosexual">Heterosexual</option>')
+                        .append('<option value="Homosexual">Homosexual</option>')
+                        .append('<option value="Otro">Otro</option>');
 
                     var rangoEdadSelect = $("<select>")
                         .attr("name", "rango_integVenta[]")
@@ -119,6 +147,22 @@ header("Content-Type: text/html;charset=utf-8");
                         .append('<option value="46 - 64">46 - 64</option>')
                         .append('<option value="Mayor o igual a 65">Mayor o igual a 65</option>');
 
+                    var condicionDispacapacidad = $("<select>")
+                        .attr("name", "condicionDispacapacidad[]")
+                        .addClass("form-control smaller-input")
+                        .append('<option value="">Condicion Discapacidad</option>')
+                        .append('<option value="Si">Si</option>')
+                        .append('<option value="No">No</option>');
+
+                    var GrupoEtnico = $("<select>")
+                        .attr("name", "grupoEtnico[]")
+                        .addClass("form-control smaller-input")
+                        .append('<option value="">Grupo Etnico</option>')
+                        .append('<option value="Indigena">Indigena</option>')
+                        .append('<option value="Negra / Afrocolombiana">Negra / Afrocolombiana</option>')
+                        .append('<option value="Raizal">Raizal</option>')
+                        .append('<option value="Palenquero">Palenquero</option>')
+                        .append('<option value="Gitano (rom)">Gitano (rom)</option>');
                     var eliminarBtn = $("<button>")
                         .attr("type", "button")
                         .addClass("btn btn-danger")
@@ -128,7 +172,7 @@ header("Content-Type: text/html;charset=utf-8");
                             actualizarTotal();
                         });
 
-                    integranteDiv.append(cantidadInput, generoSelect, rangoEdadSelect, eliminarBtn);
+                    integranteDiv.append(cantidadInput, generoSelect, rangoEdadSelect, OrientacionSexual, condicionDispacapacidad, GrupoEtnico, eliminarBtn);
                     $("#integrantes-container").append(integranteDiv);
                 }
 
@@ -286,7 +330,12 @@ header("Content-Type: text/html;charset=utf-8");
                             <option value=""></option>
                             <option value="ENCUESTA NUEVA">ENCUESTA NUEVA</option>
                             <option value="ENCUESTA NUEVA POR VERIFICACION">ENCUESTA NUEVA POR VERIFICACION</option>
-                            <option value="ENCUESTA NUEVA DESCENTRALIZADO">ENCUESTA NUEVA DESCENTRALIZADO</option>
+                            <option value="MIGRACION SISBEN 4">MIGRACION SISBEN 4</option>
+                            <option value="CAMBIO DIRECCION">CAMBIO DIRECCION</option>
+                            <option value="INCONFORMIDAD">INCONFORMIDAD</option>
+                            <option value=" DESCENTRALIZADO"> DESCENTRALIZADO</option>
+                            <option value="SOLICITUDES PENDIENTES 2024">SOLICITUDES PENDIENTES 2024</option>
+                            <option value="FAVORES">FAVORES</option>
                         </select>
                     </div>
                     <div class="form-group col-md-3">
@@ -295,7 +344,7 @@ header("Content-Type: text/html;charset=utf-8");
                     </div>
                     <div class="form-group col-md-2">
                         <label for="integra_encVenta">INTEGRANTES:</label>
-                        <input type='number' id='total_integrantes' name='integra_encVenta' class='form-control' value="" required  readonly/>
+                        <input type='number' id='total_integrantes' name='integra_encVenta' class='form-control' value="" required readonly />
                     </div>
                 </div>
 
