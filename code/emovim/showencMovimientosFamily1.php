@@ -101,6 +101,37 @@
                             <input type='number' name='id_encMovim' id="id_encMovim" class='form-control' value='<?php echo $row['id_encMovim']; ?>' readonly/>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-12 col-sm-4 mt-3">
+                            <label for="grupoEtnico">* GRUPO ETNICO:</label>
+                            <select class="form-control" name="grupoEtnico" required >
+                                <option value="">SELECCIONE:</option>   
+                                <option value="Indigena" <?php if($row['grupoEtnico']=="Indigena"){echo 'selected';} ?>>Indigena</option>
+                                <option value="Negra / Afrocolombiana" <?php if($row['grupoEtnico']=="Negra / Afrocolombiana"){echo 'selected';} ?>>Negra / Afrocolombiana</option>
+                                <option value="Raizal" <?php if($row['grupoEtnico']=="Raizal"){echo 'selected';} ?>>Raizal</option>
+                                <option value="Palenquero" <?php if($row['grupoEtnico']=="Palenquero"){echo 'selected';} ?>>Palenquero</option>
+                                <option value="Gitano (rom)" <?php if($row['grupoEtnico']=="Gitano (rom)"){echo 'selected';} ?>>Gitano (rom)</option>
+                            </select>
+                        </div>
+                        <div class="col-12 col-sm-4 mt-3">
+                            <label for="orientacionSexual">* ORIENTACION SEXUAL:</label>
+                            <select class="form-control" name="orientacionSexual" required >
+                                <option value="">SELECCIONE:</option>   
+                                <option value="Heterosexual" <?php if($row['orientacionSexual']=="Heterosexual"){echo 'selected';} ?>>Heterosexual</option>
+                                <option value="Homosexual" <?php if($row['orientacionSexual']=="Homosexual"){echo 'selected';} ?>>Homosexual</option>
+                                <option value="Otro" <?php if($row['orientacionSexual']=="Otro"){echo 'selected';} ?>>Otro</option>
+                            </select>
+                        </div>
+                        <div class="col-12 col-sm-4 mt-3">
+                            <label for="condicionDiscapacidad">* CONDICIÓN DISCAPACIDAD:</label>
+                            <select class="form-control" name="condicionDiscapacidad" required >
+                                <option value="">SELECCIONE:</option>   
+                                <option value="Si" <?php if($row['condicionDiscapacidad']=="Si"){echo 'selected';} ?>>SÍ</option>
+                                <option value="No" <?php if($row['condicionDiscapacidad']=="No"){echo 'selected';} ?>>NO</option>
+                            </select>
+                        </div>
+                    </div>
+
                 </div>
 
                 <hr style="border: 2px solid #16087B; border-radius: 2px;">
