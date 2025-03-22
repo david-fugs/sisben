@@ -32,6 +32,10 @@
             $cant_integVenta        = $_POST['cant_integVenta'] ?? array();
             $gen_integVenta         = $_POST['gen_integVenta'] ?? array();
             $rango_integVenta       = $_POST['rango_integVenta'] ?? array();
+            $condicionDiscapacidad  = $_POST['condicionDiscapacidad'] ?? array();
+            $grupoEtnico           = $_POST['grupoEtnico'] ?? array();
+            $orientacionSexual      = $_POST['orientacionSexual'] ?? array();
+        
 
             // Otras variables
             $id_usu                 = $_SESSION['id_usu'];
@@ -69,14 +73,18 @@
                     // Obtener los valores individuales para el integrante actual
                     $cantidad           = $cant_integVenta[$key];
                     $rango_descripcion  = $rango_integVenta[$key];
+                    $discapacidad           = $condicionDiscapacidad[$key];
+                    $grupo                  = $grupoEtnico[$key];
+                    $orientacion            = $orientacionSexual[$key];
+        
 
           
                     // Obtener el valor numérico del rango a partir del mapeo
                     $rango_valor = isset($rango_edad_map[$rango_descripcion]) ? $rango_edad_map[$rango_descripcion] : 'Valor_predeterminado';
 
                     // Crear la consulta de inserción para el integrante actual
-                    $sql = "INSERT INTO integVentanilla (cant_integVenta, gen_integVenta, rango_integVenta, estado_integVenta, fecha_alta_integVenta, fecha_edit_integVenta, id_usu, id_encVenta)
-                    VALUES ('$cantidad', '$genero', '$rango_valor', '$estado_integVenta', '$fecha_alta_integVenta', '$fecha_edit_integVenta', '$id_usu', '$id_encVenta')";
+                    $sql = "INSERT INTO integVentanilla (cant_integVenta, gen_integVenta, rango_integVenta,condicionDiscapacidad, grupoEtnico, orientacionSexual, estado_integVenta, fecha_alta_integVenta, fecha_edit_integVenta, id_usu, id_encVenta)
+                    VALUES ('$cantidad', '$genero', '$rango_valor','$discapacidad', '$grupo', '$orientacion' ,'$estado_integVenta', '$fecha_alta_integVenta', '$fecha_edit_integVenta', '$id_usu', '$id_encVenta')";
 
                     // Ejecutar la consulta
                     if ($mysqli->query($sql) === TRUE) 
