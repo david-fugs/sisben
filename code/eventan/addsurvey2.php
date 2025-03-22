@@ -36,67 +36,57 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $fecha_edit_encVenta    = '0000-00-00 00:00:00';
     $id_usu                 = $_SESSION['id_usu'];
 
-    $sql = "INSERT INTO encVentanilla (fec_reg_encVenta, doc_encVenta, nom_encVenta,  dir_encVenta, zona_encVenta, id_com, id_bar, id_correg, id_vere, otro_bar_ver_encVenta, tram_solic_encVenta, integra_encVenta, num_ficha_encVenta, obs_encVenta, estado_encVenta, fecha_alta_encVenta, fecha_edit_encVenta, id_usu) 
+    // Inserción en encVentanilla
+    $sql = "INSERT INTO encVentanilla (fec_reg_encVenta, doc_encVenta, nom_encVenta, dir_encVenta, zona_encVenta, id_com, id_bar, id_correg, id_vere, otro_bar_ver_encVenta, tram_solic_encVenta, integra_encVenta, num_ficha_encVenta, obs_encVenta, estado_encVenta, fecha_alta_encVenta, fecha_edit_encVenta, id_usu) 
         VALUES ('$fec_reg_encVenta', '$doc_encVenta', '$nom_encVenta', '$dir_encVenta', '$zona_encVenta', '$id_com', '$id_bar', '$id_correg', '$id_vere', '$otro_bar_ver_encVenta', '$tram_solic_encVenta', '$integra_encVenta', '$num_ficha_encVenta', '$obs_encVenta', '$estado_encVenta', '$fecha_alta_encVenta', '$fecha_edit_encVenta', '$id_usu')";
 
     $resultado = $mysqli->query($sql);
 
-    $id_encVenta = $mysqli->insert_id;
+    $id_encVenta = $mysqli->insert_id; // Obtener el ID insertado
 
-    // Verificar si se ha enviado el formulario
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        // Obtener los arreglos de integrantes
-        $cant_integVenta        = $_POST['cant_integVenta'] ?? array();
-        $gen_integVenta         = $_POST['gen_integVenta'] ?? array();
-        $rango_integVenta       = $_POST['rango_integVenta'] ?? array();
-        $condicionDispacapacidad = $_POST['condicionDispacapacidad'] ?? array();
-        $grupoEtnico            = $_POST['grupoEtnico'] ?? array();
-        $orientacionSexual      = $_POST['orientacionSexual'] ?? array();
+    // Procesamiento de integrantes
+    $cant_integVenta        = $_POST['cant_integVenta'] ?? array();
+    $gen_integVenta         = $_POST['gen_integVenta'] ?? array();
+    $rango_integVenta       = $_POST['rango_integVenta'] ?? array();
+    $condicionDiscapacidad  = $_POST['condicionDiscapacidad'] ?? array();
+    $grupoEtnico           = $_POST['grupoEtnico'] ?? array();
+    $orientacionSexual      = $_POST['orientacionSexual'] ?? array();
 
-        // Otras variables
-        $id_usu                 = $_SESSION['id_usu'];
-        $estado_integVenta      = 1;
-        $fecha_alta_integVenta  = date('Y-m-d h:i:s');
-        $fecha_edit_integVenta  = '0000-00-00 00:00:00';
+    $estado_integVenta      = 1;
+    $fecha_alta_integVenta  = date('Y-m-d h:i:s');
+    $fecha_edit_integVenta  = '0000-00-00 00:00:00';
 
-        // Mapeo de descripción del rango de integrantes a valor numérico
-        $rango_edad_map = array(
-            "0 - 6"                 => 1,
-            "7 - 12"                => 2,
-            "13 - 17"               => 3,
-            "18 - 28"               => 4,
-            "29 - 45"               => 5,
-            "46 - 64"               => 6,
-            "Mayor o igual a 65"    => 7
-        );
+    $rango_edad_map = array(
+        "0 - 6"                 => 1,
+        "7 - 12"                => 2,
+        "13 - 17"               => 3,
+        "18 - 28"               => 4,
+        "29 - 45"               => 5,
+        "46 - 64"               => 6,
+        "Mayor o igual a 65"    => 7
+    );
 
-        foreach ($gen_integVenta as $key => $genero) {
-            // Verificar que los valores estén definidos y no sean null
-            if (
-                isset($cant_integVenta[$key]) && isset($rango_integVenta[$key]) &&
-                isset($condicionDispacapacidad[$key]) && isset($grupoEtnico[$key]) &&
-                isset($orientacionSexual[$key])
-            ) {
+    foreach ($gen_integVenta as $key => $genero) {
+        if (
+            isset($cant_integVenta[$key]) && isset($rango_integVenta[$key]) &&
+            isset($condicionDiscapacidad[$key]) && isset($grupoEtnico[$key]) &&
+            isset($orientacionSexual[$key])
+        ) {
+            $cantidad               = $cant_integVenta[$key];
+            $rango_descripcion      = $rango_integVenta[$key];
+            $rango_valor            = $rango_edad_map[$rango_descripcion] ?? 'Valor_predeterminado';
+            $discapacidad           = $condicionDiscapacidad[$key];
+            $grupo                  = $grupoEtnico[$key];
+            $orientacion            = $orientacionSexual[$key];
 
-                // Obtener los valores individuales para el integrante actual
-                $cantidad               = $cant_integVenta[$key];
-                $rango_descripcion      = $rango_integVenta[$key];
-                $rango_valor            = $rango_edad_map[$rango_descripcion] ?? 'Valor_predeterminado';
-                $discapacidad           = $condicionDispacapacidad[$key];
-                $grupo                  = $grupoEtnico[$key];
-                $orientacion            = $orientacionSexual[$key];
+            $sql = "INSERT INTO integventanilla 
+                        (cant_integVenta, gen_integVenta, rango_integVenta, condicionDiscapacidad, grupoEtnico, orientacionSexual, estado_integVenta, fecha_alta_integVenta, fecha_edit_integVenta, id_usu, id_encVenta) 
+                        VALUES ('$cantidad', '$genero', '$rango_valor', '$discapacidad', '$grupo', '$orientacion', '$estado_integVenta', '$fecha_alta_integVenta', '$fecha_edit_integVenta', '$id_usu', '$id_encVenta')";
 
-                // Crear la consulta de inserción para el integrante actual
-                $sql = "INSERT INTO integVentanilla 
-                            (cant_integVenta, gen_integVenta, rango_integVenta, condicionDispacapacidad, grupoEtnico, orientacionSexual, estado_integVenta, fecha_alta_integVenta, fecha_edit_integVenta, id_usu, id_encVenta) 
-                            VALUES ('$cantidad', '$genero', '$rango_valor', '$discapacidad', '$grupo', '$orientacion', '$estado_integVenta', '$fecha_alta_integVenta', '$fecha_edit_integVenta', '$id_usu', '$id_encVenta')";
-
-                // Ejecutar la consulta
-                if ($mysqli->query($sql) === TRUE) {
-                    // Éxito al insertar el integrante
-                } else {
-                    echo "Error al insertar el integrante $key: " . $mysqli->error . "<br>";
-                }
+            if ($mysqli->query($sql) === TRUE) {
+                // Éxito al insertar el integrante
+            } else {
+                echo "Error al insertar el integrante $key: " . $mysqli->error . "<br>";
             }
         }
     }

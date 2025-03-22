@@ -147,8 +147,8 @@ header("Content-Type: text/html;charset=utf-8");
                         .append('<option value="46 - 64">46 - 64</option>')
                         .append('<option value="Mayor o igual a 65">Mayor o igual a 65</option>');
 
-                    var condicionDispacapacidad = $("<select>")
-                        .attr("name", "condicionDispacapacidad[]")
+                    var condicionDiscapacidad = $("<select>")
+                        .attr("name", "condicionDiscapacidad[]")
                         .addClass("form-control smaller-input")
                         .append('<option value="">Condicion Discapacidad</option>')
                         .append('<option value="Si">Si</option>')
@@ -172,7 +172,7 @@ header("Content-Type: text/html;charset=utf-8");
                             actualizarTotal();
                         });
 
-                    integranteDiv.append(cantidadInput, generoSelect, rangoEdadSelect, OrientacionSexual, condicionDispacapacidad, GrupoEtnico, eliminarBtn);
+                    integranteDiv.append(cantidadInput, generoSelect, rangoEdadSelect, OrientacionSexual, condicionDiscapacidad, GrupoEtnico, eliminarBtn);
                     $("#integrantes-container").append(integranteDiv);
                 }
 

@@ -42,11 +42,15 @@
                 $cant_integVenta        = $_POST['cant_integVenta'];
                 $gen_integVenta         = $_POST['gen_integVenta'];
                 $rango_integVenta       = $_POST['rango_integVenta'];
+                $condicionDiscapacidad  = $_POST['condicionDiscapacidad'];
+                $grupoEtnico           = $_POST['grupoEtnico'];
+                $orientacionSexual      = $_POST['orientacionSexual'];
+            
                 $estado_integVenta      = 1;
                 $fecha_edit_integVenta  = date('Y-m-d h:i:s');
                 $id_usu                 = $_SESSION['id_usu'];
                
-               $update = "UPDATE integVentanilla SET cant_integVenta='".$cant_integVenta."', gen_integVenta='".$gen_integVenta."', rango_integVenta='".$rango_integVenta."', estado_integVenta='".$estado_integVenta."', fecha_edit_integVenta='".$fecha_edit_integVenta."', id_usu='".$id_usu."' WHERE id_integVenta='".$id_integVenta."'";
+               $update = "UPDATE integVentanilla SET cant_integVenta='".$cant_integVenta."', gen_integVenta='".$gen_integVenta."', rango_integVenta='".$rango_integVenta."', condicionDiscapacidad='".$condicionDiscapacidad ."', grupoEtnico='".$grupoEtnico."', orientacionSexual='".$orientacionSexual."',estado_integVenta='".$estado_integVenta."', fecha_edit_integVenta='".$fecha_edit_integVenta."', id_usu='".$id_usu."' WHERE id_integVenta='".$id_integVenta."'";
 
                 $up = mysqli_query($mysqli, $update);
 
