@@ -41,6 +41,10 @@
                 $id_encMovim            = $_POST['id_encMovim'];
                 $fec_reg_encMovim       = $_POST['fec_reg_encMovim'];
                 $doc_encMovim           = $_POST['doc_encMovim'];
+                $tipo_documento          = $_POST['tipo_documento'];
+                $ciudad_expedicion       = $_POST['ciudad_expedicion'];
+                $fecha_expedicion       = $_POST['fecha_expedicion'];
+
                 $nom_encMovim           = mb_strtoupper($_POST['nom_encMovim']);
                 $dir_encMovim           = mb_strtoupper($_POST['dir_encMovim']);
                 $zona_encMovim          = $_POST['zona_encMovim'];
@@ -57,7 +61,7 @@
                 $fecha_edit_encMovim    = date('Y-m-d h:i:s');
                 $id_usu                 = $_SESSION['id_usu'];
                
-               $update = "UPDATE encMovimientos SET fec_reg_encMovim='".$fec_reg_encMovim."', doc_encMovim='".$doc_encMovim."', nom_encMovim='".$nom_encMovim."', dir_encMovim='".$dir_encMovim."', zona_encMovim='".$zona_encMovim."', id_com='".$id_com."', id_bar='".$id_bar."', id_correg='".$id_correg."', id_vere='".$id_vere."', otro_bar_ver_encMovim='".$otro_bar_ver_encMovim."', tram_solic_encMovim='".$tram_solic_encMovim."', integra_encMovim='".$integra_encMovim."', num_ficha_encMovim='".$num_ficha_encMovim."', obs_encMovim='".$obs_encMovim."', estado_encMovim='".$estado_encMovim."', fecha_edit_encMovim='".$fecha_edit_encMovim."', id_usu='".$id_usu."' WHERE id_encMovim='".$id_encMovim."'";
+               $update = "UPDATE encMovimientos SET fec_reg_encMovim='".$fec_reg_encMovim."', doc_encMovim='".$doc_encMovim."', nom_encMovim='".$nom_encMovim."', dir_encMovim='".$dir_encMovim."', zona_encMovim='".$zona_encMovim."', id_com='".$id_com."', id_bar='".$id_bar."', id_correg='".$id_correg."', id_vere='".$id_vere."', otro_bar_ver_encMovim='".$otro_bar_ver_encMovim."', tram_solic_encMovim='".$tram_solic_encMovim."', integra_encMovim='".$integra_encMovim."', num_ficha_encMovim='".$num_ficha_encMovim."', obs_encMovim='".$obs_encMovim."', estado_encMovim='".$estado_encMovim."', fecha_edit_encMovim='".$fecha_edit_encMovim."', tipo_documento='".$tipo_documento."',ciudad_expedicion='".$ciudad_expedicion."',fecha_expedicion='".$fecha_expedicion."', id_usu='".$id_usu."' WHERE id_encMovim='".$id_encMovim."'";
 
                 $up = mysqli_query($mysqli, $update);
 

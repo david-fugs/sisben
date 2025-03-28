@@ -41,6 +41,10 @@
                 $id_encVenta            = $_POST['id_encVenta'];
                 $fec_reg_encVenta       = $_POST['fec_reg_encVenta'];
                 $doc_encVenta           = $_POST['doc_encVenta'];
+                $tipo_documento          = $_POST['tipo_documento'];
+                $ciudad_expedicion       = $_POST['ciudad_expedicion'];
+                $fecha_expedicion       = $_POST['fecha_expedicion'];
+            
                 $nom_encVenta           = mb_strtoupper($_POST['nom_encVenta']);
                 $dir_encVenta           = mb_strtoupper($_POST['dir_encVenta']);
                 $zona_encVenta          = $_POST['zona_encVenta'];
@@ -57,7 +61,7 @@
                 $fecha_edit_encVenta    = date('Y-m-d h:i:s');
                 $id_usu                 = $_SESSION['id_usu'];
                
-               $update = "UPDATE encVentanilla SET fec_reg_encVenta='".$fec_reg_encVenta."', doc_encVenta='".$doc_encVenta."', nom_encVenta='".$nom_encVenta."', dir_encVenta='".$dir_encVenta."', zona_encVenta='".$zona_encVenta."', id_com='".$id_com."', id_bar='".$id_bar."', id_correg='".$id_correg."', id_vere='".$id_vere."', otro_bar_ver_encVenta='".$otro_bar_ver_encVenta."', tram_solic_encVenta='".$tram_solic_encVenta."', integra_encVenta='".$integra_encVenta."', num_ficha_encVenta='".$num_ficha_encVenta."', obs_encVenta='".$obs_encVenta."', estado_encVenta='".$estado_encVenta."', fecha_edit_encVenta='".$fecha_edit_encVenta."', id_usu='".$id_usu."' WHERE id_encVenta='".$id_encVenta."'";
+               $update = "UPDATE encVentanilla SET fec_reg_encVenta='".$fec_reg_encVenta."', doc_encVenta='".$doc_encVenta."', nom_encVenta='".$nom_encVenta."', dir_encVenta='".$dir_encVenta."', zona_encVenta='".$zona_encVenta."', id_com='".$id_com."', id_bar='".$id_bar."', id_correg='".$id_correg."', id_vere='".$id_vere."', otro_bar_ver_encVenta='".$otro_bar_ver_encVenta."', tram_solic_encVenta='".$tram_solic_encVenta."', integra_encVenta='".$integra_encVenta."', num_ficha_encVenta='".$num_ficha_encVenta."', obs_encVenta='".$obs_encVenta."', estado_encVenta='".$estado_encVenta."', fecha_edit_encVenta='".$fecha_edit_encVenta."', tipo_documento='".$tipo_documento."',ciudad_expedicion='".$ciudad_expedicion."',fecha_expedicion='".$fecha_expedicion."',      id_usu='".$id_usu."' WHERE id_encVenta='".$id_encVenta."'";
 
                 $up = mysqli_query($mysqli, $update);
 

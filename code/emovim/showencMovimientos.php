@@ -89,24 +89,51 @@
                 </div>
                 <div class="form-group">
                     <div class="row">
-                        <div class="col-12 col-sm-2">
+                        <div class="col-12 col-sm-3">
                             <label for="fec_reg_encMovim">* F. REALIZADA:</label>
                             <input type='date' name='fec_reg_encMovim' class='form-control' value='<?php echo $row['fec_reg_encMovim']; ?>'required/>
                         </div>
-                        <div class="col-12 col-sm-2">
+                        <div class="col-12 col-sm-3">
                             <label for="doc_encMovim">DOCUMENTO:</label>
                             <input type='text' name='doc_encMovim' class='form-control'  value='<?php echo $row['doc_encMovim']; ?>' required/>
                         </div>
+                        <div class="col-12 col-sm-3">
+                        <label for="tipo_doc">* TIPO DE DOCUMENTO:</label>
+                        <select name="tipo_documento" class="form-control" id="">
+                            <option value="" <?php if ($row['tipo_documento'] == "") echo 'selected'; ?>>SELECCIONE :</option>
+                            <option value="cedula" <?php if ($row['tipo_documento'] == "cedula") echo 'selected'; ?>>CEDULA</option>
+                            <option value="ppt" <?php if ($row['tipo_documento'] == "ppt") echo 'selected'; ?>>PPT</option>
+                            <option value="cedula_extranjeria" <?php if ($row['tipo_documento'] == "cedula_extranjeria") echo 'selected'; ?>>CEDULA EXTRANJERIA</option>
+                            <option value="otro" <?php if ($row['tipo_documento'] == "otro") echo 'selected'; ?>>OTRO</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="ciudad_expedicion">* CIUDAD EXPEDICION:</label>
+                        <input type='text' name='ciudad_expedicion' value='<?php echo $row['ciudad_expedicion'] ?? "" ?>' class='form-control' required style="text-transform:uppercase;" />
+                    </div>
+
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <div class="row">
+                    <div class="form-group col-md-3">
+                        <label for="fecha_expedicion">* FECHA EXPEDICION:</label>
+                        <input type='date' name='fecha_expedicion'  value='<?php echo $row['fecha_expedicion'] ?? "" ?>'class='form-control' required style="text-transform:uppercase;" />
+                    </div>
+
                         <div class="col-12 col-sm-4">
                             <label for="nom_encMovim">* NOMBRE DEL USUARIO:</label>
                             <input type='text' name='nom_encMovim' class='form-control'  value='<?php echo $row['nom_encMovim']; ?>' style="text-transform:uppercase;" required/>
                         </div>
-                        <div class="col-12 col-sm-4">
+                        <div class="col-12 col-sm-5">
                             <label for="dir_encMovim">* DIRECCIÓN</label>
                             <input type='text' name='dir_encMovim' class='form-control' value='<?php echo $row['dir_encMovim']; ?>' required/>
                         </div>
                     </div>
                 </div>
+
 
                 <div class="form-group">
                     <div class="row">

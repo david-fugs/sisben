@@ -19,6 +19,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Captura de datos enviados por POST
     $fec_reg_encMovim       = $_POST['fec_reg_encMovim'];
     $doc_encMovim           = $_POST['doc_encMovim'];
+    $tipo_documento          = $_POST['tipo_documento'];
+    $ciudad_expedicion       = $_POST['ciudad_expedicion'];
+    $fecha_expedicion       = $_POST['fecha_expedicion'];
+
     $nom_encMovim           = mb_strtoupper($_POST['nom_encMovim']);
     $dir_encMovim           = mb_strtoupper($_POST['dir_encMovim']);
     $zona_encMovim          = $_POST['zona_encMovim'];
@@ -36,8 +40,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $fecha_edit_encMovim    = '0000-00-00 00:00:00';
     $id_usu                 = $_SESSION['id_usu'];
 
-    $sql = "INSERT INTO encMovimientos (fec_reg_encMovim, doc_encMovim, nom_encMovim,  dir_encMovim, zona_encMovim, id_com, id_bar, id_correg, id_vere, otro_bar_ver_encMovim, tram_solic_encMovim, integra_encMovim, num_ficha_encMovim, obs_encMovim, estado_encMovim, fecha_alta_encMovim, fecha_edit_encMovim, id_usu) 
-        VALUES ('$fec_reg_encMovim', '$doc_encMovim', '$nom_encMovim', '$dir_encMovim', '$zona_encMovim', '$id_com', '$id_bar', '$id_correg', '$id_vere', '$otro_bar_ver_encMovim', '$tram_solic_encMovim', '$integra_encMovim', '$num_ficha_encMovim', '$obs_encMovim', '$estado_encMovim', '$fecha_alta_encMovim', '$fecha_edit_encMovim', '$id_usu')";
+    $sql = "INSERT INTO encMovimientos (fec_reg_encMovim, doc_encMovim, nom_encMovim,  dir_encMovim, zona_encMovim, id_com, id_bar, id_correg, id_vere, otro_bar_ver_encMovim, tram_solic_encMovim, integra_encMovim, num_ficha_encMovim, obs_encMovim, estado_encMovim, fecha_alta_encMovim, fecha_edit_encMovim,tipo_documento, ciudad_expedicion, fecha_expedicion, id_usu) 
+        VALUES ('$fec_reg_encMovim', '$doc_encMovim', '$nom_encMovim', '$dir_encMovim', '$zona_encMovim', '$id_com', '$id_bar', '$id_correg', '$id_vere', '$otro_bar_ver_encMovim', '$tram_solic_encMovim', '$integra_encMovim', '$num_ficha_encMovim', '$obs_encMovim', '$estado_encMovim', '$fecha_alta_encMovim', '$fecha_edit_encMovim','$tipo_documento','$ciudad_expedicion','$fecha_expedicion', '$id_usu')";
 
     $resultado = $mysqli->query($sql);
 

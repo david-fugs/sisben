@@ -19,6 +19,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Captura de datos enviados por POST
     $fec_reg_encVenta       = $_POST['fec_reg_encVenta'];
     $doc_encVenta           = $_POST['doc_encVenta'];
+    $tipo_documento          = $_POST['tipo_documento'];
+    $ciudad_expedicion       = $_POST['ciudad_expedicion'];
+    $fecha_expedicion       = $_POST['fecha_expedicion'];
+
     $nom_encVenta           = mb_strtoupper($_POST['nom_encVenta']);
     $dir_encVenta           = mb_strtoupper($_POST['dir_encVenta']);
     $zona_encVenta          = $_POST['zona_encVenta'];
@@ -37,8 +41,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id_usu                 = $_SESSION['id_usu'];
 
     // Inserción en encVentanilla
-    $sql = "INSERT INTO encVentanilla (fec_reg_encVenta, doc_encVenta, nom_encVenta, dir_encVenta, zona_encVenta, id_com, id_bar, id_correg, id_vere, otro_bar_ver_encVenta, tram_solic_encVenta, integra_encVenta, num_ficha_encVenta, obs_encVenta, estado_encVenta, fecha_alta_encVenta, fecha_edit_encVenta, id_usu) 
-        VALUES ('$fec_reg_encVenta', '$doc_encVenta', '$nom_encVenta', '$dir_encVenta', '$zona_encVenta', '$id_com', '$id_bar', '$id_correg', '$id_vere', '$otro_bar_ver_encVenta', '$tram_solic_encVenta', '$integra_encVenta', '$num_ficha_encVenta', '$obs_encVenta', '$estado_encVenta', '$fecha_alta_encVenta', '$fecha_edit_encVenta', '$id_usu')";
+    $sql = "INSERT INTO encVentanilla (fec_reg_encVenta, doc_encVenta, nom_encVenta, dir_encVenta, zona_encVenta, id_com, id_bar, id_correg, id_vere, otro_bar_ver_encVenta, tram_solic_encVenta, integra_encVenta, num_ficha_encVenta, obs_encVenta, estado_encVenta, fecha_alta_encVenta, fecha_edit_encVenta, tipo_documento, ciudad_expedicion, fecha_expedicion,id_usu) 
+        VALUES ('$fec_reg_encVenta', '$doc_encVenta', '$nom_encVenta', '$dir_encVenta', '$zona_encVenta', '$id_com', '$id_bar', '$id_correg', '$id_vere', '$otro_bar_ver_encVenta', '$tram_solic_encVenta', '$integra_encVenta', '$num_ficha_encVenta', '$obs_encVenta', '$estado_encVenta', '$fecha_alta_encVenta', '$fecha_edit_encVenta','$tipo_documento','$ciudad_expedicion','$fecha_expedicion', '$id_usu')";
 
     $resultado = $mysqli->query($sql);
 

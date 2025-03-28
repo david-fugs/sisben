@@ -183,7 +183,7 @@ header("Content-Type: text/html;charset=utf-8");
                     integranteDiv.append(GrupoEtnico);
                     integranteDiv.append(OrientacionSexual);
                     integranteDiv.append(eliminarBtn);
-                    
+
 
                     // Agregar una línea horizontal para separar los integrantes
                     //integranteDiv.append($("<hr>"));
@@ -250,11 +250,36 @@ header("Content-Type: text/html;charset=utf-8");
                         <input type='number' name='doc_encMovim' class='form-control' id="doc_encMovim" required />
                     </div>
                     <div class="form-group col-md-6">
+                        <label for="tipo_doc">* TIPO DE DOCUMENTO:</label>
+                        <select name="tipo_documento" class="form-control" id="">
+                            <option value="">SELECCIONE:</option>
+                            <option value="cedula">CEDULA</option>
+                            <option value="ppt">PPT</option>
+                            <option value="cedula_extranjeria">CEDULA EXTRANJERIA</option>
+                            <option value="otro">otro</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="form-group col-md-3">
+                        <label for="ciudad_expedicion">* CIUDAD EXPEDICION:</label>
+                        <input type='text' name='ciudad_expedicion' class='form-control' required style="text-transform:uppercase;" />
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="fecha_expedicion">* FECHA EXPEDICION:</label>
+                        <input type='date' name='fecha_expedicion' class='form-control' required style="text-transform:uppercase;" />
+                    </div>
+
+                    <div class="form-group col-md-6">
                         <label for="nom_encMovim">* NOMBRES COMPLETOS:</label>
                         <input type='text' name='nom_encMovim' class='form-control' required style="text-transform:uppercase;" />
                     </div>
                 </div>
             </div>
+
 
             <div class="form-group">
                 <div class="row">
