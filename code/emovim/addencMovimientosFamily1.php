@@ -32,6 +32,9 @@
             $cant_integMovim        = $_POST['cant_integMovim'] ?? array();
             $gen_integMovim         = $_POST['gen_integMovim'] ?? array();
             $rango_integMovim       = $_POST['rango_integMovim'] ?? array();
+            $condicionDiscapacidad  = $_POST['condicionDiscapacidad'] ?? array();
+            $grupoEtnico           = $_POST['grupoEtnico'] ?? array();
+            $orientacionSexual      = $_POST['orientacionSexual'] ?? array();
 
             // Otras variables
             $id_usu                 = $_SESSION['id_usu'];
@@ -69,14 +72,17 @@
                     // Obtener los valores individuales para el integrante actual
                     $cantidad           = $cant_integMovim[$key];
                     $rango_descripcion  = $rango_integMovim[$key];
+                    $discapacidad           = $condicionDiscapacidad[$key];
+                    $grupo                  = $grupoEtnico[$key];
+                    $orientacion            = $orientacionSexual[$key];
 
           
                     // Obtener el valor numérico del rango a partir del mapeo
                     $rango_valor = isset($rango_edad_map[$rango_descripcion]) ? $rango_edad_map[$rango_descripcion] : 'Valor_predeterminado';
 
                     // Crear la consulta de inserción para el integrante actual
-                    $sql = "INSERT INTO integMovimientos (cant_integMovim, gen_integMovim, rango_integMovim, estado_integMovim, fecha_alta_integMovim, fecha_edit_integMovim, id_usu, id_encMovim)
-                    VALUES ('$cantidad', '$genero', '$rango_valor', '$estado_integMovim', '$fecha_alta_integMovim', '$fecha_edit_integMovim', '$id_usu', '$id_encMovim')";
+                    $sql = "INSERT INTO integMovimientos (cant_integMovim, gen_integMovim, rango_integMovim,condicionDiscapacidad, grupoEtnico, orientacionSexual, estado_integMovim, fecha_alta_integMovim, fecha_edit_integMovim, id_usu, id_encMovim)
+                    VALUES ('$cantidad', '$genero', '$rango_valor','$discapacidad', '$grupo', '$orientacion' , '$estado_integMovim', '$fecha_alta_integMovim', '$fecha_edit_integMovim', '$id_usu', '$id_encMovim')";
 
                     // Ejecutar la consulta
                     if ($mysqli->query($sql) === TRUE) 
