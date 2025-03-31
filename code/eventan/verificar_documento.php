@@ -1,30 +1,24 @@
 <?php
-    include("../../conexion.php");
+include("../../conexion.php");
 
 if (isset($_POST['doc_encVenta'])) {
-    $doc_encVenta = $_POST['doc_encVenta'];
+    $doc_encVenta = mysqli_real_escape_string($mysqli, $_POST['doc_encVenta']);
 
     // 1️⃣ Verificar si ya tiene una encuesta en `encventanilla`
-    $sql_encuesta = "SELECT * FROM encventanilla WHERE doc_encVenta = ?";
-    $stmt = $mysqli->prepare($sql_encuesta);
-    $stmt->bind_param("s", $doc_encVenta);
-    $stmt->execute();
-    $resultado_encuesta = $stmt->get_result();
+    $sql_encuesta = "SELECT * FROM encventanilla WHERE doc_encVenta = '$doc_encVenta'";
+    $resultado_encuesta = mysqli_query($mysqli, $sql_encuesta);
 
-    if ($resultado_encuesta->num_rows > 0) {
+    if (mysqli_num_rows($resultado_encuesta) > 0) {
         echo json_encode(["status" => "existe_encuesta"]);
         exit;
     }
 
     // 2️⃣ Si no tiene encuesta, buscar en `informacion`
-    $sql_info = "SELECT * FROM informacion WHERE doc_info = ?";
-    $stmt = $mysqli->prepare($sql_info);
-    $stmt->bind_param("s", $doc_encVenta);
-    $stmt->execute();
-    $resultado_info = $stmt->get_result();
+    $sql_info = "SELECT * FROM informacion WHERE doc_info = '$doc_encVenta'";
+    $resultado_info = mysqli_query($mysqli, $sql_info);
 
-    if ($resultado_info->num_rows > 0) {
-        $datos = $resultado_info->fetch_assoc();
+    if (mysqli_num_rows($resultado_info) > 0) {
+        $datos = mysqli_fetch_assoc($resultado_info);
         echo json_encode(["status" => "existe_info", "data" => $datos]);
         exit;
     }
