@@ -1,40 +1,46 @@
 <?php
-     
-    session_start();
-    
-    if(!isset($_SESSION['id_usu']))
-    {
-        header("Location: ../../index.php");
-        exit();  // Asegúrate de salir del script después de redirigir
+
+session_start();
+
+if (!isset($_SESSION['id_usu'])) {
+    header("Location: ../../index.php");
+    exit();  // Asegúrate de salir del script después de redirigir
+}
+
+$usuario    = $_SESSION['usuario'];
+$nombre     = $_SESSION['nombre'];
+$tipo_usu   = $_SESSION['tipo_usu'];
+
+include("../../conexion.php");
+date_default_timezone_set("America/Bogota");
+header("Content-Type: text/html;charset=utf-8");
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Captura de datos enviados por POST
+    $fec_reg_info        = $_POST['fec_reg_info'];
+    $doc_info            = $_POST['doc_info'];
+    $nom_info            = mb_strtoupper($_POST['nom_info']);
+    $tipo_documento          = $_POST['tipo_documento'];
+    $ciudad_expedicion       = $_POST['ciudad_expedicion'];
+    $fecha_expedicion       = $_POST['fecha_expedicion'];
+    $fecha_alta_encInfo    = date('Y-m-d h:i:s');
+    $fecha_edit_encInfo    = '0000-00-00 00:00:00';
+    $tipo_solic_encInfo    = $_POST['tipo_solic_encInfo'];
+    $obs1_encInfo         = mb_strtoupper($_POST['obs1_encInfo']);
+    $obs2_encInfo         = mb_strtoupper($_POST['obs2_encInfo']);
+    $fecha_alta_encVenta    = date('Y-m-d h:i:s');
+    $fecha_edit_encVenta    = '0000-00-00 00:00:00';
+    $id_usu                 = $_SESSION['id_usu'];
+
+    $sql = "INSERT INTO informacion (fecha_reg_info, doc_info, nom_info,tipo_documento,fecha_expedicion, ciudad_expedicion ,fecha_alta_info, fecha_edit_info,observacion,tipo_solic_encInfo, info_adicional,  id_usu) 
+            VALUES ('$fec_reg_info', '$doc_info', '$nom_info','$tipo_documento','$fecha_expedicion','$ciudad_expedicion','$fecha_alta_encInfo', '$fecha_edit_encInfo','$obs1_encInfo','$tipo_solic_encInfo','$obs2_encInfo ', '$id_usu')";
+    // Ejecutar consulta y verificar errores
+    if (!$mysqli->query($sql)) {
+        echo "Error en la consulta: " . $mysqli->error; // Muestra el error de MySQL
+    } else {
+        echo "Registro insertado correctamente.";
     }
-
-    $usuario    = $_SESSION['usuario'];
-    $nombre     = $_SESSION['nombre'];
-    $tipo_usu   = $_SESSION['tipo_usu'];
-    
-    include("../../conexion.php");
-    date_default_timezone_set("America/Bogota");
-    header("Content-Type: text/html;charset=utf-8");
-
-    if ($_SERVER["REQUEST_METHOD"] == "POST")
-    {
-        // Captura de datos enviados por POST
-        $fec_rea_encInfo        = $_POST['fec_rea_encInfo'];
-        $doc_encInfo            = $_POST['doc_encInfo'];
-        $nom_encInfo            = mb_strtoupper($_POST['nom_encInfo']);
-        $tipo_solic_encInfo     = $_POST['tipo_solic_encInfo'];
-        $obs1_encInfo           = $_POST['obs1_encInfo'];
-        $obs2_encInfo           = mb_strtoupper($_POST['obs2_encInfo']);
-        $estado_encInfo        = 1;
-        $fecha_alta_encInfo    = date('Y-m-d h:i:s');
-        $fecha_edit_encInfo    = '0000-00-00 00:00:00';
-        $id_usu                 = $_SESSION['id_usu'];
-
-        $sql = "INSERT INTO encInfo (fec_rea_encInfo, doc_encInfo, nom_encInfo,  tipo_solic_encInfo, obs1_encInfo, obs2_encInfo, estado_encInfo, fecha_alta_encInfo, fecha_edit_encInfo, id_usu) 
-        VALUES ('$fec_rea_encInfo', '$doc_encInfo', '$nom_encInfo', '$tipo_solic_encInfo', '$obs1_encInfo', '$obs2_encInfo', '$estado_encInfo', '$fecha_alta_encInfo', '$fecha_edit_encInfo', '$id_usu')";
-        
-        $resultado = $mysqli->query($sql);
-    }
+}
 
 echo "
     <!DOCTYPE html>
@@ -67,4 +73,3 @@ echo "
         </body>
     </html>
 ";
-?>

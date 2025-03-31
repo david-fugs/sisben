@@ -101,7 +101,7 @@
               <a href="code/report/report1.php" class="nav_link sublink">Campo</a>
               <a href="code/report/report7.php" class="nav_link sublink">Ventanilla</a>
               <a href="code/report/report13.php" class="nav_link sublink">Información</a>
-              <a href="code/report/report17.php" class="nav_link sublink">Movimiento</a>
+              <!-- <a href="code/report/report17.php" class="nav_link sublink">Movimiento</a> -->
             </ul>
           </li>
 
@@ -247,7 +247,7 @@
 
             <ul class="menu_items submenu">
               <a href="code/eventan/addsurvey1.php" class="nav_link sublink">Nueva Encuesta</a>
-              <a href="code/emovim/addsurvey1.php" class="nav_link sublink">Movimientos</a>
+              <!-- <a href="code/emovim/addsurvey1.php" class="nav_link sublink">Movimientos</a> -->
               <a href="code/einfo/addsurvey1.php" class="nav_link sublink">Información</a>
             </ul>
           </li>
@@ -264,7 +264,7 @@
 
             <ul class="menu_items submenu">
               <a href="code/eventan/showsurvey.php" class="nav_link sublink">Encue. Nueva</a>
-              <a href="code/emovim/showsurvey.php" class="nav_link sublink">Movimientos</a>
+              <!-- <a href="code/emovim/showsurvey.php" class="nav_link sublink">Movimientos</a> -->
               <a href="code/einfo/showsurvey.php" class="nav_link sublink">Información</a>
             </ul>
           </li>
@@ -355,7 +355,7 @@
             <ul class="menu_items submenu">
 
               <a href="code/eventan/addsurvey1.php" class="nav_link sublink">Nueva Encuesta</a>
-              <a href="code/emovim/addsurvey1.php" class="nav_link sublink">Movimientos</a>
+              <!-- <a href="code/emovim/addsurvey1.php" class="nav_link sublink">Movimientos</a> -->
               <a href="code/einfo/addsurvey1.php" class="nav_link sublink">Información</a>
             </ul>
           </li>
@@ -373,7 +373,7 @@
             <ul class="menu_items submenu">
               <a href="code/ecampo/showsurvey.php" class="nav_link sublink">Campo</a>
               <a href="code/eventan/showsurvey.php" class="nav_link sublink">Nuevas</a>
-              <a href="code/emovim/showsurvey.php" class="nav_link sublink">Movimientos</a>
+              <!-- <a href="code/emovim/showsurvey.php" class="nav_link sublink">Movimientos</a> -->
               <a href="code/einfo/showsurvey.php" class="nav_link sublink">Información</a>
             </ul>
           </li>

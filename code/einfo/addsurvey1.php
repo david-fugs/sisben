@@ -84,22 +84,46 @@
                 <p><i><b><font size=3 color=#c68615>*Datos obligatorios</i></b></font></p>
                 
                 <div class="form-group">
-                    <div class="row">
-                        <div class="form-group col-md-3">
-                            <label for="fec_rea_encInfo">* FECHA REALIZADA:</label>
-                            <input type='date' name='fec_rea_encInfo' class='form-control' id="fec_rea_encInfo" required autofocus />
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label for="doc_encInfo">* DOCUMENTO:</label>
-                            <input type='number' name='doc_encInfo' class='form-control' id="doc_encInfo" required />
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="nom_encInfo">* NOMBRES COMPLETOS:</label>
-                            <input type='text' name='nom_encInfo' class='form-control' required style="text-transform:uppercase;" />
-                        </div>
+                <div class="row">
+                    <div class="form-group col-md-3">
+                        <label for="fec_reg_info">* FECHA REGISTRO:</label>
+                        <input type='date' name='fec_reg_info' class='form-control' id="fec_reg_info" required autofocus />
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="doc_info">* DOCUMENTO:</label>
+                        <input type='number' name='doc_info' class='form-control' id="doc_info" required />
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="tipo_doc">* TIPO DE DOCUMENTO:</label>
+                        <select name="tipo_documento"  class="form-control"id="">
+                            <option value="">SELECCIONE:</option>
+                            <option value="cedula">CEDULA</option>
+                            <option value="ppt">PPT</option>
+                            <option value="cedula_extranjeria">CEDULA EXTRANJERIA</option>
+                            <option value="otro">otro</option>
+                        </select>
                     </div>
                 </div>
+            </div>
 
+            <div class="form-group">
+                <div class="row">
+                    <div class="form-group col-md-3">
+                        <label for="ciudad_expedicion">* CIUDAD EXPEDICION:</label>
+                        <input type='text' name='ciudad_expedicion' class='form-control' required style="text-transform:uppercase;" />
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="fecha_expedicion">* FECHA EXPEDICION:</label>
+                        <input type='date' name='fecha_expedicion' class='form-control' required style="text-transform:uppercase;" />
+                    </div>
+
+
+                    <div class="form-group col-md-6">
+                        <label for="nom_info">* NOMBRES COMPLETOS:</label>
+                        <input type='text' name='nom_info' class='form-control' required style="text-transform:uppercase;" />
+                    </div>
+                </div>
+            </div>
                 <div class="form-group">
                     <div class="row">
                         <div class="form-group col-md-3">
@@ -107,6 +131,7 @@
                             <select class="form-control" name="tipo_solic_encInfo" id="tipo_solic_encInfo" required>
                                 <option value=""></option>   
                                 <option value="INFORMACION">INFORMACION</option>
+                                <option value="ATENCION">ATENCION</option>
                             </select>
                         </div>
                         <div class="form-group col-md-5">
@@ -122,11 +147,11 @@
                                 <option value="VERIFICACION">VERIFICACION</option>
                                 <option value="VISITA">VISITA</option>
                                 <option value="CALIDAD DE LA ENCUESTA">CALIDAD DE LA ENCUESTA</option>
+                                <option value="ATENCION">ATENCION</option>
                             </select>
                         </div>
                     </div>
                 </div>
-
                 <div class="form-row">
                     <div class="form-group col-md-12">
                         <label for="obs2_encInfo">INFORMACION ADICIONAL:</label>

@@ -31,6 +31,7 @@ header("Content-Type: text/html;charset=utf-8");
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+
     <style>
         #integrantes-container {
             display: flex;
@@ -208,14 +209,69 @@ header("Content-Type: text/html;charset=utf-8");
     <?php
     include("../../conexion.php");
     date_default_timezone_set("America/Bogota");
-
-    $id_usu  = $_GET['id_usu'];
-    if (isset($_GET['id_usu'])) {
-        $sql = mysqli_query($mysqli, "SELECT * FROM usuarios WHERE id_usu = '$id_usu'");
-        $row = mysqli_fetch_array($sql);
-    }
     ?>
+    <script>
+        $(document).ready(function() {
+            $("#doc_encVenta").on("blur", function() {
+                let documento = $(this).val();
+                let mensajeContainer = $("#mensajeDocumentoContainer");
 
+                if (documento !== "") {
+                    $.ajax({
+                        url: "verificar_documento.php",
+                        type: "POST",
+                        data: {
+                            doc_encVenta: documento
+                        },
+                        dataType: "json",
+                        beforeSend: function() {
+                            console.log("⏳ Consultando en la base de datos...");
+                            mensajeContainer.removeClass("alert-danger alert-success alert-warning").addClass("alert d-none").html("");
+                        },
+                        success: function(response) {
+                            console.log("✅ Respuesta del servidor:", response);
+
+                            if (response.status === "existe_encuesta") {
+                                mensajeContainer.removeClass("d-none alert-success alert-warning").addClass("alert alert-danger")
+                                    .html("⚠️ La encuesta ya fue realizada.");
+                                $("#btnEnviar").prop("disabled", true);
+                            } else if (response.status === "existe_info") {
+                                mensajeContainer.removeClass("d-none alert-danger alert-warning").addClass("alert alert-success")
+                                    .html("✔ Documento encontrado en Información.");
+                                $("#btnEnviar").prop("disabled", false);
+                                // Llenar los campos con los datos de la BD
+                                $("#fec_reg_encVenta").val(response.data.fecha_reg_info);
+                                $("#nom_encVenta").val(response.data.nom_info);
+                                $("#tipo_documento").val(response.data.tipo_documento);
+                                $("#ciudad_expedicion").val(response.data.ciudad_expedicion);
+                                $("#fecha_expedicion").val(response.data.fecha_expedicion);
+                                $("#obs1_encInfo").val(response.data.observacion);
+                                $("#obs2_encInfo").val(response.data.info_adicional);
+                            } else {
+                                mensajeContainer.removeClass("d-none alert-danger alert-success").addClass("alert alert-warning")
+                                    .html("⚠️ El documento no está registrado.");
+                                $("#btnEnviar").prop("disabled", false);
+
+                                // Vaciar los campos si el documento no existe
+                                $("#fec_reg_encVenta, #nom_encVenta, #tipo_documento, #ciudad_expedicion, #fecha_expedicion, #obs1_encInfo, #obs2_encInfo").val("");
+                            }
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            console.log("❌ Error AJAX:", textStatus, errorThrown);
+                            mensajeContainer.removeClass("d-none alert-success alert-warning").addClass("alert alert-danger")
+                                .html("❌ Error en la consulta. Intente nuevamente.");
+                            $("#btnEnviar").prop("disabled", false);
+                        }
+                    });
+                } else {
+                    // Si el campo está vacío, limpiar todo
+                    mensajeContainer.addClass("d-none").html("");
+                    $("#btnEnviar").prop("disabled", false);
+                    $("#fec_reg_encVenta, #nom_encVenta, #tipo_documento, #ciudad_expedicion, #fecha_expedicion, #obs1_encInfo, #obs2_encInfo").val("");
+                }
+            });
+        });
+    </script>
 
     <form id="form_contacto" action='addsurvey2.php' method="POST" enctype="multipart/form-data">
 
@@ -224,20 +280,21 @@ header("Content-Type: text/html;charset=utf-8");
             <p><i><b>
                         <font size=3 color=#c68615>*Datos obligatorios</i></b></font>
             </p>
-
+            <div id="mensajeDocumentoContainer" class="alert d-none"></div> <!-- Mensaje arriba -->
             <div class="form-group">
                 <div class="row">
+                    <div class="form-group col-md-3">
+                        <label for="doc_encVenta">* DOCUMENTO:</label>
+                        <input type='number' name='doc_encVenta' class='form-control' id="doc_encVenta" required />
+                        <small id="mensajeDocumento" class="text-danger"></small>
+                    </div>
                     <div class="form-group col-md-3">
                         <label for="fec_reg_encVenta">* FECHA REGISTRO:</label>
                         <input type='date' name='fec_reg_encVenta' class='form-control' id="fec_reg_encVenta" required autofocus />
                     </div>
-                    <div class="form-group col-md-3">
-                        <label for="doc_encVenta">* DOCUMENTO:</label>
-                        <input type='number' name='doc_encVenta' class='form-control' id="doc_encVenta" required />
-                    </div>
                     <div class="form-group col-md-6">
                         <label for="tipo_doc">* TIPO DE DOCUMENTO:</label>
-                        <select name="tipo_documento"  class="form-control"id="">
+                        <select name="tipo_documento" class="form-control" id="tipo_documento">
                             <option value="">SELECCIONE:</option>
                             <option value="cedula">CEDULA</option>
                             <option value="ppt">PPT</option>
@@ -247,30 +304,22 @@ header("Content-Type: text/html;charset=utf-8");
                     </div>
                 </div>
             </div>
-
             <div class="form-group">
                 <div class="row">
                     <div class="form-group col-md-3">
                         <label for="ciudad_expedicion">* CIUDAD EXPEDICION:</label>
-                        <input type='text' name='ciudad_expedicion' class='form-control' required style="text-transform:uppercase;" />
+                        <input type='text' id="ciudad_expedicion" name='ciudad_expedicion' class='form-control' required style="text-transform:uppercase;" />
                     </div>
                     <div class="form-group col-md-3">
                         <label for="fecha_expedicion">* FECHA EXPEDICION:</label>
-                        <input type='date' name='fecha_expedicion' class='form-control' required style="text-transform:uppercase;" />
+                        <input type='date' name='fecha_expedicion' id="fecha_expedicion" class='form-control' required style="text-transform:uppercase;" />
                     </div>
-
-
                     <div class="form-group col-md-6">
                         <label for="nom_encVenta">* NOMBRES COMPLETOS:</label>
-                        <input type='text' name='nom_encVenta' class='form-control' required style="text-transform:uppercase;" />
+                        <input type='text' name='nom_encVenta' id="nom_encVenta" class='form-control' required style="text-transform:uppercase;" />
                     </div>
                 </div>
-
             </div>
-
-
-
-
             <div class="form-group">
                 <div class="row">
                     <div class="form-group col-md-6">
@@ -404,7 +453,7 @@ header("Content-Type: text/html;charset=utf-8");
                 </div>
             </div>
 
-            <button type="submit" class="btn btn-success">
+            <button type="submit" class="btn btn-success" id="btnEnviar">
                 <span class="spinner-border spinner-border-sm"></span>
                 INGRESAR ENCUESTA
             </button>
@@ -508,9 +557,7 @@ header("Content-Type: text/html;charset=utf-8");
             }
         });
     });
-</script>
 
-<script type="text/javascript">
     $(document).ready(function() {
         $('#id_correg').on('change', function() {
             if ($('#id_correg').val() == "") {
@@ -523,9 +570,6 @@ header("Content-Type: text/html;charset=utf-8");
             }
         });
     });
-</script>
-
-<script>
     var cargarDocumentoCheckbox = document.getElementById("cargarDocumento");
     var campoArchivo = document.getElementById("campoArchivo");
 
