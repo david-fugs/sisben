@@ -157,8 +157,8 @@ header("Content-Type: text/html;charset=utf-8");
                     </div>
 
                     <div class="form-group col-md-3">
-                        <label for="rango_integVenta">* CONDICION DISCAPACIDAD:</label>
-                        <select name="rango_integVenta" class="form-control" id="rango_integVenta" required>
+                        <label for="condicionDiscapacidad">* CONDICION DISCAPACIDAD:</label>
+                        <select name="condicionDiscapacidad" class="form-control" id="condicionDiscapacidad" required>
                             <option value=""></option>
                             <option value="Si">Si</option>
                             <option value="No">No</option>
@@ -166,8 +166,89 @@ header("Content-Type: text/html;charset=utf-8");
                     </div>
                 </div>
             </div>
+            <div class="form-group" id="tipoDiscapacidadContainer" style="display: none;">
+                <div class="row">
+                    <div class="form-group col-md-3">
+                        <label for="tipoDiscapacidad">* TPO DISCAPACIDAD:</label>
+                        <select class="form-control" name="tipoDiscapacidad" id="tipoDiscapacidad" required>
+                            <option value=""></option>
+                            <option value="Auditiva">Auditiva</option>
+                            <option value="Fisica">Fisica</option>
+                            <option value="Intelectual">Intelectual</option>
+                            <option value="Multiple">Multiple</option>
+                            <option value="Psicosocial">Psicosocial</option>
+                            <option value="SordoCeguera">SordoCeguera</option>
+                            <option value="Visual">Visual</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
 
-
+            <div class="form-group">
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label for="mujerGestante">* MUJER GESTANTE/LACTANTE:</label>
+                        <select name="mujerGestante" class="form-control" id="mujerGestante" required>
+                            <option value=""></option>
+                            <option value="Si">Si</option>
+                            <option value="No">No</option>
+                        </select> <!-- Asegurar el cierre correcto aquí -->
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="cabeza_familia">* HOMBRE/MUJER CABEZA FAMILIA:</label>
+                        <select name="cabeza_familia" class="form-control" id="cabeza_familia" required>
+                            <option value=""></option>
+                            <option value="Si">Si</option>
+                            <option value="No">No</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="orientacionSexual">* ORIENTACION SEXUAL:</label>
+                        <select name="orientacionSexual" class="form-control" id="orientacionSexual" required>
+                            <option value=""></option>
+                            <option value="Asexual">Asexual</option>
+                            <option value="Bisexual">Bisexual</option>
+                            <option value="Homosexual">Homosexual</option>
+                            <option value="Heterosexual">Heterosexual</option>
+                            <option value="Otro">Otro</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label for="experienciaMigratoria">* EXPERIENCIA MIGRATORIA</label>
+                        <select name="experienciaMigratoria" class="form-control" id="experienciaMigratoria" required>
+                            <option value=""></option>
+                            <option value="Si">Si</option>
+                            <option value="No">No</option>
+                        </select> <!-- Asegurar el cierre correcto aquí -->
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="grupoEtnico">* GRUPO ETNICO:</label>
+                        <select name="grupoEtnico" class="form-control" id="grupoEtnico" required>
+                            <option value=""></option>
+                            <option value="Indigena">Indigena</option>
+                            <option value="ROM (Gitano)">ROM (Gitano)</option>
+                            <option value="Raizal">Raizal</option>
+                            <option value="Palanquero de San Basilio">Palanquero de San Basilio</option>
+                            <option value="Negro(a), Mulato(a), Afrocolobiano(a)">Negro(a), Mulato(a), Afrocolobiano(a)</option>
+                            <option value="Mestizo"> Mestizo</option>
+                            <option value="Ninguno"> Ninguno</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="seguridadSalud">* TIPO SEGURIDAD SALUD:</label>
+                        <select name="seguridadSalud" class="form-control" id="seguridadSalud" required>
+                            <option value=""></option>
+                            <option value="Regimen Contributivo">Regimen Contributivo</option>
+                            <option value="Regimen Subsidiado">Regimen Subsidiado</option>
+                            <option value="Poblacion Vinculada">Poblacion Vinculada</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
 
             <div class="form-group">
                 <div class="row">
@@ -204,6 +285,10 @@ header("Content-Type: text/html;charset=utf-8");
                 </div>
             </div>
 
+
+
+
+
             <button type="submit" class="btn btn-success">
                 <span class="spinner-border spinner-border-sm"></span>
                 INGRESAR INFORMACION
@@ -215,5 +300,16 @@ header("Content-Type: text/html;charset=utf-8");
     </form>
 
 </body>
+<script>
+    document.getElementById("condicionDiscapacidad").addEventListener("change", function() {
+        var tipoDiscapacidadContainer = document.getElementById("tipoDiscapacidadContainer");
+        if (this.value === "Si") {
+            tipoDiscapacidadContainer.style.display = "block";
+        } else {
+            tipoDiscapacidadContainer.style.display = "none";
+            document.getElementById("tipo_discapacidad").value = ""; // Reiniciar selección
+        }
+    });
+</script>
 
 </html>
