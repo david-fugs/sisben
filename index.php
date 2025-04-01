@@ -24,31 +24,31 @@
 
         if($password_bd == $pass_c)
         {
-          $_SESSION['id_usu'] = $row['id'];
+          $_SESSION['id_usu'] = $row['id_usu'];
           $_SESSION['nombre'] = $row['nombre'];
-          $_SESSION['tipo_usu'] = $row['tipo_usuario'];
-          if($row['tipo_usuario']==1)
+          $_SESSION['tipo_usu'] = $row['tipo_usu'];
+          if($row['tipo_usu']==1)
           {
-            // header("Location: code/usuarios/adduser.php");
+            // header("Location: code/usus/adduser.php");
             header("Location: access.php");
           }
-          elseif($row['tipo_usuario']==2)
-          {
-            header("Location: access.php");
-          }
-          elseif($row['tipo_usuario']==3)
+          elseif($row['tipo_usu']==2)
           {
             header("Location: access.php");
           }
-          elseif($row['tipo_usuario']==4)
+          elseif($row['tipo_usu']==3)
           {
             header("Location: access.php");
           }
-          elseif($row['tipo_usuario']==5)
+          elseif($row['tipo_usu']==4)
           {
             header("Location: access.php");
           }
-          elseif($row['tipo_usuario']==6)
+          elseif($row['tipo_usu']==5)
+          {
+            header("Location: access.php");
+          }
+          elseif($row['tipo_usu']==6)
           {
             header("Location: access.php");
           }

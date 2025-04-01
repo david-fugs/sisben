@@ -196,10 +196,10 @@ header("Content-Type: text/html;charset=utf-8");
                         .append('<option value="Si">Si</option>')
                         .append('<option value="No">No</option>');
 
-                    var hombreCabezaFamilia = $("<select>")
-                        .attr("name", "hombreCabezaFamilia[]")
+                    var cabezaFamilia = $("<select>")
+                        .attr("name", "cabezaFamilia[]")
                         .addClass("form-control smaller-input")
-                        .append('<option value="">Hombre Cabeza de Familia</option>')
+                        .append('<option value="">Hombre / mujer  Cabeza de Familia</option>')
                         .append('<option value="Si">Si</option>')
                         .append('<option value="No">No</option>');
 

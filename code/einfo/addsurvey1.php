@@ -169,7 +169,7 @@ header("Content-Type: text/html;charset=utf-8");
             <div class="form-group" id="tipoDiscapacidadContainer" style="display: none;">
                 <div class="row">
                     <div class="form-group col-md-3">
-                        <label for="tipoDiscapacidad">* TPO DISCAPACIDAD:</label>
+                        <label for="tipoDiscapacidad">* TIPO DISCAPACIDAD:</label>
                         <select class="form-control" name="tipoDiscapacidad" id="tipoDiscapacidad" required>
                             <option value=""></option>
                             <option value="Auditiva">Auditiva</option>
@@ -195,8 +195,8 @@ header("Content-Type: text/html;charset=utf-8");
                         </select> <!-- Asegurar el cierre correcto aquí -->
                     </div>
                     <div class="form-group col-md-4">
-                        <label for="cabeza_familia">* HOMBRE/MUJER CABEZA FAMILIA:</label>
-                        <select name="cabeza_familia" class="form-control" id="cabeza_familia" required>
+                        <label for="cabezaFamilia">* HOMBRE/MUJER CABEZA FAMILIA:</label>
+                        <select name="cabezaFamilia" class="form-control" id="cabezaFamilia" required>
                             <option value=""></option>
                             <option value="Si">Si</option>
                             <option value="No">No</option>
@@ -252,6 +252,45 @@ header("Content-Type: text/html;charset=utf-8");
 
             <div class="form-group">
                 <div class="row">
+                    <div class="form-group col-md-4">
+                        <label for="nivelEducativo">* NIVEL EDUCATIVO</label>
+                        <select name="nivelEducativo" class="form-control" id="nivelEducativo" required>
+                            <option value=""></option>
+                            <option value="Preescolar">Preescolar</option>
+                            <option value="Basica Primaria">Basica Primaria</option>
+                            <option value="Basica Secundaria">Basica Secundaria</option>
+                            <option value="Media Academica o clasica">Media Academica o clasica</option>
+                            <option value="Media Tecnica">Media Tecnica</option>
+                            <option value="Normalista">Normalista</option>
+                            <option value="Universitario">Universitario</option>
+                            <option value="Tecnico profesional">Tecnico profesional</option>
+                            <option value="Tecnologo">Tecnologo</option>
+                            <option value="Profesional">Profesional</option>
+                            <option value="Especializacion">Especializacion</option>
+                            <option value="Maestria">Maestria</option>
+                            <option value="Doctorado">Doctorado</option>
+                            <option value="Ninguno">Ninguno</option>
+                        </select> 
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="condicionOcupacion">* CONDICION OCUPACION:</label>
+                        <select name="condicionOcupacion" class="form-control" id="condicionOcupacion" required>
+                            <option value=""></option>
+                            <option value="Ama de Casa">Ama de Casa</option>
+                            <option value="Buscando Empleo">Buscando Empleo</option>
+                            <option value="Desempleado(a)">Desempleado(a)</option>
+                            <option value="Empleado(a)">Empleado(a)</option>
+                            <option value="Estudiante">Estudiante</option>
+                            <option value="Independiente"> Independiente</option>
+                            <option value="Pensionado(a)"> Pensionado(a)</option>
+                            <option value="Ninguno"> Ninguno</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="row">
                     <div class="form-group col-md-3">
                         <label for="tipo_solic_encInfo">* TIPO SOLICITUD:</label>
                         <select class="form-control" name="tipo_solic_encInfo" id="tipo_solic_encInfo" required>
@@ -284,10 +323,6 @@ header("Content-Type: text/html;charset=utf-8");
                     <textarea class="form-control" id="exampleFormControlTextarea1" rows="2" name="obs2_encInfo" style="text-transform:uppercase;"></textarea>
                 </div>
             </div>
-
-
-
-
 
             <button type="submit" class="btn btn-success">
                 <span class="spinner-border spinner-border-sm"></span>
