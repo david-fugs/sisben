@@ -23,7 +23,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $tipo_documento          = $_POST['tipo_documento'];
     $ciudad_expedicion       = $_POST['ciudad_expedicion'];
     $fecha_expedicion       = $_POST['fecha_expedicion'];
-
     $rango_integVenta = isset($_POST['rango_integVenta']) ? $_POST['rango_integVenta'] : '';
     $victima = isset($_POST['victima']) ? $_POST['victima'] : '';
     $condicionDiscapacidad = isset($_POST['condicionDiscapacidad']) ? $_POST['condicionDiscapacidad'] : '';
@@ -46,44 +45,60 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id_usu                 = $_SESSION['id_usu'];
 
 
-    print_r([
-        'fec_reg_info' => $_POST['fec_reg_info'],
-        'doc_info' => $_POST['doc_info'],
-        'nom_info' => mb_strtoupper($_POST['nom_info']),
-        'tipo_documento' => $_POST['tipo_documento'],
-        'ciudad_expedicion' => $_POST['ciudad_expedicion'],
-        'fecha_expedicion' => $_POST['fecha_expedicion'],
 
-        'rango_integVenta' => isset($_POST['rango_integVenta']) ? $_POST['rango_integVenta'] : '',
-        'victima' => isset($_POST['victima']) ? $_POST['victima'] : '',
-        'condicionDiscapacidad' => isset($_POST['condicionDiscapacidad']) ? $_POST['condicionDiscapacidad'] : '',
-        'tipoDiscapacidad' => isset($_POST['tipoDiscapacidad']) ? $_POST['tipoDiscapacidad'] : '',
-        'mujerGestante' => isset($_POST['mujerGestante']) ? $_POST['mujerGestante'] : '',
-        'cabezaFamilia' => isset($_POST['cabezaFamilia']) ? $_POST['cabezaFamilia'] : '',
-        'orientacionSexual' => isset($_POST['orientacionSexual']) ? $_POST['orientacionSexual'] : '',
-        'experienciaMigratoria' => isset($_POST['experienciaMigratoria']) ? $_POST['experienciaMigratoria'] : '',
-        'grupoEtnico' => isset($_POST['grupoEtnico']) ? $_POST['grupoEtnico'] : '',
-        'seguridadSalud' => isset($_POST['seguridadSalud']) ? $_POST['seguridadSalud'] : '',
-        'nivelEducativo' => isset($_POST['nivelEducativo']) ? $_POST['nivelEducativo'] : '',
-        'condicionOcupacion' => isset($_POST['condicionOcupacion']) ? $_POST['condicionOcupacion'] : '',
-
-        'fecha_alta_encInfo' => date('Y-m-d h:i:s'),
-        'fecha_edit_encInfo' => '0000-00-00 00:00:00',
-        'tipo_solic_encInfo' => $_POST['tipo_solic_encInfo'],
-        'obs1_encInfo' => mb_strtoupper($_POST['obs1_encInfo']),
-        'obs2_encInfo' => mb_strtoupper($_POST['obs2_encInfo']),
-        'fecha_alta_encVenta' => date('Y-m-d h:i:s'),
-        'fecha_edit_encVenta' => '0000-00-00 00:00:00',
-        'id_usu' => $_SESSION['id_usu']
-    ]);
-    die;
-
-
-
-
-    $sql = "INSERT INTO informacion (fecha_reg_info, doc_info, nom_info,tipo_documento,fecha_expedicion, ciudad_expedicion ,fecha_alta_info, fecha_edit_info,observacion,tipo_solic_encInfo, info_adicional,  id_usu) 
-            VALUES ('$fec_reg_info', '$doc_info', '$nom_info','$tipo_documento','$fecha_expedicion','$ciudad_expedicion','$fecha_alta_encInfo', '$fecha_edit_encInfo','$obs1_encInfo','$tipo_solic_encInfo','$obs2_encInfo ', '$id_usu')";
-    // Ejecutar consulta y verificar errores
+    $sql = "INSERT INTO informacion (
+        fecha_reg_info,
+        doc_info,
+        nom_info,
+        tipo_documento,
+        ciudad_expedicion,
+        fecha_expedicion,
+        rango_integVenta,
+        victima,
+        condicionDiscapacidad,
+        tipoDiscapacidad,
+        mujerGestante,
+        cabezaFamilia,
+        orientacionSexual,
+        experienciaMigratoria,
+        grupoEtnico,
+        seguridadSalud,
+        nivelEducativo,
+        condicionOcupacion,
+        fecha_alta_info,
+        fecha_edit_info,
+        tipo_solic_encInfo,
+        observacion,
+        info_adicional,
+        id_usu
+    ) VALUES (
+        '$fec_reg_info',
+        '$doc_info',
+        '$nom_info',
+        '$tipo_documento',
+        '$ciudad_expedicion',
+        '$fecha_expedicion',
+        '$rango_integVenta',
+        '$victima',
+        '$condicionDiscapacidad',
+        '$tipoDiscapacidad',
+        '$mujerGestante',
+        '$cabezaFamilia',
+        '$orientacionSexual',
+        '$experienciaMigratoria',
+        '$grupoEtnico',
+        '$seguridadSalud',
+        '$nivelEducativo',
+        '$condicionOcupacion',
+        '$fecha_alta_encInfo',
+        '$fecha_edit_encInfo',
+        '$tipo_solic_encInfo',
+        '$obs1_encInfo',
+        '$obs2_encInfo',
+         $id_usu
+    )";
+           
+    // Ejec
     if (!$mysqli->query($sql)) {
         echo "Error en la consulta: " . $mysqli->error; // Muestra el error de MySQL
     } else {

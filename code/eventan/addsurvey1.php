@@ -266,7 +266,7 @@ header("Content-Type: text/html;charset=utf-8");
                         }
                     });
 
-                    integranteDiv.append(cantidadInput, generoSelect, rangoEdadSelect, OrientacionSexual, condicionDiscapacidad, GrupoEtnico, eliminarBtn);
+                    integranteDiv.append(cantidadInput, generoSelect, rangoEdadSelect, OrientacionSexual, condicionDiscapacidad, discapacidadSelect, GrupoEtnico, victima, mujerGestante, cabezaFamilia, experienciaMigratoria, seguridadSalud, nivelEducativo, condicionOcupacion, eliminarBtn);
                     $("#integrantes-container").append(integranteDiv);
                 }
 

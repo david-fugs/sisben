@@ -170,7 +170,7 @@ header("Content-Type: text/html;charset=utf-8");
                 <div class="row">
                     <div class="form-group col-md-3">
                         <label for="tipoDiscapacidad">* TIPO DISCAPACIDAD:</label>
-                        <select class="form-control" name="tipoDiscapacidad" id="tipoDiscapacidad" required>
+                        <select class="form-control" name="tipoDiscapacidad" id="tipoDiscapacidad" >
                             <option value=""></option>
                             <option value="Auditiva">Auditiva</option>
                             <option value="Fisica">Fisica</option>
@@ -342,7 +342,7 @@ header("Content-Type: text/html;charset=utf-8");
             tipoDiscapacidadContainer.style.display = "block";
         } else {
             tipoDiscapacidadContainer.style.display = "none";
-            document.getElementById("tipo_discapacidad").value = ""; // Reiniciar selección
+            document.getElementById("tipoDiscapacidad").value = ""; // Reiniciar selección
         }
     });
 </script>
