@@ -35,21 +35,41 @@ header("Content-Type: text/html;charset=utf-8");
     <style>
         #integrantes-container {
             display: flex;
-            flex-wrap: wrap;
-            /* Permite que los elementos pasen a la siguiente línea si no caben */
-            gap: 10px;
+            flex-direction: column;
+            /* Apila los elementos verticalmente */
+            gap: 15px;
+            width: 100%;
         }
 
         .formulario-dinamico {
-            display: flex;
-            align-items: center;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             gap: 10px;
             border: 1px solid #ccc;
-            /* Opcional: agregar un borde */
-            padding: 10px;
+            padding: 15px;
             border-radius: 5px;
             background-color: #f9f9f9;
-            /* Opcional: fondo para cada elemento */
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .smaller-input {
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .btn-danger {
+            grid-column: 1 / -1;
+            /* Hace que el botón ocupe todo el ancho */
+            justify-self: start;
+            /* Alinea el botón a la izquierda */
+            margin-top: 10px;
+        }
+
+        /* Estilo para selectores largos */
+        select.form-control {
+            min-width: 100%;
+            max-width: 100%;
         }
 
         .responsive {
@@ -95,6 +115,9 @@ header("Content-Type: text/html;charset=utf-8");
                     total += valor;
                 });
                 $("#total_integrantes").val(total);
+
+                // Actualizar también el campo cant_integVenta con la cantidad total
+                $("#cant_integVenta").val($("input[name='cant_integVenta[]']").length);
             }
 
             $("#agregar").click(function() {
@@ -105,8 +128,6 @@ header("Content-Type: text/html;charset=utf-8");
                     alert("Por favor, ingresa una cantidad válida de integrantes.");
                     return;
                 }
-
-                $("#integrantes-container").empty();
 
                 for (var i = 0; i < cantidadValor; i++) {
                     var integranteDiv = $("<div>").addClass("formulario-dinamico");
@@ -254,15 +275,17 @@ header("Content-Type: text/html;charset=utf-8");
                         .text("Eliminar")
                         .click(function() {
                             $(this).closest(".formulario-dinamico").remove();
-                            actualizarTotal();
+                            actualizarTotal(); // Esta llamada ahora actualizará ambos campos
                         });
 
                     // Agregar evento para mostrar/ocultar el select de discapacidad
                     condicionDiscapacidad.on("change", function() {
+                        // Encuentra el select de discapacidad específico para este contenedor
+                        var currentDiscapacidadSelect = $(this).closest('.formulario-dinamico').find('.tipo-discapacidad');
                         if ($(this).val() === "Si") {
-                            discapacidadSelect.show();
+                            currentDiscapacidadSelect.show();
                         } else {
-                            discapacidadSelect.hide();
+                            currentDiscapacidadSelect.hide();
                         }
                     });
 
@@ -340,6 +363,210 @@ header("Content-Type: text/html;charset=utf-8");
                                 $("#fecha_expedicion").val(response.data.fecha_expedicion);
                                 $("#obs1_encInfo").val(response.data.observacion);
                                 $("#obs2_encInfo").val(response.data.info_adicional);
+                                console.log(response.data);
+
+                                // Generar automáticamente UN integrante con los datos de response.data
+                                var integrantesActuales = $("input[name='cant_integVenta[]']").length;
+                                var integrantesAAgregar = 1 - integrantesActuales; // Solo agregar si no hay ninguno
+                                // Establecer la cantidad de integrantes (1 en este caso)
+
+                                if (integrantesAAgregar > 0) {
+                                    $("#cant_integVenta").val(integrantesAAgregar);
+                                }
+
+                                // Crear el formulario para el integrante principal
+                                var integranteDiv = $("<div>").addClass("formulario-dinamico");
+
+                                var cantidadInput = $("<input>")
+                                    .attr("type", "number")
+                                    .attr("name", "cant_integVenta[]")
+                                    .addClass("form-control smaller-input")
+                                    .val(1)
+                                    .attr("readonly", true);
+
+                                var generoSelect = $("<select>")
+                                    .attr("name", "gen_integVenta[]")
+                                    .addClass("form-control smaller-input")
+                                    .append('<option value="">Identidad Genero</option>')
+                                    .append('<option value="F"' + (response.data.genero === 'F' ? ' selected' : '') + '>F</option>')
+                                    .append('<option value="M"' + (response.data.genero === 'M' ? ' selected' : '') + '>M</option>')
+                                    .append('<option value="O"' + (response.data.genero === 'O' ? ' selected' : '') + '>Otro</option>');
+
+                                var rangoEdadSelect = $("<select>")
+                                    .attr("name", "rango_integVenta[]")
+                                    .addClass("form-control smaller-input")
+                                    .append('<option value="">Rango de edad</option>')
+                                    .append('<option value="0 - 6"' + (response.data.rango_integVenta === '0 - 6' ? ' selected' : '') + '>0 - 6</option>')
+                                    .append('<option value="7 - 12"' + (response.data.rango_integVenta === '7 - 12' ? ' selected' : '') + '>7 - 12</option>')
+                                    .append('<option value="13 - 17"' + (response.data.rango_integVenta === '13 - 17' ? ' selected' : '') + '>13 - 17</option>')
+                                    .append('<option value="18 - 28"' + (response.data.rango_integVenta === '18 - 28' ? ' selected' : '') + '>18 - 28</option>')
+                                    .append('<option value="29 - 45"' + (response.data.rango_integVenta === '29 - 45' ? ' selected' : '') + '>29 - 45</option>')
+                                    .append('<option value="46 - 64"' + (response.data.rango_integVenta === '46 - 64' ? ' selected' : '') + '>46 - 64</option>')
+                                    .append('<option value="Mayor o igual a 65"' + (response.data.rango_integVenta === 'Mayor o igual a 65' ? ' selected' : '') + '>Mayor o igual a 65</option>');
+
+                                var OrientacionSexual = $("<select>")
+                                    .attr("name", "orientacionSexual[]")
+                                    .addClass("form-control smaller-input")
+                                    .append('<option value="">Orientación Sexual</option>')
+                                    .append('<option value="Asexual"' + (response.data.orientacionSexual === 'Asexual' ? ' selected' : '') + '>Asexual</option>')
+                                    .append('<option value="Bisexual"' + (response.data.orientacionSexual === 'Bisexual' ? ' selected' : '') + '>Bisexual</option>')
+                                    .append('<option value="Heterosexual"' + (response.data.orientacionSexual === 'Heterosexual' ? ' selected' : '') + '>Heterosexual</option>')
+                                    .append('<option value="Homosexual"' + (response.data.orientacionSexual === 'Homosexual' ? ' selected' : '') + '>Homosexual</option>')
+                                    .append('<option value="Otro"' + (response.data.orientacionSexual === 'Otro' ? ' selected' : '') + '>Otro</option>');
+
+                                var condicionDiscapacidad = $("<select>")
+                                    .attr("name", "condicionDiscapacidad[]")
+                                    .addClass("form-control smaller-input")
+                                    .append('<option value="">Condición Discapacidad</option>')
+                                    .append('<option value="Si"' + (response.data.condicionDiscapacidad === 'Si' ? ' selected' : '') + '>Si</option>')
+                                    .append('<option value="No"' + (response.data.condicionDiscapacidad === 'No' ? ' selected' : '') + '>No</option>');
+
+                                var discapacidadSelect = $("<select>")
+                                    .attr("name", "tipoDiscapacidad[]")
+                                    .addClass("form-control smaller-input tipo-discapacidad")
+                                    .append('<option value="">Tipo de Discapacidad</option>')
+                                    .append('<option value="Auditiva"' + (response.data.tipoDiscapacidad === 'Auditiva' ? ' selected' : '') + '>Auditiva</option>')
+                                    .append('<option value="Física"' + (response.data.tipoDiscapacidad === 'Física' ? ' selected' : '') + '>Física</option>')
+                                    .append('<option value="Intelectual"' + (response.data.tipoDiscapacidad === 'Intelectual' ? ' selected' : '') + '>Intelectual</option>')
+                                    .append('<option value="Múltiple"' + (response.data.tipoDiscapacidad === 'Múltiple' ? ' selected' : '') + '>Múltiple</option>')
+                                    .append('<option value="Psicosocial"' + (response.data.tipoDiscapacidad === 'Psicosocial' ? ' selected' : '') + '>Psicosocial</option>')
+                                    .append('<option value="Sordoceguera"' + (response.data.tipoDiscapacidad === 'Sordoceguera' ? ' selected' : '') + '>Sordoceguera</option>')
+                                    .append('<option value="Visual"' + (response.data.tipoDiscapacidad === 'Visual' ? ' selected' : '') + '>Visual</option>')
+                                    .hide();
+
+                                // Mostrar select de discapacidad si corresponde
+                                if (response.data.condicionDiscapacidad === 'Si') {
+                                    discapacidadSelect.show();
+                                }
+
+                                // Configurar el evento change para la discapacidad
+                                condicionDiscapacidad.on("change", function() {
+                                    var currentDiscapacidadSelect = $(this).closest('.formulario-dinamico').find('.tipo-discapacidad');
+                                    if ($(this).val() === "Si") {
+                                        currentDiscapacidadSelect.show();
+                                    } else {
+                                        currentDiscapacidadSelect.hide();
+                                    }
+                                });
+
+                                // Crear los demás campos con los datos de response.data
+                                var GrupoEtnico = $("<select>")
+                                    .attr("name", "grupoEtnico[]")
+                                    .addClass("form-control smaller-input")
+                                    .append('<option value="">Grupo Etnico</option>')
+                                    .append('<option value="Indigena"' + (response.data.grupoEtnico === 'Indigena' ? ' selected' : '') + '>Indigena</option>')
+
+
+                                    .append('<option value="Negro(a) / Mulato(a) / Afrocolombiano(a)"' + (response.data.grupoEtnico === 'Negro(a) / Mulato(a) / Afrocolombiano(a)' ? ' selected' : '') + '>Negro(a) / Mulato(a) / Afrocolombiano(a)</option>')
+                                    .append('<option value="Raizal"' + (response.data.grupoEtnico === 'Raizal' ? ' selected' : '') + '>Raizal</option>')
+                                    .append('<option value="Palenquero de San Basilio"' + (response.data.grupoEtnico === 'Palenquero de San Basilio' ? ' selected' : '') + '>Palenquero de San Basilio</option>')
+                                    .append('<option value="Mestizo"' + (response.data.grupoEtnico === 'Mestizo' ? ' selected' : '') + '>Mestizo</option>')
+                                    .append('<option value="Gitano (rom)"' + (response.data.grupoEtnico === 'Gitano (rom)' ? ' selected' : '') + '>Gitano (rom)</option>')
+                                    .append('<option value="Ninguno"' + (response.data.grupoEtnico === 'Ninguno' ? ' selected' : '') + '>Ninguno</option>');
+
+                                var victima = $("<select>")
+                                    .attr("name", "victima[]")
+                                    .addClass("form-control smaller-input")
+                                    .append('<option value="">Victima</option>')
+                                    .append('<option value="Si"' + (response.data.victima === 'Si' ? ' selected' : '') + '>Si</option>')
+                                    .append('<option value="No"' + (response.data.victima === 'No' ? ' selected' : '') + '>No</option>');
+
+                                var mujerGestante = $("<select>")
+                                    .attr("name", "mujerGestante[]")
+                                    .addClass("form-control smaller-input")
+                                    .append('<option value="">Mujer Gestante</option>')
+                                    .append('<option value="Si"' + (response.data.mujerGestante === 'Si' ? ' selected' : '') + '>Si</option>')
+                                    .append('<option value="No"' + (response.data.mujerGestante === 'No' ? ' selected' : '') + '>No</option>');
+
+                                var cabezaFamilia = $("<select>")
+                                    .attr("name", "cabezaFamilia[]")
+                                    .addClass("form-control smaller-input")
+                                    .append('<option value="">Hombre / mujer Cabeza de Familia</option>')
+                                    .append('<option value="Si"' + (response.data.cabezaFamilia === 'Si' ? ' selected' : '') + '>Si</option>')
+                                    .append('<option value="No"' + (response.data.cabezaFamilia === 'No' ? ' selected' : '') + '>No</option>');
+
+                                var experienciaMigratoria = $("<select>")
+                                    .attr("name", "experienciaMigratoria[]")
+                                    .addClass("form-control smaller-input")
+                                    .append('<option value="">Experiencia Migratoria</option>')
+                                    .append('<option value="Si"' + (response.data.experienciaMigratoria === 'Si' ? ' selected' : '') + '>Si</option>')
+                                    .append('<option value="No"' + (response.data.experienciaMigratoria === 'No' ? ' selected' : '') + '>No</option>');
+
+                                var seguridadSalud = $("<select>")
+                                    .attr("name", "seguridadSalud[]")
+                                    .addClass("form-control smaller-input")
+                                    .append('<option value="">Seguridad Salud</option>')
+                                    .append('<option value="Regimen Contributivo"' + (response.data.seguridadSalud === 'Regimen Contributivo' ? ' selected' : '') + '>Regimen Contributivo</option>')
+                                    .append('<option value="Regimen Subsidiado"' + (response.data.seguridadSalud === 'Regimen Subsidiado' ? ' selected' : '') + '>Regimen Subsidiado</option>')
+                                    .append('<option value="Poblacion Vinculada"' + (response.data.seguridadSalud === 'Poblacion Vinculada' ? ' selected' : '') + '>Poblacion Vinculada</option>');
+
+                                var nivelEducativo = $("<select>")
+                                    .attr("name", "nivelEducativo[]")
+                                    .addClass("form-control smaller-input")
+                                    .append('<option value="">Nivel Educativo</option>')
+                                    .append('<option value="Ninguno"' + (response.data.nivelEducativo === 'Ninguno' ? ' selected' : '') + '>Ninguno</option>')
+                                    .append('<option value="Preescolar"' + (response.data.nivelEducativo === 'Preescolar' ? ' selected' : '') + '>Preescolar</option>')
+                                    .append('<option value="Primaria"' + (response.data.nivelEducativo === 'Primaria' ? ' selected' : '') + '>Primaria</option>')
+                                    .append('<option value="Secundaria"' + (response.data.nivelEducativo === 'Secundaria' ? ' selected' : '') + '>Secundaria</option>')
+                                    .append('<option value="Media Academica o Clasica"' + (response.data.nivelEducativo === 'Media Academica o Clasica' ? ' selected' : '') + '>Media Academica o Clasica</option>')
+                                    .append('<option value="Media Tecnica"' + (response.data.nivelEducativo === 'Media Tecnica' ? ' selected' : '') + '>Media Tecnica</option>')
+                                    .append('<option value="Normalista"' + (response.data.nivelEducativo === 'Normalista' ? ' selected' : '') + '>Normalista</option>')
+                                    .append('<option value="Universitario"' + (response.data.nivelEducativo === 'Universitario' ? ' selected' : '') + '>Universitario</option>')
+                                    .append('<option value="Tecnica Profesional"' + (response.data.nivelEducativo === 'Tecnica Profesional' ? ' selected' : '') + '>Tecnica Profesional</option>')
+                                    .append('<option value="Tecnologica"' + (response.data.nivelEducativo === 'Tecnologica' ? ' selected' : '') + '>Tecnologica</option>')
+                                    .append('<option value="Profesional"' + (response.data.nivelEducativo === 'Profesional' ? ' selected' : '') + '>Profesional</option>')
+                                    .append('<option value="Especializacion"' + (response.data.nivelEducativo === 'Especializacion' ? ' selected' : '') + '>Especializacion</option>');
+
+                                var condicionOcupacion = $("<select>")
+                                    .attr("name", "condicionOcupacion[]")
+                                    .addClass("form-control smaller-input")
+                                    .append('<option value="">Condicion Ocupacion</option>')
+                                    .append('<option value="Ama de Casa"' + (response.data.condicionOcupacion === 'Ama de Casa' ? ' selected' : '') + '>Ama de Casa</option>')
+                                    .append('<option value="Buscando Empleo"' + (response.data.condicionOcupacion === 'Buscando Empleo' ? ' selected' : '') + '>Buscando Empleo</option>')
+                                    .append('<option value="Desempleado(a)"' + (response.data.condicionOcupacion === 'Desempleado(a)' ? ' selected' : '') + '>Desempleado(a)</option>')
+                                    .append('<option value="Empleado(a)"' + (response.data.condicionOcupacion === 'Empleado(a)' ? ' selected' : '') + '>Empleado(a)</option>')
+                                    .append('<option value="Estudiante"' + (response.data.condicionOcupacion === 'Estudiante' ? ' selected' : '') + '>Estudiante</option>')
+                                    .append('<option value="Independiente"' + (response.data.condicionOcupacion === 'Independiente' ? ' selected' : '') + '>Independiente</option>')
+                                    .append('<option value="Pensionado(a)"' + (response.data.condicionOcupacion === 'Pensionado(a)' ? ' selected' : '') + '>Pensionado(a)</option>')
+                                    .append('<option value="Ninguno"' + (response.data.condicionOcupacion === 'Ninguno' ? ' selected' : '') + '>Ninguno</option>');
+
+                                var eliminarBtn = $("<button>")
+                                    .attr("type", "button")
+                                    .addClass("btn btn-danger")
+                                    .text("Eliminar")
+                                    .click(function() {
+                                        $(this).closest(".formulario-dinamico").remove();
+                                        actualizarTotal();
+                                    });
+
+                                integranteDiv.append(
+                                    cantidadInput,
+                                    generoSelect,
+                                    rangoEdadSelect,
+                                    OrientacionSexual,
+                                    condicionDiscapacidad,
+                                    discapacidadSelect,
+                                    GrupoEtnico,
+                                    victima,
+                                    mujerGestante,
+                                    cabezaFamilia,
+                                    experienciaMigratoria,
+                                    seguridadSalud,
+                                    nivelEducativo,
+                                    condicionOcupacion,
+                                    eliminarBtn
+                                );
+
+
+                                // Agregar el integrante al contenedor
+                                $("#integrantes-container").append(integranteDiv);
+
+                                // Actualizar el total
+                                actualizarTotal();
+                            } else if (response.status === "no_existe") {
+                                mensajeContainer.removeClass("d-none alert-danger alert-success").addClass("alert alert-warning")
+                                    .html("⚠️ El documento no está registrado en ninguna base de datos.");
+                                $("#btnEnviar").prop("disabled", false);
                             } else {
                                 mensajeContainer.removeClass("d-none alert-danger alert-success").addClass("alert alert-warning")
                                     .html("⚠️ El documento no está registrado.");

@@ -53,6 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         tipo_documento,
         ciudad_expedicion,
         fecha_expedicion,
+        
         rango_integVenta,
         victima,
         condicionDiscapacidad,

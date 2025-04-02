@@ -6,7 +6,9 @@ if (!isset($_SESSION['id_usu'])) {
     header("Location: ../../index.php");
     exit();  // Asegúrate de salir del script después de redirigir
 }
-
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 $usuario    = $_SESSION['usuario'];
 $nombre     = $_SESSION['nombre'];
 $tipo_usu   = $_SESSION['tipo_usu'];
@@ -14,7 +16,6 @@ $tipo_usu   = $_SESSION['tipo_usu'];
 include("../../conexion.php");
 date_default_timezone_set("America/Bogota");
 header("Content-Type: text/html;charset=utf-8");
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Captura de datos enviados por POST
     $fec_reg_encVenta       = $_POST['fec_reg_encVenta'];
@@ -53,13 +54,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $gen_integVenta         = $_POST['gen_integVenta'] ?? array();
     $rango_integVenta       = $_POST['rango_integVenta'] ?? array();
     $condicionDiscapacidad  = $_POST['condicionDiscapacidad'] ?? array();
-    $grupoEtnico           = $_POST['grupoEtnico'] ?? array();
+    $grupoEtnico            = $_POST['grupoEtnico'] ?? array();
     $orientacionSexual      = $_POST['orientacionSexual'] ?? array();
-
+    $nivelEducativo         = $_POST['nivelEducativo'] ?? array();
+    $tipoDiscapacidad       = $_POST['tipoDiscapacidad'] ?? array();
+    $victima             = $_POST['victima'] ?? array();
+    $mujerGestante          = $_POST['mujerGestante'] ?? array();
+    $cabezaFamilia           = $_POST['cabezaFamilia'] ?? array();
+    $experienciaMigratoria  = $_POST['experienciaMigratoria'] ?? array();
+    $seguridadSalud         = $_POST['seguridadSalud'] ?? array();
+    $condicionOcupacion     = $_POST['condicionOcupacion'] ?? array();
     $estado_integVenta      = 1;
     $fecha_alta_integVenta  = date('Y-m-d h:i:s');
     $fecha_edit_integVenta  = '0000-00-00 00:00:00';
-
     $rango_edad_map = array(
         "0 - 6"                 => 1,
         "7 - 12"                => 2,
@@ -69,33 +76,45 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         "46 - 64"               => 6,
         "Mayor o igual a 65"    => 7
     );
-
+  
     foreach ($gen_integVenta as $key => $genero) {
-        if (
-            isset($cant_integVenta[$key]) && isset($rango_integVenta[$key]) &&
-            isset($condicionDiscapacidad[$key]) && isset($grupoEtnico[$key]) &&
-            isset($orientacionSexual[$key])
-        ) {
-            $cantidad               = $cant_integVenta[$key];
-            $rango_descripcion      = $rango_integVenta[$key];
-            $rango_valor            = $rango_edad_map[$rango_descripcion] ?? 'Valor_predeterminado';
-            $discapacidad           = $condicionDiscapacidad[$key];
-            $grupo                  = $grupoEtnico[$key];
-            $orientacion            = $orientacionSexual[$key];
+        
+      
+            
+            $cantidad           = $cant_integVenta[$key];
+            $rango_descripcion  = $rango_integVenta[$key];
+            $rango_valor        = $rango_edad_map[$rango_descripcion] ?? 'NULL';
+            $discapacidad       = $condicionDiscapacidad[$key];
+            $grupo              = $grupoEtnico[$key];
+            $orientacion        = $orientacionSexual[$key];
+            $educacion          = $nivelEducativo[$key];
+            $tipo_discapacidad  = $tipoDiscapacidad[$key];
+            $es_victima         = $victima[$key];
+            $es_gestante        = $mujerGestante[$key];
+            $es_cabeza_familia  = $cabezaFamilia[$key];
+            $experiencia_migr   = $experienciaMigratoria[$key];
+            $seguridad_social   = $seguridadSalud[$key];
+            $cond_ocupacion     = $condicionOcupacion[$key];
 
+            // Inserción en la base de datos
             $sql = "INSERT INTO integventanilla 
-                        (cant_integVenta, gen_integVenta, rango_integVenta, condicionDiscapacidad, grupoEtnico, orientacionSexual, estado_integVenta, fecha_alta_integVenta, fecha_edit_integVenta, id_usu, id_encVenta) 
-                        VALUES ('$cantidad', '$genero', '$rango_valor', '$discapacidad', '$grupo', '$orientacion', '$estado_integVenta', '$fecha_alta_integVenta', '$fecha_edit_integVenta', '$id_usu', '$id_encVenta')";
-
+                        (cant_integVenta, gen_integVenta, rango_integVenta, condicionDiscapacidad, grupoEtnico, 
+                         orientacionSexual, nivelEducativo, tipoDiscapacidad, victima, 
+                         mujerGestante, cabezaFamilia, experienciaMigratoria, seguridadSalud, condicionOcupacion, 
+                         estado_integVenta, fecha_alta_integVenta, fecha_edit_integVenta, id_usu, id_encVenta) 
+                    VALUES ('$cantidad', '$genero', '$rango_valor', '$discapacidad', '$grupo', '$orientacion', 
+                            '$educacion', '$tipo_discapacidad', '$es_victima', '$es_gestante', 
+                            '$es_cabeza_familia', '$experiencia_migr', '$seguridad_social', '$cond_ocupacion', 
+                            '$estado_integVenta', '$fecha_alta_integVenta', '$fecha_edit_integVenta', '$id_usu', '$id_encVenta')";
+               
             if ($mysqli->query($sql) === TRUE) {
                 // Éxito al insertar el integrante
             } else {
                 echo "Error al insertar el integrante $key: " . $mysqli->error . "<br>";
             }
         }
-    }
+    
 }
-
 echo "
     <!DOCTYPE html>
     <html lang='es'>
