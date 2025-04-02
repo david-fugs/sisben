@@ -45,6 +45,19 @@ header("Content-Type: text/html;charset=utf-8");
         $tipo_documento          = $_POST['tipo_documento'];
         $ciudad_expedicion       = $_POST['ciudad_expedicion'];
         $fecha_expedicion       = $_POST['fecha_expedicion'];
+        $rango_integVenta = isset($_POST['rango_integVenta']) ? $_POST['rango_integVenta'] : '';
+        $victima = isset($_POST['victima']) ? $_POST['victima'] : '';
+        $condicionDiscapacidad = isset($_POST['condicionDiscapacidad']) ? $_POST['condicionDiscapacidad'] : '';
+        $tipoDiscapacidad = isset($_POST['tipoDiscapacidad']) ? $_POST['tipoDiscapacidad'] : '';
+        $mujerGestante = isset($_POST['mujerGestante']) ? $_POST['mujerGestante'] : '';
+        $cabezaFamilia = isset($_POST['cabezaFamilia']) ? $_POST['cabezaFamilia'] : '';
+        $orientacionSexual = isset($_POST['orientacionSexual']) ? $_POST['orientacionSexual'] : '';
+        $experienciaMigratoria = isset($_POST['experienciaMigratoria']) ? $_POST['experienciaMigratoria'] : '';
+        $grupoEtnico = isset($_POST['grupoEtnico']) ? $_POST['grupoEtnico'] : '';
+        $seguridadSalud = isset($_POST['seguridadSalud']) ? $_POST['seguridadSalud'] : '';
+        $nivelEducativo = isset($_POST['nivelEducativo']) ? $_POST['nivelEducativo'] : '';
+        $condicionOcupacion = isset($_POST['condicionOcupacion']) ? $_POST['condicionOcupacion'] : '';
+    
         $tipo_solic_encInfo     = $_POST['tipo_solic_encInfo'];
         $info_adicional           = $_POST['info_adicional'];
         $obs2_encInfo           = $_POST['obs2_encInfo'];
@@ -52,7 +65,30 @@ header("Content-Type: text/html;charset=utf-8");
         $fecha_edit_info     = date('Y-m-d');
         $id_usu                 = $_SESSION['id_usu'];
 
-        $update =  "UPDATE informacion SET fecha_reg_info='$fecha_reg_info', doc_info='$doc_info', nom_info='$nom_info', tipo_documento='$tipo_documento', ciudad_expedicion='$ciudad_expedicion', fecha_expedicion='$fecha_expedicion', tipo_solic_encInfo='$tipo_solic_encInfo', info_adicional='$info_adicional', observacion='$obs2_encInfo',  fecha_edit_info='$fecha_edit_info' WHERE id_informacion = '$id_informacion'";
+        $update =  "UPDATE informacion SET 
+                    fecha_reg_info = '$fecha_reg_info',
+                    doc_info = '$doc_info',
+                    nom_info = '$nom_info',
+                    tipo_documento = '$tipo_documento',
+                    ciudad_expedicion = '$ciudad_expedicion',
+                    fecha_expedicion = '$fecha_expedicion',
+                    rango_integVenta = '$rango_integVenta',
+                    victima = '$victima',
+                    condicionDiscapacidad = '$condicionDiscapacidad',
+                    tipoDiscapacidad = '$tipoDiscapacidad',
+                    mujerGestante = '$mujerGestante',
+                    cabezaFamilia = '$cabezaFamilia',
+                    orientacionSexual = '$orientacionSexual',
+                    experienciaMigratoria = '$experienciaMigratoria',
+                    grupoEtnico = '$grupoEtnico',
+                    seguridadSalud = '$seguridadSalud',
+                    nivelEducativo = '$nivelEducativo',
+                    condicionOcupacion = '$condicionOcupacion',
+                    fecha_edit_info = '$fecha_edit_info',
+                    tipo_solic_encInfo = '$tipo_solic_encInfo',
+                    info_adicional = '$info_adicional',
+                    observacion = '$obs2_encInfo'
+                WHERE id_informacion='$id_informacion'";
 
         
         $up = mysqli_query($mysqli, $update);

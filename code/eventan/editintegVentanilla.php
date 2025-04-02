@@ -45,12 +45,39 @@
                 $condicionDiscapacidad  = $_POST['condicionDiscapacidad'];
                 $grupoEtnico           = $_POST['grupoEtnico'];
                 $orientacionSexual      = $_POST['orientacionSexual'];
+                $condicionDiscapacidad  = $_POST['condicionDiscapacidad'];
+                $tipoDiscapacidad       = $_POST['tipoDiscapacidad'];
+                $mujerGestante         = $_POST['mujerGestante'];
+                $cabezaFamilia         = $_POST['cabezaFamilia'];
+                $experienciaMigratoria  = $_POST['experienciaMigratoria'];
+                $seguridadSalud        = $_POST['seguridadSalud'];
+                $nivelEducativo        = $_POST['nivelEducativo'];
+                $condicionOcupacion    = $_POST['condicionOcupacion'];
+                $victima               = $_POST['victima'];
             
                 $estado_integVenta      = 1;
                 $fecha_edit_integVenta  = date('Y-m-d h:i:s');
                 $id_usu                 = $_SESSION['id_usu'];
                
-               $update = "UPDATE integVentanilla SET cant_integVenta='".$cant_integVenta."', gen_integVenta='".$gen_integVenta."', rango_integVenta='".$rango_integVenta."', condicionDiscapacidad='".$condicionDiscapacidad ."', grupoEtnico='".$grupoEtnico."', orientacionSexual='".$orientacionSexual."',estado_integVenta='".$estado_integVenta."', fecha_edit_integVenta='".$fecha_edit_integVenta."', id_usu='".$id_usu."' WHERE id_integVenta='".$id_integVenta."'";
+               $update = "UPDATE integventanilla SET 
+                            cant_integVenta = '$cant_integVenta',
+                            gen_integVenta = '$gen_integVenta',
+                            rango_integVenta = '$rango_integVenta',
+                            condicionDiscapacidad = '$condicionDiscapacidad',
+                            grupoEtnico = '$grupoEtnico',
+                            orientacionSexual = '$orientacionSexual',
+                            tipoDiscapacidad = '$tipoDiscapacidad',
+                            victima = '$victima',
+                            mujerGestante = '$mujerGestante',
+                            cabezaFamilia = '$cabezaFamilia',
+                            experienciaMigratoria = '$experienciaMigratoria',
+                            seguridadSalud = '$seguridadSalud',
+                            nivelEducativo = '$nivelEducativo',
+                            condicionOcupacion = '$condicionOcupacion',
+                            estado_integVenta = '$estado_integVenta',
+                            fecha_edit_integVenta = '$fecha_edit_integVenta',
+                            id_usu = '$id_usu'
+                        WHERE id_integVenta='$id_integVenta'";
 
                 $up = mysqli_query($mysqli, $update);
 

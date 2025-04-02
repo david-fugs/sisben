@@ -131,6 +131,8 @@
                                     <option value="">SELECCIONE:</option>   
                                     <option value="Heterosexual" '; if($row['orientacionSexual']=="Heterosexual"){echo 'selected';} echo '>Heterosexual</option>
                                     <option value="Homosexual" '; if($row['orientacionSexual']=="Homosexual"){echo 'selected';} echo '>
+                                    <option value="Asexual" '; if($row['orientacionSexual']=="Asexual"){echo 'selected';} echo '>Asexual</option>
+                                    <option value="Bisexual" '; if($row['orientacionSexual']=="Bisexual"){echo 'selected';} echo '>Bisexual</option>
                                     <option value="Otro" '; if($row['orientacionSexual']=="Otro"){echo 'selected';} echo '>Otro</option>
                                 </select>
                             </td>

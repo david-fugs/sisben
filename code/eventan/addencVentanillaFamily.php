@@ -28,21 +28,35 @@ header("Content-Type: text/html;charset=utf-8");
     <style>
         #integrantes-container {
             display: flex;
-            flex-wrap: wrap;
-            /* Permite que los elementos pasen a la siguiente línea si no caben */
-            gap: 10px;
+            flex-direction: column;
+            /* Apila los elementos verticalmente */
+            gap: 15px;
+            width: 100%;
         }
 
         .formulario-dinamico {
-            display: flex;
-            align-items: center;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             gap: 10px;
             border: 1px solid #ccc;
-            /* Opcional: agregar un borde */
-            padding: 10px;
+            padding: 15px;
             border-radius: 5px;
             background-color: #f9f9f9;
-            /* Opcional: fondo para cada elemento */
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .smaller-input {
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .btn-danger {
+            grid-column: 1 / -1;
+            /* Hace que el botón ocupe todo el ancho */
+            justify-self: start;
+            /* Alinea el botón a la izquierda */
+            margin-top: 10px;
         }
 
         .responsive {
@@ -89,7 +103,18 @@ header("Content-Type: text/html;charset=utf-8");
         }
 
         $(document).ready(function() {
-            // Función para agregar integrantes dinámicamente.
+            function actualizarTotal() {
+                let total = 0;
+                $("input[name='cant_integVenta[]']").each(function() {
+                    let valor = parseInt($(this).val()) || 0;
+                    total += valor;
+                });
+                $("#total_integrantes").val(total);
+
+                // Actualizar también el campo cant_integVenta con la cantidad total
+                $("#cant_integVenta").val($("input[name='cant_integVenta[]']").length);
+            }
+
             $("#agregar").click(function() {
                 var inputCantidad = $("#cant_integVenta");
                 var cantidadValor = parseInt(inputCantidad.val());
@@ -98,8 +123,6 @@ header("Content-Type: text/html;charset=utf-8");
                     alert("Por favor, ingresa una cantidad válida de integrantes.");
                     return;
                 }
-
-                $("#integrantes-container").empty();
 
                 for (var i = 0; i < cantidadValor; i++) {
                     var integranteDiv = $("<div>").addClass("formulario-dinamico");
@@ -125,6 +148,8 @@ header("Content-Type: text/html;charset=utf-8");
                         .attr("name", "orientacionSexual[]")
                         .addClass("form-control smaller-input")
                         .append('<option value="">Orientiacion Sexual</option>')
+                        .append('<option value="Asexual">Asexual</option>')
+                        .append('<option value="Bisexual">Bisexual</option>')
                         .append('<option value="Heterosexual">Heterosexual</option>')
                         .append('<option value="Homosexual">Homosexual</option>')
                         .append('<option value="Otro">Otro</option>');
@@ -148,25 +173,118 @@ header("Content-Type: text/html;charset=utf-8");
                         .append('<option value="Si">Si</option>')
                         .append('<option value="No">No</option>');
 
+                    var discapacidadSelect = $("<select>")
+                        .attr("name", "tipoDiscapacidad[]")
+                        .addClass("form-control smaller-input tipo-discapacidad")
+                        .append('<option value="">Tipo de Discapacidad</option>')
+                        .append('<option value="Auditiva">Auditiva</option>')
+                        .append('<option value="Física">Física</option>')
+                        .append('<option value="Intelectual">Intelectual</option>')
+                        .append('<option value="Múltiple">Múltiple</option>')
+                        .append('<option value="Psicosocial">Psicosocial</option>')
+                        .append('<option value="Sordoceguera">Sordoceguera</option>')
+                        .append('<option value="Visual">Visual</option>')
+                        .hide(); // Ocultar por defecto
+
                     var GrupoEtnico = $("<select>")
                         .attr("name", "grupoEtnico[]")
                         .addClass("form-control smaller-input")
                         .append('<option value="">Grupo Etnico</option>')
                         .append('<option value="Indigena">Indigena</option>')
-                        .append('<option value="Negra / Afrocolombiana">Negra / Afrocolombiana</option>')
+                        .append('<option value="Negro(a) / Mulato(a) / Afrocolombiano(a)">Negro(a) / Mulato(a) / Afrocolombiano(a)</option>')
                         .append('<option value="Raizal">Raizal</option>')
-                        .append('<option value="Palenquero">Palenquero</option>')
-                        .append('<option value="Gitano (rom)">Gitano (rom)</option>');
+                        .append('<option value="Palenquero de San Basilio">Palenquero de San Basilio</option>')
+                        .append('<option value="Mestizo">Mestizo</option>')
+                        .append('<option value="Gitano (rom)">Gitano (rom)</option>')
+                        .append('<option value="Ninguno">Ninguno</option>');
+
+                    var victima = $("<select>")
+                        .attr("name", "victima[]")
+                        .addClass("form-control smaller-input")
+                        .append('<option value="">Victima</option>')
+                        .append('<option value="Si">Si</option>')
+                        .append('<option value="No">No</option>');
+
+                    var mujerGestante = $("<select>")
+                        .attr("name", "mujerGestante[]")
+                        .addClass("form-control smaller-input")
+                        .append('<option value="">Mujer Gestante</option>')
+                        .append('<option value="Si">Si</option>')
+                        .append('<option value="No">No</option>');
+
+                    var cabezaFamilia = $("<select>")
+                        .attr("name", "cabezaFamilia[]")
+                        .addClass("form-control smaller-input")
+                        .append('<option value="">Hombre / mujer  Cabeza de Familia</option>')
+                        .append('<option value="Si">Si</option>')
+                        .append('<option value="No">No</option>');
+
+                    var experienciaMigratoria = $("<select>")
+                        .attr("name", "experienciaMigratoria[]")
+                        .addClass("form-control smaller-input")
+                        .append('<option value="">Experiencia Migratoria</option>')
+                        .append('<option value="Si">Si</option>')
+                        .append('<option value="No">No</option>');
+
+                    var seguridadSalud = $("<select>")
+                        .attr("name", "seguridadSalud[]")
+                        .addClass("form-control smaller-input")
+                        .append('<option value="">Seguridad Salud</option>')
+                        .append('<option value="Regimen Contributivo">Regimen Contributivo</option>')
+                        .append('<option value="Regimen Subsidiado">Regimen Subsidiado</option>')
+                        .append('<option value="Poblacion Vinculada">Poblacion Vinculada</option>');
+
+                    var nivelEducativo = $("<select>")
+                        .attr("name", "nivelEducativo[]")
+                        .addClass("form-control smaller-input")
+                        .append('<option value="">Nivel Educativo</option>')
+                        .append('<option value="Ninguno">Ninguno</option>')
+                        .append('<option value="Preescolar">Preescolar</option>')
+                        .append('<option value="Primaria">Primaria</option>')
+                        .append('<option value="Secundaria">Secundaria</option>')
+                        .append('<option value="Media Academica o Clasica">Media Academica o Clasica</option>')
+                        .append('<option value="Media Tecnica">Media Tecnica</option>')
+                        .append('<option value="Normalista">Normalista</option>')
+                        .append('<option value="Universitario">Universitario</option>')
+                        .append('<option value="Tecnica Profesional">Tecnica Profesional</option>')
+                        .append('<option value="Tecnologica">Tecnologica</option>')
+                        .append('<option value="Profesional">Profesional</option>')
+                        .append('<option value="Especializacion">Especializacion</option>')
+
+                    var condicionOcupacion = $("<select>")
+                        .attr("name", "condicionOcupacion[]")
+                        .addClass("form-control smaller-input")
+                        .append('<option value="">Condicion Ocupacion</option>')
+                        .append('<option value="Ama de casa">Ama de casa</option>')
+                        .append('<option value="Buscando Empleo">Buscando Empleo</option>')
+                        .append('<option value="Desempleado(a)">Desempleado(a)</option>')
+                        .append('<option value="Empleado(a)">Empleado(a)</option>')
+                        .append('<option value="Independiente">Independiente</option>')
+                        .append('<option value="Estudiante">Estudiante</option>')
+                        .append('<option value="Pensionado">Pensionado</option>')
+                        .append('<option value="Ninguno">Ninguno</option>')
+
                     var eliminarBtn = $("<button>")
                         .attr("type", "button")
                         .addClass("btn btn-danger")
                         .text("Eliminar")
                         .click(function() {
                             $(this).closest(".formulario-dinamico").remove();
-                            actualizarTotal();
+                            actualizarTotal(); // Esta llamada ahora actualizará ambos campos
                         });
 
-                    integranteDiv.append(cantidadInput, generoSelect, rangoEdadSelect, OrientacionSexual, condicionDiscapacidad, GrupoEtnico, eliminarBtn);
+                    // Agregar evento para mostrar/ocultar el select de discapacidad
+                    condicionDiscapacidad.on("change", function() {
+                        // Encuentra el select de discapacidad específico para este contenedor
+                        var currentDiscapacidadSelect = $(this).closest('.formulario-dinamico').find('.tipo-discapacidad');
+                        if ($(this).val() === "Si") {
+                            currentDiscapacidadSelect.show();
+                        } else {
+                            currentDiscapacidadSelect.hide();
+                        }
+                    });
+
+                    integranteDiv.append(cantidadInput, generoSelect, rangoEdadSelect, OrientacionSexual, condicionDiscapacidad, discapacidadSelect, GrupoEtnico, victima, mujerGestante, cabezaFamilia, experienciaMigratoria, seguridadSalud, nivelEducativo, condicionOcupacion, eliminarBtn);
                     $("#integrantes-container").append(integranteDiv);
                 }
 
