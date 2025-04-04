@@ -20,6 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $fec_reg_info        = $_POST['fec_reg_info'];
     $doc_info            = $_POST['doc_info'];
     $nom_info            = mb_strtoupper($_POST['nom_info']);
+    $gen_integVenta      = $_POST['gen_integVenta'];
     $tipo_documento          = $_POST['tipo_documento'];
     $ciudad_expedicion       = $_POST['ciudad_expedicion'];
     $fecha_expedicion       = $_POST['fecha_expedicion'];
@@ -50,6 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         fecha_reg_info,
         doc_info,
         nom_info,
+        gen_integVenta,
         tipo_documento,
         ciudad_expedicion,
         fecha_expedicion,
@@ -76,6 +78,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         '$fec_reg_info',
         '$doc_info',
         '$nom_info',
+        '$gen_integVenta',
         '$tipo_documento',
         '$ciudad_expedicion',
         '$fecha_expedicion',

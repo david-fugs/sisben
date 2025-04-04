@@ -70,7 +70,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             "46 - 64"               => 6,
             "Mayor o igual a 65"    => 7
         );
-
+        $huboCambios = false;
         foreach ($gen_integVenta as $key => $genero) {
             // Verificar que los valores estén definidos y no sean null
             if (isset($cant_integVenta[$key]) && isset($rango_integVenta[$key])) {
@@ -107,11 +107,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     '$estado_integVenta', '$fecha_alta_integVenta', '$fecha_edit_integVenta', '$id_usu', '$id_encVenta')";
                 // Ejecutar la consulta
                 if ($mysqli->query($sql) === TRUE) {
-                    // Éxito al insertar el integrante
+                    $huboCambios = true;
                     //echo "El integrante $key se insertó correctamente.<br>";
                 } else {
                     echo "Error al insertar el integrante $key: " . $mysqli->error . "<br>";
                 }
+            }
+        }
+
+        // Si hubo cambios, actualizar/insertar en movimientos
+        if ($huboCambios) {
+            // 1. Obtener doc_encVenta desde encventanilla
+            $queryDoc = "SELECT doc_encVenta FROM encventanilla WHERE id_encVenta = '$id_encVenta'";
+            $resultadoDoc = $mysqli->query($queryDoc);
+            $rowDoc = $resultadoDoc->fetch_assoc();
+            $doc_enc = $rowDoc['doc_encVenta'] ?? '';
+
+            // 2. Verificar si ya existe en movimientos
+            $queryExiste = "SELECT cantidad_encuesta FROM movimientos WHERE id_encuesta = '$id_encVenta' AND id_usu = '$id_usu'";
+            $resultadoExiste = $mysqli->query($queryExiste);
+
+            if ($resultadoExiste->num_rows > 0) {
+                // Ya existe, actualizar cantidad
+                $row = $resultadoExiste->fetch_assoc();
+                $nuevaCantidad = $row['cantidad_encuesta'] + 1;
+
+                $update = "UPDATE movimientos SET cantidad_encuesta = '$nuevaCantidad' WHERE id_encuesta = '$id_encVenta' AND id_usu = '$id_usu'";
+                $mysqli->query($update);
+            } else {
+                // No existe, insertar nuevo registro
+                $insert = "INSERT INTO movimientos (id_encuesta, doc_encVenta, cantidad_encuesta, id_usu) 
+                   VALUES ('$id_encVenta', '$doc_enc', 1, '$id_usu')";
+                $mysqli->query($insert);
             }
         }
     }

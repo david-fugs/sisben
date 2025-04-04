@@ -32,71 +32,100 @@ header("Content-Type: text/html;charset=utf-8");
 </head>
 
 <body>
-
     <?php
     include("../../conexion.php");
     date_default_timezone_set("America/Bogota");
     $mysqli->set_charset('utf8');
+
     if (isset($_POST['btn-update'])) {
-        $id_informacion             = $_POST['id_informacion'];
-        $fecha_reg_info        = $_POST['fecha_reg_info'];
-        $doc_info            = $_POST['doc_info'];
-        $nom_info            = mb_strtoupper($_POST['nom_info']);
-        $tipo_documento          = $_POST['tipo_documento'];
-        $ciudad_expedicion       = $_POST['ciudad_expedicion'];
-        $fecha_expedicion       = $_POST['fecha_expedicion'];
-        $rango_integVenta = isset($_POST['rango_integVenta']) ? $_POST['rango_integVenta'] : '';
-        $victima = isset($_POST['victima']) ? $_POST['victima'] : '';
-        $condicionDiscapacidad = isset($_POST['condicionDiscapacidad']) ? $_POST['condicionDiscapacidad'] : '';
-        $tipoDiscapacidad = isset($_POST['tipoDiscapacidad']) ? $_POST['tipoDiscapacidad'] : '';
-        $mujerGestante = isset($_POST['mujerGestante']) ? $_POST['mujerGestante'] : '';
-        $cabezaFamilia = isset($_POST['cabezaFamilia']) ? $_POST['cabezaFamilia'] : '';
-        $orientacionSexual = isset($_POST['orientacionSexual']) ? $_POST['orientacionSexual'] : '';
-        $experienciaMigratoria = isset($_POST['experienciaMigratoria']) ? $_POST['experienciaMigratoria'] : '';
-        $grupoEtnico = isset($_POST['grupoEtnico']) ? $_POST['grupoEtnico'] : '';
-        $seguridadSalud = isset($_POST['seguridadSalud']) ? $_POST['seguridadSalud'] : '';
-        $nivelEducativo = isset($_POST['nivelEducativo']) ? $_POST['nivelEducativo'] : '';
-        $condicionOcupacion = isset($_POST['condicionOcupacion']) ? $_POST['condicionOcupacion'] : '';
-    
-        $tipo_solic_encInfo     = $_POST['tipo_solic_encInfo'];
-        $info_adicional           = $_POST['info_adicional'];
-        $obs2_encInfo           = $_POST['obs2_encInfo'];
-        $estado_encInfo         = 1;
-        $fecha_edit_info     = date('Y-m-d');
-        $id_usu                 = $_SESSION['id_usu'];
+        session_start(); // Asegúrate de tener session_start() si usas $_SESSION
 
-        $update =  "UPDATE informacion SET 
-                    fecha_reg_info = '$fecha_reg_info',
-                    doc_info = '$doc_info',
-                    nom_info = '$nom_info',
-                    tipo_documento = '$tipo_documento',
-                    ciudad_expedicion = '$ciudad_expedicion',
-                    fecha_expedicion = '$fecha_expedicion',
-                    rango_integVenta = '$rango_integVenta',
-                    victima = '$victima',
-                    condicionDiscapacidad = '$condicionDiscapacidad',
-                    tipoDiscapacidad = '$tipoDiscapacidad',
-                    mujerGestante = '$mujerGestante',
-                    cabezaFamilia = '$cabezaFamilia',
-                    orientacionSexual = '$orientacionSexual',
-                    experienciaMigratoria = '$experienciaMigratoria',
-                    grupoEtnico = '$grupoEtnico',
-                    seguridadSalud = '$seguridadSalud',
-                    nivelEducativo = '$nivelEducativo',
-                    condicionOcupacion = '$condicionOcupacion',
-                    fecha_edit_info = '$fecha_edit_info',
-                    tipo_solic_encInfo = '$tipo_solic_encInfo',
-                    info_adicional = '$info_adicional',
-                    observacion = '$obs2_encInfo'
-                WHERE id_informacion='$id_informacion'";
+        $id_informacion = $_POST['id_informacion'];
+        $fecha_edit_info = date('Y-m-d');
+        $id_usu = $_SESSION['id_usu'];
+        $doc_info = $_POST['doc_info'];
+        // Obtener los datos actuales de la BD
+        $sql_actual = "SELECT * FROM informacion WHERE id_informacion = '$id_informacion'";
+        $res_actual = mysqli_query($mysqli, $sql_actual);
+        $actual = mysqli_fetch_assoc($res_actual);
 
-        
-        $up = mysqli_query($mysqli, $update);
-        if (!$up) {
-            echo "Error en la actualización: " . mysqli_error($mysqli);
-        } else {
-            echo "Registro actualizado correctamente.";
+        // Datos nuevos
+        $campos = [
+            'fecha_reg_info',
+            'doc_info',
+            'nom_info',
+            'tipo_documento',
+            'ciudad_expedicion',
+            'fecha_expedicion',
+            'rango_integVenta',
+            'victima',
+            'condicionDiscapacidad',
+            'tipoDiscapacidad',
+            'mujerGestante',
+            'cabezaFamilia',
+            'orientacionSexual',
+            'experienciaMigratoria',
+            'grupoEtnico',
+            'seguridadSalud',
+            'nivelEducativo',
+            'condicionOcupacion',
+            'tipo_solic_encInfo',
+            'info_adicional',
+            'observacion'
+        ];
+
+        $datos_nuevos = [];
+        foreach ($campos as $campo) {
+            $valor = isset($_POST[$campo]) ? $_POST[$campo] : '';
+            $datos_nuevos[$campo] = ($campo == 'nom_info') ? mb_strtoupper($valor) : $valor;
         }
+
+        // Verificar si hubo algún cambio
+        $hubo_cambio = false;
+        foreach ($campos as $campo) {
+            $valor_actual = isset($actual[$campo]) ? trim($actual[$campo]) : '';
+            $valor_nuevo = trim($datos_nuevos[$campo]);
+            if ($valor_actual !== $valor_nuevo) {
+                $hubo_cambio = true;
+                break;
+            }
+        }
+
+        if ($hubo_cambio) {
+            // Hacer el UPDATE
+            $update = "UPDATE informacion SET ";
+            foreach ($datos_nuevos as $campo => $valor) {
+                $update .= "$campo = '" . mysqli_real_escape_string($mysqli, $valor) . "', ";
+            }
+            $update .= "fecha_edit_info = '$fecha_edit_info' WHERE id_informacion='$id_informacion'";
+
+            $up = mysqli_query($mysqli, $update);
+
+            if (!$up) {
+                echo "Error en la actualización: " . mysqli_error($mysqli);
+            } else {
+                // Verificar si ya existe en movimientos
+                $check_mov = "SELECT * FROM movimientos WHERE id_informacion = '$id_informacion' AND id_usu = '$id_usu'";
+                $res_mov = mysqli_query($mysqli, $check_mov);
+                $doc_info = trim($_POST['doc_info']);
+
+                if (mysqli_num_rows($res_mov) > 0) {
+                    // Ya existe, sumar 1
+                    $update_mov = "UPDATE movimientos SET cantidad_informacion = cantidad_informacion + 1 WHERE id_informacion = '$id_informacion' AND id_usu = '$id_usu'";
+                    mysqli_query($mysqli, $update_mov);
+                } else {
+                    // No existe, insertar nuevo
+                    $insert_mov = "INSERT INTO movimientos (id_informacion, doc_info, id_usu, cantidad_informacion) 
+                VALUES ('$id_informacion', '$doc_info', '$id_usu', 1)";
+                    mysqli_query($mysqli, $insert_mov);
+                }
+
+                echo "Registro actualizado correctamente.";
+            }
+        } else {
+            echo "No se realizaron cambios.";
+        }
+
         echo "
                     <!DOCTYPE html>
                         <html lang='es'>

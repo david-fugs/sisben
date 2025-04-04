@@ -34,6 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $otro_bar_ver_encVenta  = mb_strtoupper($_POST['otro_bar_ver_encVenta']);
     $tram_solic_encVenta    = $_POST['tram_solic_encVenta'];
     $integra_encVenta       = $_POST['integra_encVenta'];
+    $sisben_nocturno         = $_POST['sisben_nocturno'];
     $num_ficha_encVenta     = $_POST['num_ficha_encVenta'];
     $obs_encVenta           = mb_strtoupper($_POST['obs_encVenta']);
     $estado_encVenta        = 1;
@@ -42,8 +43,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id_usu                 = $_SESSION['id_usu'];
 
     // Inserción en encVentanilla
-    $sql = "INSERT INTO encVentanilla (fec_reg_encVenta, doc_encVenta, nom_encVenta, dir_encVenta, zona_encVenta, id_com, id_bar, id_correg, id_vere, otro_bar_ver_encVenta, tram_solic_encVenta, integra_encVenta, num_ficha_encVenta, obs_encVenta, estado_encVenta, fecha_alta_encVenta, fecha_edit_encVenta, tipo_documento, ciudad_expedicion, fecha_expedicion,id_usu) 
-        VALUES ('$fec_reg_encVenta', '$doc_encVenta', '$nom_encVenta', '$dir_encVenta', '$zona_encVenta', '$id_com', '$id_bar', '$id_correg', '$id_vere', '$otro_bar_ver_encVenta', '$tram_solic_encVenta', '$integra_encVenta', '$num_ficha_encVenta', '$obs_encVenta', '$estado_encVenta', '$fecha_alta_encVenta', '$fecha_edit_encVenta','$tipo_documento','$ciudad_expedicion','$fecha_expedicion', '$id_usu')";
+    $sql = "INSERT INTO encVentanilla (fec_reg_encVenta, doc_encVenta, nom_encVenta, dir_encVenta, zona_encVenta, id_com, id_bar, id_correg, id_vere, otro_bar_ver_encVenta, tram_solic_encVenta, integra_encVenta, num_ficha_encVenta, obs_encVenta, estado_encVenta, fecha_alta_encVenta, fecha_edit_encVenta, tipo_documento, ciudad_expedicion, fecha_expedicion,id_usu ,sisben_nocturno) 
+        VALUES ('$fec_reg_encVenta', '$doc_encVenta', '$nom_encVenta', '$dir_encVenta', '$zona_encVenta', '$id_com', '$id_bar', '$id_correg', '$id_vere', '$otro_bar_ver_encVenta', '$tram_solic_encVenta', '$integra_encVenta', '$num_ficha_encVenta', '$obs_encVenta', '$estado_encVenta', '$fecha_alta_encVenta', '$fecha_edit_encVenta','$tipo_documento','$ciudad_expedicion','$fecha_expedicion', '$id_usu', '$sisben_nocturno')";
 
     $resultado = $mysqli->query($sql);
 

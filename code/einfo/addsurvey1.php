@@ -37,7 +37,45 @@ header("Content-Type: text/html;charset=utf-8");
     </style>
 
     <script>
-        // Función para ordenar un select
+        $(document).ready(function() {
+            $('#btn_ingresar').prop('disabled', true); // Deshabilitado por defecto
+
+            $('#doc_info').on('blur', function() {
+                let documento = $(this).val();
+                let mensajeDiv = $('#mensaje_documento');
+                let boton = $('#btn_ingresar');
+
+                if (documento !== '') {
+                    $.ajax({
+                        url: 'verificar_documento.php',
+                        method: 'POST',
+                        data: {
+                            doc_info: documento
+                        },
+                        dataType: 'json',
+                        success: function(response) {
+                            if (response.status === 'existe') {
+                                mensajeDiv.html('<div class="alert alert-danger">El documento ya está registrado.</div>');
+                                boton.prop('disabled', true);
+                            } else if (response.status === 'no_existe') {
+                                mensajeDiv.html('<div class="alert alert-success">Documento no registrado, puede continuar.</div>');
+                                boton.prop('disabled', false);
+                            } else {
+                                mensajeDiv.html('<div class="alert alert-warning">Ocurrió un error inesperado.</div>');
+                                boton.prop('disabled', true);
+                            }
+                        },
+                        error: function() {
+                            mensajeDiv.html('<div class="alert alert-warning">Error en la conexión.</div>');
+                            boton.prop('disabled', true);
+                        }
+                    });
+                } else {
+                    mensajeDiv.html('');
+                    boton.prop('disabled', true);
+                }
+            });
+        }); // Función para ordenar un select
         function ordenarSelect(id_componente) {
             var selectToSort = $('#' + id_componente);
             var optionActual = selectToSort.val();
@@ -80,6 +118,7 @@ header("Content-Type: text/html;charset=utf-8");
             <p><i><b>
                         <font size=3 color=#c68615>*Datos obligatorios</i></b></font>
             </p>
+            <div id="mensaje_documento" class="mb-3"></div>
 
             <div class="form-group">
                 <div class="row">
@@ -170,7 +209,7 @@ header("Content-Type: text/html;charset=utf-8");
                 <div class="row">
                     <div class="form-group col-md-3">
                         <label for="tipoDiscapacidad">* TIPO DISCAPACIDAD:</label>
-                        <select class="form-control" name="tipoDiscapacidad" id="tipoDiscapacidad" >
+                        <select class="form-control" name="tipoDiscapacidad" id="tipoDiscapacidad">
                             <option value=""></option>
                             <option value="Auditiva">Auditiva</option>
                             <option value="Fisica">Fisica</option>
@@ -270,7 +309,7 @@ header("Content-Type: text/html;charset=utf-8");
                             <option value="Maestria">Maestria</option>
                             <option value="Doctorado">Doctorado</option>
                             <option value="Ninguno">Ninguno</option>
-                        </select> 
+                        </select>
                     </div>
                     <div class="form-group col-md-4">
                         <label for="condicionOcupacion">* CONDICION OCUPACION:</label>
@@ -291,16 +330,14 @@ header("Content-Type: text/html;charset=utf-8");
 
             <div class="form-group">
                 <div class="row">
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-3 d-none">
                         <label for="tipo_solic_encInfo">* TIPO SOLICITUD:</label>
                         <select class="form-control" name="tipo_solic_encInfo" id="tipo_solic_encInfo" required>
-                            <option value=""></option>
-                            <option value="INFORMACION">INFORMACION</option>
-                            <option value="ATENCION">ATENCION</option>
+                            <option value="ATENCION"></option>
                         </select>
                     </div>
                     <div class="form-group col-md-5">
-                        <label for="obs1_encInfo">* OBSERVACION:</label>
+                        <label for="obs1_encInfo">* TIPO INFORMACION BRINDADA:</label>
                         <select class="form-control" name="obs1_encInfo" id="obs1_encInfo" required>
                             <option value=""></option>
                             <option value="ACTUALIZACION">ACTUALIZACION</option>

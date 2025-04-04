@@ -32,55 +32,108 @@
     </head>
     <body>
 
-       	<?php
-            include("../../conexion.php");
-            date_default_timezone_set("America/Bogota");
-            $mysqli->set_charset('utf8');
-    	    if(isset($_POST['btn-update']))
-            {
-                $id_integVenta          = $_POST['id_integVenta'];
-                $cant_integVenta        = $_POST['cant_integVenta'];
-                $gen_integVenta         = $_POST['gen_integVenta'];
-                $rango_integVenta       = $_POST['rango_integVenta'];
-                $condicionDiscapacidad  = $_POST['condicionDiscapacidad'];
-                $grupoEtnico           = $_POST['grupoEtnico'];
-                $orientacionSexual      = $_POST['orientacionSexual'];
-                $condicionDiscapacidad  = $_POST['condicionDiscapacidad'];
-                $tipoDiscapacidad       = $_POST['tipoDiscapacidad'];
-                $mujerGestante         = $_POST['mujerGestante'];
-                $cabezaFamilia         = $_POST['cabezaFamilia'];
-                $experienciaMigratoria  = $_POST['experienciaMigratoria'];
-                $seguridadSalud        = $_POST['seguridadSalud'];
-                $nivelEducativo        = $_POST['nivelEducativo'];
-                $condicionOcupacion    = $_POST['condicionOcupacion'];
-                $victima               = $_POST['victima'];
-            
-                $estado_integVenta      = 1;
-                $fecha_edit_integVenta  = date('Y-m-d h:i:s');
-                $id_usu                 = $_SESSION['id_usu'];
-               
-               $update = "UPDATE integventanilla SET 
-                            cant_integVenta = '$cant_integVenta',
-                            gen_integVenta = '$gen_integVenta',
-                            rango_integVenta = '$rango_integVenta',
-                            condicionDiscapacidad = '$condicionDiscapacidad',
-                            grupoEtnico = '$grupoEtnico',
-                            orientacionSexual = '$orientacionSexual',
-                            tipoDiscapacidad = '$tipoDiscapacidad',
-                            victima = '$victima',
-                            mujerGestante = '$mujerGestante',
-                            cabezaFamilia = '$cabezaFamilia',
-                            experienciaMigratoria = '$experienciaMigratoria',
-                            seguridadSalud = '$seguridadSalud',
-                            nivelEducativo = '$nivelEducativo',
-                            condicionOcupacion = '$condicionOcupacion',
-                            estado_integVenta = '$estado_integVenta',
-                            fecha_edit_integVenta = '$fecha_edit_integVenta',
-                            id_usu = '$id_usu'
-                        WHERE id_integVenta='$id_integVenta'";
+    <?php
+include("../../conexion.php");
+date_default_timezone_set("America/Bogota");
+$mysqli->set_charset('utf8');
 
-                $up = mysqli_query($mysqli, $update);
+if (isset($_POST['btn-update'])) {
+    $id_integVenta = $_POST['id_integVenta'];
+    $campos = [
+        'cant_integVenta', 'gen_integVenta', 'rango_integVenta', 'condicionDiscapacidad',
+        'grupoEtnico', 'orientacionSexual', 'tipoDiscapacidad', 'victima',
+        'mujerGestante', 'cabezaFamilia', 'experienciaMigratoria', 'seguridadSalud',
+        'nivelEducativo', 'condicionOcupacion'
+    ];
 
+    $datos_nuevos = [];
+    foreach ($campos as $campo) {
+        $datos_nuevos[$campo] = isset($_POST[$campo]) ? trim($_POST[$campo]) : '';
+    }
+
+    // Obtener datos actuales y el id_encVenta
+    $actual = [];
+    $id_encVenta = null;
+    $query_actual = "SELECT * FROM integventanilla WHERE id_integVenta = '$id_integVenta'";
+    $res_actual = mysqli_query($mysqli, $query_actual);
+    if ($res_actual && mysqli_num_rows($res_actual) > 0) {
+        $actual = mysqli_fetch_assoc($res_actual);
+        $id_encVenta = $actual['id_encVenta']; // Aquí obtenemos el id_encVenta relacionado
+    }
+
+    if (!$id_encVenta) {
+        echo "❌ Error: No se encontró el id_encVenta asociado.<br>";
+        exit;
+    }
+
+    // Verificar si hubo cambios
+    $hubo_cambio = false;
+    foreach ($campos as $campo) {
+        $valor_actual = isset($actual[$campo]) ? trim($actual[$campo]) : '';
+        $valor_nuevo = $datos_nuevos[$campo];
+        if ($valor_actual !== $valor_nuevo) {
+            $hubo_cambio = true;
+            break;
+        }
+    }
+
+    if ($hubo_cambio) {
+        echo "✅ Se detectaron cambios.<br>";
+
+        $estado_integVenta     = 1;
+        $fecha_edit_integVenta = date('Y-m-d H:i:s');
+        $id_usu                = $_SESSION['id_usu'];
+
+        // Realizar UPDATE
+        $update = "UPDATE integventanilla SET ";
+        foreach ($campos as $campo) {
+            $update .= "$campo = '" . $datos_nuevos[$campo] . "', ";
+        }
+        $update .= "estado_integVenta = '$estado_integVenta', 
+                    fecha_edit_integVenta = '$fecha_edit_integVenta', 
+                    id_usu = '$id_usu'
+                    WHERE id_integVenta = '$id_integVenta'";
+
+        if (mysqli_query($mysqli, $update)) {
+            echo "✅ Datos actualizados correctamente en 'integventanilla'.<br>";
+
+            // Obtener el doc_encVenta desde la tabla encventanilla
+            $doc = '';
+            $query_doc = "SELECT doc_encVenta FROM encventanilla WHERE id_encVenta = '$id_encVenta'";
+            $res_doc = mysqli_query($mysqli, $query_doc);
+            if ($res_doc && mysqli_num_rows($res_doc) > 0) {
+                $row_doc = mysqli_fetch_assoc($res_doc);
+                $doc = $row_doc['doc_encVenta'];
+            }
+
+            // Actualizar o insertar en movimientos
+            $check = "SELECT * FROM movimientos WHERE id_encuesta = '$id_encVenta' AND id_usu = '$id_usu'";
+            $res_check = mysqli_query($mysqli, $check);
+
+            if (mysqli_num_rows($res_check) > 0) {
+                $update_mov = "UPDATE movimientos 
+                               SET cantidad_encuesta = cantidad_encuesta + 1 
+                               WHERE id_encuesta = '$id_encVenta' AND id_usu = '$id_usu'";
+                if (mysqli_query($mysqli, $update_mov)) {
+                    echo "✅ Movimiento actualizado correctamente.<br>";
+                } else {
+                    echo "❌ Error al actualizar el movimiento: " . mysqli_error($mysqli) . "<br>";
+                }
+            } else {
+                $insert_mov = "INSERT INTO movimientos (id_encuesta, doc_encVenta, id_usu, cantidad_encuesta) 
+                               VALUES ('$id_encVenta', '$doc', '$id_usu', 1)";
+                if (mysqli_query($mysqli, $insert_mov)) {
+                    echo "✅ Movimiento insertado correctamente.<br>";
+                } else {
+                    echo "❌ Error al insertar el movimiento: " . mysqli_error($mysqli) . "<br>";
+                }
+            }
+        } else {
+            echo "❌ Error al actualizar integventanilla: " . mysqli_error($mysqli) . "<br>";
+        }
+    } else {
+        echo "ℹ️ No se detectaron cambios, no se realizó ninguna actualización.<br>";
+    }
                 echo "
                     <!DOCTYPE html>
                         <html lang='es'>
