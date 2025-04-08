@@ -415,10 +415,10 @@ header("Content-Type: text/html;charset=utf-8");
                                     );
 
                                 var rangoEdadSelect =
-                                createFormGroup(
-                                    "rango_integVenta[]", 
-                                    "Rango de edad",
-                                    $("<select>")
+                                    createFormGroup(
+                                        "rango_integVenta[]",
+                                        "Rango de edad",
+                                        $("<select>")
                                         .attr("name", "rango_integVenta[]")
                                         .addClass("form-control smaller-input")
                                         .append('<option value="">Seleccione...</option>')
@@ -429,13 +429,13 @@ header("Content-Type: text/html;charset=utf-8");
                                         .append('<option value="29 - 45"' + (response.data.rango_integVenta === '29 - 45' ? ' selected' : '') + '>29 - 45</option>')
                                         .append('<option value="46 - 64"' + (response.data.rango_integVenta === '46 - 64' ? ' selected' : '') + '>46 - 64</option>')
                                         .append('<option value="Mayor o igual a 65"' + (response.data.rango_integVenta === 'Mayor o igual a 65' ? ' selected' : '') + '>Mayor o igual a 65</option>')
-                                );
+                                    );
 
-                                var OrientacionSexual = 
-                                createFormGroup(
-                                    "orientacionSexual[]",
-                                    "Orientación Sexual",
-                                    $("<select>")
+                                var OrientacionSexual =
+                                    createFormGroup(
+                                        "orientacionSexual[]",
+                                        "Orientación Sexual",
+                                        $("<select>")
                                         .attr("name", "orientacionSexual[]")
                                         .addClass("form-control smaller-input")
                                         .append('<option value="">Seleccione...</option>')
@@ -444,159 +444,148 @@ header("Content-Type: text/html;charset=utf-8");
                                         .append('<option value="Heterosexual"' + (response.data.orientacionSexual === 'Heterosexual' ? ' selected' : '') + '>Heterosexual</option>')
                                         .append('<option value="Homosexual"' + (response.data.orientacionSexual === 'Homosexual' ? ' selected' : '') + '>Homosexual</option>')
                                         .append('<option value="Otro"' + (response.data.orientacionSexual === 'Otro' ? ' selected' : '') + '>Otro</option>')
-                                );
+                                    );
 
-                                var condicionDiscapacidad = 
-                                createFormGroup(
+                                var condicionDiscapacidad = createFormGroup(
                                     "condicionDiscapacidad[]",
                                     "Condición de Discapacidad",
                                     $("<select>")
-                                        .attr("name", "condicionDiscapacidad[]")
-                                        .addClass("form-control smaller-input")
-                                        .append('<option value="">Seleccione...</option>')
-                                        .append('<option value="Si"' + (response.data.condicionDiscapacidad === 'Si' ? ' selected' : '') + '>Sí</option>')
-                                        .append('<option value="No"' + (response.data.condicionDiscapacidad === 'No' ? ' selected' : '') + '>No</option>')
+                                    .attr("name", "condicionDiscapacidad[]")
+                                    .attr("id", "condicionDiscapacidad")
+                                    .addClass("form-control smaller-input")
+                                    .append('<option value="">Seleccione...</option>')
+                                    .append('<option value="Si"' + (response.data.condicionDiscapacidad === 'Si' ? ' selected' : '') + '>Sí</option>')
+                                    .append('<option value="No"' + (response.data.condicionDiscapacidad === 'No' ? ' selected' : '') + '>No</option>')
                                 );
-                                var discapacidadSelect = createFormGroup(
-                                "tipoDiscapacidad[]",
-                                        "Tipo de Discapacidad",
-                                        $("<select>")
-                                            .attr("name", "tipoDiscapacidad[]")
-                                            .addClass("form-control smaller-input tipo-discapacidad")
-                                            .append('<option value="">Seleccione...</option>')
-                                            .append('<option value="Auditiva"' + (response.data.tipoDiscapacidad === 'Auditiva' ? ' selected' : '') + '>Auditiva</option>')
-                                            .append('<option value="Física"' + (response.data.tipoDiscapacidad === 'Física' ? ' selected' : '') + '>Física</option>')
-                                            .append('<option value="Intelectual"' + (response.data.tipoDiscapacidad === 'Intelectual' ? ' selected' : '') + '>Intelectual</option>')
-                                            .append('<option value="Múltiple"' + (response.data.tipoDiscapacidad === 'Múltiple' ? ' selected' : '') + '>Múltiple</option>')
-                                            .append('<option value="Psicosocial"' + (response.data.tipoDiscapacidad === 'Psicosocial' ? ' selected' : '') + '>Psicosocial</option>')
-                                            .append('<option value="Sordoceguera"' + (response.data.tipoDiscapacidad === 'Sordoceguera' ? ' selected' : '') + '>Sordoceguera</option>')
-                                            .append('<option value="Visual"' + (response.data.tipoDiscapacidad === 'Visual' ? ' selected' : '') + '>Visual</option>')
-                                            
-                                    );
-                                // Mostrar select de discapacidad si corresponde
-                                if (response.data.condicionDiscapacidad === 'Si') {
-                                    discapacidadSelect.show();
-                                }
 
-                                // Configurar el evento change para la discapacidad
-                                condicionDiscapacidad.on("change", function() {
-                                    var currentDiscapacidadSelect = $(this).closest('.formulario-dinamico').find('.tipo-discapacidad');
-                                    if ($(this).val() === "Si") {
-                                        currentDiscapacidadSelect.show();
-                                    } else {
-                                        currentDiscapacidadSelect.hide();
-                                    }
-                                });
+                                var discapacidadSelect = createFormGroup(
+                                    "tipoDiscapacidad[]",
+                                    "Tipo de Discapacidad",
+                                    $("<select>")
+                                    .attr("name", "tipoDiscapacidad[]")
+                                    .attr("id", "tipoDiscapacidad")
+                                    .addClass("form-control smaller-input tipo-discapacidad")
+                                    .append('<option value="">Seleccione...</option>')
+                                    .append('<option value="Auditiva"' + (response.data.tipoDiscapacidad === 'Auditiva' ? ' selected' : '') + '>Auditiva</option>')
+                                    .append('<option value="Física"' + (response.data.tipoDiscapacidad === 'Física' ? ' selected' : '') + '>Física</option>')
+                                    .append('<option value="Intelectual"' + (response.data.tipoDiscapacidad === 'Intelectual' ? ' selected' : '') + '>Intelectual</option>')
+                                    .append('<option value="Múltiple"' + (response.data.tipoDiscapacidad === 'Múltiple' ? ' selected' : '') + '>Múltiple</option>')
+                                    .append('<option value="Psicosocial"' + (response.data.tipoDiscapacidad === 'Psicosocial' ? ' selected' : '') + '>Psicosocial</option>')
+                                    .append('<option value="Sordoceguera"' + (response.data.tipoDiscapacidad === 'Sordoceguera' ? ' selected' : '') + '>Sordoceguera</option>')
+                                    .append('<option value="Visual"' + (response.data.tipoDiscapacidad === 'Visual' ? ' selected' : '') + '>Visual</option>')
+                                );
+
+                                discapacidadSelect.attr("id", "grupoDiscapacidad");
 
                                 // Crear los demás campos con los datos de response.data
                                 var GrupoEtnico = createFormGroup(
                                     "grupoEtnico[]",
                                     "Grupo Étnico",
                                     $("<select>")
-                                        .attr("name", "grupoEtnico[]")
-                                        .addClass("form-control smaller-input")
-                                        .append('<option value="">Seleccione...</option>')
-                                        .append('<option value="Indigena"' + (response.data.grupoEtnico === 'Indigena' ? ' selected' : '') + '>Indígena</option>')
-                                        .append('<option value="Negro(a) / Mulato(a) / Afrocolombiano(a)"' + (response.data.grupoEtnico === 'Negro(a) / Mulato(a) / Afrocolombiano(a)' ? ' selected' : '') + '>Negro(a) / Mulato(a) / Afrocolombiano(a)</option>')
-                                        .append('<option value="Raizal"' + (response.data.grupoEtnico === 'Raizal' ? ' selected' : '') + '>Raizal</option>')
-                                        .append('<option value="Palenquero de San Basilio"' + (response.data.grupoEtnico === 'Palenquero de San Basilio' ? ' selected' : '') + '>Palenquero de San Basilio</option>')
-                                        .append('<option value="Mestizo"' + (response.data.grupoEtnico === 'Mestizo' ? ' selected' : '') + '>Mestizo</option>')
-                                        .append('<option value="Gitano (rom)"' + (response.data.grupoEtnico === 'Gitano (rom)' ? ' selected' : '') + '>Gitano (rom)</option>')
-                                        .append('<option value="Ninguno"' + (response.data.grupoEtnico === 'Ninguno' ? ' selected' : '') + '>Ninguno</option>')
+                                    .attr("name", "grupoEtnico[]")
+                                    .addClass("form-control smaller-input")
+                                    .append('<option value="">Seleccione...</option>')
+                                    .append('<option value="Indigena"' + (response.data.grupoEtnico === 'Indigena' ? ' selected' : '') + '>Indígena</option>')
+                                    .append('<option value="Negro(a) / Mulato(a) / Afrocolombiano(a)"' + (response.data.grupoEtnico === 'Negro(a) / Mulato(a) / Afrocolombiano(a)' ? ' selected' : '') + '>Negro(a) / Mulato(a) / Afrocolombiano(a)</option>')
+                                    .append('<option value="Raizal"' + (response.data.grupoEtnico === 'Raizal' ? ' selected' : '') + '>Raizal</option>')
+                                    .append('<option value="Palenquero de San Basilio"' + (response.data.grupoEtnico === 'Palenquero de San Basilio' ? ' selected' : '') + '>Palenquero de San Basilio</option>')
+                                    .append('<option value="Mestizo"' + (response.data.grupoEtnico === 'Mestizo' ? ' selected' : '') + '>Mestizo</option>')
+                                    .append('<option value="Gitano (rom)"' + (response.data.grupoEtnico === 'Gitano (rom)' ? ' selected' : '') + '>Gitano (rom)</option>')
+                                    .append('<option value="Ninguno"' + (response.data.grupoEtnico === 'Ninguno' ? ' selected' : '') + '>Ninguno</option>')
                                 );
 
                                 var victima = createFormGroup(
                                     "victima[]",
                                     "¿Es víctima?",
                                     $("<select>")
-                                        .attr("name", "victima[]")
-                                        .addClass("form-control smaller-input")
-                                        .append('<option value="">Seleccione...</option>')
-                                        .append('<option value="Si"' + (response.data.victima === 'Si' ? ' selected' : '') + '>Sí</option>')
-                                        .append('<option value="No"' + (response.data.victima === 'No' ? ' selected' : '') + '>No</option>')
+                                    .attr("name", "victima[]")
+                                    .addClass("form-control smaller-input")
+                                    .append('<option value="">Seleccione...</option>')
+                                    .append('<option value="Si"' + (response.data.victima === 'Si' ? ' selected' : '') + '>Sí</option>')
+                                    .append('<option value="No"' + (response.data.victima === 'No' ? ' selected' : '') + '>No</option>')
                                 );
 
                                 var mujerGestante = createFormGroup(
                                     "mujerGestante[]",
                                     "¿Mujer gestante?",
                                     $("<select>")
-                                        .attr("name", "mujerGestante[]")
-                                        .addClass("form-control smaller-input")
-                                        .append('<option value="">Seleccione...</option>')
-                                        .append('<option value="Si"' + (response.data.mujerGestante === 'Si' ? ' selected' : '') + '>Sí</option>')
-                                        .append('<option value="No"' + (response.data.mujerGestante === 'No' ? ' selected' : '') + '>No</option>')
+                                    .attr("name", "mujerGestante[]")
+                                    .addClass("form-control smaller-input")
+                                    .append('<option value="">Seleccione...</option>')
+                                    .append('<option value="Si"' + (response.data.mujerGestante === 'Si' ? ' selected' : '') + '>Sí</option>')
+                                    .append('<option value="No"' + (response.data.mujerGestante === 'No' ? ' selected' : '') + '>No</option>')
                                 );
 
                                 var cabezaFamilia = createFormGroup(
                                     "cabezaFamilia[]",
                                     "¿Cabeza de familia?",
                                     $("<select>")
-                                        .attr("name", "cabezaFamilia[]")
-                                        .addClass("form-control smaller-input")
-                                        .append('<option value="">Seleccione...</option>')
-                                        .append('<option value="Si"' + (response.data.cabezaFamilia === 'Si' ? ' selected' : '') + '>Sí</option>')
-                                        .append('<option value="No"' + (response.data.cabezaFamilia === 'No' ? ' selected' : '') + '>No</option>')
+                                    .attr("name", "cabezaFamilia[]")
+                                    .addClass("form-control smaller-input")
+                                    .append('<option value="">Seleccione...</option>')
+                                    .append('<option value="Si"' + (response.data.cabezaFamilia === 'Si' ? ' selected' : '') + '>Sí</option>')
+                                    .append('<option value="No"' + (response.data.cabezaFamilia === 'No' ? ' selected' : '') + '>No</option>')
                                 );
 
                                 var experienciaMigratoria = createFormGroup(
                                     "experienciaMigratoria[]",
                                     "¿Tiene experiencia migratoria?",
                                     $("<select>")
-                                        .attr("name", "experienciaMigratoria[]")
-                                        .addClass("form-control smaller-input")
-                                        .append('<option value="">Seleccione...</option>')
-                                        .append('<option value="Si"' + (response.data.experienciaMigratoria === 'Si' ? ' selected' : '') + '>Sí</option>')
-                                        .append('<option value="No"' + (response.data.experienciaMigratoria === 'No' ? ' selected' : '') + '>No</option>')
+                                    .attr("name", "experienciaMigratoria[]")
+                                    .addClass("form-control smaller-input")
+                                    .append('<option value="">Seleccione...</option>')
+                                    .append('<option value="Si"' + (response.data.experienciaMigratoria === 'Si' ? ' selected' : '') + '>Sí</option>')
+                                    .append('<option value="No"' + (response.data.experienciaMigratoria === 'No' ? ' selected' : '') + '>No</option>')
                                 );
 
                                 var seguridadSalud = createFormGroup(
                                     "seguridadSalud[]",
                                     "Seguridad en salud",
                                     $("<select>")
-                                        .attr("name", "seguridadSalud[]")
-                                        .addClass("form-control smaller-input")
-                                        .append('<option value="">Seleccione...</option>')
-                                        .append('<option value="Regimen Contributivo"' + (response.data.seguridadSalud === 'Regimen Contributivo' ? ' selected' : '') + '>Régimen Contributivo</option>')
-                                        .append('<option value="Regimen Subsidiado"' + (response.data.seguridadSalud === 'Regimen Subsidiado' ? ' selected' : '') + '>Régimen Subsidiado</option>')
-                                        .append('<option value="Poblacion Vinculada"' + (response.data.seguridadSalud === 'Poblacion Vinculada' ? ' selected' : '') + '>Población Vinculada</option>')
+                                    .attr("name", "seguridadSalud[]")
+                                    .addClass("form-control smaller-input")
+                                    .append('<option value="">Seleccione...</option>')
+                                    .append('<option value="Regimen Contributivo"' + (response.data.seguridadSalud === 'Regimen Contributivo' ? ' selected' : '') + '>Régimen Contributivo</option>')
+                                    .append('<option value="Regimen Subsidiado"' + (response.data.seguridadSalud === 'Regimen Subsidiado' ? ' selected' : '') + '>Régimen Subsidiado</option>')
+                                    .append('<option value="Poblacion Vinculada"' + (response.data.seguridadSalud === 'Poblacion Vinculada' ? ' selected' : '') + '>Población Vinculada</option>')
                                 );
 
                                 var nivelEducativo = createFormGroup(
                                     "nivelEducativo[]",
                                     "Nivel educativo",
                                     $("<select>")
-                                        .attr("name", "nivelEducativo[]")
-                                        .addClass("form-control smaller-input")
-                                        .append('<option value="">Seleccione...</option>')
-                                        .append('<option value="Ninguno"' + (response.data.nivelEducativo === 'Ninguno' ? ' selected' : '') + '>Ninguno</option>')
-                                        .append('<option value="Preescolar"' + (response.data.nivelEducativo === 'Preescolar' ? ' selected' : '') + '>Preescolar</option>')
-                                        .append('<option value="Primaria"' + (response.data.nivelEducativo === 'Primaria' ? ' selected' : '') + '>Primaria</option>')
-                                        .append('<option value="Secundaria"' + (response.data.nivelEducativo === 'Secundaria' ? ' selected' : '') + '>Secundaria</option>')
-                                        .append('<option value="Media Academica o Clasica"' + (response.data.nivelEducativo === 'Media Academica o Clasica' ? ' selected' : '') + '>Media Académica o Clásica</option>')
-                                        .append('<option value="Media Tecnica"' + (response.data.nivelEducativo === 'Media Tecnica' ? ' selected' : '') + '>Media Técnica</option>')
-                                        .append('<option value="Normalista"' + (response.data.nivelEducativo === 'Normalista' ? ' selected' : '') + '>Normalista</option>')
-                                        .append('<option value="Universitario"' + (response.data.nivelEducativo === 'Universitario' ? ' selected' : '') + '>Universitario</option>')
-                                        .append('<option value="Tecnica Profesional"' + (response.data.nivelEducativo === 'Tecnica Profesional' ? ' selected' : '') + '>Técnica Profesional</option>')
-                                        .append('<option value="Tecnologica"' + (response.data.nivelEducativo === 'Tecnologica' ? ' selected' : '') + '>Tecnológica</option>')
-                                        .append('<option value="Profesional"' + (response.data.nivelEducativo === 'Profesional' ? ' selected' : '') + '>Profesional</option>')
-                                        .append('<option value="Especializacion"' + (response.data.nivelEducativo === 'Especializacion' ? ' selected' : '') + '>Especialización</option>')
+                                    .attr("name", "nivelEducativo[]")
+                                    .addClass("form-control smaller-input")
+                                    .append('<option value="">Seleccione...</option>')
+                                    .append('<option value="Ninguno"' + (response.data.nivelEducativo === 'Ninguno' ? ' selected' : '') + '>Ninguno</option>')
+                                    .append('<option value="Preescolar"' + (response.data.nivelEducativo === 'Preescolar' ? ' selected' : '') + '>Preescolar</option>')
+                                    .append('<option value="Primaria"' + (response.data.nivelEducativo === 'Primaria' ? ' selected' : '') + '>Primaria</option>')
+                                    .append('<option value="Secundaria"' + (response.data.nivelEducativo === 'Secundaria' ? ' selected' : '') + '>Secundaria</option>')
+                                    .append('<option value="Media Academica o Clasica"' + (response.data.nivelEducativo === 'Media Academica o Clasica' ? ' selected' : '') + '>Media Académica o Clásica</option>')
+                                    .append('<option value="Media Tecnica"' + (response.data.nivelEducativo === 'Media Tecnica' ? ' selected' : '') + '>Media Técnica</option>')
+                                    .append('<option value="Normalista"' + (response.data.nivelEducativo === 'Normalista' ? ' selected' : '') + '>Normalista</option>')
+                                    .append('<option value="Universitario"' + (response.data.nivelEducativo === 'Universitario' ? ' selected' : '') + '>Universitario</option>')
+                                    .append('<option value="Tecnica Profesional"' + (response.data.nivelEducativo === 'Tecnica Profesional' ? ' selected' : '') + '>Técnica Profesional</option>')
+                                    .append('<option value="Tecnologica"' + (response.data.nivelEducativo === 'Tecnologica' ? ' selected' : '') + '>Tecnológica</option>')
+                                    .append('<option value="Profesional"' + (response.data.nivelEducativo === 'Profesional' ? ' selected' : '') + '>Profesional</option>')
+                                    .append('<option value="Especializacion"' + (response.data.nivelEducativo === 'Especializacion' ? ' selected' : '') + '>Especialización</option>')
                                 );
 
                                 var condicionOcupacion = createFormGroup(
                                     "condicionOcupacion[]",
                                     "Condición de ocupación",
                                     $("<select>")
-                                        .attr("name", "condicionOcupacion[]")
-                                        .addClass("form-control smaller-input")
-                                        .append('<option value="">Seleccione...</option>')
-                                        .append('<option value="Ama de casa"' + (response.data.condicionOcupacion === 'Ama de Casa' ? ' selected' : '') + '>Ama de casa</option>')
-                                        .append('<option value="Buscando Empleo"' + (response.data.condicionOcupacion === 'Buscando Empleo' ? ' selected' : '') + '>Buscando Empleo</option>')
-                                        .append('<option value="Desempleado(a)"' + (response.data.condicionOcupacion === 'Desempleado(a)' ? ' selected' : '') + '>Desempleado(a)</option>')
-                                        .append('<option value="Empleado(a)"' + (response.data.condicionOcupacion === 'Empleado(a)' ? ' selected' : '') + '>Empleado(a)</option>')
-                                        .append('<option value="Independiente"' + (response.data.condicionOcupacion === 'Independiente' ? ' selected' : '') + '>Independiente</option>')
-                                        .append('<option value="Estudiante"' + (response.data.condicionOcupacion === 'Estudiante' ? ' selected' : '') + '>Estudiante</option>')
-                                        .append('<option value="Pensionado(a)"' + (response.data.condicionOcupacion === 'Pensionado(a)' ? ' selected' : '') + '>Pensionado(a)</option>')
-                                        .append('<option value="Ninguno"' + (response.data.condicionOcupacion === 'Ninguno' ? ' selected' : '') + '>Ninguno</option>')
+                                    .attr("name", "condicionOcupacion[]")
+                                    .addClass("form-control smaller-input")
+                                    .append('<option value="">Seleccione...</option>')
+                                    .append('<option value="Ama de casa"' + (response.data.condicionOcupacion === 'Ama de Casa' ? ' selected' : '') + '>Ama de casa</option>')
+                                    .append('<option value="Buscando Empleo"' + (response.data.condicionOcupacion === 'Buscando Empleo' ? ' selected' : '') + '>Buscando Empleo</option>')
+                                    .append('<option value="Desempleado(a)"' + (response.data.condicionOcupacion === 'Desempleado(a)' ? ' selected' : '') + '>Desempleado(a)</option>')
+                                    .append('<option value="Empleado(a)"' + (response.data.condicionOcupacion === 'Empleado(a)' ? ' selected' : '') + '>Empleado(a)</option>')
+                                    .append('<option value="Independiente"' + (response.data.condicionOcupacion === 'Independiente' ? ' selected' : '') + '>Independiente</option>')
+                                    .append('<option value="Estudiante"' + (response.data.condicionOcupacion === 'Estudiante' ? ' selected' : '') + '>Estudiante</option>')
+                                    .append('<option value="Pensionado(a)"' + (response.data.condicionOcupacion === 'Pensionado(a)' ? ' selected' : '') + '>Pensionado(a)</option>')
+                                    .append('<option value="Ninguno"' + (response.data.condicionOcupacion === 'Ninguno' ? ' selected' : '') + '>Ninguno</option>')
                                 );
                                 var eliminarBtn = $("<button>")
                                     .attr("type", "button")
@@ -628,7 +617,23 @@ header("Content-Type: text/html;charset=utf-8");
 
                                 // Agregar el integrante al contenedor
                                 $("#integrantes-container").append(integranteDiv);
+                                if (response.data.condicionDiscapacidad === 'Si') {
+                                    $("#grupoDiscapacidad").show();
+                                } else {
+                                    $("#grupoDiscapacidad").hide();
+                                    $("#tipoDiscapacidad").val("");
+                                }
 
+                                // 5. Listener para cuando cambie el valor
+                                $("#condicionDiscapacidad").on("change", function() {
+                                    const valor = $(this).val();
+                                    if (valor === "Si") {
+                                        $("#grupoDiscapacidad").show();
+                                    } else {
+                                        $("#grupoDiscapacidad").hide();
+                                        $("#tipoDiscapacidad").val("");
+                                    }
+                                });
                                 // Actualizar el total
                                 actualizarTotal();
                             } else if (response.status === "no_existe") {
@@ -812,7 +817,7 @@ header("Content-Type: text/html;charset=utf-8");
                     </div>
                     <div class="form-group col-md-4">
                         <label for="sisben_nocturno">* SISBEN NOCTURNO:</label>
-                        <select class="form-control" name="sisben_nocturno" id="nocturno" >
+                        <select class="form-control" name="sisben_nocturno" id="nocturno">
                             <option value=""></option>
                             <option value="SI">SI</option>
                             <option value="NO">NO</option>
