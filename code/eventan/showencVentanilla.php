@@ -61,6 +61,13 @@ header("Content-Type: text/html;charset=utf-8");
     <?php
     include("../../conexion.php");
     date_default_timezone_set("America/Bogota");
+    //traer todos los departamentos
+    $sql = "SELECT * FROM departamentos ORDER BY nombre_departamento ASC";
+    $resultado = mysqli_query($mysqli, $sql);
+    $departamentos = [];
+    while ($row = mysqli_fetch_assoc($resultado)) {
+        $departamentos[] = $row;
+    }
     $time = time();
     $id_encVenta  = $_GET['id_encVenta'];
     if (isset($_GET['id_encVenta'])) {
@@ -92,15 +99,15 @@ header("Content-Type: text/html;charset=utf-8");
             </div>
             <div class="form-group">
                 <div class="row">
-                    <div class="col-12 col-sm-2">
+                    <div class="col-12 col-sm-3">
                         <label for="fec_reg_encVenta">* F. REALIZADA:</label>
                         <input type='date' name='fec_reg_encVenta' class='form-control' value='<?php echo $row['fec_reg_encVenta']; ?>' required />
                     </div>
-                    <div class="col-12 col-sm-2">
+                    <div class="col-12 col-sm-3">
                         <label for="doc_encVenta">DOCUMENTO:</label>
                         <input type='text' name='doc_encVenta' class='form-control' value='<?php echo $row['doc_encVenta']; ?>' required />
                     </div>
-                    <div class="col-12 col-sm-4">
+                    <div class="col-12 col-sm-6">
                         <label for="tipo_doc">* TIPO DE DOCUMENTO:</label>
                         <select name="tipo_documento" class="form-control" id="">
                             <option value="" <?php if ($row['tipo_documento'] == "") echo 'selected'; ?>>SELECCIONE :</option>
@@ -110,15 +117,30 @@ header("Content-Type: text/html;charset=utf-8");
                             <option value="otro" <?php if ($row['tipo_documento'] == "otro") echo 'selected'; ?>>OTRO</option>
                         </select>
                     </div>
-                    <div class="form-group col-md-3">
-                        <label for="ciudad_expedicion">* CIUDAD EXPEDICION:</label>
-                        <input type='text' name='ciudad_expedicion' value='<?php echo $row['ciudad_expedicion'] ?? "" ?>' class='form-control' required style="text-transform:uppercase;" />
-                    </div>
+
                 </div>
             </div>
 
             <div class="form-group">
                 <div class="row">
+                    <div class="form-group col-md-3">
+                        <label for="departamento_expedicion">* DEPARTAMENTO EXPEDICION:</label>
+                        <select class="form-control" name="departamento_expedicion" id="departamento_expedicion">
+                            <option value="">Seleccione un departamento</option>
+                            <?php
+                            foreach ($departamentos as $departamento) {
+                                $selected = ($departamento['cod_departamento'] == $row['departamento_expedicion']) ? "selected" : "";
+                                echo "<option value='{$departamento['cod_departamento']}' $selected>{$departamento['nombre_departamento']}</option>";
+                            }
+                            ?>
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        <label for="ciudad_expedicion">* MUNICIPIO EXPEDICION:</label>
+                        <select id="ciudad_expedicion" name="ciudad_expedicion" class="form-control" required>
+                        </select>
+                    </div>
                     <div class="form-group col-md-3">
                         <label for="fecha_expedicion">* FECHA EXPEDICION:</label>
                         <input type='date' name='fecha_expedicion' value='<?php echo $row['fecha_expedicion'] ?? "" ?>' class='form-control' required style="text-transform:uppercase;" />
@@ -265,6 +287,17 @@ header("Content-Type: text/html;charset=utf-8");
                             <option value="ENCUESTA NUEVA DESCENTRALIZADO" <?php if ($row['tram_solic_encVenta'] == 'ENCUESTA NUEVA DESCENTRALIZADO') {
                                                                                 echo 'selected';
                                                                             } ?>>ENCUESTA NUEVA DESCENTRALIZADO</option>
+                            <option value="CAMBIO DIRECCION" <?php if ($row['tram_solic_encVenta'] == 'CAMBIO DIRECCION') {
+                                                                    echo 'selected';
+                                                                } ?>>CAMBIO DIRECCION</option>
+                            <option value="INCONFORMIDAD" <?php if ($row['tram_solic_encVenta'] == 'INCONFORMIDAD') {
+                                                                echo 'selected';
+                                                            } ?>>INCONFORMIDAD</option>
+
+                            <option value="FAVORES" <?php if ($row['tram_solic_encVenta'] == 'FAVORES') {
+                                                        echo 'selected';
+                                                    } ?>>FAVORES</option>
+
                         </select>
                     </div>
                 </div>
@@ -325,6 +358,96 @@ header("Content-Type: text/html;charset=utf-8");
 </script>
 
 <script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function() {
+        const departamentoSelect = document.getElementById('departamento_expedicion');
+        const ciudadSelect = document.getElementById('ciudad_expedicion');
+
+        // Guardamos la ciudad que se debe seleccionar (si existe globalmente)
+        let ciudadSeleccionada = null;
+
+        // Función para cargar municipios
+        function cargarMunicipios(departamento) {
+            ciudadSelect.innerHTML = '<option value="">Seleccione una ciudad</option>';
+
+            if (departamento === '') {
+                ciudadSelect.disabled = true;
+                return;
+            }
+
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', '../obtener_municipios.php', true);
+            xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    const municipios = JSON.parse(xhr.responseText);
+                    municipios.forEach(function(municipio) {
+                        const option = document.createElement('option');
+                        option.value = municipio.cod_municipio;
+                        option.textContent = municipio.nombre_municipio;
+                        ciudadSelect.appendChild(option);
+                    });
+
+                    ciudadSelect.disabled = false;
+
+                    // ✅ Si ya teníamos una ciudad guardada, la seleccionamos
+                    if (ciudadSeleccionada) {
+                        ciudadSelect.value = ciudadSeleccionada;
+                        ciudadSeleccionada = null; // Limpiamos
+                    }
+                } else {
+                    alert('Error al cargar municipios');
+                }
+            };
+
+            xhr.send('cod_departamento=' + departamento);
+        }
+
+        // Evento change para el departamento
+        departamentoSelect.addEventListener('change', function() {
+            console.log('Departamento seleccionado:', this.value);
+            cargarMunicipios(this.value);
+        });
+
+        // ✅ Exponemos una función global para seleccionar ciudad desde AJAX
+        window.setCiudadSeleccionada = function(ciudad) {
+            ciudadSeleccionada = ciudad;
+        };
+    });
+
+    $(document).ready(function() {
+        // Asegúrate de que también tienes el valor de ciudad_expedicion disponible
+        const codDepartamento = <?= json_encode($row['departamento_expedicion']) ?>;
+        const codCiudad = <?= json_encode($row['ciudad_expedicion']) ?>;
+
+        $.ajax({
+            url: '../obtener_municipios.php',
+            type: 'POST',
+            data: {
+                cod_departamento: codDepartamento
+            },
+            dataType: 'json',
+            success: function(municipios) {
+                let ciudadSelect = $("#ciudad_expedicion");
+                ciudadSelect.empty().append('<option value="">Seleccione un municipio</option>');
+
+                $.each(municipios, function(index, municipio) {
+                    ciudadSelect.append(
+                        $('<option>', {
+                            value: municipio.cod_municipio,
+                            text: municipio.nombre_municipio,
+                            selected: municipio.cod_municipio == codCiudad // No hace falta parseInt si ambos son string
+                        })
+                    );
+                });
+
+                ciudadSelect.prop('disabled', false);
+            },
+            error: function(xhr, status, error) {
+                console.error("Error al obtener municipios:", error);
+            }
+        });
+    });
     $(document).ready(function() {
         $('#id_correg').on('change', function() {
             if ($('#id_correg').val() == "") {

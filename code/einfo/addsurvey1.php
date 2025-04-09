@@ -103,6 +103,13 @@ header("Content-Type: text/html;charset=utf-8");
     include("../../conexion.php");
     date_default_timezone_set("America/Bogota");
 
+    //traer todos los departamentos
+    $sql = "SELECT * FROM departamentos ORDER BY nombre_departamento ASC";
+    $resultado = mysqli_query($mysqli, $sql);
+    $departamentos = [];
+    while ($row = mysqli_fetch_assoc($resultado)) {
+        $departamentos[] = $row;
+    }
     $id_usu  = $_GET['id_usu'];
     if (isset($_GET['id_usu'])) {
         $sql = mysqli_query($mysqli, "SELECT * FROM usuarios WHERE id_usu = '$id_usu'");
@@ -146,16 +153,27 @@ header("Content-Type: text/html;charset=utf-8");
             <div class="form-group">
                 <div class="row">
                     <div class="form-group col-md-3">
-                        <label for="ciudad_expedicion">* CIUDAD EXPEDICION:</label>
-                        <input type='text' name='ciudad_expedicion' class='form-control' required style="text-transform:uppercase;" />
+                        <label for="departamento_expedicion">* DEPARTAMENTO EXPEDICION:</label>
+                        <select class="form-control" name="departamento_expedicion" id="departamento_expedicion">
+                            <option value="">Seleccione un departamento</option>
+                            <?php
+                            foreach ($departamentos as $departamento) {
+                                echo "<option value='{$departamento['cod_departamento']}'>{$departamento['nombre_departamento']}</option>";
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="ciudad_expedicion">* MUNICIPIO EXPEDICION:</label>
+                        <select id="ciudad_expedicion" name="ciudad_expedicion" class="form-control" disabled required>
+                            <option value="">Seleccione una ciudad</option>
+                        </select>
                     </div>
                     <div class="form-group col-md-3">
                         <label for="fecha_expedicion">* FECHA EXPEDICION:</label>
                         <input type='date' name='fecha_expedicion' class='form-control' required style="text-transform:uppercase;" />
                     </div>
-
-
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-3">
                         <label for="nom_info">* NOMBRES COMPLETOS:</label>
                         <input type='text' name='nom_info' class='form-control' required style="text-transform:uppercase;" />
                     </div>
@@ -166,16 +184,16 @@ header("Content-Type: text/html;charset=utf-8");
                 <div class="row">
                     <div class="form-group col-md-3">
                         <label for="gen_integVenta">* IDENTIDAD DE GENERO:</label>
-                        <select name="gen_integVenta" class="form-control" id="gen_integVenta" required>
+                        <select name="gen_integVenta" class="form-control" id="gen_integVenta" >
                             <option value=""></option>
                             <option value="M">MASCULINO</option>
                             <option value="F">FEMENINO</option>
                             <option value="OTRO">OTRO</option>
-                        </select> <!-- Asegurar el cierre correcto aquí -->
+                        </select> 
                     </div>
                     <div class="form-group col-md-3">
                         <label for="rango_integVenta">* RANGO DE EDAD:</label>
-                        <select name="rango_integVenta" class="form-control" id="rango_integVenta" required>
+                        <select name="rango_integVenta" class="form-control" id="rango_integVenta" >
                             <option value=""></option>
                             <option value="0 - 6">0 - 6</option>
                             <option value="7 - 12">7 - 12</option>
@@ -188,7 +206,7 @@ header("Content-Type: text/html;charset=utf-8");
                     </div>
                     <div class="form-group col-md-3">
                         <label for="victima">* VICTIMA:</label>
-                        <select name="victima" class="form-control" id="victima" required>
+                        <select name="victima" class="form-control" id="victima" >
                             <option value=""></option>
                             <option value="Si">Si</option>
                             <option value="No">No</option>
@@ -197,7 +215,7 @@ header("Content-Type: text/html;charset=utf-8");
 
                     <div class="form-group col-md-3">
                         <label for="condicionDiscapacidad">* CONDICION DISCAPACIDAD:</label>
-                        <select name="condicionDiscapacidad" class="form-control" id="condicionDiscapacidad" required>
+                        <select name="condicionDiscapacidad" class="form-control" id="condicionDiscapacidad" >
                             <option value=""></option>
                             <option value="Si">Si</option>
                             <option value="No">No</option>
@@ -227,7 +245,7 @@ header("Content-Type: text/html;charset=utf-8");
                 <div class="row">
                     <div class="form-group col-md-4">
                         <label for="mujerGestante">* MUJER GESTANTE/LACTANTE:</label>
-                        <select name="mujerGestante" class="form-control" id="mujerGestante" required>
+                        <select name="mujerGestante" class="form-control" id="mujerGestante" >
                             <option value=""></option>
                             <option value="Si">Si</option>
                             <option value="No">No</option>
@@ -235,7 +253,7 @@ header("Content-Type: text/html;charset=utf-8");
                     </div>
                     <div class="form-group col-md-4">
                         <label for="cabezaFamilia">* HOMBRE/MUJER CABEZA FAMILIA:</label>
-                        <select name="cabezaFamilia" class="form-control" id="cabezaFamilia" required>
+                        <select name="cabezaFamilia" class="form-control" id="cabezaFamilia" >
                             <option value=""></option>
                             <option value="Si">Si</option>
                             <option value="No">No</option>
@@ -243,7 +261,7 @@ header("Content-Type: text/html;charset=utf-8");
                     </div>
                     <div class="form-group col-md-4">
                         <label for="orientacionSexual">* ORIENTACION SEXUAL:</label>
-                        <select name="orientacionSexual" class="form-control" id="orientacionSexual" required>
+                        <select name="orientacionSexual" class="form-control" id="orientacionSexual" >
                             <option value=""></option>
                             <option value="Asexual">Asexual</option>
                             <option value="Bisexual">Bisexual</option>
@@ -258,7 +276,7 @@ header("Content-Type: text/html;charset=utf-8");
                 <div class="row">
                     <div class="form-group col-md-4">
                         <label for="experienciaMigratoria">* EXPERIENCIA MIGRATORIA</label>
-                        <select name="experienciaMigratoria" class="form-control" id="experienciaMigratoria" required>
+                        <select name="experienciaMigratoria" class="form-control" id="experienciaMigratoria" >
                             <option value=""></option>
                             <option value="Si">Si</option>
                             <option value="No">No</option>
@@ -266,7 +284,7 @@ header("Content-Type: text/html;charset=utf-8");
                     </div>
                     <div class="form-group col-md-4">
                         <label for="grupoEtnico">* GRUPO ETNICO:</label>
-                        <select name="grupoEtnico" class="form-control" id="grupoEtnico" required>
+                        <select name="grupoEtnico" class="form-control" id="grupoEtnico" >
                             <option value=""></option>
                             <option value="Indigena">Indigena</option>
                             <option value="ROM (Gitano)">ROM (Gitano)</option>
@@ -279,7 +297,7 @@ header("Content-Type: text/html;charset=utf-8");
                     </div>
                     <div class="form-group col-md-4">
                         <label for="seguridadSalud">* TIPO SEGURIDAD SALUD:</label>
-                        <select name="seguridadSalud" class="form-control" id="seguridadSalud" required>
+                        <select name="seguridadSalud" class="form-control" id="seguridadSalud" >
                             <option value=""></option>
                             <option value="Regimen Contributivo">Regimen Contributivo</option>
                             <option value="Regimen Subsidiado">Regimen Subsidiado</option>
@@ -293,7 +311,7 @@ header("Content-Type: text/html;charset=utf-8");
                 <div class="row">
                     <div class="form-group col-md-4">
                         <label for="nivelEducativo">* NIVEL EDUCATIVO</label>
-                        <select name="nivelEducativo" class="form-control" id="nivelEducativo" required>
+                        <select name="nivelEducativo" class="form-control" id="nivelEducativo" >
                             <option value=""></option>
                             <option value="Preescolar">Preescolar</option>
                             <option value="Basica Primaria">Basica Primaria</option>
@@ -313,7 +331,7 @@ header("Content-Type: text/html;charset=utf-8");
                     </div>
                     <div class="form-group col-md-4">
                         <label for="condicionOcupacion">* CONDICION OCUPACION:</label>
-                        <select name="condicionOcupacion" class="form-control" id="condicionOcupacion" required>
+                        <select name="condicionOcupacion" class="form-control" id="condicionOcupacion" >
                             <option value=""></option>
                             <option value="Ama de Casa">Ama de Casa</option>
                             <option value="Buscando Empleo">Buscando Empleo</option>
@@ -331,14 +349,14 @@ header("Content-Type: text/html;charset=utf-8");
             <div class="form-group">
                 <div class="row">
                     <div class="form-group col-md-3 d-none">
-                        <label for="tipo_solic_encInfo">* TIPO SOLICITUD:</label>
-                        <select class="form-control" name="tipo_solic_encInfo" id="tipo_solic_encInfo" required>
+                        <label for="tipo_solic_encInfo">UD:</label>
+                        <select class="form-control" name="tipo_solic_encInfo" id="tipo_solic_encInfo" >
                             <option value="ATENCION"></option>
                         </select>
                     </div>
                     <div class="form-group col-md-5">
                         <label for="obs1_encInfo">* TIPO INFORMACION BRINDADA:</label>
-                        <select class="form-control" name="obs1_encInfo" id="obs1_encInfo" required>
+                        <select class="form-control" name="obs1_encInfo" id="obs1_encInfo" >
                             <option value=""></option>
                             <option value="ACTUALIZACION">ACTUALIZACION</option>
                             <option value="CLASIFICACION">CLASIFICACION</option>
@@ -381,6 +399,43 @@ header("Content-Type: text/html;charset=utf-8");
             tipoDiscapacidadContainer.style.display = "none";
             document.getElementById("tipoDiscapacidad").value = ""; // Reiniciar selección
         }
+    });
+    document.addEventListener('DOMContentLoaded', function() {
+        const departamentoSelect = document.getElementById('departamento_expedicion');
+        const ciudadSelect = document.getElementById('ciudad_expedicion');
+
+        departamentoSelect.addEventListener('change', function() {
+            console.log('Departamento seleccionado:', this.value);
+            const departamento = this.value;
+
+            ciudadSelect.innerHTML = '<option value="">Seleccione una ciudad</option>';
+
+            if (departamento === '') {
+                ciudadSelect.disabled = true;
+                return;
+            }
+
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', '../obtener_municipios.php', true);
+            xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    const municipios = JSON.parse(xhr.responseText);
+                    municipios.forEach(function(municipio) {
+                        const option = document.createElement('option');
+                        option.value = municipio.cod_municipio;
+                        option.textContent = municipio.nombre_municipio;
+                        ciudadSelect.appendChild(option);
+                    });
+                    ciudadSelect.disabled = false;
+                } else {
+                    alert('Error al cargar municipios');
+                }
+            };
+
+            xhr.send('cod_departamento=' + departamento);
+        });
     });
 </script>
 

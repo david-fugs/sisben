@@ -336,6 +336,14 @@ header("Content-Type: text/html;charset=utf-8");
     <?php
     include("../../conexion.php");
     date_default_timezone_set("America/Bogota");
+
+    //traer todos los departamentos
+    $sql = "SELECT * FROM departamentos ORDER BY nombre_departamento ASC";
+    $resultado = mysqli_query($mysqli, $sql);
+    $departamentos = [];
+    while ($row = mysqli_fetch_assoc($resultado)) {
+        $departamentos[] = $row;
+    }
     ?>
     <script>
         $(document).ready(function() {
@@ -370,11 +378,39 @@ header("Content-Type: text/html;charset=utf-8");
                                 $("#fec_reg_encVenta").val(response.data.fecha_reg_info);
                                 $("#nom_encVenta").val(response.data.nom_info);
                                 $("#tipo_documento").val(response.data.tipo_documento);
-                                $("#ciudad_expedicion").val(response.data.ciudad_expedicion);
+                                $("#departamento_expedicion").val(response.data.departamento_expedicion).trigger('change');
                                 $("#fecha_expedicion").val(response.data.fecha_expedicion);
                                 $("#obs1_encInfo").val(response.data.observacion);
                                 $("#obs2_encInfo").val(response.data.info_adicional);
-                                console.log(response.data);
+                                
+                                //aqui intentamos rellenar el municipio despues de tener el vlaor de departamento
+                                $.ajax({
+                                    url: '../obtener_municipios.php',
+                                    type: 'POST',
+                                    data: {
+                                        cod_departamento: response.data.departamento_expedicion
+                                    },
+                                    dataType: 'json',
+                                    success: function(municipios) {
+                                        let ciudadSelect = $("#ciudad_expedicion");
+                                        ciudadSelect.empty().append('<option value="">Seleccione un municipio</option>');
+                                        $.each(municipios, function(index, municipio) {
+                                            ciudadSelect.append(
+                                                $('<option>', {
+                                                    value: municipio.cod_municipio,
+                                                    text: municipio.nombre_municipio,
+                                                    selected: municipio.cod_municipio === parseInt(response.data.ciudad_expedicion)
+                                                })
+                                            );
+                                        });
+
+                                        ciudadSelect.prop('disabled', false);
+                                    },
+                                    error: function(xhr, status, error) {
+                                        console.error("Error al obtener municipios:", error);
+                                    }
+                                });
+
 
                                 // Generar automáticamente UN integrante con los datos de response.data
                                 var integrantesActuales = $("input[name='cant_integVenta[]']").length;
@@ -700,14 +736,26 @@ header("Content-Type: text/html;charset=utf-8");
             <div class="form-group">
                 <div class="row">
                     <div class="form-group col-md-3">
-                        <label for="ciudad_expedicion">* CIUDAD EXPEDICION:</label>
-                        <input type='text' id="ciudad_expedicion" name='ciudad_expedicion' class='form-control' required style="text-transform:uppercase;" />
+                        <label for="departamento_expedicion">* DEPARTAMENTO EXPEDICION:</label>
+                        <select class="form-control" name="departamento_expedicion" id="departamento_expedicion">
+                            <option value="">Seleccione un departamento</option>
+                            <?php
+                            foreach ($departamentos as $departamento) {
+                                echo "<option value='{$departamento['cod_departamento']}'>{$departamento['nombre_departamento']}</option>";
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="ciudad_expedicion">* MUNICIPIO EXPEDICION:</label>
+                        <select id="ciudad_expedicion" name="ciudad_expedicion" class="form-control" disabled required>
+                        </select>
                     </div>
                     <div class="form-group col-md-3">
                         <label for="fecha_expedicion">* FECHA EXPEDICION:</label>
                         <input type='date' name='fecha_expedicion' id="fecha_expedicion" class='form-control' required style="text-transform:uppercase;" />
                     </div>
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-3">
                         <label for="nom_encVenta">* NOMBRES COMPLETOS:</label>
                         <input type='text' name='nom_encVenta' id="nom_encVenta" class='form-control' required style="text-transform:uppercase;" />
                     </div>
@@ -717,18 +765,18 @@ header("Content-Type: text/html;charset=utf-8");
                 <div class="row">
                     <div class="form-group col-md-6">
                         <label for="dir_encVenta">* DIRECCIÓN:</label>
-                        <input type='text' name='dir_encVenta' class='form-control' required />
+                        <input type='text' name='dir_encVenta' class='form-control' />
                     </div>
                     <div class="form-group col-md-2">
                         <label for="zona_encVenta">* ZONA:</label>
-                        <select id="zona_encVenta" class="form-control" name="zona_encVenta" required>
+                        <select id="zona_encVenta" class="form-control" name="zona_encVenta">
                             <option value="URBANA">URBANA</option>
                             <option value="RURAL">RURAL</option>
                         </select>
                     </div>
                     <div class="form-group col-md-4">
                         <label for="id_com">* COMUNA:</label>
-                        <select id="id_com" class="form-control" name="id_com" required>
+                        <select id="id_com" class="form-control" name="id_com">
                             <option value=""></option>
                             <?php
                             $sql = $mysqli->prepare("SELECT * FROM comunas");
@@ -750,7 +798,7 @@ header("Content-Type: text/html;charset=utf-8");
                 <div class="row">
                     <div class="form-group col-md-4">
                         <label for="id_correg">* CORREGIMIENTO:</label>
-                        <select id="id_correg" class="form-control" name="id_correg" required>
+                        <select id="id_correg" class="form-control" name="id_correg">
                             <?php
                             $sql_correg = $mysqli->prepare("SELECT * FROM corregimientos");
                             if ($sql_correg->execute()) {
@@ -766,7 +814,7 @@ header("Content-Type: text/html;charset=utf-8");
                     </div>
                     <div class="form-group col-md-4">
                         <label for="id_vere">VEREDA:</label>
-                        <select id="id_vere" name="id_vere" class="form-control" disabled="disabled" required>
+                        <select id="id_vere" name="id_vere" class="form-control" disabled="disabled">
                             <option value="">* SELECCIONE LA VEREDA:</option>
                         </select>
                     </div>
@@ -774,7 +822,7 @@ header("Content-Type: text/html;charset=utf-8");
 
                     <div class="form-group col-md-4">
                         <label for="id_bar">* BARRIO:</label>
-                        <select id="id_bar" name="id_bar" class="form-control" disabled="disabled" required>
+                        <select id="id_bar" name="id_bar" class="form-control" disabled="disabled">
                             <option value="">* SELECCIONE EL BARRIO:</option>
                         </select>
                     </div>
@@ -797,7 +845,7 @@ header("Content-Type: text/html;charset=utf-8");
                 <div class="row">
                     <div class="form-group col-md-3">
                         <label for="tram_solic_encVenta">* TRÁMITE SOLICITADO:</label>
-                        <select class="form-control" name="tram_solic_encVenta" id="selectEF" required>
+                        <select class="form-control" name="tram_solic_encVenta" id="selectEF">
                             <option value=""></option>
                             <option value="ENCUESTA NUEVA">ENCUESTA NUEVA</option>
                             <option value="ENCUESTA NUEVA POR VERIFICACION">ENCUESTA NUEVA POR VERIFICACION</option>
@@ -813,7 +861,7 @@ header("Content-Type: text/html;charset=utf-8");
                     </div>
                     <div class="form-group col-md-2">
                         <label for="integra_encVenta">INTEGRANTES:</label>
-                        <input type='number' id='total_integrantes' name='integra_encVenta' class='form-control' value="" required readonly />
+                        <input type='number' id='total_integrantes' name='integra_encVenta' class='form-control' value="" readonly />
                     </div>
                     <div class="form-group col-md-4">
                         <label for="sisben_nocturno">* SISBEN NOCTURNO:</label>
@@ -874,11 +922,66 @@ header("Content-Type: text/html;charset=utf-8");
     </script>
 
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const departamentoSelect = document.getElementById('departamento_expedicion');
+            const ciudadSelect = document.getElementById('ciudad_expedicion');
+
+            // Guardamos la ciudad que se debe seleccionar (si existe globalmente)
+            let ciudadSeleccionada = null;
+
+            // Función para cargar municipios
+            function cargarMunicipios(departamento) {
+                ciudadSelect.innerHTML = '<option value="">Seleccione una ciudad</option>';
+
+                if (departamento === '') {
+                    ciudadSelect.disabled = true;
+                    return;
+                }
+
+                const xhr = new XMLHttpRequest();
+                xhr.open('POST', '../obtener_municipios.php', true);
+                xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+                xhr.onload = function() {
+                    if (xhr.status === 200) {
+                        const municipios = JSON.parse(xhr.responseText);
+                        municipios.forEach(function(municipio) {
+                            const option = document.createElement('option');
+                            option.value = municipio.cod_municipio;
+                            option.textContent = municipio.nombre_municipio;
+                            ciudadSelect.appendChild(option);
+                        });
+
+                        ciudadSelect.disabled = false;
+
+                        // ✅ Si ya teníamos una ciudad guardada, la seleccionamos
+                        if (ciudadSeleccionada) {
+                            ciudadSelect.value = ciudadSeleccionada;
+                            ciudadSeleccionada = null; // Limpiamos
+                        }
+                    } else {
+                        alert('Error al cargar municipios');
+                    }
+                };
+
+                xhr.send('cod_departamento=' + departamento);
+            }
+
+            // Evento change para el departamento
+            departamentoSelect.addEventListener('change', function() {
+                console.log('Departamento seleccionado:', this.value);
+                cargarMunicipios(this.value);
+            });
+
+            // ✅ Exponemos una función global para seleccionar ciudad desde AJAX
+            window.setCiudadSeleccionada = function(ciudad) {
+                ciudadSeleccionada = ciudad;
+            };
+        });
+
         let agregar = document.getElementById('agregar');
         let contenido = document.getElementById('contenedor');
-
         let boton_enviar = document.querySelector('#enviar_contacto')
-
         agregar.addEventListener('click', e => {
             e.preventDefault();
             let clonado = document.querySelector('.clonar');
@@ -898,18 +1001,14 @@ header("Content-Type: text/html;charset=utf-8");
                 contenedor.parentNode.removeChild(contenedor);
             }
         });
-
         boton_enviar.addEventListener('click', e => {
             e.preventDefault();
-
             const formulario = document.querySelector('#form_contacto');
             const form = new FormData(formulario);
-
             const peticion = {
                 body: form,
                 method: 'POST'
             };
-
             fetch('php/inserta-contacto.php', peticion)
                 .then(res => res.json())
                 .then(res => {
@@ -919,7 +1018,6 @@ header("Content-Type: text/html;charset=utf-8");
                     } else {
                         alert(res['mensaje']);
                     }
-
                 });
         });
     </script>

@@ -22,6 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nom_info            = mb_strtoupper($_POST['nom_info']);
     $gen_integVenta      = $_POST['gen_integVenta'];
     $tipo_documento          = $_POST['tipo_documento'];
+    $departamento_expedicion = $_POST['departamento_expedicion'];
     $ciudad_expedicion       = $_POST['ciudad_expedicion'];
     $fecha_expedicion       = $_POST['fecha_expedicion'];
     $rango_integVenta = isset($_POST['rango_integVenta']) ? $_POST['rango_integVenta'] : '';
@@ -53,6 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         nom_info,
         gen_integVenta,
         tipo_documento,
+        departamento_expedicion,
         ciudad_expedicion,
         fecha_expedicion,
         
@@ -80,6 +82,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         '$nom_info',
         '$gen_integVenta',
         '$tipo_documento',
+        '$departamento_expedicion',
         '$ciudad_expedicion',
         '$fecha_expedicion',
         '$rango_integVenta',
@@ -101,43 +104,43 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         '$obs2_encInfo',
          $id_usu
     )";
-           
+
     // Ejec
     if (!$mysqli->query($sql)) {
         echo "Error en la consulta: " . $mysqli->error; // Muestra el error de MySQL
     } else {
         echo "Registro insertado correctamente.";
+
+        echo "
+<!DOCTYPE html>
+<html lang='es'>
+    <head>
+        <meta charset='utf-8' />
+        <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+        <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+        <link href='https://fonts.googleapis.com/css?family=Lobster' rel='stylesheet'>
+        <link href='https://fonts.googleapis.com/css?family=Orbitron' rel='stylesheet'>
+        <link rel='stylesheet' href='../../css/bootstrap.min.css'>
+        <link href='../../fontawesome/css/all.css' rel='stylesheet'>
+        <title>BD SISBEN</title>
+        <style>
+            .responsive {
+                max-width: 100%;
+                height: auto;
+            }
+        </style>
+    </head>
+    <body>
+        <center>
+            <img src='../../img/sisben.png' width=300 height=185 class='responsive'>
+            <div class='container'>
+                <br />
+                <h3><b><i class='fas fa-check-circle'></i> SE GUARDÓ DE FORMA EXITOSA EL REGISTRO</b></h3><br />
+                <p align='center'><a href='../../access.php'><img src='../../img/atras.png' width=96 height=96></a></p>
+            </div>
+        </center>
+    </body>
+</html>
+";
     }
 }
-
-echo "
-    <!DOCTYPE html>
-    <html lang='es'>
-        <head>
-            <meta charset='utf-8' />
-            <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-            <meta http-equiv='X-UA-Compatible' content='ie=edge'>
-            <link href='https://fonts.googleapis.com/css?family=Lobster' rel='stylesheet'>
-            <link href='https://fonts.googleapis.com/css?family=Orbitron' rel='stylesheet'>
-            <link rel='stylesheet' href='../../css/bootstrap.min.css'>
-            <link href='../../fontawesome/css/all.css' rel='stylesheet'>
-            <title>BD SISBEN</title>
-            <style>
-                .responsive {
-                    max-width: 100%;
-                    height: auto;
-                }
-            </style>
-        </head>
-        <body>
-            <center>
-                <img src='../../img/sisben.png' width=300 height=185 class='responsive'>
-                <div class='container'>
-                    <br />
-                    <h3><b><i class='fas fa-check-circle'></i> SE GUARDÓ DE FORMA EXITOSA EL REGISTRO</b></h3><br />
-                    <p align='center'><a href='../../access.php'><img src='../../img/atras.png' width=96 height=96></a></p>
-                </div>
-            </center>
-        </body>
-    </html>
-";

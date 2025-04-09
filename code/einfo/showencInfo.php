@@ -59,6 +59,13 @@ header("Content-Type: text/html;charset=utf-8");
     <?php
     include("../../conexion.php");
     date_default_timezone_set("America/Bogota");
+    //traer todos los departamentos
+    $sql = "SELECT * FROM departamentos ORDER BY nombre_departamento ASC";
+    $resultado = mysqli_query($mysqli, $sql);
+    $departamentos = [];
+    while ($row = mysqli_fetch_assoc($resultado)) {
+        $departamentos[] = $row;
+    }
     $time = time();
     $id_informacion  = $_GET['id_informacion'];
     if (isset($_GET['id_informacion'])) {
@@ -112,8 +119,22 @@ header("Content-Type: text/html;charset=utf-8");
                     </div>
 
                     <div class="form-group col-md-3">
-                        <label for="ciudad_expedicion">* CIUDAD EXPEDICIÓN:</label>
-                        <input type='text' name='ciudad_expedicion' class='form-control' required style="text-transform:uppercase;" value="<?php echo isset($row['ciudad_expedicion']) ? $row['ciudad_expedicion'] : ''; ?>" />
+                        <label for="departamento_expedicion">* DEPARTAMENTO EXPEDICION:</label>
+                        <select class="form-control" name="departamento_expedicion" id="departamento_expedicion">
+                            <option value="">Seleccione un departamento</option>
+                            <?php
+                            foreach ($departamentos as $departamento) {
+                                $selected = ($departamento['cod_departamento'] == $row['departamento_expedicion']) ? "selected" : "";
+                                echo "<option value='{$departamento['cod_departamento']}' $selected>{$departamento['nombre_departamento']}</option>";
+                            }
+                            ?>
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        <label for="ciudad_expedicion">* MUNICIPIO EXPEDICION:</label>
+                        <select id="ciudad_expedicion" name="ciudad_expedicion" class="form-control" required>
+                        </select>
                     </div>
 
                     <div class="form-group col-md-3">
@@ -121,7 +142,7 @@ header("Content-Type: text/html;charset=utf-8");
                         <input type='date' name='fecha_expedicion' class='form-control' required value="<?php echo isset($row['fecha_expedicion']) ? $row['fecha_expedicion'] : ''; ?>" />
                     </div>
 
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-3">
                         <label for="nom_info">* NOMBRES COMPLETOS:</label>
                         <input type='text' name='nom_info' class='form-control' required style="text-transform:uppercase;" value="<?php echo isset($row['nom_info']) ? $row['nom_info'] : ''; ?>" />
                     </div>
@@ -269,51 +290,136 @@ header("Content-Type: text/html;charset=utf-8");
 
                 <div class="form-group">
                     <div class="row">
-                    <div class="form-group col-md-4">
-                        <label for="tipo_solic_encInfo">* TIPO SOLICITUD:</label>
-                        <select class="form-control" name="tipo_solic_encInfo" id="tipo_solic_encInfo" required>
-                            <option value=""></option>
-                            <option value="INFORMACION" <?php echo isset($row['tipo_solic_encInfo']) && $row['tipo_solic_encInfo'] == "INFORMACION" ? 'selected' : ''; ?>>INFORMACIÓN</option>
-                            <option value="ATENCION" <?php echo isset($row['tipo_solic_encInfo']) && $row['tipo_solic_encInfo'] == "ATENCION" ? 'selected' : ''; ?>>ATENCIÓN</option>
-                        </select>
-                    </div>
+                   
 
-                    <div class="form-group col-md-4">
-                        <label for="obs1_encInfo">* OBSERVACIÓN:</label>
-                        <select class="form-control" name="obs2_encInfo" id="obs2_encInfo" required>
-                            <option value=""></option>
-                            <option value="ACTUALIZACION" <?php echo isset($row['observacion']) && $row['observacion'] == "ACTUALIZACION" ? 'selected' : ''; ?>>ACTUALIZACIÓN</option>
-                            <option value="CLASIFICACION" <?php echo isset($row['observacion']) && $row['observacion'] == "CLASIFICACION" ? 'selected' : ''; ?>>CLASIFICACIÓN</option>
-                            <option value="DIRECCION" <?php echo isset($row['observacion']) && $row['observacion'] == "DIRECCION" ? 'selected' : ''; ?>>DIRECCIÓN</option>
-                            <option value="DOCUMENTO" <?php echo isset($row['observacion']) && $row['observacion'] == "DOCUMENTO" ? 'selected' : ''; ?>>DOCUMENTO</option>
-                            <option value="INCLUSION" <?php echo isset($row['observacion']) && $row['observacion'] == "INCLUSION" ? 'selected' : ''; ?>>INCLUSIÓN</option>
-                            <option value="PENDIENTE" <?php echo isset($row['observacion']) && $row['observacion'] == "PENDIENTE" ? 'selected' : ''; ?>>PENDIENTE</option>
-                            <option value="VERIFICACION" <?php echo isset($row['observacion']) && $row['observacion'] == "VERIFICACION" ? 'selected' : ''; ?>>VERIFICACIÓN</option>
-                            <option value="VISITA" <?php echo isset($row['observacion']) && $row['observacion'] == "VISITA" ? 'selected' : ''; ?>>VISITA</option>
-                            <option value="CALIDAD DE LA ENCUESTA" <?php echo isset($row['observacion']) && $row['observacion'] == "CALIDAD DE LA ENCUESTA" ? 'selected' : ''; ?>>CALIDAD DE LA ENCUESTA</option>
-                            <option value="ATENCION" <?php echo isset($row['observacion']) && $row['observacion'] == "ATENCION" ? 'selected' : ''; ?>>ATENCIÓN</option>
-                        </select>
-                    </div>
-                    </div>
-                    </div>
-
-                    <div class="form-group col-md-12">
-                        <label for="info_adicional">INFORMACIÓN ADICIONAL:</label>
-                        <textarea class="form-control" id="info_adicional" rows="2" name="info_adicional" style="text-transform:uppercase;"><?php echo isset($row['info_adicional']) ? $row['info_adicional'] : ''; ?></textarea>
+                        <div class="form-group col-md-4">
+                            <label for="obs1_encInfo">* TIPO INFORMACION BRINDADA:</label>
+                            <select class="form-control" name="observacion" id="obs2_encInfo" required>
+                                <option value=""></option>
+                                <option value="ACTUALIZACION" <?php echo isset($row['observacion']) && $row['observacion'] == "ACTUALIZACION" ? 'selected' : ''; ?>>ACTUALIZACIÓN</option>
+                                <option value="CLASIFICACION" <?php echo isset($row['observacion']) && $row['observacion'] == "CLASIFICACION" ? 'selected' : ''; ?>>CLASIFICACIÓN</option>
+                                <option value="DIRECCION" <?php echo isset($row['observacion']) && $row['observacion'] == "DIRECCION" ? 'selected' : ''; ?>>DIRECCIÓN</option>
+                                <option value="DOCUMENTO" <?php echo isset($row['observacion']) && $row['observacion'] == "DOCUMENTO" ? 'selected' : ''; ?>>DOCUMENTO</option>
+                                <option value="INCLUSION" <?php echo isset($row['observacion']) && $row['observacion'] == "INCLUSION" ? 'selected' : ''; ?>>INCLUSIÓN</option>
+                                <option value="PENDIENTE" <?php echo isset($row['observacion']) && $row['observacion'] == "PENDIENTE" ? 'selected' : ''; ?>>PENDIENTE</option>
+                                <option value="VERIFICACION" <?php echo isset($row['observacion']) && $row['observacion'] == "VERIFICACION" ? 'selected' : ''; ?>>VERIFICACIÓN</option>
+                                <option value="VISITA" <?php echo isset($row['observacion']) && $row['observacion'] == "VISITA" ? 'selected' : ''; ?>>VISITA</option>
+                                <option value="CALIDAD DE LA ENCUESTA" <?php echo isset($row['observacion']) && $row['observacion'] == "CALIDAD DE LA ENCUESTA" ? 'selected' : ''; ?>>CALIDAD DE LA ENCUESTA</option>
+                                <option value="ATENCION" <?php echo isset($row['observacion']) && $row['observacion'] == "ATENCION" ? 'selected' : ''; ?>>ATENCIÓN</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
 
-                <hr style="border: 2px solid #16087B; border-radius: 2px;">
+                <div class="form-group col-md-12">
+                    <label for="info_adicional">INFORMACIÓN ADICIONAL:</label>
+                    <textarea class="form-control" id="info_adicional" rows="2" name="info_adicional" style="text-transform:uppercase;"><?php echo isset($row['info_adicional']) ? $row['info_adicional'] : ''; ?></textarea>
+                </div>
+            </div>
 
-                <button type="submit" class="btn btn-primary" name="btn-update">
-                    <span class="spinner-border spinner-border-sm"></span>
-                    ACTUALIZAR INFORMACIÓN
-                </button>
-                <button type="reset" class="btn btn-outline-dark" role='link' onclick="history.back();" type='reset'><img src='../../img/atras.png' width=27 height=27> REGRESAR
-                </button>
+            <hr style="border: 2px solid #16087B; border-radius: 2px;">
+
+            <button type="submit" class="btn btn-primary" name="btn-update">
+                <span class="spinner-border spinner-border-sm"></span>
+                ACTUALIZAR INFORMACIÓN
+            </button>
+            <button type="reset" class="btn btn-outline-dark" role='link' onclick="history.back();" type='reset'><img src='../../img/atras.png' width=27 height=27> REGRESAR
+            </button>
         </form>
     </div>
     <script src="https://www.jose-aguilar.com/scripts/fontawesome/js/all.min.js" data-auto-replace-svg="nest"></script>
 </body>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const departamentoSelect = document.getElementById('departamento_expedicion');
+        const ciudadSelect = document.getElementById('ciudad_expedicion');
+
+        // Guardamos la ciudad que se debe seleccionar (si existe globalmente)
+        let ciudadSeleccionada = null;
+
+        // Función para cargar municipios
+        function cargarMunicipios(departamento) {
+            ciudadSelect.innerHTML = '<option value="">Seleccione una ciudad</option>';
+
+            if (departamento === '') {
+                ciudadSelect.disabled = true;
+                return;
+            }
+
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', '../obtener_municipios.php', true);
+            xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    const municipios = JSON.parse(xhr.responseText);
+                    municipios.forEach(function(municipio) {
+                        const option = document.createElement('option');
+                        option.value = municipio.cod_municipio;
+                        option.textContent = municipio.nombre_municipio;
+                        ciudadSelect.appendChild(option);
+                    });
+
+                    ciudadSelect.disabled = false;
+
+                    // ✅ Si ya teníamos una ciudad guardada, la seleccionamos
+                    if (ciudadSeleccionada) {
+                        ciudadSelect.value = ciudadSeleccionada;
+                        ciudadSeleccionada = null; // Limpiamos
+                    }
+                } else {
+                    alert('Error al cargar municipios');
+                }
+            };
+
+            xhr.send('cod_departamento=' + departamento);
+        }
+
+        // Evento change para el departamento
+        departamentoSelect.addEventListener('change', function() {
+            console.log('Departamento seleccionado:', this.value);
+            cargarMunicipios(this.value);
+        });
+
+        // ✅ Exponemos una función global para seleccionar ciudad desde AJAX
+        window.setCiudadSeleccionada = function(ciudad) {
+            ciudadSeleccionada = ciudad;
+        };
+    });
+
+    $(document).ready(function() {
+        // Asegúrate de que también tienes el valor de ciudad_expedicion disponible
+        const codDepartamento = <?= json_encode($row['departamento_expedicion']) ?>;
+        const codCiudad = <?= json_encode($row['ciudad_expedicion']) ?>;
+
+        $.ajax({
+            url: '../obtener_municipios.php',
+            type: 'POST',
+            data: {
+                cod_departamento: codDepartamento
+            },
+            dataType: 'json',
+            success: function(municipios) {
+                let ciudadSelect = $("#ciudad_expedicion");
+                ciudadSelect.empty().append('<option value="">Seleccione un municipio</option>');
+
+                $.each(municipios, function(index, municipio) {
+                    ciudadSelect.append(
+                        $('<option>', {
+                            value: municipio.cod_municipio,
+                            text: municipio.nombre_municipio,
+                            selected: municipio.cod_municipio == codCiudad // No hace falta parseInt si ambos son string
+                        })
+                    );
+                });
+
+                ciudadSelect.prop('disabled', false);
+            },
+            error: function(xhr, status, error) {
+                console.error("Error al obtener municipios:", error);
+            }
+        });
+    });
+</script>
 
 </html>

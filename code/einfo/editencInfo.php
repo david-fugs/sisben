@@ -38,7 +38,6 @@ header("Content-Type: text/html;charset=utf-8");
     $mysqli->set_charset('utf8');
 
     if (isset($_POST['btn-update'])) {
-        session_start(); // Asegúrate de tener session_start() si usas $_SESSION
 
         $id_informacion = $_POST['id_informacion'];
         $fecha_edit_info = date('Y-m-d');
@@ -55,6 +54,7 @@ header("Content-Type: text/html;charset=utf-8");
             'doc_info',
             'nom_info',
             'tipo_documento',
+            'departamento_expedicion',
             'ciudad_expedicion',
             'fecha_expedicion',
             'rango_integVenta',
@@ -108,15 +108,19 @@ header("Content-Type: text/html;charset=utf-8");
                 $check_mov = "SELECT * FROM movimientos WHERE id_informacion = '$id_informacion' AND id_usu = '$id_usu'";
                 $res_mov = mysqli_query($mysqli, $check_mov);
                 $doc_info = trim($_POST['doc_info']);
-
+                $nueva_obs = isset($_POST['observacion']) ? mysqli_real_escape_string($mysqli, $_POST['observacion']) : '';
+                
                 if (mysqli_num_rows($res_mov) > 0) {
-                    // Ya existe, sumar 1
-                    $update_mov = "UPDATE movimientos SET cantidad_informacion = cantidad_informacion + 1 WHERE id_informacion = '$id_informacion' AND id_usu = '$id_usu'";
+                    // Ya existe, sumar 1 y concatenar observación con un espacio
+                    $update_mov = "UPDATE movimientos 
+                                   SET cantidad_informacion = cantidad_informacion + 1, 
+                                       observacion = CONCAT(observacion, ' ', '$nueva_obs') 
+                                   WHERE id_informacion = '$id_informacion' AND id_usu = '$id_usu'";
                     mysqli_query($mysqli, $update_mov);
                 } else {
                     // No existe, insertar nuevo
-                    $insert_mov = "INSERT INTO movimientos (id_informacion, doc_info, id_usu, cantidad_informacion) 
-                VALUES ('$id_informacion', '$doc_info', '$id_usu', 1)";
+                    $insert_mov = "INSERT INTO movimientos (id_informacion, doc_info, id_usu, cantidad_informacion, observacion) 
+                                   VALUES ('$id_informacion', '$doc_info', '$id_usu', 1, '$nueva_obs')";
                     mysqli_query($mysqli, $insert_mov);
                 }
 
