@@ -27,12 +27,26 @@ header("Content-Type: text/html;charset=utf-8");
     <script type="text/javascript" src="../../js/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
     <script src="https://kit.fontawesome.com/fed2435e21.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Select2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
+    <!-- Select2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
     <style>
+        .select2-container .select2-selection--single {
+            height: 40px !important;
+            padding: 6px 12px;
+            font-size: 16px;
+            line-height: 30px;
+        }
+
+        /* Ajusta la flecha del desplegable */
+        .select2-container--default .select2-selection--single .select2-selection__arrow {
+            height: 45px !important;
+        }
+
         #integrantes-container {
             display: flex;
             flex-direction: column;
@@ -100,6 +114,62 @@ header("Content-Type: text/html;charset=utf-8");
     </style>
 
     <script>
+        $(document).ready(function() {
+            $('#id_barrios').select2({
+                placeholder: 'Seleccione barrio',
+                minimumInputLength: 2,
+                allowClear: true, //  esto permite borrar la selección
+                ajax: {
+                    url: '../buscar_barrios.php',
+                    dataType: 'json',
+                    delay: 250,
+                    data: function(params) {
+                        return {
+                            q: params.term
+                        };
+                    },
+                    processResults: function(data) {
+                        return {
+                            results: data
+                        };
+                    },
+                    cache: true
+                }
+            });
+
+            $('#id_barrios').on('change', function() {
+
+                const selectedValue = $(this).val();
+
+                if (selectedValue == '1897') {
+                    $('#otro_barrio_container').show();
+                } else {
+                    $('#otro_barrio_container').hide();
+                }
+
+                let id_barrio = $(this).val();
+
+                if (id_barrio !== "") {
+                    $.ajax({
+                        url: '../comunaGet.php',
+                        type: 'GET',
+                        data: {
+                            id_barrio: id_barrio
+                        },
+                        success: function(response) {
+                            $('#id_comunas').html(response);
+                            $('#id_comunas').removeAttr('disabled');
+                        },
+                        error: function() {
+                            alert('Error al obtener las comunas.');
+                        }
+                    });
+                } else {
+                    $('#id_comunas').html('<option value="">Seleccione comuna</option>');
+                }
+            });
+        });
+
         // Función para ordenar un select
         function ordenarSelect(id_componente) {
             var selectToSort = $('#' + id_componente);
@@ -382,7 +452,7 @@ header("Content-Type: text/html;charset=utf-8");
                                 $("#fecha_expedicion").val(response.data.fecha_expedicion);
                                 $("#obs1_encInfo").val(response.data.observacion);
                                 $("#obs2_encInfo").val(response.data.info_adicional);
-                                
+
                                 //aqui intentamos rellenar el municipio despues de tener el vlaor de departamento
                                 $.ajax({
                                     url: '../obtener_municipios.php',
@@ -774,7 +844,7 @@ header("Content-Type: text/html;charset=utf-8");
                             <option value="RURAL">RURAL</option>
                         </select>
                     </div>
-                    <div class="form-group col-md-4">
+                    <!-- <div class="form-group col-md-4">
                         <label for="id_com">* COMUNA:</label>
                         <select id="id_com" class="form-control" name="id_com">
                             <option value=""></option>
@@ -790,9 +860,28 @@ header("Content-Type: text/html;charset=utf-8");
                             }
                             ?>
                         </select>
+                    </div> -->
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label for="id_barrios">* BARRIO:</label>
+                        <select id="id_barrios" class="form-control" name="id_bar" style="width: 100%;min-height: 55px; "></select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="id_comunas">* COMUNA:</label>
+                        <select id="id_comunas" class="form-control" name="id_com" disabled>
+                            <option value="" disabled>Seleccione comuna</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4" id="otro_barrio_container" style="display: none;">
+                        <label for="otro_bar_ver_encVenta">ESPECIFIQUE BARRIO, VEREDA O INVASIÓN:</label>
+                        <input type="text" id="otro_bar_ver_encVenta" name="otro_bar_ver_encVenta" class="form-control" placeholder="Ingrese el barrio">
                     </div>
                 </div>
             </div>
+
 
             <div class="form-group">
                 <div class="row">
@@ -820,16 +909,13 @@ header("Content-Type: text/html;charset=utf-8");
                     </div>
 
 
-                    <div class="form-group col-md-4">
+                    <!-- <div class="form-group col-md-4">
                         <label for="id_bar">* BARRIO:</label>
                         <select id="id_bar" name="id_bar" class="form-control" disabled="disabled">
                             <option value="">* SELECCIONE EL BARRIO:</option>
                         </select>
-                    </div>
-                    <div class="form-group col-md-4" id="otro_barrio_container" style="display: none;">
-                        <label for="otro_bar_ver_encVenta">ESPECIFIQUE BARRIO,VEREDA O INVASION:</label>
-                        <input type="text" id="otro_bar_ver_encVenta" name="otro_bar_ver_encVenta" class="form-control" placeholder="Ingrese el barrio">
-                    </div>
+                    </div> -->
+
                 </div>
             </div>
             <script>
@@ -1023,23 +1109,8 @@ header("Content-Type: text/html;charset=utf-8");
     </script>
 
 </body>
-<script src="../ecampo/js/jquery-3.1.1.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
-        $('#id_com').on('change', function() {
-            if ($('#id_com').val() == "") {
-                $('#id_bar').empty();
-                $('<option value="">SELECCIONE EL BARRIO:</option>').appendTo('#id_bar');
-                $('#id_bar').attr('disabled', 'disabled');
-            } else {
-                $('#id_bar').removeAttr('disabled');
-                $('#id_bar').load('../ecampo/barriosGet.php?id_com=' + $('#id_com').val(), function() {
-                    console.log("Barrios cargados:");
-                    $('#id_bar option').each(function() {});
-                });
-            }
-        });
-
         //  Agregar LOGS para ver qué tiene id_bar al cambiar
         $('#id_bar').on('change', function() {
             $('#id_bar option:selected').each(function() {
