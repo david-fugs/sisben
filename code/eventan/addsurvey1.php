@@ -33,7 +33,7 @@ header("Content-Type: text/html;charset=utf-8");
 
     <!-- Select2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
+    <script src="../barrios.js"> </script>
     <style>
         .select2-container .select2-selection--single {
             height: 40px !important;
@@ -114,62 +114,6 @@ header("Content-Type: text/html;charset=utf-8");
     </style>
 
     <script>
-        $(document).ready(function() {
-            $('#id_barrios').select2({
-                placeholder: 'Seleccione barrio',
-                minimumInputLength: 2,
-                allowClear: true, //  esto permite borrar la selección
-                ajax: {
-                    url: '../buscar_barrios.php',
-                    dataType: 'json',
-                    delay: 250,
-                    data: function(params) {
-                        return {
-                            q: params.term
-                        };
-                    },
-                    processResults: function(data) {
-                        return {
-                            results: data
-                        };
-                    },
-                    cache: true
-                }
-            });
-
-            $('#id_barrios').on('change', function() {
-
-                const selectedValue = $(this).val();
-
-                if (selectedValue == '1897') {
-                    $('#otro_barrio_container').show();
-                } else {
-                    $('#otro_barrio_container').hide();
-                }
-
-                let id_barrio = $(this).val();
-
-                if (id_barrio !== "") {
-                    $.ajax({
-                        url: '../comunaGet.php',
-                        type: 'GET',
-                        data: {
-                            id_barrio: id_barrio
-                        },
-                        success: function(response) {
-                            $('#id_comunas').html(response);
-                            $('#id_comunas').removeAttr('disabled');
-                        },
-                        error: function() {
-                            alert('Error al obtener las comunas.');
-                        }
-                    });
-                } else {
-                    $('#id_comunas').html('<option value="">Seleccione comuna</option>');
-                }
-            });
-        });
-
         // Función para ordenar un select
         function ordenarSelect(id_componente) {
             var selectToSort = $('#' + id_componente);
@@ -837,13 +781,7 @@ header("Content-Type: text/html;charset=utf-8");
                         <label for="dir_encVenta">* DIRECCIÓN:</label>
                         <input type='text' name='dir_encVenta' class='form-control' />
                     </div>
-                    <div class="form-group col-md-2">
-                        <label for="zona_encVenta">* ZONA:</label>
-                        <select id="zona_encVenta" class="form-control" name="zona_encVenta">
-                            <option value="URBANA">URBANA</option>
-                            <option value="RURAL">RURAL</option>
-                        </select>
-                    </div>
+
                     <!-- <div class="form-group col-md-4">
                         <label for="id_com">* COMUNA:</label>
                         <select id="id_com" class="form-control" name="id_com">
@@ -886,6 +824,26 @@ header("Content-Type: text/html;charset=utf-8");
             <div class="form-group">
                 <div class="row">
                     <div class="form-group col-md-4">
+                        <label for="zona_encVenta">* ZONA:</label>
+                        <select id="zona_encVenta" class="form-control" name="zona_encVenta">
+                            <option value="">* SELECCIONE LA ZONA:</option>
+                            <option value="URBANA">URBANA</option>
+                            <option value="RURAL">RURAL</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="tram_solic_encVenta">* TRÁMITE SOLICITADO:</label>
+                        <select class="form-control" name="tram_solic_encVenta" id="selectEF">
+                            <option value=""></option>
+                            <option value="ENCUESTA NUEVA">ENCUESTA NUEVA</option>
+                            <option value="ENCUESTA NUEVA POR VERIFICACION">ENCUESTA NUEVA POR VERIFICACION</option>
+                            <option value="CAMBIO DIRECCION">CAMBIO DIRECCION</option>
+                            <option value="INCONFORMIDAD">INCONFORMIDAD</option>
+                            <option value=" DESCENTRALIZADO"> DESCENTRALIZADO</option>
+                            <option value="FAVORES">FAVORES</option>
+                        </select>
+                    </div>
+                    <!-- <div class="form-group col-md-4">
                         <label for="id_correg">* CORREGIMIENTO:</label>
                         <select id="id_correg" class="form-control" name="id_correg">
                             <?php
@@ -906,7 +864,7 @@ header("Content-Type: text/html;charset=utf-8");
                         <select id="id_vere" name="id_vere" class="form-control" disabled="disabled">
                             <option value="">* SELECCIONE LA VEREDA:</option>
                         </select>
-                    </div>
+                    </div> -->
 
 
                     <!-- <div class="form-group col-md-4">
@@ -929,23 +887,12 @@ header("Content-Type: text/html;charset=utf-8");
 
             <div class="form-group">
                 <div class="row">
-                    <div class="form-group col-md-3">
-                        <label for="tram_solic_encVenta">* TRÁMITE SOLICITADO:</label>
-                        <select class="form-control" name="tram_solic_encVenta" id="selectEF">
-                            <option value=""></option>
-                            <option value="ENCUESTA NUEVA">ENCUESTA NUEVA</option>
-                            <option value="ENCUESTA NUEVA POR VERIFICACION">ENCUESTA NUEVA POR VERIFICACION</option>
-                            <option value="CAMBIO DIRECCION">CAMBIO DIRECCION</option>
-                            <option value="INCONFORMIDAD">INCONFORMIDAD</option>
-                            <option value=" DESCENTRALIZADO"> DESCENTRALIZADO</option>
-                            <option value="FAVORES">FAVORES</option>
-                        </select>
-                    </div>
-                    <div class="form-group col-md-3">
+
+                    <div class="form-group col-md-4">
                         <label for="num_ficha_encVenta">* No. FICHA o RADICADO:</label>
                         <input type='number' name='num_ficha_encVenta' class='form-control' required />
                     </div>
-                    <div class="form-group col-md-2">
+                    <div class="form-group col-md-4">
                         <label for="integra_encVenta">INTEGRANTES:</label>
                         <input type='number' id='total_integrantes' name='integra_encVenta' class='form-control' value="" readonly />
                     </div>
