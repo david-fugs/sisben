@@ -218,7 +218,7 @@ header("Content-Type: text/html;charset=utf-8");
                         ?>
                         </select>
                     </div>
-                    <div class="col-12 col-sm-4">
+                    <!-- <div class="col-12 col-sm-4">
                         <label for="id_correg">CORREGIMIENTO</label>
                         <select name='id_correg' class='form-control' id="id_correg" required />
                         <option value=''></option>
@@ -238,7 +238,7 @@ header("Content-Type: text/html;charset=utf-8");
                         }
                         ?>
                         </select>
-                    </div>
+                    </div> -->
                 </div>
             </div>
             <script>
@@ -249,7 +249,7 @@ header("Content-Type: text/html;charset=utf-8");
 
             <div class="form-group">
                 <div class="row">
-                    <div class="col-12 col-sm-3">
+                    <!-- <div class="col-12 col-sm-3">
                         <label for="id_vere">VEREDA</label>
                         <select name='id_vere' class='form-control' id='id_vere' required />
                         <option value=''></option>
@@ -269,12 +269,12 @@ header("Content-Type: text/html;charset=utf-8");
                         }
                         ?>
                         </select>
-                    </div>
+                    </div> -->
                     <div class="form-group col-md-4">
                         <label for="otro_bar_ver_encVenta">OTRO BARRIO,VEREDA O INVASION:</label>
                         <input type='text' id='otro_bar_ver_encVenta' name='otro_bar_ver_encVenta' class='form-control' value='<?php echo $row['otro_bar_ver_encVenta']; ?>' />
                     </div>
-                    <div class="col-12 col-sm-5">
+                    <div class="col-12 col-sm-4">
                         <label for="tram_solic_encVenta">* TRÁMITE SOLICITADO:</label>
                         <select class="form-control" name="tram_solic_encVenta" required id="tram_solic_encVenta">
                             <option value="">SELECCIONE:</option>
@@ -300,6 +300,10 @@ header("Content-Type: text/html;charset=utf-8");
 
                         </select>
                     </div>
+                    <div class="col-12 col-sm-4">
+                        <label for="num_ficha_encVenta">* No. FICHA:</label>
+                        <input type='number' name='num_ficha_encVenta' class='form-control' value='<?php echo $row['num_ficha_encVenta']; ?>' required />
+                    </div>
                 </div>
             </div>
             <script>
@@ -314,10 +318,7 @@ header("Content-Type: text/html;charset=utf-8");
                         <label for="integra_encVenta">* INTEGRANTES:</label>
                         <input type='number' id='integra_encVenta' name='integra_encVenta' class='form-control' value='<?php echo $row['integra_encVenta']; ?>' required readonly />
                     </div>
-                    <div class="col-12 col-sm-4">
-                        <label for="num_ficha_encVenta">* No. FICHA:</label>
-                        <input type='number' name='num_ficha_encVenta' class='form-control' value='<?php echo $row['num_ficha_encVenta']; ?>' required />
-                    </div>
+
                 </div>
             </div>
 

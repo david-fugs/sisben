@@ -9,7 +9,7 @@ if (!isset($_SESSION['id_usu'])) {
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-$usuario    = $_SESSION['usuario'];
+$usuario    = $_SESSION['id_usu'];
 $nombre     = $_SESSION['nombre'];
 $tipo_usu   = $_SESSION['tipo_usu'];
 
@@ -29,8 +29,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $zona_encVenta          = $_POST['zona_encVenta'];
     $id_com                 = $_POST['id_com'];
     $id_bar                 = $_POST['id_bar'];
-    $id_correg              = $_POST['id_correg'];
-    $id_vere                = $_POST['id_vere'];
     $otro_bar_ver_encVenta  = mb_strtoupper($_POST['otro_bar_ver_encVenta']);
     $tram_solic_encVenta    = $_POST['tram_solic_encVenta'];
     $integra_encVenta       = $_POST['integra_encVenta'];
@@ -43,8 +41,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id_usu                 = $_SESSION['id_usu'];
 
     // Inserción en encVentanilla
-    $sql = "INSERT INTO encVentanilla (fec_reg_encVenta, doc_encVenta, nom_encVenta, dir_encVenta, zona_encVenta, id_com, id_bar, id_correg, id_vere, otro_bar_ver_encVenta, tram_solic_encVenta, integra_encVenta, num_ficha_encVenta, obs_encVenta, estado_encVenta, fecha_alta_encVenta, fecha_edit_encVenta, tipo_documento, fecha_expedicion,departamento_expedicion,ciudad_expedicion,id_usu ,sisben_nocturno) 
-        VALUES ('$fec_reg_encVenta', '$doc_encVenta', '$nom_encVenta', '$dir_encVenta', '$zona_encVenta', '$id_com', '$id_bar', '$id_correg', '$id_vere', '$otro_bar_ver_encVenta', '$tram_solic_encVenta', '$integra_encVenta', '$num_ficha_encVenta', '$obs_encVenta', '$estado_encVenta', '$fecha_alta_encVenta', '$fecha_edit_encVenta','$tipo_documento','$fecha_expedicion', '$departamento_expedicion','$ciudad_expedicion', '$id_usu', '$sisben_nocturno')";
+    $sql = "INSERT INTO encVentanilla (fec_reg_encVenta, doc_encVenta, nom_encVenta, dir_encVenta, zona_encVenta, id_com, id_bar, otro_bar_ver_encVenta, tram_solic_encVenta, integra_encVenta, num_ficha_encVenta, obs_encVenta, estado_encVenta, fecha_alta_encVenta, fecha_edit_encVenta, tipo_documento, fecha_expedicion,departamento_expedicion,ciudad_expedicion,id_usu ,sisben_nocturno) 
+        VALUES ('$fec_reg_encVenta', '$doc_encVenta', '$nom_encVenta', '$dir_encVenta', '$zona_encVenta', '$id_com', '$id_bar', '$otro_bar_ver_encVenta', '$tram_solic_encVenta', '$integra_encVenta', '$num_ficha_encVenta', '$obs_encVenta', '$estado_encVenta', '$fecha_alta_encVenta', '$fecha_edit_encVenta','$tipo_documento','$fecha_expedicion', '$departamento_expedicion','$ciudad_expedicion', '$id_usu', '$sisben_nocturno')";
 
     $resultado = $mysqli->query($sql);
 
