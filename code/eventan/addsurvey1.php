@@ -28,10 +28,7 @@ header("Content-Type: text/html;charset=utf-8");
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
     <script src="https://kit.fontawesome.com/fed2435e21.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <!-- Select2 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-
-    <!-- Select2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="../barrios.js"> </script>
     <style>
@@ -777,42 +774,24 @@ header("Content-Type: text/html;charset=utf-8");
             </div>
             <div class="form-group">
                 <div class="row">
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-4">
                         <label for="dir_encVenta">* DIRECCIÓN:</label>
                         <input type='text' name='dir_encVenta' class='form-control' />
                     </div>
-
-                    <!-- <div class="form-group col-md-4">
-                        <label for="id_com">* COMUNA:</label>
-                        <select id="id_com" class="form-control" name="id_com">
-                            <option value=""></option>
-                            <?php
-                            $sql = $mysqli->prepare("SELECT * FROM comunas");
-                            if ($sql->execute()) {
-                                $g_result = $sql->get_result();
-                            }
-                            while ($row = $g_result->fetch_array()) {
-                            ?>
-                                <option value="<?php echo $row['id_com'] ?>"><?php echo $row['nombre_com'] ?></option>
-                            <?php
-                            }
-                            ?>
-                        </select>
-                    </div> -->
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="row">
                     <div class="form-group col-md-4">
-                        <label for="id_barrios">* BARRIO:</label>
+                        <label for="id_barrios">* BARRIO O VEREDA:</label>
                         <select id="id_barrios" class="form-control" name="id_bar" style="width: 100%;min-height: 55px; "></select>
                     </div>
                     <div class="form-group col-md-4">
-                        <label for="id_comunas">* COMUNA:</label>
+                        <label for="id_comunas">* COMUNA O CORREGIMIENTO:</label>
                         <select id="id_comunas" class="form-control" name="id_com" disabled>
                             <option value="" disabled>Seleccione comuna</option>
                         </select>
                     </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
                     <div class="form-group col-md-4" id="otro_barrio_container" style="display: none;">
                         <label for="otro_bar_ver_encVenta">ESPECIFIQUE BARRIO, VEREDA O INVASIÓN:</label>
                         <input type="text" id="otro_bar_ver_encVenta" name="otro_bar_ver_encVenta" class="form-control" placeholder="Ingrese el barrio">
@@ -843,37 +822,10 @@ header("Content-Type: text/html;charset=utf-8");
                             <option value="FAVORES">FAVORES</option>
                         </select>
                     </div>
-                    <!-- <div class="form-group col-md-4">
-                        <label for="id_correg">* CORREGIMIENTO:</label>
-                        <select id="id_correg" class="form-control" name="id_correg">
-                            <?php
-                            $sql_correg = $mysqli->prepare("SELECT * FROM corregimientos");
-                            if ($sql_correg->execute()) {
-                                $g_result_correg = $sql_correg->get_result();
-                            }
-                            while ($row_correg = $g_result_correg->fetch_array()) {
-                            ?>
-                                <option value="<?php echo $row_correg['id_correg'] ?>"><?php echo $row_correg['nombre_correg'] ?></option>
-                            <?php
-                            }
-                            ?>
-                        </select>
-                    </div>
                     <div class="form-group col-md-4">
-                        <label for="id_vere">VEREDA:</label>
-                        <select id="id_vere" name="id_vere" class="form-control" disabled="disabled">
-                            <option value="">* SELECCIONE LA VEREDA:</option>
-                        </select>
-                    </div> -->
-
-
-                    <!-- <div class="form-group col-md-4">
-                        <label for="id_bar">* BARRIO:</label>
-                        <select id="id_bar" name="id_bar" class="form-control" disabled="disabled">
-                            <option value="">* SELECCIONE EL BARRIO:</option>
-                        </select>
-                    </div> -->
-
+                        <label for="num_ficha_encVenta">* No. FICHA o RADICADO:</label>
+                        <input type='number' name='num_ficha_encVenta' class='form-control' required />
+                    </div>
                 </div>
             </div>
             <script>
@@ -887,11 +839,6 @@ header("Content-Type: text/html;charset=utf-8");
 
             <div class="form-group">
                 <div class="row">
-
-                    <div class="form-group col-md-4">
-                        <label for="num_ficha_encVenta">* No. FICHA o RADICADO:</label>
-                        <input type='number' name='num_ficha_encVenta' class='form-control' required />
-                    </div>
                     <div class="form-group col-md-4">
                         <label for="integra_encVenta">INTEGRANTES:</label>
                         <input type='number' id='total_integrantes' name='integra_encVenta' class='form-control' value="" readonly />

@@ -99,15 +99,15 @@ header("Content-Type: text/html;charset=utf-8");
             </div>
             <div class="form-group">
                 <div class="row">
-                    <div class="col-12 col-sm-3">
+                    <div class="col-12 col-sm-4">
                         <label for="fec_reg_encVenta">* F. REALIZADA:</label>
                         <input type='date' name='fec_reg_encVenta' class='form-control' value='<?php echo $row['fec_reg_encVenta']; ?>' required />
                     </div>
-                    <div class="col-12 col-sm-3">
+                    <div class="col-12 col-sm-4">
                         <label for="doc_encVenta">DOCUMENTO:</label>
                         <input type='text' name='doc_encVenta' class='form-control' value='<?php echo $row['doc_encVenta']; ?>' required />
                     </div>
-                    <div class="col-12 col-sm-6">
+                    <div class="col-12 col-sm-4">
                         <label for="tipo_doc">* TIPO DE DOCUMENTO:</label>
                         <select name="tipo_documento" class="form-control" id="">
                             <option value="" <?php if ($row['tipo_documento'] == "") echo 'selected'; ?>>SELECCIONE :</option>
@@ -123,7 +123,7 @@ header("Content-Type: text/html;charset=utf-8");
 
             <div class="form-group">
                 <div class="row">
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-4">
                         <label for="departamento_expedicion">* DEPARTAMENTO EXPEDICION:</label>
                         <select class="form-control" name="departamento_expedicion" id="departamento_expedicion">
                             <option value="">Seleccione un departamento</option>
@@ -136,12 +136,12 @@ header("Content-Type: text/html;charset=utf-8");
                         </select>
                     </div>
 
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-4">
                         <label for="ciudad_expedicion">* MUNICIPIO EXPEDICION:</label>
                         <select id="ciudad_expedicion" name="ciudad_expedicion" class="form-control" required>
                         </select>
                     </div>
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-4">
                         <label for="fecha_expedicion">* FECHA EXPEDICION:</label>
                         <input type='date' name='fecha_expedicion' value='<?php echo $row['fecha_expedicion'] ?? "" ?>' class='form-control' required style="text-transform:uppercase;" />
                     </div>
@@ -155,16 +155,7 @@ header("Content-Type: text/html;charset=utf-8");
                         <label for="dir_encVenta">* DIRECCIÓN</label>
                         <input type='text' name='dir_encVenta' class='form-control' value='<?php echo $row['dir_encVenta']; ?>' required />
                     </div>
-                </div>
-            </div>
-
-
-
-
-            <div class="form-group">
-                <div class="row">
-
-                    <div class="col-12 col-sm-2">
+                    <div class="col-12 col-sm-4">
                         <label for="zona_encVenta">* ZONA:</label>
                         <select class="form-control" name="zona_encVenta" required>
                             <option value="">SELECCIONE:</option>
@@ -176,7 +167,17 @@ header("Content-Type: text/html;charset=utf-8");
                                                     } ?>>RURAL</option>
                         </select>
                     </div>
-                    <div class="col-12 col-sm-3">
+                </div>
+            </div>
+
+
+
+
+            <div class="form-group">
+                <div class="row">
+
+
+                    <div class="col-12 col-sm-4">
                         <label for="id_com">* COMUNA:</label>
                         <select name='id_com' class='form-control' id="id_com" required />
                         <option value=''></option>
@@ -197,7 +198,7 @@ header("Content-Type: text/html;charset=utf-8");
                         ?>
                         </select>
                     </div>
-                    <div class="col-12 col-sm-3">
+                    <div class="col-12 col-sm-4">
                         <label for="id_bar">* BARRIO:</label>
                         <select name='id_bar' class='form-control' id="id_bar" required />
                         <option value=''></option>
@@ -217,6 +218,10 @@ header("Content-Type: text/html;charset=utf-8");
                         }
                         ?>
                         </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="otro_bar_ver_encVenta">OTRO BARRIO,VEREDA O INVASION:</label>
+                        <input type='text' id='otro_bar_ver_encVenta' name='otro_bar_ver_encVenta' class='form-control' value='<?php echo $row['otro_bar_ver_encVenta']; ?>' />
                     </div>
                     <!-- <div class="col-12 col-sm-4">
                         <label for="id_correg">CORREGIMIENTO</label>
@@ -270,10 +275,7 @@ header("Content-Type: text/html;charset=utf-8");
                         ?>
                         </select>
                     </div> -->
-                    <div class="form-group col-md-4">
-                        <label for="otro_bar_ver_encVenta">OTRO BARRIO,VEREDA O INVASION:</label>
-                        <input type='text' id='otro_bar_ver_encVenta' name='otro_bar_ver_encVenta' class='form-control' value='<?php echo $row['otro_bar_ver_encVenta']; ?>' />
-                    </div>
+
                     <div class="col-12 col-sm-4">
                         <label for="tram_solic_encVenta">* TRÁMITE SOLICITADO:</label>
                         <select class="form-control" name="tram_solic_encVenta" required id="tram_solic_encVenta">

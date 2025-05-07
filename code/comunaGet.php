@@ -8,7 +8,7 @@ $comunas = $mysqli->prepare("
     WHERE b.id_bar = ?
 ") or die(mysqli_error($mysqli));
 $comunas->bind_param("i", $id_barrio);
-echo '<option value = "">SELECCIONE EL BARRIO: </option>';
+echo '<option value = "">SELECCIONE COMUNA O VEREDA: </option>';
 if ($comunas->execute()) {
 	$a_result = $comunas->get_result();
 }

@@ -15,29 +15,21 @@
 
    // Incluye la conexión a la base de datos
    include("../../conexion.php");
-
-   if(isset($_GET['id_usu']))
-   {
+   if(isset($_GET['id_usu'])) {
       $id_usu = $_GET['id_usu'];
-
+  
       // Realizar la consulta para eliminar el registro con el ID proporcionado
-      $eliminar_query = "DELETE FROM usuarios WHERE id_usu = ?";
-      $eliminar_stmt = $mysqli->prepare($eliminar_query);
-      $eliminar_stmt->bind_param("i", $id_usu);
-
-      if($eliminar_stmt->execute())
-      {
-         // Redireccionar a la página principal después de la eliminación
-         header("Location: showusers.php");
-         exit();
+      $eliminar_query = "DELETE FROM usuarios WHERE id_usu = $id_usu";
+  
+      if(mysqli_query($link, $eliminar_query)) {
+          // Redireccionar a la página principal después de la eliminación
+          header("Location: showusers.php");
+          exit();
+      } else {
+          echo "Error al intentar eliminar el registro.";
       }
-      else
-      {
-         echo "Error al intentar eliminar el registro.";
-      }
-   }
-   else
-   {
+  } else {
       echo "ID de registro no proporcionado.";
-   }
+  }
+  
 ?>

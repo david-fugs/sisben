@@ -5,13 +5,16 @@ require '../conexion.php';
 $response = [];
 
 if (isset($_POST['cod_departamento'])) {
-    $codDepartamento = $_POST['cod_departamento'];
+    $codDepartamento = $mysqli->real_escape_string($_POST['cod_departamento']);
 
-    $stmt = $mysqli->prepare("SELECT cod_municipio, nombre_municipio FROM municipios WHERE cod_departamento = ? ORDER BY nombre_municipio ASC");
-    $stmt->bind_param("s", $codDepartamento);
+    $query = "SELECT cod_municipio, nombre_municipio 
+              FROM municipios 
+              WHERE cod_departamento = '$codDepartamento' 
+              ORDER BY nombre_municipio ASC";
 
-    if ($stmt->execute()) {
-        $resultado = $stmt->get_result();
+    $resultado = $mysqli->query($query);
+
+    if ($resultado) {
         $municipios = [];
 
         while ($fila = $resultado->fetch_assoc()) {
