@@ -18,7 +18,7 @@ if (isset($_GET['id_encVenta'])) {
    $id_encVenta = (int) $_GET['id_encVenta']; // Convertir a entero por seguridad
 
    // Realizar la consulta para eliminar el registro con el ID proporcionado
-   $eliminar_query = "DELETE FROM encVentanilla WHERE id_encVenta = $id_encVenta";
+   $eliminar_query = "DELETE FROM encventanilla WHERE id_encVenta = $id_encVenta";
 
    if ($mysqli->query($eliminar_query)) {
       // Redireccionar a la página principal después de la eliminación

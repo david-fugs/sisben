@@ -64,7 +64,7 @@
 	    $id_encVenta  = $_GET['id_encVenta'];
 	    if(isset($_GET['id_encVenta']))
 	    { 
-            $query = "SELECT * FROM integVentanilla INNER JOIN encVentanilla ON integVentanilla.id_encVenta=encVentanilla.id_encVenta WHERE estado_integVenta=1 AND integVentanilla.id_encVenta = '$id_encVenta'";
+            $query = "SELECT * FROM integventanilla INNER JOIN encventanilla ON integventanilla.id_encVenta=encventanilla.id_encVenta WHERE estado_integVenta=1 AND integventanilla.id_encVenta = '$id_encVenta'";
             $res = $mysqli->query($query);
             $num_registros = mysqli_num_rows($res);
 
@@ -87,7 +87,7 @@
                         </thead>
                         <tbody>";
 
-            $consulta = "SELECT * FROM integVentanilla INNER JOIN encVentanilla ON integVentanilla.id_encVenta=encVentanilla.id_encVenta WHERE estado_integVenta=1 AND integVentanilla.id_encVenta = '$id_encVenta'";
+            $consulta = "SELECT * FROM integventanilla INNER JOIN encventanilla ON integventanilla.id_encVenta=encventanilla.id_encVenta WHERE estado_integVenta=1 AND integventanilla.id_encVenta = '$id_encVenta'";
             $result = $mysqli->query($consulta);
             $i = 1;
             while($row = mysqli_fetch_array($result))

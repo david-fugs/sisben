@@ -5,7 +5,7 @@ if (isset($_POST['doc_encVenta'])) {
     $doc_encVenta = mysqli_real_escape_string($mysqli, $_POST['doc_encVenta']);
 
     // 1️⃣ Verificar si ya tiene una encuesta en `encventanilla`
-    $sql_encuesta = "SELECT * FROM encVentanilla WHERE doc_encVenta = '$doc_encVenta'";
+    $sql_encuesta = "SELECT * FROM encventanilla WHERE doc_encVenta = '$doc_encVenta'";
     $resultado_encuesta = mysqli_query($mysqli, $sql_encuesta);
 
     if (mysqli_num_rows($resultado_encuesta) > 0) {

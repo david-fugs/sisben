@@ -46,7 +46,7 @@
                 $fecha_edit_integVenta  = date('Y-m-d h:i:s');
                 $id_usu                 = $_SESSION['id_usu'];
                
-                $update = "UPDATE integVentanilla SET cant_integVenta='".$cant_integVenta."', gen_integVenta='".$gen_integVenta."', rango_integVenta='".$rango_integVenta."', estado_integVenta='".$estado_integVenta."', fecha_edit_integVenta='".$fecha_edit_integVenta."', id_usu='".$id_usu."' WHERE id_integVenta='".$id_integVenta."'";
+                $update = "UPDATE integventanilla SET cant_integVenta='".$cant_integVenta."', gen_integVenta='".$gen_integVenta."', rango_integVenta='".$rango_integVenta."', estado_integVenta='".$estado_integVenta."', fecha_edit_integVenta='".$fecha_edit_integVenta."', id_usu='".$id_usu."' WHERE id_integVenta='".$id_integVenta."'";
 
                 $up = mysqli_query($mysqli, $update);
 

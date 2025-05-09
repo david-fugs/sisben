@@ -133,18 +133,18 @@ header("Content-Type: text/html;charset=utf-8");
 
                     <div class="form-group col-md-3">
                         <label for="ciudad_expedicion">* MUNICIPIO EXPEDICION:</label>
-                        <select id="ciudad_expedicion" name="ciudad_expedicion" class="form-control" required>
+                        <select id="ciudad_expedicion" name="ciudad_expedicion" class="form-control" >
                         </select>
                     </div>
 
                     <div class="form-group col-md-3">
                         <label for="fecha_expedicion">* FECHA EXPEDICIÓN:</label>
-                        <input type='date' name='fecha_expedicion' class='form-control' required value="<?php echo isset($row['fecha_expedicion']) ? $row['fecha_expedicion'] : ''; ?>" />
+                        <input type='date' name='fecha_expedicion' class='form-control'  value="<?php echo isset($row['fecha_expedicion']) ? $row['fecha_expedicion'] : ''; ?>" />
                     </div>
 
                     <div class="form-group col-md-3">
                         <label for="nom_info">* NOMBRES COMPLETOS:</label>
-                        <input type='text' name='nom_info' class='form-control' required style="text-transform:uppercase;" value="<?php echo isset($row['nom_info']) ? $row['nom_info'] : ''; ?>" />
+                        <input type='text' name='nom_info' class='form-control'  style="text-transform:uppercase;" value="<?php echo isset($row['nom_info']) ? $row['nom_info'] : ''; ?>" />
                     </div>
                 </div>
 
@@ -154,7 +154,7 @@ header("Content-Type: text/html;charset=utf-8");
                     <div class="row">
                         <div class="form-group col-md-3">
                             <label for="condicionDiscapacidad">* CONDICION DISCAPACIDAD:</label>
-                            <select name="condicionDiscapacidad" class="form-control" id="condicionDiscapacidad" required>
+                            <select name="condicionDiscapacidad" class="form-control" id="condicionDiscapacidad" >
                                 <option value=""></option>
                                 <option value="Si" <?php echo ($row['condicionDiscapacidad'] == 'Si') ? 'selected' : ''; ?>>Si</option>
                                 <option value="No" <?php echo ($row['condicionDiscapacidad'] == 'No') ? 'selected' : ''; ?>>No</option>
@@ -180,7 +180,7 @@ header("Content-Type: text/html;charset=utf-8");
                     <div class="row">
                         <div class="form-group col-md-4">
                             <label for="mujerGestante">* MUJER GESTANTE/LACTANTE:</label>
-                            <select name="mujerGestante" class="form-control" id="mujerGestante" required>
+                            <select name="mujerGestante" class="form-control" id="mujerGestante" >
                                 <option value=""></option>
                                 <option value="Si" <?php echo ($row['mujerGestante'] == 'Si') ? 'selected' : ''; ?>>Si</option>
                                 <option value="No" <?php echo ($row['mujerGestante'] == 'No') ? 'selected' : ''; ?>>No</option>
@@ -188,7 +188,7 @@ header("Content-Type: text/html;charset=utf-8");
                         </div>
                         <div class="form-group col-md-4">
                             <label for="cabezaFamilia">* HOMBRE/MUJER CABEZA FAMILIA:</label>
-                            <select name="cabezaFamilia" class="form-control" id="cabezaFamilia" required>
+                            <select name="cabezaFamilia" class="form-control" id="cabezaFamilia" >
                                 <option value=""></option>
                                 <option value="Si" <?php echo ($row['cabezaFamilia'] == 'Si') ? 'selected' : ''; ?>>Si</option>
                                 <option value="No" <?php echo ($row['cabezaFamilia'] == 'No') ? 'selected' : ''; ?>>No</option>
@@ -196,7 +196,7 @@ header("Content-Type: text/html;charset=utf-8");
                         </div>
                         <div class="form-group col-md-4">
                             <label for="orientacionSexual">* ORIENTACION SEXUAL:</label>
-                            <select name="orientacionSexual" class="form-control" id="orientacionSexual" required>
+                            <select name="orientacionSexual" class="form-control" id="orientacionSexual" >
                                 <option value=""></option>
                                 <option value="Asexual" <?php echo ($row['orientacionSexual'] == 'Asexual') ? 'selected' : ''; ?>>Asexual</option>
                                 <option value="Bisexual" <?php echo ($row['orientacionSexual'] == 'Bisexual') ? 'selected' : ''; ?>>Bisexual</option>
@@ -212,7 +212,7 @@ header("Content-Type: text/html;charset=utf-8");
                     <div class="row">
                         <div class="form-group col-md-4">
                             <label for="experienciaMigratoria">* EXPERIENCIA MIGRATORIA</label>
-                            <select name="experienciaMigratoria" class="form-control" id="experienciaMigratoria" required>
+                            <select name="experienciaMigratoria" class="form-control" id="experienciaMigratoria" >
                                 <option value=""></option>
                                 <option value="Si" <?php echo ($row['experienciaMigratoria'] == 'Si') ? 'selected' : ''; ?>>Si</option>
                                 <option value="No" <?php echo ($row['experienciaMigratoria'] == 'No') ? 'selected' : ''; ?>>No</option>
@@ -220,7 +220,7 @@ header("Content-Type: text/html;charset=utf-8");
                         </div>
                         <div class="form-group col-md-4">
                             <label for="grupoEtnico">* GRUPO ETNICO:</label>
-                            <select name="grupoEtnico" class="form-control" id="grupoEtnico" required>
+                            <select name="grupoEtnico" class="form-control" id="grupoEtnico" >
                                 <option value=""></option>
                                 <option value="Indigena" <?php echo ($row['grupoEtnico'] == 'Indigena') ? 'selected' : ''; ?>>Indigena</option>
                                 <option value="ROM (Gitano)" <?php echo ($row['grupoEtnico'] == 'ROM (Gitano)') ? 'selected' : ''; ?>>ROM (Gitano)</option>
@@ -233,7 +233,7 @@ header("Content-Type: text/html;charset=utf-8");
                         </div>
                         <div class="form-group col-md-4">
                             <label for="seguridadSalud">* TIPO SEGURIDAD SALUD:</label>
-                            <select name="seguridadSalud" class="form-control" id="seguridadSalud" required>
+                            <select name="seguridadSalud" class="form-control" id="seguridadSalud" >
                                 <option value=""></option>
                                 <option value="Regimen Contributivo" <?php echo ($row['seguridadSalud'] == 'Regimen Contributivo') ? 'selected' : ''; ?>>Regimen Contributivo</option>
                                 <option value="Regimen Subsidiado" <?php echo ($row['seguridadSalud'] == 'Regimen Subsidiado') ? 'selected' : ''; ?>>Regimen Subsidiado</option>
@@ -247,7 +247,7 @@ header("Content-Type: text/html;charset=utf-8");
                     <div class="row">
                         <div class="form-group col-md-4">
                             <label for="nivelEducativo">* NIVEL EDUCATIVO</label>
-                            <select name="nivelEducativo" class="form-control" id="nivelEducativo" required>
+                            <select name="nivelEducativo" class="form-control" id="nivelEducativo" >
                                 <option value=""></option>
                                 <option value="Preescolar" <?php echo ($row['nivelEducativo'] == 'Preescolar') ? 'selected' : ''; ?>>Preescolar</option>
                                 <option value="Basica Primaria" <?php echo ($row['nivelEducativo'] == 'Basica Primaria') ? 'selected' : ''; ?>>Basica Primaria</option>
@@ -267,7 +267,7 @@ header("Content-Type: text/html;charset=utf-8");
                         </div>
                         <div class="form-group col-md-4">
                             <label for="condicionOcupacion">* CONDICION OCUPACION:</label>
-                            <select name="condicionOcupacion" class="form-control" id="condicionOcupacion" required>
+                            <select name="condicionOcupacion" class="form-control" id="condicionOcupacion" >
                                 <option value=""></option>
                                 <option value="Ama de Casa" <?php echo ($row['condicionOcupacion'] == 'Ama de Casa') ? 'selected' : ''; ?>>Ama de Casa</option>
                                 <option value="Buscando Empleo" <?php echo ($row['condicionOcupacion'] == 'Buscando Empleo') ? 'selected' : ''; ?>>Buscando Empleo</option>
@@ -294,7 +294,7 @@ header("Content-Type: text/html;charset=utf-8");
 
                         <div class="form-group col-md-4">
                             <label for="obs1_encInfo">* TIPO INFORMACION BRINDADA:</label>
-                            <select class="form-control" name="observacion" id="obs2_encInfo" required>
+                            <select class="form-control" name="observacion" id="obs2_encInfo" >
                                 <option value=""></option>
                                 <option value="ACTUALIZACION" <?php echo isset($row['observacion']) && $row['observacion'] == "ACTUALIZACION" ? 'selected' : ''; ?>>ACTUALIZACIÓN</option>
                                 <option value="CLASIFICACION" <?php echo isset($row['observacion']) && $row['observacion'] == "CLASIFICACION" ? 'selected' : ''; ?>>CLASIFICACIÓN</option>

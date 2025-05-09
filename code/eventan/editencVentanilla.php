@@ -66,7 +66,7 @@ header("Content-Type: text/html;charset=utf-8");
         ];
 
         // 2. Obtener datos actuales
-        $query = "SELECT * FROM encVentanilla WHERE id_encVenta = '$id_encVenta'";
+        $query = "SELECT * FROM encventanilla WHERE id_encVenta = '$id_encVenta'";
         $result = mysqli_query($mysqli, $query);
         $actual = mysqli_fetch_assoc($result);
 
@@ -93,7 +93,7 @@ header("Content-Type: text/html;charset=utf-8");
             $fecha_edit_encVenta = date('Y-m-d H:i:s');
             $estado_encVenta = 1;
 
-            $update = "UPDATE encVentanilla SET ";
+            $update = "UPDATE encventanilla SET ";
             foreach ($campos as $campo) {
                 $valor = $mysqli->real_escape_string($datos_nuevos[$campo]);
                 $update .= "$campo = '$valor', ";

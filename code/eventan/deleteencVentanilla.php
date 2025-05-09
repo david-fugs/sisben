@@ -44,7 +44,7 @@
     	    $id_integVenta  = $_GET['id_integVenta'];
     	    if(isset($_GET['id_integVenta']))
     	    { 
-                $sql = mysqli_query($mysqli, "SELECT * FROM integVentanilla WHERE id_integVenta = '$id_integVenta'");
+                $sql = mysqli_query($mysqli, "SELECT * FROM integventanilla WHERE id_integVenta = '$id_integVenta'");
     	        $row = mysqli_fetch_array($sql);
             }
 

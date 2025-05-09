@@ -41,7 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id_usu                 = $_SESSION['id_usu'];
 
     // Inserción en encVentanilla
-    $sql = "INSERT INTO encVentanilla (fec_reg_encVenta, doc_encVenta, nom_encVenta, dir_encVenta, zona_encVenta, id_com, id_bar, otro_bar_ver_encVenta, tram_solic_encVenta, integra_encVenta, num_ficha_encVenta, obs_encVenta, estado_encVenta, fecha_alta_encVenta, fecha_edit_encVenta, tipo_documento, fecha_expedicion,departamento_expedicion,ciudad_expedicion,id_usu ,sisben_nocturno) 
+    $sql = "INSERT INTO encventanilla (fec_reg_encVenta, doc_encVenta, nom_encVenta, dir_encVenta, zona_encVenta, id_com, id_bar, otro_bar_ver_encVenta, tram_solic_encVenta, integra_encVenta, num_ficha_encVenta, obs_encVenta, estado_encVenta, fecha_alta_encVenta, fecha_edit_encVenta, tipo_documento, fecha_expedicion,departamento_expedicion,ciudad_expedicion,id_usu ,sisben_nocturno) 
         VALUES ('$fec_reg_encVenta', '$doc_encVenta', '$nom_encVenta', '$dir_encVenta', '$zona_encVenta', '$id_com', '$id_bar', '$otro_bar_ver_encVenta', '$tram_solic_encVenta', '$integra_encVenta', '$num_ficha_encVenta', '$obs_encVenta', '$estado_encVenta', '$fecha_alta_encVenta', '$fecha_edit_encVenta','$tipo_documento','$fecha_expedicion', '$departamento_expedicion','$ciudad_expedicion', '$id_usu', '$sisben_nocturno')";
 
     $resultado = $mysqli->query($sql);

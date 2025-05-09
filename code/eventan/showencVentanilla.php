@@ -71,7 +71,7 @@ header("Content-Type: text/html;charset=utf-8");
     $time = time();
     $id_encVenta  = $_GET['id_encVenta'];
     if (isset($_GET['id_encVenta'])) {
-        $sql = mysqli_query($mysqli, "SELECT * FROM encVentanilla WHERE id_encVenta = '$id_encVenta'");
+        $sql = mysqli_query($mysqli, "SELECT * FROM encventanilla WHERE id_encVenta = '$id_encVenta'");
         $row = mysqli_fetch_array($sql);
     }
 

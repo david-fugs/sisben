@@ -77,7 +77,7 @@
 	@$doc_encVenta = ($_GET['doc_encVenta']);
 	@$num_ficha_encVenta = ($_GET['num_ficha_encVenta']);
 
-	$query = "SELECT * FROM encVentanilla INNER JOIN usuarios ON encVentanilla.id_usu=usuarios.id_usu INNER JOIN encuestadores ON usuarios.id_usu=encuestadores.id_usu WHERE (doc_encVenta LIKE '%".$doc_encVenta."%') AND (num_ficha_encVenta LIKE '%".$num_ficha_encVenta."%') AND encVentanilla.id_usu=$id_usu ORDER BY encVentanilla.fec_reg_encVenta ASC";
+	$query = "SELECT * FROM encventanilla INNER JOIN usuarios ON encventanilla.id_usu=usuarios.id_usu INNER JOIN encuestadores ON usuarios.id_usu=encuestadores.id_usu WHERE (doc_encVenta LIKE '%".$doc_encVenta."%') AND (num_ficha_encVenta LIKE '%".$num_ficha_encVenta."%') AND encventanilla.id_usu=$id_usu ORDER BY encventanilla.fec_reg_encVenta ASC";
 	$res = $mysqli->query($query);
 	$num_registros = mysqli_num_rows($res);
 	$resul_x_pagina = 200;
@@ -105,7 +105,7 @@
 	$paginacion->records($num_registros);
 	$paginacion->records_per_page($resul_x_pagina);
 
-	$consulta = "SELECT * FROM encVentanilla INNER JOIN usuarios ON encVentanilla.id_usu=usuarios.id_usu INNER JOIN encuestadores ON usuarios.id_usu=encuestadores.id_usu WHERE (doc_encVenta LIKE '%".$doc_encVenta."%') AND (num_ficha_encVenta LIKE '%".$num_ficha_encVenta."%') AND encVentanilla.id_usu=$id_usu ORDER BY encVentanilla.fec_reg_encVenta ASC LIMIT " .(($paginacion->get_page() - 1) * $resul_x_pagina). "," .$resul_x_pagina;
+	$consulta = "SELECT * FROM encventanilla INNER JOIN usuarios ON encventanilla.id_usu=usuarios.id_usu INNER JOIN encuestadores ON usuarios.id_usu=encuestadores.id_usu WHERE (doc_encVenta LIKE '%".$doc_encVenta."%') AND (num_ficha_encVenta LIKE '%".$num_ficha_encVenta."%') AND encventanilla.id_usu=$id_usu ORDER BY encventanilla.fec_reg_encVenta ASC LIMIT " .(($paginacion->get_page() - 1) * $resul_x_pagina). "," .$resul_x_pagina;
 	$result = $mysqli->query($consulta);
 
 	$i = 1;
