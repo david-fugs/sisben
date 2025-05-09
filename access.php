@@ -79,12 +79,9 @@
             </div>
 
             <ul class="menu_items submenu">
-              <a href="code/users/showEncCampo.php" class="nav_link sublink">En Campo</a>
-              <a href="code/users/showEncVentanilla.php" class="nav_link sublink">Ventanilla</a>
-              <!--<a href="code/users/addsurvey.php" class="nav_link sublink">Nueva</a>
-              <a href="code/users//addsurvey.php" class="nav_link sublink">Movimientos</a>
-              <a href="code/users/addsurvey.php" class="nav_link sublink">Información</a>
-              <a href="code/users/addsurvey.php" class="nav_link sublink">Portal Ciudadano</a>-->
+              <a href="code/eventan/showsurvey.php" class="nav_link sublink">Ventanilla</a>
+              <a href="code/users/showEncCampo.php" class="nav_link sublink">Informacion</a>
+
             </ul>
           </li>
           <li class="item">
@@ -97,7 +94,6 @@
             </div>
 
             <ul class="menu_items submenu">
-              <a href="code/report/report1.php" class="nav_link sublink">Campo</a>
               <a href="code/report/report7.php" class="nav_link sublink">Ventanilla</a>
               <a href="code/report/report13.php" class="nav_link sublink">Información</a>
               <!-- <a href="code/report/report17.php" class="nav_link sublink">Movimiento</a> -->
