@@ -10,7 +10,6 @@ $id_usu 	= $_SESSION['id_usu'];
 $usuario    = $_SESSION['usuario'];
 $nombre     = $_SESSION['nombre'];
 $tipo_usu   = $_SESSION['tipo_usu'];
-
 header("Content-Type: text/html;charset=utf-8");
 ?>
 
@@ -78,20 +77,20 @@ header("Content-Type: text/html;charset=utf-8");
 			@$num_ficha_encVenta = ($_GET['num_ficha_encVenta']);
 
 			$query = "SELECT * FROM encventanilla 
-				INNER JOIN usuarios ON encventanilla.id_usu = usuarios.id_usu 
-				INNER JOIN encuestadores ON usuarios.id_usu = encuestadores.id_usu 
 				WHERE (doc_encVenta LIKE '%$doc_encVenta%') 
 				AND (num_ficha_encVenta LIKE '%$num_ficha_encVenta%')";
 
-			if ($tipo_usu != 1) {
+			if ($tipo_usu != '1') {
 				$query .= " AND encventanilla.id_usu = $id_usu";
+				
 			}
 
 			$query .= " ORDER BY encventanilla.fec_reg_encVenta ASC";
+			
 			$res = $mysqli->query($query);
 			$num_registros = mysqli_num_rows($res);
 			$resul_x_pagina = 200;
-
+			
 			echo "<section class='content'>
 			<div class='card-body'>
         		<div class='table-responsive'>
@@ -116,18 +115,15 @@ header("Content-Type: text/html;charset=utf-8");
 			$paginacion->records_per_page($resul_x_pagina);
 
 			$consulta = "SELECT * FROM encventanilla 
-				INNER JOIN usuarios ON encventanilla.id_usu = usuarios.id_usu 
-				INNER JOIN encuestadores ON usuarios.id_usu = encuestadores.id_usu 
 				WHERE (doc_encVenta LIKE '%" . $doc_encVenta . "%') 
 				AND (num_ficha_encVenta LIKE '%" . $num_ficha_encVenta . "%')";
 
-			if ($tipo_usu != 1) {
+			if ($tipo_usu != '1') {
 				$consulta .= " AND encventanilla.id_usu = $id_usu";
 			}
 
 			$consulta .= " ORDER BY encventanilla.fec_reg_encVenta ASC 
 				LIMIT " . (($paginacion->get_page() - 1) * $resul_x_pagina) . "," . $resul_x_pagina;
-
 			$result = $mysqli->query($consulta);
 
 			$i = 1;
