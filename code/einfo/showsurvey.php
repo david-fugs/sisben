@@ -73,7 +73,11 @@ header("Content-Type: text/html;charset=utf-8");
 			include("../../conexion.php");
 			require_once("../../zebra.php");
 
-			$where = ["informacion.id_usu = '$id_usu'"];
+			$where = [];
+
+			if ($tipo_usu != '1') {
+				$where[] = "informacion.id_usu = '$id_usu'";
+			}
 
 			// Si se envió el documento, agrégalo al filtro
 			if (!empty($_GET['doc_info'])) {
@@ -89,9 +93,12 @@ header("Content-Type: text/html;charset=utf-8");
 
 			// Construir la consulta con los filtros dinámicos
 			$query = "SELECT informacion.*, usuarios.nombre 
-          FROM informacion 
-          JOIN usuarios ON informacion.id_usu = usuarios.id_usu
-          WHERE " . implode(" AND ", $where);
+					  FROM informacion 
+					  JOIN usuarios ON informacion.id_usu = usuarios.id_usu";
+
+			if (!empty($where)) {
+				$query .= " WHERE " . implode(" AND ", $where);
+			}
 
 			$result = $mysqli->query($query);
 			$res = $mysqli->query($query);
@@ -124,10 +131,14 @@ header("Content-Type: text/html;charset=utf-8");
 
 			$consulta = "SELECT informacion.*, usuarios.nombre 
 			FROM informacion 
-			JOIN usuarios ON informacion.id_usu = usuarios.id_usu
-			WHERE " . implode(" AND ", $where) . "
-			LIMIT " . (($paginacion->get_page() - 1) * $resul_x_pagina) . "," . $resul_x_pagina;
+			JOIN usuarios ON informacion.id_usu = usuarios.id_usu";
+
+			if (!empty($where)) {
+				$consulta .= " WHERE " . implode(" AND ", $where);
+			}
+
 			$result = $mysqli->query($consulta);
+
 
 			$i = 1;
 			while ($row = mysqli_fetch_array($result)) {
