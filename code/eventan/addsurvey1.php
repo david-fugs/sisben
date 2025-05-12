@@ -410,7 +410,7 @@ header("Content-Type: text/html;charset=utf-8");
                                                 $('<option>', {
                                                     value: municipio.cod_municipio,
                                                     text: municipio.nombre_municipio,
-                                                    selected: municipio.cod_municipio === parseInt(response.data.ciudad_expedicion)
+                                                    selected: municipio.cod_municipio === response.data.ciudad_expedicion
                                                 })
                                             );
                                         });
