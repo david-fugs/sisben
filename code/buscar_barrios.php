@@ -1,11 +1,15 @@
 <?php
-require_once '../conexion.php'; // tu conexión a la BD
+require_once '../conexion.php';
+
+header('Content-Type: application/json; charset=utf-8');
+
+$mysqli->set_charset("utf8"); 
 
 $term = $_GET['q'] ?? '';
-$term = $mysqli->real_escape_string($term); // para evitar inyección SQL
+$term = $mysqli->real_escape_string($term);
+
 $query = "SELECT id_bar, nombre_bar, zona_bar FROM barrios WHERE nombre_bar LIKE '%$term%' LIMIT 20";
 $result = $mysqli->query($query);
-
 
 $results = [];
 while ($row = $result->fetch_assoc()) {
@@ -16,5 +20,5 @@ while ($row = $result->fetch_assoc()) {
     ];
 }
 
-echo json_encode($results);
+echo json_encode($results, JSON_UNESCAPED_UNICODE); 
 ?>
