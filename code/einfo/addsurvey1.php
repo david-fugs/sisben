@@ -302,6 +302,7 @@ header("Content-Type: text/html;charset=utf-8");
                             <option value="Regimen Contributivo">Regimen Contributivo</option>
                             <option value="Regimen Subsidiado">Regimen Subsidiado</option>
                             <option value="Poblacion Vinculada">Poblacion Vinculada</option>
+                            <option value="Ninguno">Ninguno</option>
                         </select>
                     </div>
                 </div>
