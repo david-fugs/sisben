@@ -111,6 +111,63 @@ header("Content-Type: text/html;charset=utf-8");
     </style>
 
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const departamentoSelect = document.getElementById('departamento_expedicion');
+            const ciudadSelect = document.getElementById('ciudad_expedicion');
+
+            // Guardamos la ciudad que se debe seleccionar (si existe globalmente)
+            let ciudadSeleccionada = null;
+
+            // Función para cargar municipios
+            function cargarMunicipios(departamento) {
+                ciudadSelect.innerHTML = '<option value="">Seleccione una ciudad</option>';
+
+                if (departamento === '') {
+                    ciudadSelect.disabled = true;
+                    return;
+                }
+
+                const xhr = new XMLHttpRequest();
+                xhr.open('POST', '../obtener_municipios.php', true);
+                xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+                xhr.onload = function() {
+                    if (xhr.status === 200) {
+                        const municipios = JSON.parse(xhr.responseText);
+                        municipios.forEach(function(municipio) {
+                            const option = document.createElement('option');
+                            option.value = municipio.cod_municipio;
+                            option.textContent = municipio.nombre_municipio;
+                            ciudadSelect.appendChild(option);
+                        });
+
+                        ciudadSelect.disabled = false;
+
+                        // ✅ Si ya teníamos una ciudad guardada, la seleccionamos
+                        if (ciudadSeleccionada) {
+                            ciudadSelect.value = ciudadSeleccionada;
+                            ciudadSeleccionada = null; // Limpiamos
+                        }
+                    } else {
+                        alert('Error al cargar municipios');
+                    }
+                };
+
+                xhr.send('cod_departamento=' + departamento);
+            }
+
+            // Evento change para el departamento
+            departamentoSelect.addEventListener('change', function() {
+                console.log('Departamento seleccionado:', this.value);
+                cargarMunicipios(this.value);
+            });
+
+            // ✅ Exponemos una función global para seleccionar ciudad desde AJAX
+            window.setCiudadSeleccionada = function(ciudad) {
+                ciudadSeleccionada = ciudad;
+            };
+        });
+
         // Función para ordenar un select
         function ordenarSelect(id_componente) {
             var selectToSort = $('#' + id_componente);
@@ -378,9 +435,78 @@ header("Content-Type: text/html;charset=utf-8");
                             console.log("✅ Respuesta del servidor:", response);
 
                             if (response.status === "existe_encuesta") {
-                                mensajeContainer.removeClass("d-none alert-success alert-warning").addClass("alert alert-danger")
-                                    .html("⚠️ La encuesta ya fue realizada.");
-                                $("#btnEnviar").prop("disabled", true);
+                                mensajeContainer.removeClass("d-none alert-danger alert-warning").addClass("alert alert-success")
+                                    .html(" La encuesta ya fue realizada.");
+                                $("#btnEnviar").prop("disabled", false);
+                                $("#nom_encVenta").val(response.data.nom_encVenta);
+                                $("#tipo_documento").val(response.data.tipo_documento);
+                                // Seteamos el departamento y hacemos la consulta directamente
+                                $("#departamento_expedicion").val(response.data.departamento_expedicion);
+                                //traer el municipio
+                                $.ajax({
+                                    url: '../obtener_municipios.php',
+                                    type: 'POST',
+                                    data: {
+                                        cod_departamento: response.data.departamento_expedicion
+                                    },
+                                    dataType: 'json',
+                                    success: function(municipios) {
+                                        let ciudadSelect = $("#ciudad_expedicion");
+                                        ciudadSelect.empty().append('<option value="">Seleccione un municipio</option>');
+                                        $.each(municipios, function(index, municipio) {
+                                            ciudadSelect.append(
+                                                $('<option>', {
+                                                    value: municipio.cod_municipio,
+                                                    text: municipio.nombre_municipio,
+                                                    selected: municipio.cod_municipio === response.data.ciudad_expedicion
+                                                })
+                                            );
+                                        });
+                                        ciudadSelect.prop('disabled', false);
+                                    },
+                                    error: function(xhr, status, error) {
+                                        console.error("Error al obtener municipios:", error);
+                                    }
+                                });
+
+                                $("#fecha_expedicion").val(response.data.fecha_expedicion);
+                                $("#dir_encVenta").val(response.data.dir_encVenta);
+                                $("#zona_encVenta").val(response.data.zona_encVenta);
+                                $("#num_ficha_encVenta").val(response.data.num_ficha_encVenta);
+                                //barrio y comuna
+                                // Setear el barrio seleccionado en Select2 (Select2 requiere cargarlo manualmente)
+                                $.ajax({
+                                    type: 'GET',
+                                    url: '../buscar_barrios.php',
+                                    data: {
+                                        q: '', // esto puede quedar vacío si buscar_barrios.php acepta ID directo
+                                        id: response.data.id_bar // puedes necesitar modificar tu script PHP para permitir búsquedas por ID
+                                    },
+                                    dataType: 'json',
+                                    success: function(data) {
+                                        if (data.length > 0) {
+                                            let barrio = data[0];
+                                            let option = new Option(barrio.text, barrio.id, true, true);
+                                            $('#id_barrios').append(option).trigger('change');
+
+                                            // Una vez cargado el barrio, obtenemos su comuna
+                                            $.ajax({
+                                                url: '../comunaGet.php',
+                                                type: 'GET',
+                                                data: {
+                                                    id_barrio: barrio.id
+                                                },
+                                                success: function(comunasHtml) {
+                                                    $('#id_comunas').html(comunasHtml);
+                                                    $('#id_comunas').prop('disabled', false);
+                                                    $('#id_comunas').val(response.data.id_com);
+                                                }
+                                            });
+                                        }
+                                    }
+                                });
+
+
                             } else if (response.status === "existe_info") {
                                 mensajeContainer.removeClass("d-none alert-danger alert-warning").addClass("alert alert-success")
                                     .html("✔ Documento encontrado en Información.");
@@ -778,7 +904,7 @@ header("Content-Type: text/html;charset=utf-8");
                 <div class="row">
                     <div class="form-group col-md-4">
                         <label for="dir_encVenta">* DIRECCIÓN:</label>
-                        <input type='text' name='dir_encVenta' class='form-control' />
+                        <input type='text' name='dir_encVenta' id="dir_encVenta" class='form-control' />
                     </div>
                     <div class="form-group col-md-4">
                         <label for="id_barrios">* BARRIO O VEREDA:</label>
@@ -826,7 +952,7 @@ header("Content-Type: text/html;charset=utf-8");
                     </div>
                     <div class="form-group col-md-4">
                         <label for="num_ficha_encVenta">* No. FICHA o RADICADO:</label>
-                        <input type='number' name='num_ficha_encVenta' class='form-control' required />
+                        <input type='number' id="num_ficha_encVenta" name='num_ficha_encVenta' class='form-control' required />
                     </div>
                 </div>
             </div>
@@ -904,63 +1030,6 @@ header("Content-Type: text/html;charset=utf-8");
     </script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const departamentoSelect = document.getElementById('departamento_expedicion');
-            const ciudadSelect = document.getElementById('ciudad_expedicion');
-
-            // Guardamos la ciudad que se debe seleccionar (si existe globalmente)
-            let ciudadSeleccionada = null;
-
-            // Función para cargar municipios
-            function cargarMunicipios(departamento) {
-                ciudadSelect.innerHTML = '<option value="">Seleccione una ciudad</option>';
-
-                if (departamento === '') {
-                    ciudadSelect.disabled = true;
-                    return;
-                }
-
-                const xhr = new XMLHttpRequest();
-                xhr.open('POST', '../obtener_municipios.php', true);
-                xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-
-                xhr.onload = function() {
-                    if (xhr.status === 200) {
-                        const municipios = JSON.parse(xhr.responseText);
-                        municipios.forEach(function(municipio) {
-                            const option = document.createElement('option');
-                            option.value = municipio.cod_municipio;
-                            option.textContent = municipio.nombre_municipio;
-                            ciudadSelect.appendChild(option);
-                        });
-
-                        ciudadSelect.disabled = false;
-
-                        // ✅ Si ya teníamos una ciudad guardada, la seleccionamos
-                        if (ciudadSeleccionada) {
-                            ciudadSelect.value = ciudadSeleccionada;
-                            ciudadSeleccionada = null; // Limpiamos
-                        }
-                    } else {
-                        alert('Error al cargar municipios');
-                    }
-                };
-
-                xhr.send('cod_departamento=' + departamento);
-            }
-
-            // Evento change para el departamento
-            departamentoSelect.addEventListener('change', function() {
-                console.log('Departamento seleccionado:', this.value);
-                cargarMunicipios(this.value);
-            });
-
-            // ✅ Exponemos una función global para seleccionar ciudad desde AJAX
-            window.setCiudadSeleccionada = function(ciudad) {
-                ciudadSeleccionada = ciudad;
-            };
-        });
-
         let agregar = document.getElementById('agregar');
         let contenido = document.getElementById('contenedor');
         let boton_enviar = document.querySelector('#enviar_contacto')

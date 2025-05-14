@@ -9,7 +9,8 @@ if (isset($_POST['doc_encVenta'])) {
     $resultado_encuesta = mysqli_query($mysqli, $sql_encuesta);
 
     if (mysqli_num_rows($resultado_encuesta) > 0) {
-        echo json_encode(["status" => "existe_encuesta"]);
+        $datos = mysqli_fetch_assoc($resultado_encuesta);
+        echo json_encode(["status" => "existe_encuesta", "data" => $datos]);
         exit;
     }
 
