@@ -60,51 +60,37 @@ $(document).ready(function () {
                 .append('<option value="">Seleccione...</option>')
                 .append(
                   '<option value="0 - 6"' +
-                    (integrante.rango_integVenta === "0 - 6"
-                      ? " selected"
-                      : "") +
+                    (integrante.rango_integVenta == "1" ? " selected" : "") +
                     ">0 - 6</option>"
                 )
                 .append(
                   '<option value="7 - 12"' +
-                    (integrante.rango_integVenta === "7 - 12"
-                      ? " selected"
-                      : "") +
+                    (integrante.rango_integVenta == "2" ? " selected" : "") +
                     ">7 - 12</option>"
                 )
                 .append(
                   '<option value="13 - 17"' +
-                    (integrante.rango_integVenta === "13 - 17"
-                      ? " selected"
-                      : "") +
+                    (integrante.rango_integVenta == "3" ? " selected" : "") +
                     ">13 - 17</option>"
                 )
                 .append(
                   '<option value="18 - 28"' +
-                    (integrante.rango_integVenta === "18 - 28"
-                      ? " selected"
-                      : "") +
+                    (integrante.rango_integVenta == "4" ? " selected" : "") +
                     ">18 - 28</option>"
                 )
                 .append(
                   '<option value="29 - 45"' +
-                    (integrante.rango_integVenta === "29 - 45"
-                      ? " selected"
-                      : "") +
+                    (integrante.rango_integVenta == "5" ? " selected" : "") +
                     ">29 - 45</option>"
                 )
                 .append(
                   '<option value="46 - 64"' +
-                    (integrante.rango_integVenta === "46 - 64"
-                      ? " selected"
-                      : "") +
+                    (integrante.rango_integVenta == "6" ? " selected" : "") +
                     ">46 - 64</option>"
                 )
                 .append(
                   '<option value="Mayor o igual a 65"' +
-                    (integrante.rango_integVenta === "Mayor o igual a 65"
-                      ? " selected"
-                      : "") +
+                    (integrante.rango_integVenta == "7" ? " selected" : "") +
                     ">Mayor o igual a 65</option>"
                 )
             );
@@ -119,6 +105,151 @@ $(document).ready(function () {
                 .attr("name", "orientacionSexual[]")
                 .addClass("form-control smaller-input")
                 .val(integrante.orientacionSexual || "")
+            );
+            console.log("la condicion es: ", response.data.condicionDiscapacidad);
+            var condicionDiscapacidad = createFormGroup(
+              "condicionDiscapacidad[]",
+              "Condición de Discapacidad",
+              $("<select>")
+                .attr("name", "condicionDiscapacidad[]")
+                .attr("id", "condicionDiscapacidad")
+                .addClass("form-control smaller-input")
+                .append('<option value="">Seleccione...</option>')
+                .append(
+                  '<option value="Si"' +
+                    (response.data.condicionDiscapacidad == "Si"
+                      ? " selected"
+                      : "") +
+                    ">Sí</option>"
+                )
+                .append(
+                  '<option value="No"' +
+                    (response.data.condicionDiscapacidad == "No"
+                      ? " selected"
+                      : "") +
+                    ">No</option>"
+                )
+            );
+
+            var discapacidadSelect = createFormGroup(
+              "tipoDiscapacidad[]",
+              "Tipo de Discapacidad",
+              $("<select>")
+                .attr("name", "tipoDiscapacidad[]")
+                .attr("id", "tipoDiscapacidad")
+                .addClass("form-control smaller-input tipo-discapacidad")
+                .append('<option value="">Seleccione...</option>')
+                .append(
+                  '<option value="Auditiva"' +
+                    (response.data.tipoDiscapacidad == "Auditiva"
+                      ? " selected"
+                      : "") +
+                    ">Auditiva</option>"
+                )
+                .append(
+                  '<option value="Física"' +
+                    (response.data.tipoDiscapacidad == "Física"
+                      ? " selected"
+                      : "") +
+                    ">Física</option>"
+                )
+                .append(
+                  '<option value="Intelectual"' +
+                    (response.data.tipoDiscapacidad == "Intelectual"
+                      ? " selected"
+                      : "") +
+                    ">Intelectual</option>"
+                )
+                .append(
+                  '<option value="Múltiple"' +
+                    (response.data.tipoDiscapacidad == "Múltiple"
+                      ? " selected"
+                      : "") +
+                    ">Múltiple</option>"
+                )
+                .append(
+                  '<option value="Psicosocial"' +
+                    (response.data.tipoDiscapacidad == "Psicosocial"
+                      ? " selected"
+                      : "") +
+                    ">Psicosocial</option>"
+                )
+                .append(
+                  '<option value="Sordoceguera"' +
+                    (response.data.tipoDiscapacidad == "Sordoceguera"
+                      ? " selected"
+                      : "") +
+                    ">Sordoceguera</option>"
+                )
+                .append(
+                  '<option value="Visual"' +
+                    (response.data.tipoDiscapacidad == "Visual"
+                      ? " selected"
+                      : "") +
+                    ">Visual</option>"
+                )
+            );
+
+            discapacidadSelect.attr("id", "grupoDiscapacidad");
+
+            // Crear los demás campos con los datos de response.data
+            var GrupoEtnico = createFormGroup(
+              "grupoEtnico[]",
+              "Grupo Étnico",
+              $("<select>")
+                .attr("name", "grupoEtnico[]")
+                .addClass("form-control smaller-input")
+                .append('<option value="">Seleccione...</option>')
+                .append(
+                  '<option value="Indigena"' +
+                    (response.data.grupoEtnico === "Indigena"
+                      ? " selected"
+                      : "") +
+                    ">Indígena</option>"
+                )
+                .append(
+                  '<option value="Negro(a) / Mulato(a) / Afrocolombiano(a)"' +
+                    (response.data.grupoEtnico ===
+                    "Negro(a) / Mulato(a) / Afrocolombiano(a)"
+                      ? " selected"
+                      : "") +
+                    ">Negro(a) / Mulato(a) / Afrocolombiano(a)</option>"
+                )
+                .append(
+                  '<option value="Raizal"' +
+                    (response.data.grupoEtnico === "Raizal"
+                      ? " selected"
+                      : "") +
+                    ">Raizal</option>"
+                )
+                .append(
+                  '<option value="Palenquero de San Basilio"' +
+                    (response.data.grupoEtnico === "Palenquero de San Basilio"
+                      ? " selected"
+                      : "") +
+                    ">Palenquero de San Basilio</option>"
+                )
+                .append(
+                  '<option value="Mestizo"' +
+                    (response.data.grupoEtnico === "Mestizo"
+                      ? " selected"
+                      : "") +
+                    ">Mestizo</option>"
+                )
+                .append(
+                  '<option value="Gitano (rom)"' +
+                    (response.data.grupoEtnico === "Gitano (rom)"
+                      ? " selected"
+                      : "") +
+                    ">Gitano (rom)</option>"
+                )
+                .append(
+                  '<option value="Ninguno"' +
+                    (response.data.grupoEtnico === "Ninguno"
+                      ? " selected"
+                      : "") +
+                    ">Ninguno</option>"
+                )
             );
 
             // ...repite para los demás campos, igual que hiciste con `genero` y `rango`
@@ -138,7 +269,10 @@ $(document).ready(function () {
               generoSelect,
               rangoEdadSelect,
               OrientacionSexual,
-              // ...los demás campos que generes aquí...
+              condicionDiscapacidad,
+              discapacidadSelect,
+              GrupoEtnico,
+
               eliminarBtn
             );
             // Agregar al contenedor
@@ -164,7 +298,7 @@ $(document).ready(function () {
             }
           });
         } else {
-        //  alert("El documento no es válido.");
+          //  alert("El documento no es válido.");
         }
       },
       error: function (xhr, status, error) {
