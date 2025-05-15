@@ -31,6 +31,7 @@ header("Content-Type: text/html;charset=utf-8");
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="../barrios.js"> </script>
+    <script src="integrantesEncuesta.js" ></script>
     <style>
         .select2-container .select2-selection--single {
             height: 40px !important;
@@ -158,7 +159,7 @@ header("Content-Type: text/html;charset=utf-8");
 
             // Evento change para el departamento
             departamentoSelect.addEventListener('change', function() {
-                console.log('Departamento seleccionado:', this.value);
+                //console.log('Departamento seleccionado:', this.value);
                 cargarMunicipios(this.value);
             });
 
@@ -428,7 +429,7 @@ header("Content-Type: text/html;charset=utf-8");
                         },
                         dataType: "json",
                         beforeSend: function() {
-                            console.log("⏳ Consultando en la base de datos...");
+                           // console.log("⏳ Consultando en la base de datos...");
                             mensajeContainer.removeClass("alert-danger alert-success alert-warning").addClass("alert d-none").html("");
                         },
                         success: function(response) {
@@ -823,7 +824,7 @@ header("Content-Type: text/html;charset=utf-8");
                             }
                         },
                         error: function(jqXHR, textStatus, errorThrown) {
-                            console.log("❌ Error AJAX:", textStatus, errorThrown);
+                           // console.log("❌ Error AJAX:", textStatus, errorThrown);
                             mensajeContainer.removeClass("d-none alert-success alert-warning").addClass("alert alert-danger")
                                 .html("❌ Error en la consulta. Intente nuevamente.");
                             $("#btnEnviar").prop("disabled", false);
@@ -1079,7 +1080,7 @@ header("Content-Type: text/html;charset=utf-8");
         //  Agregar LOGS para ver qué tiene id_bar al cambiar
         $('#id_bar').on('change', function() {
             $('#id_bar option:selected').each(function() {
-                console.log("Valor:", $(this).val(), "Texto:", $(this).text());
+              //  console.log("Valor:", $(this).val(), "Texto:", $(this).text());
             });
 
             let selectedText = $("#id_bar option:selected").text().trim();

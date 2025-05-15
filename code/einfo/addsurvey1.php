@@ -199,8 +199,8 @@ header("Content-Type: text/html;charset=utf-8");
                             <option value="7 - 12">7 - 12</option>
                             <option value="13 - 17">13 - 17</option>
                             <option value="18 - 28">18 - 28</option>
-                            <option value="29-45">29-45</option>
-                            <option value="46-64">46-64</option>
+                            <option value="29 - 45">29-45</option>
+                            <option value="46 - 64">46-64</option>
                             <option value="Mayor o igual a 65">Mayor o igual a 65</option>
                         </select>
                     </div>

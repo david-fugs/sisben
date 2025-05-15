@@ -16,6 +16,7 @@ date_default_timezone_set("America/Bogota");
 header("Content-Type: text/html;charset=utf-8");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    
     // Captura de datos enviados por POST
     $fec_reg_info        = $_POST['fec_reg_info'];
     $doc_info            = $_POST['doc_info'];
