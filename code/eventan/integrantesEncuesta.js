@@ -106,16 +106,21 @@ $(document).ready(function () {
 
             // Aquí debes hacer lo mismo para: OrientacionSexual, condicionDiscapacidad, etc.
             // Por ejemplo:
-            var OrientacionSexual = createFormGroup(
-              "orientacionSexual[]",
-              "Orientación Sexual",
-              $("<input>")
-                .attr("type", "text")
-                .attr("name", "orientacionSexual[]")
-                .addClass("form-control smaller-input")
-                .val(integrante.orientacionSexual || "")
-            );
-            console.log("la condicion es: ", integrante.condicionDiscapacidad);
+             var OrientacionSexual =
+                                    createFormGroup(
+                                        "orientacionSexual[]",
+                                        "Orientación Sexual",
+                                        $("<select>")
+                                        .attr("name", "orientacionSexual[]")
+                                        .addClass("form-control smaller-input")
+                                        .append('<option value="">Seleccione...</option>')
+                                        .append('<option value="Asexual"' + (integrante.orientacionSexual === 'Asexual' ? ' selected' : '') + '>Asexual</option>')
+                                        .append('<option value="Bisexual"' + (integrante.orientacionSexual === 'Bisexual' ? ' selected' : '') + '>Bisexual</option>')
+                                        .append('<option value="Heterosexual"' + (integrante.orientacionSexual === 'Heterosexual' ? ' selected' : '') + '>Heterosexual</option>')
+                                        .append('<option value="Homosexual"' + (integrante.orientacionSexual === 'Homosexual' ? ' selected' : '') + '>Homosexual</option>')
+                                        .append('<option value="Otro"' + (integrante.orientacionSexual === 'Otro' ? ' selected' : '') + '>Otro</option>')
+                                    );
+
             var condicionDiscapacidad = createFormGroup(
               "condicionDiscapacidad[]",
               "Condición de Discapacidad",

@@ -858,7 +858,7 @@ header("Content-Type: text/html;charset=utf-8");
                     <div class="form-group col-md-3">
                         <label for="fec_reg_encVenta">* FECHA REGISTRO:</label>
                         <input type="date" name="fec_reg_encVenta" class="form-control" id="fec_reg_encVenta"
-                            value="<?php echo date('Y-m-d'); ?>" required autofocus />
+                            value="<?php echo date('Y-m-d'); ?>"  autofocus disabled />
                     </div>
 
                     <div class="form-group col-md-6">
