@@ -261,6 +261,7 @@ header("Content-Type: text/html;charset=utf-8");
                                     <option value="Regimen Contributivo" <?php echo ($row['seguridadSalud'] == 'Regimen Contributivo') ? 'selected' : ''; ?>>Regimen Contributivo</option>
                                     <option value="Regimen Subsidiado" <?php echo ($row['seguridadSalud'] == 'Regimen Subsidiado') ? 'selected' : ''; ?>>Regimen Subsidiado</option>
                                     <option value="Poblacion Vinculada" <?php echo ($row['seguridadSalud'] == 'Poblacion Vinculada') ? 'selected' : ''; ?>>Poblacion Vinculada</option>
+                                    <option value="Ninguno" <?php echo ($row['seguridadSalud'] == 'Ninguno') ? 'selected' : ''; ?>>Ninguno</option>
                                 </select>
                             </div>
                         </div>
