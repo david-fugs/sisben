@@ -101,8 +101,9 @@
                             <select class="form-control" name="tipo_usu" required id="selctUsuario" />
                                 <option value="">SELECCIONE:</option>
                                 <option value=1 <?php if($row['tipo_usu']==1){echo 'selected';} ?>>ADMINISTRADOR</option>
-                                <option value=3 <?php if($row['tipo_usu']==3){echo 'selected';} ?>>ENCUESTADOR</option>
-                                <option value=4 <?php if($row['tipo_usu']==4){echo 'selected';} ?>>ENCUESTADOR Y REVISION</option>
+                                <option value=2 <?php if($row['tipo_usu']==2){echo 'selected';} ?>>ENCUESTADOR CAMPO</option>
+                                <option value=3 <?php if($row['tipo_usu']==3){echo 'selected';} ?>>VENTANILLA</option>
+                                <option value=4 <?php if($row['tipo_usu']==4){echo 'selected';} ?>>ENCUESTADOR Y REVISIOR</option>
                                 <option value=10 <?php if($row['tipo_usu']==10){echo 'selected';} ?>>SIN ACCESO</option>
                             </select>
                         </div>
