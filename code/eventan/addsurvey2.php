@@ -6,9 +6,7 @@ if (!isset($_SESSION['id_usu'])) {
     header("Location: ../../index.php");
     exit();  // Asegúrate de salir del script después de redirigir
 }
-mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+
 $usuario    = $_SESSION['id_usu'];
 $nombre     = $_SESSION['nombre'];
 $tipo_usu   = $_SESSION['tipo_usu'];
@@ -18,7 +16,7 @@ date_default_timezone_set("America/Bogota");
 header("Content-Type: text/html;charset=utf-8");
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Captura de datos enviados por POST
-    $fec_reg_encVenta        = $_POST['fec_reg_encVenta'];
+    $fec_reg_encVenta        = $_POST['fec_reg_encVenta'] ?? '';
     $doc_encVenta            = $_POST['doc_encVenta'];
     $tipo_documento          = $_POST['tipo_documento'];
     $fecha_expedicion        = $_POST['fecha_expedicion'];
