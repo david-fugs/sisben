@@ -1,6 +1,6 @@
 <?php
 
-$mysqli = new mysqli("localhost", "root", "", "aprendad_sisben");
+$mysqli = new mysqli("localhost", "root", "", "softepuc_sisben");
 
 //nueva db  BD: 	softepuc_sisben
 // USER: 	softepuc_sisben

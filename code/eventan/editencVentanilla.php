@@ -37,7 +37,6 @@ header("Content-Type: text/html;charset=utf-8");
     include("../../conexion.php");
     date_default_timezone_set("America/Bogota");
     $mysqli->set_charset('utf8');
-
     if (isset($_POST['btn-update'])) {
         session_start(); // Por si no está iniciado
         $id_encVenta = $_POST['id_encVenta'];
@@ -104,32 +103,56 @@ header("Content-Type: text/html;charset=utf-8");
             $up = mysqli_query($mysqli, $update);
 
             if ($up) {
-                // 6. Insertar o actualizar en movimientos
+                // 1. Obtener doc_encVenta
                 $doc_encVenta = $datos_nuevos['doc_encVenta'];
 
-                // Verificamos si ya hay registro para ese id_encVenta
-                $check = "SELECT * FROM movimientos WHERE id_encuesta = '$id_encVenta' AND id_usu = '$id_usu'";
-                $res_check = mysqli_query($mysqli, $check);
-
-                // Aseguramos que la nueva observación venga limpia
+                // 2. Limpiar entradas
+                $movimiento = isset($_POST['movimiento']) ? mysqli_real_escape_string($mysqli, $_POST['movimiento']) : '';
                 $nueva_obs = isset($_POST['tram_solic_encVenta']) ? mysqli_real_escape_string($mysqli, $_POST['tram_solic_encVenta']) : '';
 
-                if (mysqli_num_rows($res_check) > 0) {
-                    // Ya existe → actualizar cantidad_encuesta y concatenar observación
-                    $update_mov = "UPDATE movimientos 
-                   SET cantidad_encuesta = cantidad_encuesta + 1, 
-                       observacion = CONCAT(observacion, ' ', '$nueva_obs') 
-                   WHERE id_encuesta = '$id_encVenta' AND id_usu = '$id_usu'";
-                    mysqli_query($mysqli, $update_mov);
+                // 3. Validar movimiento permitido (para evitar SQL Injection)
+                $columnas_validas = ['inconfor_clasificacion', 'datos_persona', 'inclusion']; // <- Agrega aquí tus columnas permitidas
+                $columna = strtolower($movimiento); // ejemplo: INCONFOR_CLASIFICACION → inconfor_clasificacion
+
+                if (in_array($columna, $columnas_validas)) {
+                    // 4. Verificar si ya existe movimiento
+                    $check = "SELECT * FROM movimientos WHERE id_encuesta = '$id_encVenta' AND id_usu = '$id_usu'";
+                    $res_check = mysqli_query($mysqli, $check);
+
+                    if (mysqli_num_rows($res_check) > 0) {
+                        // Ya existe → actualizar la columna dinámica y concatenar observación
+                        $update_mov = "UPDATE movimientos 
+                           SET $columna = COALESCE($columna, 0) + 1,
+                               observacion = CONCAT(observacion, ' ', '$nueva_obs')
+                           WHERE id_encuesta = '$id_encVenta' AND id_usu = '$id_usu'";
+                        mysqli_query($mysqli, $update_mov);
+                    } else {
+                        // No existe → crear nuevo registro con 1 en la columna correspondiente
+                        // Preparamos los valores para todas las columnas con 0 excepto la que se va a actualizar
+                        $valores = [
+                            'inconfor_clasificacion' => 0,
+                            'datos_persona' => 0,
+                            'inclusion' => 0
+                        ];
+                        $valores[$columna] = 1; // solo esta columna con 1
+
+                        $insert_mov = "INSERT INTO movimientos 
+                (id_encuesta, doc_encVenta, id_usu, inconfor_clasificacion, datos_persona, inclusion, observacion)
+                VALUES (
+                    '$id_encVenta', 
+                    '$doc_encVenta', 
+                    '$id_usu', 
+                    {$valores['inconfor_clasificacion']}, 
+                    {$valores['datos_persona']}, 
+                    {$valores['inclusion']}, 
+                    '$nueva_obs')";
+                        mysqli_query($mysqli, $insert_mov);
+                    }
+
+                    echo "✅ Registro actualizado correctamente en '$columna'.";
                 } else {
-                    // No existe → insertar nuevo
-                    $insert_mov = "INSERT INTO movimientos (id_encuesta, doc_encVenta, id_usu, cantidad_encuesta, observacion) 
-                   VALUES ('$id_encVenta', '$doc_encVenta', '$id_usu', 1, '$nueva_obs')";
-                    mysqli_query($mysqli, $insert_mov);
+                    echo "❌ Movimiento no válido.";
                 }
-
-
-                echo "✅ Registro actualizado correctamente y movimiento registrado.";
             } else {
                 echo "❌ Error al actualizar: " . mysqli_error($mysqli);
             }

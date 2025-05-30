@@ -7,7 +7,6 @@ if (!isset($_SESSION['id_usu'])) {
 }
 
 $id_usu 	= $_SESSION['id_usu'];
-$usuario    = $_SESSION['usuario'];
 $nombre     = $_SESSION['nombre'];
 $tipo_usu   = $_SESSION['tipo_usu'];
 header("Content-Type: text/html;charset=utf-8");
@@ -21,11 +20,16 @@ header("Content-Type: text/html;charset=utf-8");
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>BD SISBEN</title>
-	<link rel="stylesheet" href="../css/styles.css">
-	<link rel="stylesheet" href="../../css/bootstrap.min.css">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
 
 	<style>
+		.hover-bg:hover {
+			background-color: #f5f5f5;
+			cursor: pointer;
+		}
+
 		.responsive {
 			max-width: 100%;
 			height: auto;
@@ -43,128 +47,188 @@ header("Content-Type: text/html;charset=utf-8");
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"></script>
 
-	<center>
-		<img src='../../img/sisben.png' width=300 height=185 class="responsive">
-	</center>
-
-	<section class="principal">
-
-		<div style="border-radius: 9px 9px 9px 9px; -moz-border-radius: 9px 9px 9px 9px; -webkit-border-radius: 9px 9px 9px 9px; border: 4px solid #FFFFFF;" align="center">
-
-			<div align="center">
-				<h1 style="color: #412fd1; text-shadow: #FFFFFF 0.1em 0.1em 0.2em"><b><i class="fa-solid fa-address-card"></i> ENCUESTAS REALIZADAS</b></h1>
+	<div class="container my-5">
+		<div class="row align-items-center">
+			<div class="col-md-4 text-center text-md-start mb-3 mb-md-0">
+				<img src='../../img/sisben.png' class="img-fluid" alt="Logo Sisben" style="max-width: 300px;">
 			</div>
+			<div class="col-md-8">
+				<h1 class="text-primary fw-bold">
+					<i class="fa-solid fa-address-card me-2"></i> ENCUESTAS REALIZADAS
+				</h1>
+			</div>
+		</div>
+	</div>
 
-			<div style="border-radius: 9px 9px 9px 9px; -moz-border-radius: 9px 9px 9px 9px; -webkit-border-radius: 9px 9px 9px 9px; border: 1px solid #efd47d; width: 500px; height: 30px; background:#FAFAFA; display:table-cell; vertical-align:middle;">
-
-				<label for="buscar">Datos de búsqueda</label>
-
-				<form action="showsurvey.php" method="get">
-					<input name="doc_encVenta" type="text" placeholder="Ingrese el Documento" size=20>
-					<input name="num_ficha_encVenta" type="text" placeholder="Escriba el número de ficha" size=30>
-					<input value="Buscar" type="submit">
+	<div class="container my-4">
+		<div class="card shadow-sm">
+			<div class="card-body">
+				<h5 class="card-title mb-3">Buscar registros</h5>
+				<form action="showsurvey.php" method="get" class="row g-3 align-items-center">
+					<div class="col-md-4">
+						<input name="doc_encVenta" type="text" class="form-control" placeholder="Ingrese el Documento">
+					</div>
+					<div class="col-md-5">
+						<input name="num_ficha_encVenta" type="text" class="form-control" placeholder="Número de ficha">
+					</div>
+					<div class="col-md-3">
+						<button type="submit" class="btn btn-success w-100">
+							<i class="fa fa-search me-1"></i> Buscar
+						</button>
+					</div>
 				</form>
-
 			</div>
+		</div>
+	</div>
 
-			<?php
 
-			date_default_timezone_set("America/Bogota");
-			include("../../conexion.php");
-			require_once("../../zebra.php");
+	<?php
 
-			@$doc_encVenta = ($_GET['doc_encVenta']);
-			@$num_ficha_encVenta = ($_GET['num_ficha_encVenta']);
+	date_default_timezone_set("America/Bogota");
+	include("../../conexion.php");
+	require_once("../../zebra.php");
 
-			$query = "SELECT * FROM encventanilla 
+	@$doc_encVenta = ($_GET['doc_encVenta']);
+	@$num_ficha_encVenta = ($_GET['num_ficha_encVenta']);
+
+	$query = "SELECT * FROM encventanilla 
 				WHERE (doc_encVenta LIKE '%$doc_encVenta%') 
 				AND (num_ficha_encVenta LIKE '%$num_ficha_encVenta%')";
 
-			if ($tipo_usu != '1') {
-				$query .= " AND encventanilla.id_usu = $id_usu";
-				
-			}
+	if ($tipo_usu != '1') {
+		$query .= " AND encventanilla.id_usu = $id_usu";
+	}
 
-			$query .= " ORDER BY encventanilla.fec_reg_encVenta ASC";
-			
-			$res = $mysqli->query($query);
-			$num_registros = mysqli_num_rows($res);
-			$resul_x_pagina = 200;
-			
-			echo "<section class='content'>
-			<div class='card-body'>
-        		<div class='table-responsive'>
-		        	<table>
-		            	<thead>
-		                	<tr>
+	$query .= " ORDER BY encventanilla.fec_reg_encVenta ASC";
+
+	$res = $mysqli->query($query);
+	$num_registros = mysqli_num_rows($res);
+	$resul_x_pagina = 200;
+
+	echo "<section class='content'>
+			<div class='container-fluid mt-3'>
+				<div class='table-responsive'>
+					<table class='table table-bordered table-striped table-hover align-middle text-center'>
+						<thead class='table-dark'>
+							<tr>
 								<th>No.</th>
 								<th>F. REA.</th>
 								<th>DOC. USU.</th>
 								<th>NOMBRE</th>
 								<th>FICHA</th>
-				        		<th>EDIT</th>
-				        		<th>EDITAR INTG.</th>
-				        		<th>AGREGAR INTG.</th>
-				        		<th>ELIMINAR REG.</th>
-				    		</tr>
-				  		</thead>
-            			<tbody>";
+								<th>MOVIMIENTOS</th>
+								<th>ELIMINAR REG.</th>
+							</tr>
+						</thead>
+						<tbody'>";
 
-			$paginacion = new Zebra_Pagination();
-			$paginacion->records($num_registros);
-			$paginacion->records_per_page($resul_x_pagina);
+	$paginacion = new Zebra_Pagination();
+	$paginacion->records($num_registros);
+	$paginacion->records_per_page($resul_x_pagina);
 
-			$consulta = "SELECT * FROM encventanilla 
+	$consulta = "SELECT * FROM encventanilla 
 				WHERE (doc_encVenta LIKE '%" . $doc_encVenta . "%') 
 				AND (num_ficha_encVenta LIKE '%" . $num_ficha_encVenta . "%')";
 
-			if ($tipo_usu != '1') {
-				$consulta .= " AND encventanilla.id_usu = $id_usu";
-			}
+	if ($tipo_usu != '1') {
+		$consulta .= " AND encventanilla.id_usu = $id_usu";
+	}
 
-			$consulta .= " ORDER BY encventanilla.fec_reg_encVenta ASC 
+	$consulta .= " ORDER BY encventanilla.fec_reg_encVenta ASC 
 				LIMIT " . (($paginacion->get_page() - 1) * $resul_x_pagina) . "," . $resul_x_pagina;
-			$result = $mysqli->query($consulta);
+	$result = $mysqli->query($consulta);
 
-			$i = 1;
-			while ($row = mysqli_fetch_array($result)) {
+	$i = 1;
+	while ($row = mysqli_fetch_array($result)) {
 
-				echo '
+		echo '
 				<tr>
-					<td data-label="No.">' . $i++ . '</td>
-					<td data-label="F. REA.">' . $row['fec_reg_encVenta'] . '</td>
-					<td data-label="DOC. USU">' . $row['doc_encVenta'] . '</td>
-					<td data-label="NOMBRE">' . $row['nom_encVenta'] . '</td>
-					<td data-label="FICHA">' . $row['num_ficha_encVenta'] . '</td>
-					<td data-label="EDIT"><a href="showencVentanilla.php?id_encVenta=' . $row['id_encVenta'] . '" ><img src="../../img/search.png" width=28 height=28></a></td>
-					<td data-label="EDITAR INTG."><a href="showencVentanillaFamily.php?id_encVenta=' . $row['id_encVenta'] . '" ><img src="../../img/family.png" width=28 height=28></a></td>
-					<td data-label="AGREGAR INTG."><a href="addencVentanillaFamily.php?id_encVenta=' . $row['id_encVenta'] . '" ><img src="../../img/addpeople1.png" width=28 height=28></a></td>
-					<td data-label="ELIMINAR"><a href="eliminarVentanilla.php?id_encVenta=' . $row['id_encVenta'] . '" onclick="return confirm(\'¿ESTÁS SEGURO DE ELIMINAR ESTE REGISTRO?\')"><img src="../../img/eliminar.png" width=28 height=28></a></td>
-            	</tr>';
-			}
+		<td>' . $i++ . '</td>
+		<td>' . $row['fec_reg_encVenta'] . '</td>
+		<td>' . $row['doc_encVenta'] . '</td>
+		<td>' . $row['nom_encVenta'] . '</td>
+		<td>' . $row['num_ficha_encVenta'] . '</td>
+		<td>
+			<button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#modalMenus" data-id="' . $row['id_encVenta'] . '">
+       			<i class="fa-solid fa-hand-point-up"></i>
+      		</button>
+		</td>
+		<td>
+			<a href="eliminarVentanilla.php?id_encVenta=' . $row['id_encVenta'] . '" onclick="return confirm(\'¿ESTÁS SEGURO DE ELIMINAR ESTE REGISTRO?\')">
+				<img src="../../img/eliminar.png" width="28" height="28" alt="Eliminar">
+			</a>
+		</td>
+	</tr>';
+	}
+	// <td data-label="EDIT"><a href="showencVentanilla.php?id_encVenta=' . $row['id_encVenta'] . '" ><img src="../../img/search.png" width=28 height=28></a></td>
+	// <td data-label="EDITAR INTG."><a href="showencVentanillaFamily.php?id_encVenta=' . $row['id_encVenta'] . '" ><img src="../../img/family.png" width=28 height=28></a></td>
+	// <td data-label="AGREGAR INTG."><a href="addencVentanillaFamily.php?id_encVenta=' . $row['id_encVenta'] . '" ><img src="../../img/addpeople1.png" width=28 height=28></a></td>
+	//
 
-			echo '</table>
+	echo '</table>
 		</div>
 
 		';
 
-			$paginacion->render();
+	$paginacion->render();
 
-			?>
-			<div class="share-container">
-				<!-- Go to www.addthis.com/dashboard to customize your tools -->
-				<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4ecc1a47193e29e4" async="async"></script>
-				<!-- Go to www.addthis.com/dashboard to customize your tools -->
-				<div class="addthis_sharing_toolbox"></div>
-			</div>
-			<center>
-				<br /><a href="../../access.php"><img src='../../img/atras.png' width="72" height="72" title="Regresar" /></a>
-			</center>
+	?>
+	<div class="share-container">
+		<!-- Go to www.addthis.com/dashboard to customize your tools -->
+		<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4ecc1a47193e29e4" async="async"></script>
+		<!-- Go to www.addthis.com/dashboard to customize your tools -->
+		<div class="addthis_sharing_toolbox"></div>
+	</div>
+	<center>
+		<br /><a href="../../access.php"><img src='../../img/atras.png' width="72" height="72" title="Regresar" /></a>
+	</center>
 
-		</div>
-		</div>
+	</div>
+	</div>
 	</section>
+	<!-- MODAL MENUS -->
+	<div class="modal fade" id="modalMenus" tabindex="-1" aria-labelledby="modalMenusLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content rounded-4 shadow-sm">
+				<div class="modal-header border-bottom-0">
+					<h1 class="modal-title fs-5 text-dark fw-semibold" id="modalMenusLabel">Selecciona un Movimiento</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+				</div>
+				<div class="modal-body">
+					<div class="list-group">
+						<a href="#" class="list-group-item list-group-item-action movimiento-link"
+							data-movimiento="INCLUSION"
+							data-custom-url="addencVentanillaFamily.php">
+							INCLUSION
+						</a>
+						<a href="#" class="list-group-item list-group-item-action movimiento-link"
+							data-movimiento="INCONFOR_CLASIFICACION">INCONFORMIDAD POR CLASIFICACIÓN</a>
+						<a href="#" class="list-group-item list-group-item-action movimiento-link"
+							data-movimiento="DATOS_PERSONA">MODIFICACION DATOS PERSONA</a>
+						<a href="#" class="list-group-item list-group-item-action movimiento-link"
+							data-movimiento="RETIRO_PERSONAS"
+							data-custom-url="showencVentanillaFamily.php">
+							RETIRO PERSONAS
+						</a>
+						<a href="#" class="list-group-item list-group-item-action movimiento-link"
+							data-movimiento="RETIRO_PERSONAS_INCONFORMIDAD"
+							data-custom-url="showencVentanillaFamily.php">
+							RETIRO PERSONAS POR INCONFORMIDAD
+						</a>
+					</div>
+				</div>
+				<div class="modal-footer border-top-0">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
 	<script src="js/app.js"></script>
+	<script src="js/redirecciones_movimientos.js"></script>
 	<script src="https://www.jose-aguilar.com/scripts/fontawesome/js/all.min.js" data-auto-replace-svg="nest"></script>
 
 </body>

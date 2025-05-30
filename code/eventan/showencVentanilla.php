@@ -333,6 +333,8 @@ header("Content-Type: text/html;charset=utf-8");
                 </div>
             </div>
 
+            <!-- movimientos -->
+             <input type="text" name="movimiento" value="<?=$_GET['movimiento']; ?>" hidden />
             <hr style="border: 2px solid #16087B; border-radius: 2px;">
 
             <button type="submit" class="btn btn-primary" name="btn-update">

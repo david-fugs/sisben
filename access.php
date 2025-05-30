@@ -246,6 +246,7 @@ $tipo_usu     = $_SESSION['tipo_usu'];
               <a href="code/eventan/addsurvey1.php" class="nav_link sublink">Nueva Encuesta</a>
               <!-- <a href="code/emovim/addsurvey1.php" class="nav_link sublink">Movimientos</a> -->
               <a href="code/einfo/addsurvey1.php" class="nav_link sublink">Información</a>
+              <a href="code/eventan/showsurvey.php" class="nav_link sublink">Movimientos</a>
             </ul>
           </li>
           <!-- end -->
@@ -260,7 +261,6 @@ $tipo_usu     = $_SESSION['tipo_usu'];
             </div>
 
             <ul class="menu_items submenu">
-              <a href="code/eventan/showsurvey.php" class="nav_link sublink">Encue. Nueva</a>
               <!-- <a href="code/emovim/showsurvey.php" class="nav_link sublink">Movimientos</a> -->
               <a href="code/einfo/showsurvey.php" class="nav_link sublink">Información</a>
             </ul>

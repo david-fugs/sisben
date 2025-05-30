@@ -112,6 +112,8 @@
                 </div>
 
                 <hr style="border: 2px solid #16087B; border-radius: 2px;">
+                <!-- Movimiento -->
+                 <input type="text" name="movimiento" id="movimiento" class="form-control" value="<?= $_GET['movimiento'] ?>" hidden/>
 
                 <button type="submit" class="btn btn-primary" name="btn-update">
                     <span class="spinner-border spinner-border-sm"></span>

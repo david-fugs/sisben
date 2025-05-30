@@ -144,7 +144,11 @@
                                 </select>
                             </td>
                             <td data-label="EDIT"><a href="showencVentanillaFamily1.php?id_integVenta='.$row['id_integVenta'].'" ><img src="../../img/editar.png" width=28 height=28></a></td>
-                            <td data-label="ELIMINAR"><a href="deleteencVentanilla.php?id_integVenta='.$row['id_integVenta'].'" ><img src="../../img/eliminar.png" width=28 height=28></a></td>
+                            <td data-label="ELIMINAR">
+                                    <a href="deleteencVentanilla.php?id_integVenta=' . $row['id_integVenta'] . '&movimiento=' . $_GET['movimiento'] . '">
+                                        <img src="../../img/eliminar.png" width=28 height=28>
+                                    </a>
+                                </td>                        
                         </tr>';
             }
  

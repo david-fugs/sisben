@@ -40,6 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $experienciaMigratoria  = $_POST['experienciaMigratoria'] ?? array();
         $seguridadSalud         = $_POST['seguridadSalud'] ?? array();
         $condicionOcupacion     = $_POST['condicionOcupacion'] ?? array();
+        $movimiento            = $_POST['movimiento'] ?? '';
 
 
 
@@ -115,64 +116,69 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         }
 
-        // Si hubo cambios, actualizar/insertar en movimientos
         if ($huboCambios) {
             // 1. Obtener doc_encVenta desde encventanilla
             $queryDoc = "SELECT doc_encVenta FROM encventanilla WHERE id_encVenta = '$id_encVenta'";
             $resultadoDoc = $mysqli->query($queryDoc);
-            $rowDoc = $resultadoDoc->fetch_assoc();
-            $doc_enc = $rowDoc['doc_encVenta'] ?? '';
 
-            // 2. Verificar si ya existe en movimientos
-            $queryExiste = "SELECT cantidad_encuesta FROM movimientos WHERE id_encuesta = '$id_encVenta' AND id_usu = '$id_usu'";
-            $resultadoExiste = $mysqli->query($queryExiste);
+            if ($resultadoDoc && $rowDoc = $resultadoDoc->fetch_assoc()) {
+                $doc_enc = $rowDoc['doc_encVenta'] ?? '';
 
-            if ($resultadoExiste->num_rows > 0) {
-                // Ya existe, actualizar cantidad
-                $row = $resultadoExiste->fetch_assoc();
-                $nuevaCantidad = $row['cantidad_encuesta'] + 1;
+                // 2. Verificar si ya existe en movimientos
+                $queryExiste = "SELECT inclusion FROM movimientos WHERE id_encuesta = '$id_encVenta' AND id_usu = '$id_usu'";
+                $resultadoExiste = $mysqli->query($queryExiste);
 
-                $update = "UPDATE movimientos SET cantidad_encuesta = '$nuevaCantidad' WHERE id_encuesta = '$id_encVenta' AND id_usu = '$id_usu'";
-                $mysqli->query($update);
-            } else {
-                // No existe, insertar nuevo registro
-                $insert = "INSERT INTO movimientos (id_encuesta, doc_encVenta, cantidad_encuesta, id_usu) 
-                   VALUES ('$id_encVenta', '$doc_enc', 1, '$id_usu')";
-                $mysqli->query($insert);
+                $exito = false;
+
+                if ($resultadoExiste && $resultadoExiste->num_rows > 0) {
+                    // Ya existe, actualizar
+                    $row = $resultadoExiste->fetch_assoc();
+                    $nuevaCantidad = $row['inclusion'] + 1;
+
+                    $update = "UPDATE movimientos SET inclusion = '$nuevaCantidad' WHERE id_encuesta = '$id_encVenta' AND id_usu = '$id_usu'";
+                    $exito = $mysqli->query($update);
+                } else {
+                    // No existe, insertar
+                    $insert = "INSERT INTO movimientos (id_encuesta, doc_encVenta, inclusion, id_usu) 
+                       VALUES ('$id_encVenta', '$doc_enc', 1, '$id_usu')";
+                    $exito = $mysqli->query($insert);
+                }
+
+                // Mostrar confirmación si hubo éxito
+                if ($exito) {
+                    echo "
+                <!DOCTYPE html>
+                <html lang='es'>
+                <head>
+                    <meta charset='utf-8' />
+                    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+                    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+                    <link href='https://fonts.googleapis.com/css?family=Lobster' rel='stylesheet'>
+                    <link href='https://fonts.googleapis.com/css?family=Orbitron' rel='stylesheet'>
+                    <link rel='stylesheet' href='../../css/bootstrap.min.css'>
+                    <link href='../../fontawesome/css/all.css' rel='stylesheet'>
+                    <title>BD SISBEN</title>
+                    <style>
+                        .responsive {
+                            max-width: 100%;
+                            height: auto;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <center>
+                        <img src='../../img/sisben.png' width=300 height=185 class='responsive'>
+                        <div class='container'>
+                            <br />
+                            <h3><b><i class='fas fa-check-circle'></i> SE GUARDÓ DE FORMA EXITOSA EL REGISTRO</b></h3><br />
+                            <p align='center'><a href='../../access.php'><img src='../../img/atras.png' width=96 height=96></a></p>
+                        </div>   
+                    </center>
+                </body>
+                </html>
+            ";
+                }
             }
         }
     }
 }
-
-echo "
-        <!DOCTYPE html>
-        <html lang='es'>
-            <head>
-                <meta charset='utf-8' />
-                <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-                <meta http-equiv='X-UA-Compatible' content='ie=edge'>
-                <link href='https://fonts.googleapis.com/css?family=Lobster' rel='stylesheet'>
-                <link href='https://fonts.googleapis.com/css?family=Orbitron' rel='stylesheet'>
-                <link rel='stylesheet' href='../../css/bootstrap.min.css'>
-                <link href='../../fontawesome/css/all.css' rel='stylesheet'>
-                <title>BD SISBEN</title>
-                <style>
-                    .responsive {
-                        max-width: 100%;
-                        height: auto;
-                    }
-                </style>
-            </head>
-            <body>
-                <center>
-                    <img src='../../img/sisben.png' width=300 height=185 class='responsive'>
-                    <div class='container'>
-                        <br />
-                        <h3><b><i class='fas fa-check-circle'></i> SE GUARDÓ DE FORMA EXITOSA EL REGISTRO</b></h3><br />
-                        <p align='center'><a href='../../access.php'><img src='../../img/atras.png' width=96 height=96></a></p>
-                    </div>   
-                </center>
-            </body>
-        </html>
-    ";
-

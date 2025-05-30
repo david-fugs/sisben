@@ -333,7 +333,8 @@ header("Content-Type: text/html;charset=utf-8");
                         </div>
                     </div>
                 </div>
-
+                <!-- MOVIMIENTO -->
+                 <input type="text" name="movimiento" value="<?=  $_GET['movimiento']?>" id="movimiento" class="form-control" value="1" readonly hidden />
                 <div class="form-group">
                     <div class="row">
                         <div class="form-group col-md-2">
