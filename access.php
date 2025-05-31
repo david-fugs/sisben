@@ -96,7 +96,7 @@ $tipo_usu     = $_SESSION['tipo_usu'];
             </div>
 
             <ul class="menu_items submenu">
-              <a href="code/report/report7.php" class="nav_link sublink">Ventanilla</a>
+              <a href="code/exportares/exportar.php" class="nav_link sublink">Ventanilla</a>
               <a href="code/report/report13.php" class="nav_link sublink">Información</a>
               <!-- <a href="code/report/report17.php" class="nav_link sublink">Movimiento</a> -->
             </ul>

@@ -7,9 +7,9 @@
 
 			function Conexion(){
 				$this->ruta       ="localhost"; //
-				$this->usuario    ="aprendad_sisben"; //usuario que tengas definido
-				$this->contrasena ="~CY]&J9u#wxa"; //contraseña que tengas definidad
-				$this->baseDatos  ="aprendad_sisben"; //base de datos personas, si quieres utilizar otra base de datos solamente cambiala
+				$this->usuario    ="root"; //usuario que tengas definido
+				$this->contrasena =""; //contraseña que tengas definidad
+				$this->baseDatos  ="softepuc_sisben"; //base de datos personas, si quieres utilizar otra base de datos solamente cambiala
 			}
 
 			function conectarse(){
