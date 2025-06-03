@@ -70,11 +70,19 @@ $encuestadores = mysqli_query($mysqli, $sql_users);
             <div class="card-body">
                 <h5 class="card-title mb-3">Buscar por Rango de Fechas</h5>
                 <form action="exportarAll.php" method="get" class="row g-3 align-items-center">
-                    <div class="col-md-5">
+                    <div class="col-md-3">
                         <input name="fecha_inicio" type="date" class="form-control" placeholder="Fecha inicio" required>
                     </div>
-                    <div class="col-md-5">
+                    <div class="col-md-3">
                         <input name="fecha_fin" type="date" class="form-control" placeholder="Fecha fin" required>
+                    </div>
+                    <div class="col-md-4">
+                        <select name="id_usu" class="form-select" >
+                            <option value="">-- Selecciona Encuestador --</option>
+                            <?php foreach ($encuestadores as $enc): ?>
+                                <option value="<?= $enc['id_usu'] ?>"><?= htmlspecialchars($enc['nombre']) ?></option>
+                            <?php endforeach; ?>
+                        </select>
                     </div>
                     <div class="col-md-2">
                         <button type="submit" class="btn btn-success w-100">
