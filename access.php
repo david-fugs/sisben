@@ -184,7 +184,7 @@ $tipo_usu     = $_SESSION['tipo_usu'];
             </div>
 
             <ul class="menu_items submenu">
-              <a href="code/ecampo/report/report1.php" class="nav_link sublink">Informes</a>
+              <a href="code/exportares/exportar.php" class="nav_link sublink">Informes</a>
             </ul>
           </li>
           <!-- duplicate this li tag if you want to add or remove  navlink with submenu -->
@@ -244,9 +244,9 @@ $tipo_usu     = $_SESSION['tipo_usu'];
 
             <ul class="menu_items submenu">
               <a href="code/eventan/addsurvey1.php" class="nav_link sublink">Nueva Encuesta</a>
-              <!-- <a href="code/emovim/addsurvey1.php" class="nav_link sublink">Movimientos</a> -->
+              <a href="code/eventan/movimientosEncuesta.php" class="nav_link sublink">Movimientos</a>
               <a href="code/einfo/addsurvey1.php" class="nav_link sublink">Información</a>
-              <a href="code/eventan/showsurvey.php" class="nav_link sublink">Movimientos</a>
+              <a href="code/eventan/showsurvey.php" class="nav_link sublink">Lista Encuesta</a>
             </ul>
           </li>
           <!-- end -->
@@ -275,7 +275,8 @@ $tipo_usu     = $_SESSION['tipo_usu'];
             </div>
 
             <ul class="menu_items submenu">
-              <a href="code/eventan/report/report1.php" class="nav_link sublink">Informes</a>
+              <a href="code/exportares/exportar.php" class="nav_link sublink">Informes</a>
+
             </ul>
           </li>
           <!-- duplicate this li tag if you want to add or remove  navlink with submenu -->
@@ -380,7 +381,8 @@ $tipo_usu     = $_SESSION['tipo_usu'];
             </div>
 
             <ul class="menu_items submenu">
-              <a href="code/eventan/report/report1.php" class="nav_link sublink">Informes</a>
+              <a href="code/exportares/exportar.php" class="nav_link sublink">Informes</a>
+
             </ul>
           </li>
           <!-- duplicate this li tag if you want to add or remove  navlink with submenu -->

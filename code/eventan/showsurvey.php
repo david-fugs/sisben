@@ -141,7 +141,6 @@ header("Content-Type: text/html;charset=utf-8");
 								<th>NOMBRE</th>
 								<th>FICHA</th>
 								<th>ESTADO</th>
-								<th>MOVIMIENTOS</th>
 								<th>ELIMINAR REG.</th>
 							</tr>
 						</thead>
@@ -178,11 +177,6 @@ header("Content-Type: text/html;charset=utf-8");
 		<td>' . $row['nom_encVenta'] . '</td>
 		<td>' . $row['num_ficha_encVenta'] . '</td>
 		<td><span class="' . $estadoFicha . '">' . $row['estado_ficha_texto'] . '</span></td>
-		<td>
-			<button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#modalMenus" data-id="' . $row['id_encVenta'] . '">
-       			<i class="fa-solid fa-hand-point-up"></i>
-      		</button>
-		</td>
 		<td>
 			<a href="eliminarVentanilla.php?id_encVenta=' . $row['id_encVenta'] . '" onclick="return confirm(\'¿ESTÁS SEGURO DE ELIMINAR ESTE REGISTRO?\')">
 				<img src="../../img/eliminar.png" width="28" height="28" alt="Eliminar">

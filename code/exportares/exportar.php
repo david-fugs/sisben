@@ -94,36 +94,6 @@ $encuestadores = mysqli_query($mysqli, $sql_users);
         </div>
     </div>
 
-    <!-- 🟦 Formulario 2: Buscar por rango de fechas + encuestador -->
-    <div class="container my-4">
-        <div class="card shadow-sm">
-            <div class="card-body">
-                <h5 class="card-title mb-3">Buscar por Fechas y Encuestador</h5>
-                <form action="showsurvey.php" method="get" class="row g-3 align-items-center">
-                    <div class="col-md-3">
-                        <input name="fecha_inicio_enc" type="date" class="form-control" placeholder="Fecha inicio" required>
-                    </div>
-                    <div class="col-md-3">
-                        <input name="fecha_fin_enc" type="date" class="form-control" placeholder="Fecha fin" required>
-                    </div>
-                    <div class="col-md-4">
-                        <select name="encuestador_id" class="form-select" required>
-                            <option value="">-- Selecciona Encuestador --</option>
-                            <?php foreach ($encuestadores as $enc): ?>
-                                <option value="<?= $enc['id_usu'] ?>"><?= htmlspecialchars($enc['nombre']) ?></option>
-                            <?php endforeach; ?>
-                        </select>
-                    </div>
-                    <div class="col-md-2">
-                        <button type="submit" class="btn btn-success w-100">
-                            <i class="fa fa-search me-1"></i> Buscar
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
 
     <center>
         <br /><a href="../../access.php"><img src='../../img/atras.png' width="72" height="72" title="Regresar" /></a>
