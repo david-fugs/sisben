@@ -23,7 +23,6 @@ header("Content-Type: text/html;charset=utf-8");
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
-
 	<style>
 		.hover-bg:hover {
 			background-color: #f5f5f5;
@@ -37,6 +36,34 @@ header("Content-Type: text/html;charset=utf-8");
 
 		.selector-for-some-widget {
 			box-sizing: content-box;
+		}
+
+		/* Estilos para fichas retiradas */
+		.ficha-retirada {
+			background-color: #ffebee !important;
+			background-image: linear-gradient(45deg, #ffcdd2 25%, transparent 25%, transparent 75%, #ffcdd2 75%, #ffcdd2),
+							  linear-gradient(45deg, #ffcdd2 25%, transparent 25%, transparent 75%, #ffcdd2 75%, #ffcdd2);
+			background-size: 20px 20px;
+			background-position: 0 0, 10px 10px;
+			border-left: 5px solid #f44336 !important;
+		}
+
+		.estado-ficha-retirada {
+			background-color: #f44336;
+			color: white;
+			padding: 2px 8px;
+			border-radius: 12px;
+			font-size: 0.8em;
+			font-weight: bold;
+		}
+
+		.estado-ficha-activa {
+			background-color: #4caf50;
+			color: white;
+			padding: 2px 8px;
+			border-radius: 12px;
+			font-size: 0.8em;
+			font-weight: bold;
 		}
 	</style>
 </head>
@@ -89,11 +116,9 @@ header("Content-Type: text/html;charset=utf-8");
 	require_once("../../zebra.php");
 
 	@$doc_encVenta = ($_GET['doc_encVenta']);
-	@$num_ficha_encVenta = ($_GET['num_ficha_encVenta']);
-
-	$query = "SELECT * FROM encventanilla 
-				WHERE (doc_encVenta LIKE '%$doc_encVenta%') 
-				AND (num_ficha_encVenta LIKE '%$num_ficha_encVenta%')";
+	@$num_ficha_encVenta = ($_GET['num_ficha_encVenta']);	$query = "SELECT COUNT(*) as total FROM encventanilla 
+				WHERE (encventanilla.doc_encVenta LIKE '%$doc_encVenta%') 
+				AND (encventanilla.num_ficha_encVenta LIKE '%$num_ficha_encVenta%')";
 
 	if ($tipo_usu != '1') {
 		$query .= " AND encventanilla.id_usu = $id_usu";
@@ -108,14 +133,14 @@ header("Content-Type: text/html;charset=utf-8");
 	echo "<section class='content'>
 			<div class='container-fluid mt-3'>
 				<div class='table-responsive'>
-					<table class='table table-bordered table-striped table-hover align-middle text-center'>
-						<thead class='table-dark'>
+					<table class='table table-bordered table-striped table-hover align-middle text-center'>						<thead class='table-dark'>
 							<tr>
 								<th>No.</th>
 								<th>F. REA.</th>
 								<th>DOC. USU.</th>
 								<th>NOMBRE</th>
 								<th>FICHA</th>
+								<th>ESTADO</th>
 								<th>MOVIMIENTOS</th>
 								<th>ELIMINAR REG.</th>
 							</tr>
@@ -124,11 +149,14 @@ header("Content-Type: text/html;charset=utf-8");
 
 	$paginacion = new Zebra_Pagination();
 	$paginacion->records($num_registros);
-	$paginacion->records_per_page($resul_x_pagina);
-
-	$consulta = "SELECT * FROM encventanilla 
-				WHERE (doc_encVenta LIKE '%" . $doc_encVenta . "%') 
-				AND (num_ficha_encVenta LIKE '%" . $num_ficha_encVenta . "%')";
+	$paginacion->records_per_page($resul_x_pagina);	$consulta = "SELECT encventanilla.*, 
+				CASE 
+					WHEN encventanilla.estado_ficha = 0 THEN 'FICHA RETIRADA'
+					ELSE 'ACTIVA'
+				END as estado_ficha_texto
+				FROM encventanilla 
+				WHERE (encventanilla.doc_encVenta LIKE '%" . $doc_encVenta . "%') 
+				AND (encventanilla.num_ficha_encVenta LIKE '%" . $num_ficha_encVenta . "%')";
 
 	if ($tipo_usu != '1') {
 		$consulta .= " AND encventanilla.id_usu = $id_usu";
@@ -137,17 +165,19 @@ header("Content-Type: text/html;charset=utf-8");
 	$consulta .= " ORDER BY encventanilla.fec_reg_encVenta ASC 
 				LIMIT " . (($paginacion->get_page() - 1) * $resul_x_pagina) . "," . $resul_x_pagina;
 	$result = $mysqli->query($consulta);
-
 	$i = 1;
-	while ($row = mysqli_fetch_array($result)) {
+	while ($row = mysqli_fetch_array($result)) {		// Determinar si la fila debe tener el estilo de ficha retirada
+		$claseFilaRetirada = ($row['estado_ficha'] == 0) ? 'ficha-retirada' : '';
+		$estadoFicha = ($row['estado_ficha'] == 0) ? 'estado-ficha-retirada' : 'estado-ficha-activa';
 
 		echo '
-				<tr>
+				<tr class="' . $claseFilaRetirada . '">
 		<td>' . $i++ . '</td>
 		<td>' . $row['fec_reg_encVenta'] . '</td>
 		<td>' . $row['doc_encVenta'] . '</td>
 		<td>' . $row['nom_encVenta'] . '</td>
 		<td>' . $row['num_ficha_encVenta'] . '</td>
+		<td><span class="' . $estadoFicha . '">' . $row['estado_ficha_texto'] . '</span></td>
 		<td>
 			<button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#modalMenus" data-id="' . $row['id_encVenta'] . '">
        			<i class="fa-solid fa-hand-point-up"></i>

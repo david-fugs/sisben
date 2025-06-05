@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prueba de Sistema de Movimientos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>🧪 Prueba del Sistema de Movimientos - Correcciones Aplicadas</h2>
+        
+        <div class="alert alert-info">
+            <h5>✅ Correcciones Implementadas:</h5>
+            <ol>
+                <li><strong>Campo estado_ficha:</strong> Agregado a la tabla encventanilla (1=ACTIVA, 0=RETIRADA)</li>
+                <li><strong>Lógica de integrantes corregida:</strong> Eliminación y reinserción controlada para evitar duplicaciones</li>
+                <li><strong>Detección de ficha retirada:</strong> Basada en el campo estado_ficha de encventanilla</li>
+                <li><strong>Validación para ficha retirada:</strong> No permite movimientos si estado_ficha = 0</li>
+                <li><strong>Indicadores visuales actualizados:</strong> showsurvey.php usa el nuevo campo</li>
+            </ol>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header bg-success text-white">
+                        <h5>✅ Problemas Solucionados</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <strong>Duplicación de integrantes:</strong> 
+                                <span class="text-success">SOLUCIONADO</span>
+                                <br><small class="text-muted">Ahora elimina solo los existentes antes de insertar los nuevos</small>
+                            </li>
+                            <li class="list-group-item">
+                                <strong>Estado de ficha retirada:</strong> 
+                                <span class="text-success">SOLUCIONADO</span>
+                                <br><small class="text-muted">Campo estado_ficha en encventanilla con detección automática</small>
+                            </li>
+                            <li class="list-group-item">
+                                <strong>Validación de movimientos:</strong> 
+                                <span class="text-success">SOLUCIONADO</span>
+                                <br><small class="text-muted">Bloquea envío cuando estado_ficha = 0</small>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h5>🔧 Archivos Modificados</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <code>updateEncuesta.php</code>
+                                <br><small>✅ Lógica de integrantes mejorada + estado_ficha</small>
+                            </li>
+                            <li class="list-group-item">
+                                <code>verificar_encuesta.php</code>
+                                <br><small>✅ Detección basada en estado_ficha</small>
+                            </li>
+                            <li class="list-group-item">
+                                <code>showsurvey.php</code>
+                                <br><small>✅ Indicadores visuales actualizados</small>
+                            </li>
+                            <li class="list-group-item">
+                                <code>addsurvey2.php</code>
+                                <br><small>✅ Incluye estado_ficha = 1 por defecto</small>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-4">
+            <div class="card">
+                <div class="card-header bg-warning text-dark">
+                    <h5>⚠️ Pasos Pendientes para Implementación Completa</h5>
+                </div>
+                <div class="card-body">
+                    <ol>
+                        <li>
+                            <strong>Ejecutar el script SQL:</strong>
+                            <code class="bg-light p-1">agregar_estado_ficha.sql</code>
+                            <br><small class="text-muted">Para agregar el campo estado_ficha a la tabla existente</small>
+                        </li>
+                        <li>
+                            <strong>Probar el formulario de movimientos:</strong>
+                            <br><small class="text-muted">Verificar que no se dupliquen integrantes al actualizar</small>
+                        </li>
+                        <li>
+                            <strong>Probar detección de ficha retirada:</strong>
+                            <br><small class="text-muted">Confirmar que se muestre el mensaje de advertencia</small>
+                        </li>
+                        <li>
+                            <strong>Verificar indicadores visuales:</strong>
+                            <br><small class="text-muted">En showsurvey.php para fichas retiradas</small>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-4">
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    <h5>📋 Flujo de Funcionamiento Corregido</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h6>1. Consulta de Documento</h6>
+                            <ul class="small">
+                                <li>Busca en encventanilla por documento</li>
+                                <li>Verifica estado_ficha</li>
+                                <li>Si estado_ficha = 0 → Muestra advertencia</li>
+                                <li>Si estado_ficha = 1 → Permite movimientos</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4">
+                            <h6>2. Actualización de Integrantes</h6>
+                            <ul class="small">
+                                <li>Si NO es "Retiro ficha":</li>
+                                <li>Elimina integrantes existentes</li>
+                                <li>Inserta todos los del formulario</li>
+                                <li>Si ES "Retiro ficha": No modifica integrantes</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4">
+                            <h6>3. Actualización de Estado</h6>
+                            <ul class="small">
+                                <li>Si movimiento = "Retiro ficha" → estado_ficha = 0</li>
+                                <li>Cualquier otro movimiento → estado_ficha = 1</li>
+                                <li>Registra movimiento en tabla movimientos</li>
+                                <li>Actualiza contadores correspondientes</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-4 text-center">
+            <a href="movimientosEncuesta.php" class="btn btn-primary btn-lg">
+                🚀 Probar Sistema de Movimientos
+            </a>
+            <a href="showsurvey.php" class="btn btn-secondary btn-lg">
+                👁️ Ver Indicadores Visuales
+            </a>
+        </div>
+    </div>
+</body>
+</html>
