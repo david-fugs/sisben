@@ -172,7 +172,7 @@ header("Content-Type: text/html;charset=utf-8");
 		echo '
 				<tr class="' . $claseFilaRetirada . '">
 		<td>' . $i++ . '</td>
-		<td>' . $row['fec_reg_encVenta'] . '</td>
+		<td>' . $row['fecha_alta_encVenta'] . '</td>
 		<td>' . $row['doc_encVenta'] . '</td>
 		<td>' . $row['nom_encVenta'] . '</td>
 		<td>' . $row['num_ficha_encVenta'] . '</td>
@@ -184,10 +184,6 @@ header("Content-Type: text/html;charset=utf-8");
 		</td>
 	</tr>';
 	}
-	// <td data-label="EDIT"><a href="showencVentanilla.php?id_encVenta=' . $row['id_encVenta'] . '" ><img src="../../img/search.png" width=28 height=28></a></td>
-	// <td data-label="EDITAR INTG."><a href="showencVentanillaFamily.php?id_encVenta=' . $row['id_encVenta'] . '" ><img src="../../img/family.png" width=28 height=28></a></td>
-	// <td data-label="AGREGAR INTG."><a href="addencVentanillaFamily.php?id_encVenta=' . $row['id_encVenta'] . '" ><img src="../../img/addpeople1.png" width=28 height=28></a></td>
-	//
 
 	echo '</table>
 		</div>
