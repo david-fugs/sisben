@@ -433,12 +433,12 @@ header("Content-Type: text/html;charset=utf-8");
                             mensajeContainer.removeClass("alert-danger alert-success alert-warning").addClass("alert d-none").html("");
                         },
                         success: function(response) {
-                            console.log("✅ Respuesta del servidor:", response);
-
-                            if (response.status === "existe_encuesta") {
+                            console.log("✅ Respuesta del servidor:", response);                            if (response.status === "existe_encuesta") {
                                 mensajeContainer.removeClass("d-none alert-danger alert-warning").addClass("alert alert-success")
                                     .html(" La encuesta ya fue realizada.");
                                 $("#btnEnviar").prop("disabled", false);
+                                // Llenar los campos con los datos de la encuesta existente
+                                $("#fec_reg_encVenta").val(response.data.fecha_alta_encVenta.split(' ')[0]); // Solo la fecha, sin la hora
                                 $("#nom_encVenta").val(response.data.nom_encVenta);
                                 $("#tipo_documento").val(response.data.tipo_documento);
                                 // Seteamos el departamento y hacemos la consulta directamente
@@ -505,15 +505,12 @@ header("Content-Type: text/html;charset=utf-8");
                                             });
                                         }
                                     }
-                                });
-
-
-                            } else if (response.status === "existe_info") {
+                                });                            } else if (response.status === "existe_info") {
                                 mensajeContainer.removeClass("d-none alert-danger alert-warning").addClass("alert alert-success")
                                     .html("✔ Documento encontrado en Información.");
                                 $("#btnEnviar").prop("disabled", false);
-                                // Llenar los campos con los datos de la BD
-                                $("#fec_reg_encVenta").val(response.data.fecha_reg_info);
+                                // Para información, mantener la fecha actual ya que no tiene fecha_alta_encVenta
+                                $("#fec_reg_encVenta").val("<?php echo date('Y-m-d'); ?>");
                                 $("#nom_encVenta").val(response.data.nom_info);
                                 $("#tipo_documento").val(response.data.tipo_documento);
                                 $("#departamento_expedicion").val(response.data.departamento_expedicion).trigger('change');
@@ -809,18 +806,21 @@ header("Content-Type: text/html;charset=utf-8");
                                     }
                                 });
                                 // Actualizar el total
-                                actualizarTotal();
-                            } else if (response.status === "no_existe") {
+                                actualizarTotal();                            } else if (response.status === "no_existe") {
                                 mensajeContainer.removeClass("d-none alert-danger alert-success").addClass("alert alert-warning")
                                     .html("⚠️ El documento no está registrado en ninguna base de datos.");
                                 $("#btnEnviar").prop("disabled", false);
+                                
+                                // Mantener la fecha actual cuando el documento no existe
+                                $("#fec_reg_encVenta").val("<?php echo date('Y-m-d'); ?>");
                             } else {
                                 mensajeContainer.removeClass("d-none alert-danger alert-success").addClass("alert alert-warning")
                                     .html("⚠️ El documento no está registrado.");
                                 $("#btnEnviar").prop("disabled", false);
 
-                                // Vaciar los campos si el documento no existe
-                                $("#fec_reg_encVenta, #nom_encVenta, #tipo_documento, #ciudad_expedicion, #fecha_expedicion, #obs1_encInfo, #obs2_encInfo").val("");
+                                // Mantener la fecha actual y vaciar solo los demás campos
+                                $("#fec_reg_encVenta").val("<?php echo date('Y-m-d'); ?>");
+                                $("#nom_encVenta, #tipo_documento, #ciudad_expedicion, #fecha_expedicion, #obs1_encInfo, #obs2_encInfo").val("");
                             }
                         },
                         error: function(jqXHR, textStatus, errorThrown) {
@@ -829,12 +829,12 @@ header("Content-Type: text/html;charset=utf-8");
                                 .html("❌ Error en la consulta. Intente nuevamente.");
                             $("#btnEnviar").prop("disabled", false);
                         }
-                    });
-                } else {
-                    // Si el campo está vacío, limpiar todo
+                    });                } else {
+                    // Si el campo está vacío, limpiar todo excepto la fecha
                     mensajeContainer.addClass("d-none").html("");
                     $("#btnEnviar").prop("disabled", false);
-                    $("#fec_reg_encVenta, #nom_encVenta, #tipo_documento, #ciudad_expedicion, #fecha_expedicion, #obs1_encInfo, #obs2_encInfo").val("");
+                    $("#fec_reg_encVenta").val("<?php echo date('Y-m-d'); ?>");
+                    $("#nom_encVenta, #tipo_documento, #ciudad_expedicion, #fecha_expedicion, #obs1_encInfo, #obs2_encInfo").val("");
                 }
             });
         });

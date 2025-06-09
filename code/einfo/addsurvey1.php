@@ -34,18 +34,19 @@ header("Content-Type: text/html;charset=utf-8");
             max-width: 100%;
             height: auto;
         }
-    </style>
-
-    <script>
-        $(document).ready(function() {
-            $('#btn_ingresar').prop('disabled', true); // Deshabilitado por defecto
+    </style>    <script>        $(document).ready(function() {
+            console.log('🚀 Documento cargado, inicializando eventos...');
+            $('#btn_ingresar').prop('disabled', false); // Habilitado por defecto
+            console.log('✅ Botón habilitado');
 
             $('#doc_info').on('blur', function() {
                 let documento = $(this).val();
                 let mensajeDiv = $('#mensaje_documento');
-                let boton = $('#btn_ingresar');
+                
+                console.log('📄 Verificando documento:', documento);
 
                 if (documento !== '') {
+                    console.log('🔍 Realizando búsqueda AJAX...');
                     $.ajax({
                         url: 'verificar_documento.php',
                         method: 'POST',
@@ -54,28 +55,109 @@ header("Content-Type: text/html;charset=utf-8");
                         },
                         dataType: 'json',
                         success: function(response) {
+                            console.log('✅ Respuesta recibida:', response);
                             if (response.status === 'existe') {
-                                mensajeDiv.html('<div class="alert alert-danger">El documento ya está registrado.</div>');
-                                boton.prop('disabled', true);
-                            } else if (response.status === 'no_existe') {
-                                mensajeDiv.html('<div class="alert alert-success">Documento no registrado, puede continuar.</div>');
-                                boton.prop('disabled', false);
+                                // Precargar todos los datos del registro más reciente
+                                mensajeDiv.html('<div class="alert alert-info">📋 Documento encontrado. Datos precargados del registro más reciente.</div>');
+                                console.log('📋 Precargando datos...');
+                                
+                                // Precargar campos básicos
+                                $('#nom_info').val(response.data.nom_info);
+                                $('#tipo_documento').val(response.data.tipo_documento);
+                                $('#departamento_expedicion').val(response.data.departamento_expedicion);
+                                $('#fecha_expedicion').val(response.data.fecha_expedicion);
+                                
+                                // Precargar campos demográficos
+                                $('#gen_integVenta').val(response.data.gen_integVenta);
+                                $('#rango_integVenta').val(response.data.rango_integVenta);
+                                $('#victima').val(response.data.victima);
+                                $('#condicionDiscapacidad').val(response.data.condicionDiscapacidad);
+                                $('#tipoDiscapacidad').val(response.data.tipoDiscapacidad);
+                                $('#mujerGestante').val(response.data.mujerGestante);
+                                $('#cabezaFamilia').val(response.data.cabezaFamilia);
+                                $('#orientacionSexual').val(response.data.orientacionSexual);
+                                $('#experienciaMigratoria').val(response.data.experienciaMigratoria);
+                                $('#grupoEtnico').val(response.data.grupoEtnico);
+                                $('#seguridadSalud').val(response.data.seguridadSalud);
+                                $('#nivelEducativo').val(response.data.nivelEducativo);
+                                $('#condicionOcupacion').val(response.data.condicionOcupacion);
+                                $('#obs1_encInfo').val(response.data.observacion);
+                                $('#obs2_encInfo').val(response.data.info_adicional);
+                                
+                                // Manejar discapacidad
+                                if (response.data.condicionDiscapacidad === 'Si') {
+                                    $('#tipoDiscapacidadContainer').show();
+                                } else {
+                                    $('#tipoDiscapacidadContainer').hide();
+                                }
+                                
+                                // Cargar municipio si hay departamento
+                                if (response.data.departamento_expedicion && response.data.ciudad_expedicion) {
+                                    cargarMunicipios(response.data.departamento_expedicion, response.data.ciudad_expedicion);
+                                }
+                                  } else if (response.status === 'no_existe') {
+                                mensajeDiv.html('<div class="alert alert-success">✅ Documento nuevo, puede ingresar la información.</div>');
+                                console.log('✅ Documento nuevo, limpiando formulario...');
+                                // Limpiar campos pero mantener la fecha actual
+                                limpiarFormulario();
                             } else {
-                                mensajeDiv.html('<div class="alert alert-warning">Ocurrió un error inesperado.</div>');
-                                boton.prop('disabled', true);
+                                console.log('⚠️ Respuesta inesperada:', response);
+                                mensajeDiv.html('<div class="alert alert-warning">⚠️ Ocurrió un error inesperado.</div>');
                             }
                         },
-                        error: function() {
-                            mensajeDiv.html('<div class="alert alert-warning">Error en la conexión.</div>');
-                            boton.prop('disabled', true);
+                        error: function(xhr, status, error) {
+                            console.error('❌ Error AJAX:', error);
+                            console.error('📊 Status:', status);
+                            console.error('📝 Response:', xhr.responseText);
+                            mensajeDiv.html('<div class="alert alert-warning">❌ Error en la conexión. Revise la consola para más detalles.</div>');
                         }
                     });
                 } else {
                     mensajeDiv.html('');
-                    boton.prop('disabled', true);
+                    limpiarFormulario();
                 }
             });
-        }); // Función para ordenar un select
+            
+            // Función para cargar municipios
+            function cargarMunicipios(departamento, ciudadSeleccionada = null) {
+                const xhr = new XMLHttpRequest();
+                xhr.open('POST', '../obtener_municipios.php', true);
+                xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                
+                xhr.onload = function() {
+                    if (xhr.status === 200) {
+                        const municipios = JSON.parse(xhr.responseText);
+                        const ciudadSelect = document.getElementById('ciudad_expedicion');
+                        ciudadSelect.innerHTML = '<option value="">Seleccione una ciudad</option>';
+                        
+                        municipios.forEach(function(municipio) {
+                            const option = document.createElement('option');
+                            option.value = municipio.cod_municipio;
+                            option.textContent = municipio.nombre_municipio;
+                            if (ciudadSeleccionada && municipio.cod_municipio === ciudadSeleccionada) {
+                                option.selected = true;
+                            }
+                            ciudadSelect.appendChild(option);
+                        });
+                        ciudadSelect.disabled = false;
+                    }
+                };
+                
+                xhr.send('cod_departamento=' + departamento);
+            }
+              // Función para limpiar formulario (excepto fecha y documento)
+            function limpiarFormulario() {
+                $('#nom_info, #tipo_documento, #departamento_expedicion, #fecha_expedicion').val('');
+                $('#gen_integVenta, #rango_integVenta, #victima, #condicionDiscapacidad').val('');
+                $('#tipoDiscapacidad, #mujerGestante, #cabezaFamilia, #orientacionSexual').val('');
+                $('#experienciaMigratoria, #grupoEtnico, #seguridadSalud, #nivelEducativo').val('');
+                $('#condicionOcupacion, #obs1_encInfo, #obs2_encInfo').val('');
+                $('#ciudad_expedicion').html('<option value="">Seleccione una ciudad</option>').prop('disabled', true);
+                $('#tipoDiscapacidadContainer').hide();
+            }
+        });
+
+        // Función para ordenar un select
         function ordenarSelect(id_componente) {
             var selectToSort = $('#' + id_componente);
             var optionActual = selectToSort.val();
@@ -136,10 +218,9 @@ header("Content-Type: text/html;charset=utf-8");
                     <div class="form-group col-md-3">
                         <label for="doc_info">* DOCUMENTO:</label>
                         <input type='number' name='doc_info' class='form-control' id="doc_info" required />
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="tipo_doc">* TIPO DE DOCUMENTO:</label>
-                        <select name="tipo_documento" class="form-control" id="">
+                    </div>                    <div class="form-group col-md-6">
+                        <label for="tipo_documento">* TIPO DE DOCUMENTO:</label>
+                        <select name="tipo_documento" class="form-control" id="tipo_documento">
                             <option value="">SELECCIONE:</option>
                             <option value="cedula">CEDULA</option>
                             <option value="ppt">PPT</option>
@@ -168,14 +249,13 @@ header("Content-Type: text/html;charset=utf-8");
                         <select id="ciudad_expedicion" name="ciudad_expedicion" class="form-control" disabled required>
                             <option value="">Seleccione una ciudad</option>
                         </select>
-                    </div>
-                    <div class="form-group col-md-3">
+                    </div>                    <div class="form-group col-md-3">
                         <label for="fecha_expedicion">* FECHA EXPEDICION:</label>
-                        <input type='date' name='fecha_expedicion' class='form-control' required style="text-transform:uppercase;" />
+                        <input type='date' name='fecha_expedicion' id='fecha_expedicion' class='form-control' required style="text-transform:uppercase;" />
                     </div>
                     <div class="form-group col-md-3">
                         <label for="nom_info">* NOMBRES COMPLETOS:</label>
-                        <input type='text' name='nom_info' class='form-control' required style="text-transform:uppercase;" />
+                        <input type='text' name='nom_info' id='nom_info' class='form-control' required style="text-transform:uppercase;" />
                     </div>
                 </div>
             </div>
@@ -372,15 +452,12 @@ header("Content-Type: text/html;charset=utf-8");
                         </select>
                     </div>
                 </div>
-            </div>
-            <div class="form-row">
+            </div>            <div class="form-row">
                 <div class="form-group col-md-12">
                     <label for="obs2_encInfo">INFORMACION ADICIONAL:</label>
-                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="2" name="obs2_encInfo" style="text-transform:uppercase;"></textarea>
+                    <textarea class="form-control" id="obs2_encInfo" rows="2" name="obs2_encInfo" style="text-transform:uppercase;"></textarea>
                 </div>
-            </div>
-
-            <button type="submit" class="btn btn-success">
+            </div><button type="submit" class="btn btn-success" id="btn_ingresar">
                 <span class="spinner-border spinner-border-sm"></span>
                 INGRESAR INFORMACION
             </button>
@@ -400,8 +477,7 @@ header("Content-Type: text/html;charset=utf-8");
             tipoDiscapacidadContainer.style.display = "none";
             document.getElementById("tipoDiscapacidad").value = ""; // Reiniciar selección
         }
-    });
-    document.addEventListener('DOMContentLoaded', function() {
+    });    document.addEventListener('DOMContentLoaded', function() {
         const departamentoSelect = document.getElementById('departamento_expedicion');
         const ciudadSelect = document.getElementById('ciudad_expedicion');
 
@@ -431,7 +507,7 @@ header("Content-Type: text/html;charset=utf-8");
                     });
                     ciudadSelect.disabled = false;
                 } else {
-                    alert('Error al cargar municipios');
+                    console.error('Error al cargar municipios');
                 }
             };
 

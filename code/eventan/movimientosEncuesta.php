@@ -475,12 +475,10 @@ header("Content-Type: text/html;charset=utf-8");
                                     
                                     const event = new Event('change');
                                     document.getElementById('departamento_expedicion').dispatchEvent(event);
-                                }
-
-                                $("#tipo_documento").val(response.data.tipo_documento);
+                                }                                $("#tipo_documento").val(response.data.tipo_documento);
                                 $("#fecha_expedicion").val(response.data.fecha_expedicion);
                                 $("#nom_encVenta").val(response.data.nom_encVenta);
-                                $("#fec_reg_encVenta").val(response.data.fec_reg_encVenta);
+                                $("#fec_reg_encVenta").val(response.data.fecha_alta_encVenta.split(' ')[0]); // Solo la fecha, sin la hora
 
                                 // Cargar barrio y comuna
                                 if (response.data.id_bar) {
@@ -538,15 +536,13 @@ header("Content-Type: text/html;charset=utf-8");
 
                                     // Actualizar el total
                                     actualizarTotal();
-                                }
-
-                            } else if (response.status === "existe") {
+                                }                            } else if (response.status === "existe") {
                                 mensajeContainer.removeClass("d-none alert-danger alert-warning").addClass("alert alert-success")
                                     .html("✔ Encuesta encontrada.");
                                 $("#btnEnviar").prop("disabled", false);
 
                                 // Llenar todos los campos principales
-                                $("#fec_reg_encVenta").val(response.data.fec_reg_encVenta);
+                                $("#fec_reg_encVenta").val(response.data.fecha_alta_encVenta.split(' ')[0]); // Solo la fecha, sin la hora
                                 $("#nom_encVenta").val(response.data.nom_encVenta);
                                 $("#tipo_documento").val(response.data.tipo_documento);
                                 $("#departamento_expedicion").val(response.data.departamento_expedicion);
