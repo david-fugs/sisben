@@ -1,0 +1,128 @@
+[2025-06-10 21:39:53] Iniciando exportarEncuestador.php
+[2025-06-10 21:39:53] Autoload cargado correctamente
+[2025-06-10 21:39:53] Sesión iniciada
+[2025-06-10 21:39:53] Conexión incluida
+[2025-06-10 21:39:53] Conexión a BD verificada
+[2025-06-10 14:39:53] Parámetros recibidos - fecha_inicio: 2025-06-01, fecha_fin: 2025-06-30
+[2025-06-10 14:39:53] Hoja 1 - ENCUESTAS creada
+[2025-06-10 14:39:53] Consulta de encuestas ejecutada correctamente
+[2025-06-10 14:39:53] Datos de encuestas escritos en la hoja 1
+[2025-06-10 14:39:53] Hoja 2 - INFORMACIÓN creada
+[2025-06-10 14:39:53] Consulta de información ejecutada correctamente
+[2025-06-10 14:39:53] Datos de información escritos en la hoja 2
+[2025-06-10 14:39:53] Hoja 3 - MOVIMIENTOS creada
+[2025-06-10 21:44:01] Iniciando exportarEncuestador.php
+[2025-06-10 21:44:01] Autoload cargado correctamente
+[2025-06-10 21:44:01] Sesión iniciada
+[2025-06-10 21:44:01] Conexión incluida
+[2025-06-10 21:44:01] Conexión a BD verificada
+[2025-06-10 14:44:01] Parámetros recibidos - fecha_inicio: 2025-06-01, fecha_fin: 2025-06-30
+[2025-06-10 14:44:01] Hoja 1 - ENCUESTAS creada
+[2025-06-10 14:44:01] Consulta de encuestas ejecutada correctamente
+[2025-06-10 14:44:01] Datos de encuestas escritos en la hoja 1
+[2025-06-10 14:44:01] Hoja 2 - INFORMACIÓN creada
+[2025-06-10 14:44:01] Consulta de información ejecutada correctamente
+[2025-06-10 14:44:01] Datos de información escritos en la hoja 2
+[2025-06-10 14:44:01] Hoja 3 - MOVIMIENTOS creada
+[2025-06-10 21:44:46] Iniciando exportarEncuestador.php
+[2025-06-10 21:44:46] Autoload cargado correctamente
+[2025-06-10 21:44:46] Sesión iniciada
+[2025-06-10 21:44:46] Conexión incluida
+[2025-06-10 21:44:46] Conexión a BD verificada
+[2025-06-10 14:44:46] Parámetros recibidos - fecha_inicio: 2025-06-01, fecha_fin: 2025-06-30
+[2025-06-10 14:44:46] Hoja 1 - ENCUESTAS creada
+[2025-06-10 14:44:46] Consulta de encuestas ejecutada correctamente
+[2025-06-10 14:44:46] Datos de encuestas escritos en la hoja 1
+[2025-06-10 14:44:46] Hoja 2 - INFORMACIÓN creada
+[2025-06-10 14:44:46] Consulta de información ejecutada correctamente
+[2025-06-10 14:44:46] Datos de información escritos en la hoja 2
+[2025-06-10 14:44:46] Hoja 3 - MOVIMIENTOS creada
+[2025-06-10 14:44:46] Consulta de movimientos ejecutada correctamente
+[2025-06-10 14:44:46] Datos de movimientos escritos en la hoja 3
+[2025-06-10 14:44:46] Archivo Excel generado: Encuestas_Informacion_y_Movimientos_2025-06-01_2025-06-30.xlsx
+[2025-06-10 14:44:46] Archivo Excel enviado para descarga
+[2025-06-10 21:48:37] Iniciando exportarEncuestador.php
+[2025-06-10 21:48:37] Autoload cargado correctamente
+[2025-06-10 21:48:37] Sesión iniciada
+[2025-06-10 21:48:37] Conexión incluida
+[2025-06-10 21:48:37] Conexión a BD verificada
+[2025-06-10 14:48:37] Parámetros recibidos - fecha_inicio: 2025-06-01, fecha_fin: 2025-06-30
+[2025-06-10 14:48:37] Hoja 1 - ENCUESTAS creada
+[2025-06-10 14:48:37] Consulta de encuestas ejecutada correctamente
+[2025-06-10 14:48:37] Datos de encuestas escritos en la hoja 1
+[2025-06-10 14:48:37] Hoja 2 - INFORMACIÓN creada
+[2025-06-10 14:48:37] Consulta de información ejecutada correctamente
+[2025-06-10 14:48:37] Datos de información escritos en la hoja 2
+[2025-06-10 14:48:37] Hoja 3 - MOVIMIENTOS creada
+[2025-06-10 14:48:37] Consulta de movimientos ejecutada correctamente
+[2025-06-10 14:48:37] Datos de movimientos escritos en la hoja 3
+[2025-06-10 14:48:37] Archivo Excel generado: Encuestas_Informacion_y_Movimientos_2025-06-01_2025-06-30.xlsx
+[2025-06-10 14:48:37] Archivo Excel enviado para descarga
+[2025-06-10 21:49:37] Iniciando exportarEncuestador.php
+[2025-06-10 21:49:37] Autoload cargado correctamente
+[2025-06-10 21:49:37] Sesión iniciada
+[2025-06-10 21:49:37] Conexión incluida
+[2025-06-10 21:49:37] Conexión a BD verificada
+[2025-06-10 14:49:37] Parámetros recibidos - fecha_inicio: 2025-06-01, fecha_fin: 2025-06-30
+[2025-06-10 14:49:37] Hoja 1 - ENCUESTAS creada
+[2025-06-10 14:49:37] Consulta de encuestas ejecutada correctamente
+[2025-06-10 14:49:37] Datos de encuestas escritos en la hoja 1
+[2025-06-10 14:49:37] Hoja 2 - INFORMACIÓN creada
+[2025-06-10 14:49:37] Consulta de información ejecutada correctamente
+[2025-06-10 14:49:37] Datos de información escritos en la hoja 2
+[2025-06-10 14:49:37] Hoja 3 - MOVIMIENTOS creada
+[2025-06-10 14:49:37] Consulta de movimientos ejecutada correctamente
+[2025-06-10 14:49:37] Datos de movimientos escritos en la hoja 3
+[2025-06-10 14:49:37] Archivo Excel generado: Encuestas_Informacion_y_Movimientos_2025-06-01_2025-06-30.xlsx
+[2025-06-10 14:49:37] Archivo Excel enviado para descarga
+[2025-06-10 22:09:41] Iniciando exportarEncuestador.php
+[2025-06-10 22:09:41] Autoload cargado correctamente
+[2025-06-10 22:09:41] Sesión iniciada
+[2025-06-10 22:09:41] Conexión incluida
+[2025-06-10 22:09:41] Conexión a BD verificada
+[2025-06-10 15:09:41] Parámetros recibidos - fecha_inicio: 2025-06-01, fecha_fin: 2025-06-30
+[2025-06-10 15:09:41] Hoja 1 - ENCUESTAS creada
+[2025-06-10 15:09:41] Consulta de encuestas ejecutada correctamente
+[2025-06-10 15:09:41] Datos de encuestas escritos en la hoja 1
+[2025-06-10 15:09:41] Hoja 2 - INFORMACIÓN creada
+[2025-06-10 15:09:41] Consulta de información ejecutada correctamente
+[2025-06-10 15:09:41] Datos de información escritos en la hoja 2
+[2025-06-10 15:09:41] Hoja 3 - MOVIMIENTOS creada
+[2025-06-10 15:09:41] Consulta de movimientos ejecutada correctamente
+[2025-06-10 15:09:41] Datos de movimientos escritos en la hoja 3
+[2025-06-10 15:09:41] Archivo Excel generado: Encuestas_Informacion_y_Movimientos_2025-06-01_2025-06-30.xlsx
+[2025-06-10 15:09:41] Archivo Excel enviado para descarga
+[2025-06-10 22:09:48] Iniciando exportarEncuestador.php
+[2025-06-10 22:09:48] Autoload cargado correctamente
+[2025-06-10 22:09:48] Sesión iniciada
+[2025-06-10 22:09:48] Conexión incluida
+[2025-06-10 22:09:48] Conexión a BD verificada
+[2025-06-10 15:09:48] Parámetros recibidos - fecha_inicio: 2025-06-01, fecha_fin: 2025-06-30
+[2025-06-10 15:09:48] Hoja 1 - ENCUESTAS creada
+[2025-06-10 15:09:48] Consulta de encuestas ejecutada correctamente
+[2025-06-10 15:09:48] Datos de encuestas escritos en la hoja 1
+[2025-06-10 15:09:48] Hoja 2 - INFORMACIÓN creada
+[2025-06-10 15:09:48] Consulta de información ejecutada correctamente
+[2025-06-10 15:09:48] Datos de información escritos en la hoja 2
+[2025-06-10 15:09:48] Hoja 3 - MOVIMIENTOS creada
+[2025-06-10 15:09:48] Consulta de movimientos ejecutada correctamente
+[2025-06-10 15:09:48] Datos de movimientos escritos en la hoja 3
+[2025-06-10 15:09:48] Archivo Excel generado: Encuestas_Informacion_y_Movimientos_2025-06-01_2025-06-30.xlsx
+[2025-06-10 15:09:48] Archivo Excel enviado para descarga
+[2025-06-10 23:13:29] Iniciando exportarEncuestador.php
+[2025-06-10 23:13:29] Autoload cargado correctamente
+[2025-06-10 23:13:29] Sesión iniciada
+[2025-06-10 23:13:29] Conexión incluida
+[2025-06-10 23:13:29] Conexión a BD verificada
+[2025-06-10 16:13:29] Parámetros recibidos - fecha_inicio: 2025-06-01, fecha_fin: 2025-06-30
+[2025-06-10 16:13:29] Hoja 1 - ENCUESTAS creada
+[2025-06-10 16:13:29] Consulta de encuestas ejecutada correctamente
+[2025-06-10 16:13:29] Datos de encuestas escritos en la hoja 1
+[2025-06-10 16:13:29] Hoja 2 - INFORMACIÓN creada
+[2025-06-10 16:13:29] Consulta de información ejecutada correctamente
+[2025-06-10 16:13:29] Datos de información escritos en la hoja 2
+[2025-06-10 16:13:29] Hoja 3 - MOVIMIENTOS creada
+[2025-06-10 16:13:29] Consulta de movimientos ejecutada correctamente
+[2025-06-10 16:13:29] Datos de movimientos escritos en la hoja 3
+[2025-06-10 16:13:29] Archivo Excel generado: Encuestas_Informacion_y_Movimientos_2025-06-01_2025-06-30.xlsx
+[2025-06-10 16:13:29] Archivo Excel enviado para descarga

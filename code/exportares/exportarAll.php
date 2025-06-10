@@ -31,7 +31,10 @@ $fecha_fin = isset($_GET['fecha_fin']) ? $_GET['fecha_fin'] : '';
 $condiciones = [];
 
 if (!empty($fecha_inicio) && !empty($fecha_fin)) {
-    $condiciones[] = "ev.fecha_alta_encVenta BETWEEN '$fecha_inicio' AND '$fecha_fin'";
+    // Convertir fechas para incluir todo el día
+    $fecha_inicio_completa = $fecha_inicio . ' 00:00:00';
+    $fecha_fin_completa = $fecha_fin . ' 23:59:59';
+    $condiciones[] = "ev.fecha_alta_encVenta BETWEEN '$fecha_inicio_completa' AND '$fecha_fin_completa'";
 }
 
 $where = '';
@@ -113,8 +116,8 @@ COUNT(CASE WHEN grupoEtnico = 'Palanquero de San Basilio' THEN 1 END) AS total_p
 COUNT(CASE WHEN grupoEtnico = 'Gitano (rom)' THEN 1 END) AS total_gitanorom,
 COUNT(CASE WHEN grupoEtnico = 'Ninguno' THEN 1 END) AS total_ninguno,
 COUNT(CASE WHEN grupoEtnico = 'Mestizo' THEN 1 END) AS total_mestizo
-FROM integventanilla
-WHERE fecha_alta_integVenta BETWEEN '$fecha_inicio' AND '$fecha_fin'
+FROM integventanilla iv
+" . (!empty($fecha_inicio) && !empty($fecha_fin) ? "WHERE iv.fecha_alta_integVenta BETWEEN '$fecha_inicio_completa' AND '$fecha_fin_completa'" : "") . "
 ";
 // Ejecutar la consulta
 $res_integrantes = mysqli_query($mysqli, $sql_integrantes);

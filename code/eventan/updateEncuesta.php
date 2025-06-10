@@ -78,8 +78,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if (!$mysqli->query($sql_update)) {
                 throw new Exception("Error al actualizar la encuesta: " . $mysqli->error);
             }
-            
-        } else {
+              } else {
             // CREAR NUEVA ENCUESTA
             $estado_ficha = 1; // Nueva encuesta siempre activa
             $fecha_alta_encVenta = date('Y-m-d H:i:s');
@@ -93,7 +92,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             ) VALUES (
                 '$doc_encVenta', '$fec_reg_encVenta', '$nom_encVenta', '$dir_encVenta', '$zona_encVenta',
                 '$id_com', '$id_bar', '$otro_bar_ver_encVenta', 'ENCUESTA NUEVA', '$integra_encVenta',
-                '$num_ficha_encVenta', '$obs_encVenta', '$fecha_alta_encVenta', '$fecha_edit_encVenta',
+                '$num_ficha_encVenta', 'CREADO DESDE MOVIMIENTOS', '$fecha_alta_encVenta', '$fecha_edit_encVenta',
                 '$tipo_documento', '$fecha_expedicion', '$departamento_expedicion', '$ciudad_expedicion',
                 '$sisben_nocturno', '$estado_ficha', '$id_usu'
             )";
@@ -204,60 +203,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     throw new Exception("Error al insertar integrante $key: " . $mysqli->error);
                 }
             }
-        }
-
-        // Registrar movimiento en la tabla movimientos
-        $fecha_movimiento = date('Y-m-d H:i:s');        // Determinar qué campo incrementar según el tipo de movimiento
-        $campo_incrementar = "";
-        switch($movimientos) {
-            case "inclusion":
-                $campo_incrementar = "inclusion";
-                break;
-            case "Inconformidad por clasificacion":
-                $campo_incrementar = "inconfor_clasificacion";
-                break;
-            case "modificación datos persona":
-                $campo_incrementar = "datos_persona";
-                break;
-            case "Retiro ficha":
-                $campo_incrementar = "retiro_ficha";
-                break;
-            case "Retiro personas":
-                $campo_incrementar = "retiro_personas";
-                break;
-            case "ENCUESTA NUEVA":
-                $campo_incrementar = "inclusion"; // Las encuestas nuevas se cuentan como inclusión
-                break;
-            default:
-                $campo_incrementar = "inclusion"; // Por defecto
-        }
-
-        // Verificar si ya existe un registro para este documento
-        $sql_check_movimiento = "SELECT id_movimiento FROM movimientos WHERE doc_encVenta = '$doc_encVenta'";
-        $result_check = $mysqli->query($sql_check_movimiento);
-
-        if ($result_check->num_rows > 0) {
-            // Si existe, actualizar incrementando el campo correspondiente
-            $sql_movimiento = "UPDATE movimientos SET 
-                $campo_incrementar = $campo_incrementar + 1,
-                cantidad_encuesta = cantidad_encuesta + 1,
-                observacion = '$obs_encVenta',
-                id_usu = '$id_usu'
-                WHERE doc_encVenta = '$doc_encVenta'";        } else {
-            // Si no existe, crear nuevo registro - omitiendo id_informacion si no puede ser NULL
-            $sql_movimiento = "INSERT INTO movimientos 
-                (inclusion, inconfor_clasificacion, datos_persona, retiro_ficha, retiro_personas, 
-                 retiro_personas_inconformidad, cantidad_informacion, cantidad_encuesta, 
-                 id_encuesta, doc_encVenta, observacion, id_usu)
-                VALUES (
-                    " . ($campo_incrementar == 'inclusion' ? 1 : 0) . ",
-                    " . ($campo_incrementar == 'inconfor_clasificacion' ? 1 : 0) . ",
-                    " . ($campo_incrementar == 'datos_persona' ? 1 : 0) . ",
-                    " . ($campo_incrementar == 'retiro_ficha' ? 1 : 0) . ",
-                    " . ($campo_incrementar == 'retiro_personas' ? 1 : 0) . ",
-                    0, 0, 1, '$id_encVenta', '$doc_encVenta', '$obs_encVenta', '$id_usu'
-                )";
-        }
+        }        // Registrar movimiento en la tabla movimientos (NUEVA ESTRUCTURA)
+        $fecha_movimiento = date('Y-m-d H:i:s');
+        
+        // Crear registro individual del movimiento
+        $sql_movimiento = "INSERT INTO movimientos 
+            (doc_encVenta, tipo_movimiento, fecha_movimiento, observacion, id_usu, id_encuesta)
+            VALUES ('$doc_encVenta', '$movimientos', '$fecha_movimiento', '$obs_encVenta', '$id_usu', '$id_encVenta')";
 
         if (!$mysqli->query($sql_movimiento)) {
             throw new Exception("Error al registrar movimiento: " . $mysqli->error);

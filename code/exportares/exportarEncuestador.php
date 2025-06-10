@@ -75,9 +75,9 @@ try {
            c.nombre_com AS comuna_nombre, m.nombre_municipio as ciudad_nombre
     FROM encventanilla ev
     LEFT JOIN barrios b ON ev.id_bar = b.id_bar
-    LEFT JOIN departamentos d ON ev.departamento_expedicion = d.id_departamento
+    LEFT JOIN departamentos d ON ev.departamento_expedicion = d.cod_departamento
     LEFT JOIN comunas c ON ev.id_com = c.id_com
-    LEFT JOIN municipios m ON ev.ciudad_expedicion = m.id_municipio
+    LEFT JOIN municipios m ON ev.ciudad_expedicion = m.cod_municipio
     $where_encuestas
     ";
     $res_encuestas = mysqli_query($mysqli, $sql_encuestas);
@@ -173,8 +173,8 @@ try {
     $sql_informacion = "
     SELECT i.*, d.nombre_departamento AS departamento_nombre, m.nombre_municipio as ciudad_nombre
     FROM informacion i
-    LEFT JOIN departamentos d ON i.departamento_expedicion = d.id_departamento
-    LEFT JOIN municipios m ON i.ciudad_expedicion = m.id_municipio
+    LEFT JOIN departamentos d ON i.departamento_expedicion = d.cod_departamento
+    LEFT JOIN municipios m ON i.ciudad_expedicion = m.cod_municipio
     $where_info
     ";
     $res_informacion = mysqli_query($mysqli, $sql_informacion);
@@ -244,9 +244,7 @@ try {
         $sheet2->setCellValue('V' . $rowIndex2, $row['observacion']);
         $sheet2->setCellValue('W' . $rowIndex2, $row['info_adicional']);
         $rowIndex2++;    }
-    logError("Datos de información escritos en la hoja 2");
-
-    // ===============================================
+    logError("Datos de información escritos en la hoja 2");    // ===============================================
     // HOJA 3: MOVIMIENTOS (datos de movimientos)
     // ===============================================
     $sheet3 = $spreadsheet->createSheet();
@@ -255,6 +253,12 @@ try {
 
     // Condiciones WHERE para movimientos
     $condiciones_mov = [];
+    if (!empty($fecha_inicio) && !empty($fecha_fin)) {
+        // Convertir fechas para incluir todo el día
+        $fecha_inicio_completa = $fecha_inicio . ' 00:00:00';
+        $fecha_fin_completa = $fecha_fin . ' 23:59:59';
+        $condiciones_mov[] = "m.fecha_movimiento BETWEEN '$fecha_inicio_completa' AND '$fecha_fin_completa'";
+    }
     if (isset($_GET['id_usu']) && $_GET['id_usu'] != '') {
         $condiciones_mov[] = "m.id_usu = '$id_usu'";
     }
@@ -264,13 +268,15 @@ try {
         $where_mov = 'WHERE ' . implode(' AND ', $condiciones_mov);
     }
 
-    // Consulta para movimientos
+    // Consulta para movimientos (nueva estructura individual)
     $sql_movimientos = "
-    SELECT m.*, u.nombre AS nombre_usuario
+    SELECT m.*, u.nombre AS nombre_usuario, ev.nom_encVenta, i.nom_info
     FROM movimientos m
     LEFT JOIN usuarios u ON m.id_usu = u.id_usu
+    LEFT JOIN encventanilla ev ON m.doc_encVenta = ev.doc_encVenta
+    LEFT JOIN informacion i ON m.id_informacion = i.id_informacion
     $where_mov
-    ORDER BY m.id_movimiento DESC
+    ORDER BY m.fecha_movimiento DESC, m.id_movimiento DESC
     ";
     $res_movimientos = mysqli_query($mysqli, $sql_movimientos);
     if ($res_movimientos === false) {
@@ -278,44 +284,30 @@ try {
         exit;
     }
     logError("Consulta de movimientos ejecutada correctamente");    // Aplicar estilos a la hoja 3
-    $sheet3->getStyle('A1:L1')->applyFromArray($styleHeader);
-
-    // Encabezados para MOVIMIENTOS
-    $sheet3->setCellValue('A1', 'DOCUMENTO');
-    $sheet3->setCellValue('B1', 'INCLUSION');
-    $sheet3->setCellValue('C1', 'INCONFORMIDAD CLASIFICACION');
-    $sheet3->setCellValue('D1', 'DATOS PERSONA');
-    $sheet3->setCellValue('E1', 'RETIRO PERSONAS');
-    $sheet3->setCellValue('F1', 'RETIRO FICHA');
-    $sheet3->setCellValue('G1', 'RETIRO PERSONAS INCONFORMIDAD');
-    $sheet3->setCellValue('H1', 'CANTIDAD INFORMACION');
-    $sheet3->setCellValue('I1', 'CANTIDAD ENCUESTA');
-    $sheet3->setCellValue('J1', 'DOC INFORMACION');
-    $sheet3->setCellValue('K1', 'OBSERVACION');
-    $sheet3->setCellValue('L1', 'USUARIO');
+    $sheet3->getStyle('A1:F1')->applyFromArray($styleHeader);    // Encabezados para MOVIMIENTOS (nueva estructura individual)
+    $sheet3->setCellValue('A1', 'FECHA MOVIMIENTO');
+    $sheet3->setCellValue('B1', 'DOCUMENTO');
+    $sheet3->setCellValue('C1', 'NOMBRE');
+    $sheet3->setCellValue('D1', 'TIPO MOVIMIENTO');
+    $sheet3->setCellValue('E1', 'OBSERVACION');
+    $sheet3->setCellValue('F1', 'ASESOR');
 
     // Ajustar ancho de columnas para MOVIMIENTOS
-    foreach(range('A','L') as $col) {
+    foreach(range('A','F') as $col) {
         $sheet3->getColumnDimension($col)->setWidth(20);
     }
-    $sheet3->getDefaultRowDimension()->setRowHeight(25);    // Escribir datos de MOVIMIENTOS
+    $sheet3->getDefaultRowDimension()->setRowHeight(25);    // Escribir datos de MOVIMIENTOS (nueva estructura individual)
     $rowIndex3 = 2;
     while ($row = mysqli_fetch_array($res_movimientos, MYSQLI_ASSOC)) {
-        $sheet3->setCellValue('A' . $rowIndex3, $row['doc_encVenta']);
-        $sheet3->setCellValue('B' . $rowIndex3, $row['inclusion']);
-        $sheet3->setCellValue('C' . $rowIndex3, $row['inconfor_clasificacion']);
-        $sheet3->setCellValue('D' . $rowIndex3, $row['datos_persona']);
-        $sheet3->setCellValue('E' . $rowIndex3, $row['retiro_personas']);
-        $sheet3->setCellValue('F' . $rowIndex3, $row['retiro_ficha']);
-        $sheet3->setCellValue('G' . $rowIndex3, $row['retiro_personas_inconformidad']);
-        $sheet3->setCellValue('H' . $rowIndex3, $row['cantidad_informacion']);
-        $sheet3->setCellValue('I' . $rowIndex3, $row['cantidad_encuesta']);
-        $sheet3->setCellValue('J' . $rowIndex3, $row['doc_info']);
-        $sheet3->setCellValue('K' . $rowIndex3, $row['observacion']);
-        $sheet3->setCellValue('L' . $rowIndex3, $row['nombre_usuario']);
+        $sheet3->setCellValue('A' . $rowIndex3, $row['fecha_movimiento']);
+        $sheet3->setCellValue('B' . $rowIndex3, $row['doc_encVenta']);
+        $sheet3->setCellValue('C' . $rowIndex3, $row['nom_encVenta']);
+        $sheet3->setCellValue('D' . $rowIndex3, $row['tipo_movimiento']);
+        $sheet3->setCellValue('E' . $rowIndex3, $row['observacion']);
+        $sheet3->setCellValue('F' . $rowIndex3, $row['nombre_usuario']);
         $rowIndex3++;
     }
-    logError("Datos de movimientos escritos en la hoja 3");    // Nombre del archivo
+    logError("Datos de movimientos escritos en la hoja 3");// Nombre del archivo
     $nombreArchivo = 'Encuestas_Informacion_y_Movimientos_' . $fecha_inicio . '_' . $fecha_fin . '.xlsx';
     $writer = new Xlsx($spreadsheet);
     logError("Archivo Excel generado: {$nombreArchivo}");
