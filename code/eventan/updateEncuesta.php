@@ -39,96 +39,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $num_ficha_encVenta     = $_POST['num_ficha_encVenta'];
         $obs_encVenta           = mb_strtoupper($_POST['obs_encVenta']);
         $fecha_edit_encVenta    = date('Y-m-d H:i:s');
-        $id_usu                 = $_SESSION['id_usu'];        // Verificar si la encuesta existe
-        $sql_get_id = "SELECT id_encVenta FROM encventanilla WHERE doc_encVenta = '$doc_encVenta'";
-        $result_id = $mysqli->query($sql_get_id);
+        $id_usu                 = $_SESSION['id_usu'];        // Verificar si ya existen movimientos para este documento
+        $sql_check_movimientos = "SELECT id_movimiento FROM movimientos WHERE doc_encVenta = '$doc_encVenta' ORDER BY fecha_movimiento DESC LIMIT 1";
+        $result_check = $mysqli->query($sql_check_movimientos);
         
-        $encuesta_existe = ($result_id->num_rows > 0);
+        $ultimo_movimiento_existe = ($result_check->num_rows > 0);
         
-        if ($encuesta_existe) {
-            // ACTUALIZAR ENCUESTA EXISTENTE
-            $row_id = $result_id->fetch_assoc();
-            $id_encVenta = $row_id['id_encVenta'];
-            
-            // Determinar el estado de la ficha según el tipo de movimiento
-            $estado_ficha = ($movimientos == "Retiro ficha") ? 0 : 1; // 0 = retirada, 1 = activa
+        // Determinar el estado de la ficha según el tipo de movimiento
+        $estado_ficha = ($movimientos == "Retiro ficha") ? 0 : 1; // 0 = retirada, 1 = activa
+        
+        // CREAR NUEVO MOVIMIENTO (siempre independiente)
+        $fecha_movimiento = date('Y-m-d H:i:s');
+        
+        $sql_insert_movimiento = "INSERT INTO movimientos (
+            doc_encVenta, tipo_movimiento, fecha_movimiento, observacion, id_usu,
+            fec_reg_encVenta, nom_encVenta, dir_encVenta, zona_encVenta, id_com, id_bar,
+            otro_bar_ver_encVenta, tram_solic_encVenta, integra_encVenta, num_ficha_encVenta,
+            obs_encVenta, tipo_documento, fecha_expedicion, departamento_expedicion,
+            ciudad_expedicion, sisben_nocturno, estado_ficha, fecha_alta_movimiento
+        ) VALUES (
+            '$doc_encVenta', '$movimientos', '$fecha_movimiento', '$obs_encVenta', '$id_usu',
+            '$fec_reg_encVenta', '$nom_encVenta', '$dir_encVenta', '$zona_encVenta', '$id_com', '$id_bar',
+            '$otro_bar_ver_encVenta', '$movimientos', '$integra_encVenta', '$num_ficha_encVenta',
+            '$obs_encVenta', '$tipo_documento', '$fecha_expedicion', '$departamento_expedicion',
+            '$ciudad_expedicion', '$sisben_nocturno', '$estado_ficha', '$fecha_movimiento'
+        )";
 
-            // Actualizar la tabla encventanilla
-            $sql_update = "UPDATE encventanilla SET 
-                fec_reg_encVenta = '$fec_reg_encVenta',
-                nom_encVenta = '$nom_encVenta',
-                dir_encVenta = '$dir_encVenta',
-                zona_encVenta = '$zona_encVenta',
-                id_com = '$id_com',
-                id_bar = '$id_bar',
-                otro_bar_ver_encVenta = '$otro_bar_ver_encVenta',
-                tram_solic_encVenta = '$movimientos',
-                integra_encVenta = '$integra_encVenta',
-                num_ficha_encVenta = '$num_ficha_encVenta',
-                obs_encVenta = '$obs_encVenta',
-                fecha_edit_encVenta = '$fecha_edit_encVenta',
-                tipo_documento = '$tipo_documento',
-                fecha_expedicion = '$fecha_expedicion',
-                departamento_expedicion = '$departamento_expedicion',
-                ciudad_expedicion = '$ciudad_expedicion',
-                sisben_nocturno = '$sisben_nocturno',
-                estado_ficha = '$estado_ficha'
-                WHERE doc_encVenta = '$doc_encVenta'";
-
-            if (!$mysqli->query($sql_update)) {
-                throw new Exception("Error al actualizar la encuesta: " . $mysqli->error);
-            }
-              } else {
-            // CREAR NUEVA ENCUESTA
-            $estado_ficha = 1; // Nueva encuesta siempre activa
-            $fecha_alta_encVenta = date('Y-m-d H:i:s');
-            
-            $sql_insert = "INSERT INTO encventanilla (
-                doc_encVenta, fec_reg_encVenta, nom_encVenta, dir_encVenta, zona_encVenta, 
-                id_com, id_bar, otro_bar_ver_encVenta, tram_solic_encVenta, integra_encVenta, 
-                num_ficha_encVenta, obs_encVenta, fecha_alta_encVenta, fecha_edit_encVenta,
-                tipo_documento, fecha_expedicion, departamento_expedicion, ciudad_expedicion,
-                sisben_nocturno, estado_ficha, id_usu
-            ) VALUES (
-                '$doc_encVenta', '$fec_reg_encVenta', '$nom_encVenta', '$dir_encVenta', '$zona_encVenta',
-                '$id_com', '$id_bar', '$otro_bar_ver_encVenta', 'ENCUESTA NUEVA', '$integra_encVenta',
-                '$num_ficha_encVenta', 'CREADO DESDE MOVIMIENTOS', '$fecha_alta_encVenta', '$fecha_edit_encVenta',
-                '$tipo_documento', '$fecha_expedicion', '$departamento_expedicion', '$ciudad_expedicion',
-                '$sisben_nocturno', '$estado_ficha', '$id_usu'
-            )";
-
-            if (!$mysqli->query($sql_insert)) {
-                throw new Exception("Error al crear la nueva encuesta: " . $mysqli->error);
-            }
-            
-            // Obtener el ID de la encuesta recién creada
-            $id_encVenta = $mysqli->insert_id;
-            
-            // Actualizar la variable movimientos para el registro de movimientos
-            $movimientos = "ENCUESTA NUEVA";
+        if (!$mysqli->query($sql_insert_movimiento)) {
+            throw new Exception("Error al crear el nuevo movimiento: " . $mysqli->error);
         }
-
-        // MANEJO INTELIGENTE DE INTEGRANTES
-        // Solo procesar integrantes si no es "Retiro ficha" (para ficha retirada no se modifican integrantes)
+        
+        // Obtener el ID del movimiento recién creado
+        $id_movimiento = $mysqli->insert_id;        // MANEJO DE INTEGRANTES VINCULADOS AL MOVIMIENTO
+        // Solo procesar integrantes si no es "Retiro ficha"
         if ($movimientos != "Retiro ficha") {
-            // Obtener IDs de integrantes existentes para comparar
-            $sql_existing = "SELECT id_integVenta FROM integventanilla WHERE id_encVenta = '$id_encVenta'";
-            $result_existing = $mysqli->query($sql_existing);
-            $existing_ids = [];
-            while ($row = $result_existing->fetch_assoc()) {
-                $existing_ids[] = $row['id_integVenta'];
-            }
-
-            // Eliminar SOLO los integrantes existentes (mantendremos los nuevos por separado)
-            if (!empty($existing_ids)) {
-                $ids_to_delete = implode(',', $existing_ids);
-                $sql_delete_integrantes = "DELETE FROM integventanilla WHERE id_integVenta IN ($ids_to_delete)";
-                if (!$mysqli->query($sql_delete_integrantes)) {
-                    throw new Exception("Error al eliminar integrantes existentes: " . $mysqli->error);
-                }
-            }
-
-            // Insertar todos los integrantes del formulario (tanto existentes modificados como nuevos)
+            // Procesamiento de integrantes
             $cant_integVenta        = $_POST['cant_integVenta'] ?? array();
             $gen_integVenta         = $_POST['gen_integVenta'] ?? array();
             $rango_integVenta       = $_POST['rango_integVenta'] ?? array();
@@ -187,33 +132,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $es_cabeza_familia = $mysqli->real_escape_string($es_cabeza_familia);
                 $experiencia_migr = $mysqli->real_escape_string($experiencia_migr);
                 $seguridad_social = $mysqli->real_escape_string($seguridad_social);
-                $cond_ocupacion = $mysqli->real_escape_string($cond_ocupacion);
-
-                $sql_integrante = "INSERT INTO integventanilla 
+                $cond_ocupacion = $mysqli->real_escape_string($cond_ocupacion);                $sql_integrante = "INSERT INTO integventanilla 
                     (cant_integVenta, gen_integVenta, rango_integVenta, condicionDiscapacidad, grupoEtnico, 
                      orientacionSexual, nivelEducativo, tipoDiscapacidad, victima, 
                      mujerGestante, cabezaFamilia, experienciaMigratoria, seguridadSalud, condicionOcupacion, 
-                     estado_integVenta, fecha_alta_integVenta, fecha_edit_integVenta, id_usu, id_encVenta)
+                     estado_integVenta, fecha_alta_integVenta, fecha_edit_integVenta, id_usu, id_movimiento)
                     VALUES ('$cantidad', '$genero', '$rango_valor', '$discapacidad', '$grupo', '$orientacion', 
                             '$educacion', '$tipo_discapacidad', '$es_victima', '$es_gestante', 
                             '$es_cabeza_familia', '$experiencia_migr', '$seguridad_social', '$cond_ocupacion', 
-                            '$estado_integVenta', '$fecha_alta_integVenta', '$fecha_edit_integVenta', '$id_usu', '$id_encVenta')";
+                            '$estado_integVenta', '$fecha_alta_integVenta', '$fecha_edit_integVenta', '$id_usu', '$id_movimiento')";
                 
                 if (!$mysqli->query($sql_integrante)) {
                     throw new Exception("Error al insertar integrante $key: " . $mysqli->error);
                 }
-            }
-        }        // Registrar movimiento en la tabla movimientos (NUEVA ESTRUCTURA)
-        $fecha_movimiento = date('Y-m-d H:i:s');
-        
-        // Crear registro individual del movimiento
-        $sql_movimiento = "INSERT INTO movimientos 
-            (doc_encVenta, tipo_movimiento, fecha_movimiento, observacion, id_usu, id_encuesta)
-            VALUES ('$doc_encVenta', '$movimientos', '$fecha_movimiento', '$obs_encVenta', '$id_usu', '$id_encVenta')";
+            }        }
 
-        if (!$mysqli->query($sql_movimiento)) {
-            throw new Exception("Error al registrar movimiento: " . $mysqli->error);
-        }
+        // Ya no necesitamos registrar movimiento separado porque el movimiento YA se creó arriba
+        // con toda la información completa
 
         // Confirmar transacción
         $mysqli->commit();
