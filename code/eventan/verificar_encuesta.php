@@ -85,6 +85,7 @@ if ($_POST['doc_encVenta']) {
             } else {
                 echo json_encode([
                     'status' => 'existe',
+                    'nada'=>'nada',
                     'data' => $data,
                     'integrantes' => $integrantes,
                     'origen' => 'encventanilla'
