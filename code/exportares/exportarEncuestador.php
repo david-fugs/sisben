@@ -59,9 +59,14 @@ try {
         $fecha_fin_completa = $fecha_fin . ' 23:59:59';
         $condiciones[] = "ev.fecha_alta_encVenta BETWEEN '$fecha_inicio_completa' AND '$fecha_fin_completa'";
     }
-    if (isset($_GET['id_usu']) && $_GET['id_usu'] != '') {
+      // Solo agregar filtro de usuario si no es "todos"
+    $id_usu = null; // Inicializar la variable
+    if (isset($_GET['id_usu']) && $_GET['id_usu'] != '' && $_GET['id_usu'] != 'todos') {
         $id_usu = $_GET['id_usu'];
         $condiciones[] = "ev.id_usu = '$id_usu'";
+        logError("Filtrando por usuario específico: {$id_usu}");
+    } else {
+        logError("Exportando TODOS los encuestadores en el rango de fechas");
     }
 
     $where_encuestas = '';
@@ -160,7 +165,9 @@ try {
         $fecha_fin_completa = $fecha_fin . ' 23:59:59';
         $condiciones_info[] = "i.fecha_alta_info BETWEEN '$fecha_inicio_completa' AND '$fecha_fin_completa'";
     }
-    if (isset($_GET['id_usu']) && $_GET['id_usu'] != '') {
+    
+    // Solo agregar filtro de usuario si no es "todos"
+    if (isset($_GET['id_usu']) && $_GET['id_usu'] != '' && $_GET['id_usu'] != 'todos') {
         $condiciones_info[] = "i.id_usu = '$id_usu'";
     }
 
@@ -258,23 +265,30 @@ try {
         $fecha_inicio_completa = $fecha_inicio . ' 00:00:00';
         $fecha_fin_completa = $fecha_fin . ' 23:59:59';
         $condiciones_mov[] = "m.fecha_movimiento BETWEEN '$fecha_inicio_completa' AND '$fecha_fin_completa'";
-    }
-    if (isset($_GET['id_usu']) && $_GET['id_usu'] != '') {
-        $condiciones_mov[] = "m.id_usu = '$id_usu'";
+    }    if (isset($_GET['id_usu']) && $_GET['id_usu'] != '' && $_GET['id_usu'] != 'todos') {
+        $user_id = $_GET['id_usu'];
+        $condiciones_mov[] = "m.id_usu = '$user_id'";
     }
 
     $where_mov = '';
     if (count($condiciones_mov) > 0) {
         $where_mov = 'WHERE ' . implode(' AND ', $condiciones_mov);
-    }
-
-    // Consulta para movimientos (nueva estructura individual)
+    }    // Consulta completa para movimientos con todas las columnas y nombres descriptivos
     $sql_movimientos = "
-    SELECT m.*, u.nombre AS nombre_usuario, ev.nom_encVenta, i.nom_info
+    SELECT m.*, u.nombre AS nombre_usuario, 
+           COALESCE(ev.nom_encVenta, 'N/A') as nombre_persona_encuesta,
+           COALESCE(ev.dir_encVenta, 'N/A') as direccion_encuesta,
+           COALESCE(d.nombre_departamento, 'N/A') as departamento_nombre,
+           COALESCE(mu.nombre_municipio, 'N/A') as ciudad_nombre,
+           COALESCE(c.nombre_com, 'N/A') as comuna_nombre,
+           COALESCE(b.nombre_bar, 'N/A') as barrio_nombre
     FROM movimientos m
     LEFT JOIN usuarios u ON m.id_usu = u.id_usu
     LEFT JOIN encventanilla ev ON m.doc_encVenta = ev.doc_encVenta
-    LEFT JOIN informacion i ON m.id_informacion = i.id_informacion
+    LEFT JOIN departamentos d ON m.departamento_expedicion = d.cod_departamento
+    LEFT JOIN municipios mu ON m.ciudad_expedicion = mu.cod_municipio
+    LEFT JOIN comunas c ON m.id_com = c.id_com
+    LEFT JOIN barrios b ON m.id_bar = b.id_bar
     $where_mov
     ORDER BY m.fecha_movimiento DESC, m.id_movimiento DESC
     ";
@@ -283,36 +297,75 @@ try {
         echo "Error en la consulta de movimientos: " . mysqli_error($mysqli);
         exit;
     }
-    logError("Consulta de movimientos ejecutada correctamente");    // Aplicar estilos a la hoja 3
-    $sheet3->getStyle('A1:F1')->applyFromArray($styleHeader);    // Encabezados para MOVIMIENTOS (nueva estructura individual)
-    $sheet3->setCellValue('A1', 'FECHA MOVIMIENTO');
-    $sheet3->setCellValue('B1', 'DOCUMENTO');
-    $sheet3->setCellValue('C1', 'NOMBRE');
-    $sheet3->setCellValue('D1', 'TIPO MOVIMIENTO');
-    $sheet3->setCellValue('E1', 'OBSERVACION');
-    $sheet3->setCellValue('F1', 'ASESOR');
+    logError("Consulta de movimientos ejecutada correctamente");    // Aplicar estilos a la hoja 3 - MOVIMIENTOS SIMPLIFICADA
+    $sheet3->getStyle('A1:S1')->applyFromArray($styleHeader);
 
-    // Ajustar ancho de columnas para MOVIMIENTOS
-    foreach(range('A','F') as $col) {
-        $sheet3->getColumnDimension($col)->setWidth(20);
-    }
-    $sheet3->getDefaultRowDimension()->setRowHeight(25);    // Escribir datos de MOVIMIENTOS (nueva estructura individual)
+    // Encabezados para MOVIMIENTOS (sin ID, sin TRAMITE SOLICITADO y campos eliminados)
+    $sheet3->setCellValue('A1', 'FECHA MOVIMIENTO');
+    $sheet3->setCellValue('B1', 'DOCUMENTO ENCUESTA');
+    $sheet3->setCellValue('C1', 'NOMBRE PERSONA');
+    $sheet3->setCellValue('D1', 'TIPO DOCUMENTO');
+    $sheet3->setCellValue('E1', 'DEPARTAMENTO EXPEDICION');
+    $sheet3->setCellValue('F1', 'CIUDAD EXPEDICION');
+    $sheet3->setCellValue('G1', 'FECHA EXPEDICION');
+    $sheet3->setCellValue('H1', 'DIRECCION');
+    $sheet3->setCellValue('I1', 'ZONA');
+    $sheet3->setCellValue('J1', 'COMUNA');
+    $sheet3->setCellValue('K1', 'BARRIO');
+    $sheet3->setCellValue('L1', 'OTRO BARRIO');
+    $sheet3->setCellValue('M1', 'CANTIDAD INTEGRANTES');
+    $sheet3->setCellValue('N1', 'NUMERO FICHA');
+    $sheet3->setCellValue('O1', 'SISBEN NOCTURNO');
+    $sheet3->setCellValue('P1', 'TIPO MOVIMIENTO');
+    $sheet3->setCellValue('Q1', 'FECHA ALTA');
+    $sheet3->setCellValue('R1', 'OBSERVACION');
+    $sheet3->setCellValue('S1', 'ASESOR');// Ajustar ancho de columnas para MOVIMIENTOS SIMPLIFICADA
+    $sheet3->getColumnDimension('A')->setWidth(20); // FECHA MOVIMIENTO
+    $sheet3->getColumnDimension('B')->setWidth(20); // DOCUMENTO
+    $sheet3->getColumnDimension('C')->setWidth(35); // NOMBRE
+    $sheet3->getColumnDimension('D')->setWidth(20); // TIPO DOCUMENTO
+    $sheet3->getColumnDimension('E')->setWidth(25); // DEPARTAMENTO
+    $sheet3->getColumnDimension('F')->setWidth(25); // CIUDAD
+    $sheet3->getColumnDimension('G')->setWidth(20); // FECHA EXPEDICION
+    $sheet3->getColumnDimension('H')->setWidth(35); // DIRECCION
+    $sheet3->getColumnDimension('I')->setWidth(15); // ZONA
+    $sheet3->getColumnDimension('J')->setWidth(20); // COMUNA
+    $sheet3->getColumnDimension('K')->setWidth(25); // BARRIO
+    $sheet3->getColumnDimension('L')->setWidth(25); // OTRO BARRIO
+    $sheet3->getColumnDimension('M')->setWidth(15); // CANTIDAD
+    $sheet3->getColumnDimension('N')->setWidth(15); // NUMERO FICHA
+    $sheet3->getColumnDimension('O')->setWidth(15); // SISBEN NOCTURNO    $sheet3->getColumnDimension('P')->setWidth(25); // TIPO MOVIMIENTO
+    $sheet3->getColumnDimension('Q')->setWidth(20); // FECHA ALTA
+    $sheet3->getColumnDimension('R')->setWidth(40); // OBSERVACION
+    $sheet3->getColumnDimension('S')->setWidth(25); // ASESOR
+    $sheet3->getDefaultRowDimension()->setRowHeight(25);// Escribir datos de MOVIMIENTOS simplificados
     $rowIndex3 = 2;
     while ($row = mysqli_fetch_array($res_movimientos, MYSQLI_ASSOC)) {
-        $sheet3->setCellValue('A' . $rowIndex3, $row['fecha_movimiento']);
-        $sheet3->setCellValue('B' . $rowIndex3, $row['doc_encVenta']);
-        $sheet3->setCellValue('C' . $rowIndex3, $row['nom_encVenta']);
-        $sheet3->setCellValue('D' . $rowIndex3, $row['tipo_movimiento']);
-        $sheet3->setCellValue('E' . $rowIndex3, $row['observacion']);
-        $sheet3->setCellValue('F' . $rowIndex3, $row['nombre_usuario']);
+        $sheet3->setCellValue('A' . $rowIndex3, $row['fecha_movimiento'] ?? '');
+        $sheet3->setCellValue('B' . $rowIndex3, $row['doc_encVenta'] ?? '');
+        $sheet3->setCellValue('C' . $rowIndex3, $row['nom_encVenta'] ?? '');
+        $sheet3->setCellValue('D' . $rowIndex3, $row['tipo_documento'] ?? '');
+        $sheet3->setCellValue('E' . $rowIndex3, $row['departamento_nombre'] ?? '');
+        $sheet3->setCellValue('F' . $rowIndex3, $row['ciudad_nombre'] ?? '');
+        $sheet3->setCellValue('G' . $rowIndex3, $row['fecha_expedicion'] ?? '');
+        $sheet3->setCellValue('H' . $rowIndex3, $row['dir_encVenta'] ?? '');
+        $sheet3->setCellValue('I' . $rowIndex3, $row['zona_encVenta'] ?? '');
+        $sheet3->setCellValue('J' . $rowIndex3, $row['comuna_nombre'] ?? '');
+        $sheet3->setCellValue('K' . $rowIndex3, $row['barrio_nombre'] ?? '');
+        $sheet3->setCellValue('L' . $rowIndex3, $row['otro_bar_ver_encVenta'] ?? '');
+        $sheet3->setCellValue('M' . $rowIndex3, $row['integra_encVenta'] ?? '');
+        $sheet3->setCellValue('N' . $rowIndex3, $row['num_ficha_encVenta'] ?? '');        $sheet3->setCellValue('O' . $rowIndex3, $row['sisben_nocturno'] ?? '');
+        $sheet3->setCellValue('P' . $rowIndex3, $row['tipo_movimiento'] ?? '');
+        $sheet3->setCellValue('Q' . $rowIndex3, $row['fecha_alta_movimiento'] ?? '');
+        $sheet3->setCellValue('R' . $rowIndex3, $row['observacion'] ?? '');
+        $sheet3->setCellValue('S' . $rowIndex3, $row['nombre_usuario'] ?? '');
         $rowIndex3++;
-    }
-    logError("Datos de movimientos escritos en la hoja 3");// Nombre del archivo
-    $nombreArchivo = 'Encuestas_Informacion_y_Movimientos_' . $fecha_inicio . '_' . $fecha_fin . '.xlsx';
-    $writer = new Xlsx($spreadsheet);
-    logError("Archivo Excel generado: {$nombreArchivo}");
+    }logError("Datos de movimientos escritos en la hoja 3");
 
-    // Headers para descarga
+    // Nombre del archivo
+    $nombreArchivo = 'Reporte_Completo_Sisben_' . $fecha_inicio . '_' . $fecha_fin . '.xlsx';
+    $writer = new Xlsx($spreadsheet);
+    logError("Archivo Excel generado: {$nombreArchivo}");    // Headers para descarga
     header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
     header('Content-Disposition: attachment;filename="' . $nombreArchivo . '"');
     header('Cache-Control: max-age=0');
@@ -323,7 +376,22 @@ try {
     
 } catch (Exception $e) {
     logError("Excepción capturada: " . $e->getMessage());
-    echo "Ocurrió un error al generar el archivo. Por favor, inténtelo de nuevo más tarde.";
+    logError("Stack trace: " . $e->getTraceAsString());
+    
+    // Mostrar error detallado para debugging
+    echo "<h1>Error en el Exportador</h1>";
+    echo "<p><strong>Error:</strong> " . htmlspecialchars($e->getMessage()) . "</p>";
+    echo "<p><strong>Archivo:</strong> " . $e->getFile() . " (línea " . $e->getLine() . ")</p>";
+    echo "<h3>Stack Trace:</h3>";
+    echo "<pre>" . htmlspecialchars($e->getTraceAsString()) . "</pre>";
+    
+    // También mostrar el log
+    $debug_log = __DIR__ . '/debug.log';
+    if (file_exists($debug_log)) {
+        echo "<h3>Log de Debug:</h3>";
+        echo "<pre>" . htmlspecialchars(file_get_contents($debug_log)) . "</pre>";
+    }
+    
     exit;
 }
 ?>

@@ -15,6 +15,10 @@ header("Content-Type: text/html;charset=utf-8");
 $sql_users = "SELECT id_usu, nombre FROM usuarios WHERE tipo_usu = 3 ORDER BY nombre";
 $encuestadores = mysqli_query($mysqli, $sql_users);
 
+// Determinar qué opciones mostrar según el tipo de usuario
+$mostrar_todos = ($tipo_usu != 3); // Solo mostrar "Todos" si NO es tipo_usu 3
+$solo_usuario_actual = ($tipo_usu == 3); // Si es tipo_usu 3, solo mostrar el usuario actual
+
 ?>
 
 <!DOCTYPE html>
@@ -68,8 +72,7 @@ $encuestadores = mysqli_query($mysqli, $sql_users);
     <div class="container my-4">
         <div class="card shadow-sm">
             <div class="card-body">
-                <h5 class="card-title mb-3">Buscar por Rango de Fechas</h5>
-                <form action="exportarAll.php" method="get" class="row g-3 align-items-center">
+                <h5 class="card-title mb-3">Buscar por Rango de Fechas</h5>                <form id="exportForm" action="exportarAll.php" method="get" class="row g-3 align-items-center">
                     <div class="col-md-3">
                         <input name="fecha_inicio" type="date" class="form-control" placeholder="Fecha inicio" required>
                     </div>
@@ -77,11 +80,20 @@ $encuestadores = mysqli_query($mysqli, $sql_users);
                         <input name="fecha_fin" type="date" class="form-control" placeholder="Fecha fin" required>
                     </div>
                     <div class="col-md-4">
-                        <select name="id_usu" class="form-select" >
-                            <option value="">-- Selecciona Encuestador --</option>
-                            <?php foreach ($encuestadores as $enc): ?>
-                                <option value="<?= $enc['id_usu'] ?>"><?= htmlspecialchars($enc['nombre']) ?></option>
-                            <?php endforeach; ?>
+                        <select name="id_usu" id="encuestador_select" class="form-select">
+                            <?php if ($solo_usuario_actual): ?>
+                                <!-- Si es tipo_usu 3, solo mostrar el usuario actual -->
+                                <option value="<?= $id_usu ?>" selected><?= htmlspecialchars($nombre) ?></option>
+                            <?php else: ?>
+                                <!-- Para otros tipos de usuario, mostrar todos los encuestadores -->
+                                <option value="">-- Exportar Todo --</option>
+                                <?php if ($mostrar_todos): ?>
+                                    <option value="todos">-- Todos los Encuestadores --</option>
+                                <?php endif; ?>
+                                <?php foreach ($encuestadores as $enc): ?>
+                                    <option value="<?= $enc['id_usu'] ?>"><?= htmlspecialchars($enc['nombre']) ?></option>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
                         </select>
                     </div>
                     <div class="col-md-2">
@@ -93,11 +105,35 @@ $encuestadores = mysqli_query($mysqli, $sql_users);
             </div>
         </div>
     </div>
-
-
     <center>
         <br /><a href="../../access.php"><img src='../../img/atras.png' width="72" height="72" title="Regresar" /></a>
-    </center>
+    </center>    <script>
+        document.getElementById('encuestador_select').addEventListener('change', function() {
+            const form = document.getElementById('exportForm');
+            const selectedValue = this.value;
+            
+            // Si está vacío (-- Exportar Todo --), ir a exportarAll.php
+            if (selectedValue === '') {
+                form.action = 'exportarAll.php';
+            } else {
+                // Si se selecciona "todos" o un encuestador específico, ir a exportarEncuestador.php
+                form.action = 'exportarEncuestador.php';
+            }
+        });
+
+        // Configurar acción inicial basada en la selección por defecto
+        document.addEventListener('DOMContentLoaded', function() {
+            const select = document.getElementById('encuestador_select');
+            const form = document.getElementById('exportForm');
+            
+            // Determinar la acción inicial según el valor del select
+            if (select.value === '') {
+                form.action = 'exportarAll.php';
+            } else {
+                form.action = 'exportarEncuestador.php';
+            }
+        });
+    </script>
 
     </section>
 

@@ -1,6 +1,6 @@
 <?php
 
-if (isset($_GET['id_usu']) && $_GET['id_usu'] != '') {
+if (isset($_GET['id_usu']) && $_GET['id_usu'] != '' && $_GET['id_usu'] != 'todos') {
     $id = $_GET['id_usu'];
     $fechaInicio = isset($_GET['fecha_inicio']) ? $_GET['fecha_inicio'] : '';
     $fechaFin = isset($_GET['fecha_fin']) ? $_GET['fecha_fin'] : '';
@@ -67,13 +67,32 @@ if ($res === false) {
     echo "Error en la consulta: " . mysqli_error($mysqli);
     exit;
 }
-// Consulta 2: Conteo por nombre de barrio
+// Consulta 2: Conteo de rangos de edad por barrio
 $sql_por_barrio = "
-SELECT b.nombre_bar, COUNT(*) AS total_por_barrio
-FROM encventanilla ev
+SELECT 
+    b.nombre_bar,
+    c.nombre_com,
+    COUNT(CASE WHEN iv.gen_integVenta = 'M' AND iv.rango_integVenta = '1' THEN 1 END) AS masculino_0_6,
+    COUNT(CASE WHEN iv.gen_integVenta = 'F' AND iv.rango_integVenta = '1' THEN 1 END) AS femenino_0_6,
+    COUNT(CASE WHEN iv.gen_integVenta = 'M' AND iv.rango_integVenta = '2' THEN 1 END) AS masculino_7_12,
+    COUNT(CASE WHEN iv.gen_integVenta = 'F' AND iv.rango_integVenta = '2' THEN 1 END) AS femenino_7_12,
+    COUNT(CASE WHEN iv.gen_integVenta = 'M' AND iv.rango_integVenta = '3' THEN 1 END) AS masculino_13_17,
+    COUNT(CASE WHEN iv.gen_integVenta = 'F' AND iv.rango_integVenta = '3' THEN 1 END) AS femenino_13_17,
+    COUNT(CASE WHEN iv.gen_integVenta = 'M' AND iv.rango_integVenta = '4' THEN 1 END) AS masculino_18_28,
+    COUNT(CASE WHEN iv.gen_integVenta = 'F' AND iv.rango_integVenta = '4' THEN 1 END) AS femenino_18_28,
+    COUNT(CASE WHEN iv.gen_integVenta = 'M' AND iv.rango_integVenta = '5' THEN 1 END) AS masculino_39_45,
+    COUNT(CASE WHEN iv.gen_integVenta = 'F' AND iv.rango_integVenta = '5' THEN 1 END) AS femenino_39_45,
+    COUNT(CASE WHEN iv.gen_integVenta = 'M' AND iv.rango_integVenta = '6' THEN 1 END) AS masculino_46_64,
+    COUNT(CASE WHEN iv.gen_integVenta = 'F' AND iv.rango_integVenta = '6' THEN 1 END) AS femenino_46_64,
+    COUNT(CASE WHEN iv.gen_integVenta = 'M' AND iv.rango_integVenta = '7' THEN 1 END) AS masculino_mayor_65,
+    COUNT(CASE WHEN iv.gen_integVenta = 'F' AND iv.rango_integVenta = '7' THEN 1 END) AS femenino_mayor_65,
+    COUNT(*) AS total_por_barrio
+FROM integventanilla iv
+JOIN encventanilla ev ON iv.id_encVenta = ev.id_encVenta
 LEFT JOIN barrios b ON ev.id_bar = b.id_bar
-$where
-GROUP BY b.nombre_bar
+LEFT JOIN comunas c ON b.id_com = c.id_com
+" . (!empty($fecha_inicio) && !empty($fecha_fin) ? "WHERE ev.fecha_alta_encVenta BETWEEN '$fecha_inicio_completa' AND '$fecha_fin_completa'" : "") . "
+GROUP BY b.nombre_bar, b.id_bar, c.nombre_com
 ORDER BY total_por_barrio DESC
 ";
 // Ejecutar la consulta
@@ -138,7 +157,7 @@ $sheet->getStyle('A1:L1')->applyFromArray([
     ],
 ]);
 
-$sheet->getStyle('A4:L4')->applyFromArray([
+$sheet->getStyle('A4:P4')->applyFromArray([
     'fill' => [
         'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
         'startColor' => [
@@ -146,7 +165,7 @@ $sheet->getStyle('A4:L4')->applyFromArray([
         ],
     ],
 ]);
-$sheet->getStyle('A9:L9')->applyFromArray([
+$sheet->getStyle('A9:S9')->applyFromArray([
     'fill' => [
         'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
         'startColor' => [
@@ -154,6 +173,28 @@ $sheet->getStyle('A9:L9')->applyFromArray([
         ],
     ],
 ]);
+
+// Ajustar el ancho de las columnas
+$sheet->getColumnDimension('A')->setWidth(25); // Barrio
+$sheet->getColumnDimension('B')->setWidth(20); // Comuna
+$sheet->getColumnDimension('C')->setWidth(12); // M 0-6
+$sheet->getColumnDimension('D')->setWidth(12); // M 7-12
+$sheet->getColumnDimension('E')->setWidth(12); // M 13-17
+$sheet->getColumnDimension('F')->setWidth(12); // M 18-28
+$sheet->getColumnDimension('G')->setWidth(12); // M 39-45
+$sheet->getColumnDimension('H')->setWidth(12); // M 46-64
+$sheet->getColumnDimension('I')->setWidth(12); // M +65
+$sheet->getColumnDimension('J')->setWidth(15); // TOTAL M
+$sheet->getColumnDimension('K')->setWidth(12); // F 0-6
+$sheet->getColumnDimension('L')->setWidth(12); // F 7-12
+$sheet->getColumnDimension('M')->setWidth(12); // F 13-17
+$sheet->getColumnDimension('N')->setWidth(12); // F 18-28
+$sheet->getColumnDimension('O')->setWidth(12); // F 39-45
+$sheet->getColumnDimension('P')->setWidth(12); // F 46-64
+$sheet->getColumnDimension('Q')->setWidth(12); // F +65
+$sheet->getColumnDimension('R')->setWidth(15); // TOTAL F
+$sheet->getColumnDimension('S')->setWidth(15); // TOTAL
+$sheet->getDefaultRowDimension()->setRowHeight(25);
 
 // Aplicar formato en negrita a las celdas con títulos
 $boldFontStyle = [
@@ -180,8 +221,8 @@ $styleHeader = [
 
 // Aplicar el estilo a las celdas de encabezado
 $sheet->getStyle('A1:L1')->applyFromArray(['font' => $styleHeader, 'fill' => $styleHeader, 'alignment' => $styleHeader]);
-$sheet->getStyle('A4:K4')->applyFromArray(['font' => $styleHeader, 'fill' => $styleHeader, 'alignment' => $styleHeader]);
-$sheet->getStyle('A9:K9')->applyFromArray(['font' => $styleHeader, 'fill' => $styleHeader, 'alignment' => $styleHeader]);
+$sheet->getStyle('A4:P4')->applyFromArray(['font' => $styleHeader, 'fill' => $styleHeader, 'alignment' => $styleHeader]);
+$sheet->getStyle('A9:S9')->applyFromArray(['font' => $styleHeader, 'fill' => $styleHeader, 'alignment' => $styleHeader]);
 
 // // Definir los encabezados de columna
 
@@ -219,67 +260,14 @@ while ($row = mysqli_fetch_array($res, MYSQLI_ASSOC)) {
 }
 
 
-//titulo de barrios encuestas
-// Fila donde se escribirá el título (una fila antes de $rowBarrioIndex)
-$tituloRow = 9;
-// Unir celdas de A a K
-$sheet->mergeCells("A$tituloRow:K$tituloRow");
-// Escribir el título
-$sheet->setCellValue("A$tituloRow", "CANTIDAD DE ENCUESTAS POR BARRIO");
-// Centrar el texto
-$sheet->getStyle("A$tituloRow")->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
-// (Opcional) Negrita y tamaño de fuente
-$sheet->getStyle("A$tituloRow")->getFont()->setBold(true)->setSize(14);
-// Ajustar el ancho de las columna
-$sheet->getColumnDimension('A')->setWidth(25);
-$sheet->getColumnDimension('B')->setWidth(25);
-$sheet->getColumnDimension('C')->setWidth(25);
-$sheet->getColumnDimension('D')->setWidth(25);
-$sheet->getColumnDimension('E')->setWidth(25);
-$sheet->getColumnDimension('F')->setWidth(25);
-$sheet->getColumnDimension('G')->setWidth(25);
-$sheet->getColumnDimension('H')->setWidth(25);
-$sheet->getColumnDimension('I')->setWidth(25);
-$sheet->getColumnDimension('J')->setWidth(20);
-$sheet->getColumnDimension('K')->setWidth(20);
-$sheet->getColumnDimension('L')->setWidth(25);
-$sheet->getDefaultRowDimension()->setRowHeight(25);
-// Empieza a escribir desde la fila 4 en adelante
-
-$rowBarrioIndex = $rowIndex + 7; // Dos filas debajo de los totales
-$colIndex = 1; // Comienza en la columna A (índice 1)
-
-while ($rowBarrio = mysqli_fetch_assoc($res_barrio)) {
-    // Si llegamos a la columna 11 (K), reiniciamos y bajamos una fila
-    if ($colIndex > 11) {
-        $colIndex = 1; // volver a columna A
-        $rowBarrioIndex++;
-    }
-
-    // Convertir número de columna a letra (A, B, C, ...)
-    $colLetter = Coordinate::stringFromColumnIndex($colIndex);
-
-    // Concatenar nombre + total
-    $texto = $rowBarrio['nombre_bar'] . ' (' . $rowBarrio['total_por_barrio'] . ')';
-    // Escribir el texto en una sola celda
-    $sheet->setCellValue($colLetter . $rowBarrioIndex, $texto);
-    // Aplicar estilo de negrita a la celda
-    $sheet->getStyle($colLetter . $rowBarrioIndex)->applyFromArray(['font' => $boldFontStyle]);
-
-    $colIndex++;
-}
-
+// Título de totales generales de integrantes en la fila 4
 $tituloRow = 4;
-// Unir celdas de A a K
-$sheet->mergeCells("A$tituloRow:K$tituloRow");
-// Escribir el título
-$sheet->setCellValue("A$tituloRow", "CANTIDAD DE INTEGRANTES POR ENCUESTA");
-// Centrar el texto
+$sheet->mergeCells("A$tituloRow:P$tituloRow");
+$sheet->setCellValue("A$tituloRow", "TOTALES GENERALES DE INTEGRANTES");
 $sheet->getStyle("A$tituloRow")->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
-// (Opcional) Negrita y tamaño de fuente
 $sheet->getStyle("A$tituloRow")->getFont()->setBold(true)->setSize(14);
 
-$rowIntegranteIndex = 5; // Saltamos 2 filas debajo del bloque anterior
+$rowIntegranteIndex = 5; // Empezamos en la fila 5
 $colIndex = 1; // Empezamos desde la columna A
 
 $rowIntegrante = mysqli_fetch_assoc($res_integrantes); // Solo hay una fila con todos los totales
@@ -303,6 +291,151 @@ foreach ($rowIntegrante as $nombreCampo => $valorTotal) {
 
     $colIndex++;
 }
+
+//titulo de rangos de edad por barrio
+// Fila donde se escribirá el título 
+$tituloRow = 9;
+// Unir celdas de A a S para abarcar todas las columnas necesarias
+$sheet->mergeCells("A$tituloRow:S$tituloRow");
+// Escribir el título
+$sheet->setCellValue("A$tituloRow", "RANGOS DE EDAD POR BARRIO Y GÉNERO");
+// Centrar el texto
+$sheet->getStyle("A$tituloRow")->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+// (Opcional) Negrita y tamaño de fuente
+$sheet->getStyle("A$tituloRow")->getFont()->setBold(true)->setSize(14);
+
+// Crear encabezados para los rangos de edad
+$rowBarrioIndex = 10; // Directamente en la fila 10
+
+// Establecer encabezados de columnas para los rangos
+$sheet->setCellValue('A' . $rowBarrioIndex, 'BARRIO');
+$sheet->setCellValue('B' . $rowBarrioIndex, 'COMUNA');
+$sheet->setCellValue('C' . $rowBarrioIndex, 'M 0-6');
+$sheet->setCellValue('D' . $rowBarrioIndex, 'M 7-12');
+$sheet->setCellValue('E' . $rowBarrioIndex, 'M 13-17');
+$sheet->setCellValue('F' . $rowBarrioIndex, 'M 18-28');
+$sheet->setCellValue('G' . $rowBarrioIndex, 'M 39-45');
+$sheet->setCellValue('H' . $rowBarrioIndex, 'M 46-64');
+$sheet->setCellValue('I' . $rowBarrioIndex, 'M +65');
+$sheet->setCellValue('J' . $rowBarrioIndex, 'TOTAL M');
+$sheet->setCellValue('K' . $rowBarrioIndex, 'F 0-6');
+$sheet->setCellValue('L' . $rowBarrioIndex, 'F 7-12');
+$sheet->setCellValue('M' . $rowBarrioIndex, 'F 13-17');
+$sheet->setCellValue('N' . $rowBarrioIndex, 'F 18-28');
+$sheet->setCellValue('O' . $rowBarrioIndex, 'F 39-45');
+$sheet->setCellValue('P' . $rowBarrioIndex, 'F 46-64');
+$sheet->setCellValue('Q' . $rowBarrioIndex, 'F +65');
+$sheet->setCellValue('R' . $rowBarrioIndex, 'TOTAL F');
+$sheet->setCellValue('S' . $rowBarrioIndex, 'TOTAL');
+
+// Aplicar estilo a los encabezados
+$sheet->getStyle("A$rowBarrioIndex:S$rowBarrioIndex")->applyFromArray(['font' => $boldFontStyle]);
+$sheet->getStyle("A$rowBarrioIndex:S$rowBarrioIndex")->applyFromArray([
+    'fill' => [
+        'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+        'startColor' => [
+            'rgb' => 'ffd880',
+        ],
+    ],
+]);
+
+$rowBarrioIndex++; // Mover a la siguiente fila para empezar con los datos
+
+// Variables para calcular totales generales
+$totales = [
+    'masculino_0_6' => 0, 'masculino_7_12' => 0, 'masculino_13_17' => 0, 'masculino_18_28' => 0,
+    'masculino_39_45' => 0, 'masculino_46_64' => 0, 'masculino_mayor_65' => 0,
+    'femenino_0_6' => 0, 'femenino_7_12' => 0, 'femenino_13_17' => 0, 'femenino_18_28' => 0,
+    'femenino_39_45' => 0, 'femenino_46_64' => 0, 'femenino_mayor_65' => 0,
+    'total_masculino' => 0, 'total_femenino' => 0, 'total_general' => 0
+];
+
+while ($rowBarrio = mysqli_fetch_assoc($res_barrio)) {
+    // Calcular totales por género
+    $totalMasculino = $rowBarrio['masculino_0_6'] + $rowBarrio['masculino_7_12'] + $rowBarrio['masculino_13_17'] + 
+                     $rowBarrio['masculino_18_28'] + $rowBarrio['masculino_39_45'] + $rowBarrio['masculino_46_64'] + 
+                     $rowBarrio['masculino_mayor_65'];
+    
+    $totalFemenino = $rowBarrio['femenino_0_6'] + $rowBarrio['femenino_7_12'] + $rowBarrio['femenino_13_17'] + 
+                    $rowBarrio['femenino_18_28'] + $rowBarrio['femenino_39_45'] + $rowBarrio['femenino_46_64'] + 
+                    $rowBarrio['femenino_mayor_65'];
+    
+    // Acumular totales generales
+    $totales['masculino_0_6'] += $rowBarrio['masculino_0_6'];
+    $totales['masculino_7_12'] += $rowBarrio['masculino_7_12'];
+    $totales['masculino_13_17'] += $rowBarrio['masculino_13_17'];
+    $totales['masculino_18_28'] += $rowBarrio['masculino_18_28'];
+    $totales['masculino_39_45'] += $rowBarrio['masculino_39_45'];
+    $totales['masculino_46_64'] += $rowBarrio['masculino_46_64'];
+    $totales['masculino_mayor_65'] += $rowBarrio['masculino_mayor_65'];
+    $totales['femenino_0_6'] += $rowBarrio['femenino_0_6'];
+    $totales['femenino_7_12'] += $rowBarrio['femenino_7_12'];
+    $totales['femenino_13_17'] += $rowBarrio['femenino_13_17'];
+    $totales['femenino_18_28'] += $rowBarrio['femenino_18_28'];
+    $totales['femenino_39_45'] += $rowBarrio['femenino_39_45'];
+    $totales['femenino_46_64'] += $rowBarrio['femenino_46_64'];
+    $totales['femenino_mayor_65'] += $rowBarrio['femenino_mayor_65'];
+    $totales['total_masculino'] += $totalMasculino;
+    $totales['total_femenino'] += $totalFemenino;
+    $totales['total_general'] += $rowBarrio['total_por_barrio'];
+    
+    $sheet->setCellValue('A' . $rowBarrioIndex, $rowBarrio['nombre_bar']);
+    $sheet->setCellValue('B' . $rowBarrioIndex, $rowBarrio['nombre_com']);
+    // Hombres primero
+    $sheet->setCellValue('C' . $rowBarrioIndex, $rowBarrio['masculino_0_6']);
+    $sheet->setCellValue('D' . $rowBarrioIndex, $rowBarrio['masculino_7_12']);
+    $sheet->setCellValue('E' . $rowBarrioIndex, $rowBarrio['masculino_13_17']);
+    $sheet->setCellValue('F' . $rowBarrioIndex, $rowBarrio['masculino_18_28']);
+    $sheet->setCellValue('G' . $rowBarrioIndex, $rowBarrio['masculino_39_45']);
+    $sheet->setCellValue('H' . $rowBarrioIndex, $rowBarrio['masculino_46_64']);
+    $sheet->setCellValue('I' . $rowBarrioIndex, $rowBarrio['masculino_mayor_65']);
+    $sheet->setCellValue('J' . $rowBarrioIndex, $totalMasculino);
+    // Mujeres después
+    $sheet->setCellValue('K' . $rowBarrioIndex, $rowBarrio['femenino_0_6']);
+    $sheet->setCellValue('L' . $rowBarrioIndex, $rowBarrio['femenino_7_12']);
+    $sheet->setCellValue('M' . $rowBarrioIndex, $rowBarrio['femenino_13_17']);
+    $sheet->setCellValue('N' . $rowBarrioIndex, $rowBarrio['femenino_18_28']);
+    $sheet->setCellValue('O' . $rowBarrioIndex, $rowBarrio['femenino_39_45']);
+    $sheet->setCellValue('P' . $rowBarrioIndex, $rowBarrio['femenino_46_64']);
+    $sheet->setCellValue('Q' . $rowBarrioIndex, $rowBarrio['femenino_mayor_65']);
+    $sheet->setCellValue('R' . $rowBarrioIndex, $totalFemenino);
+    $sheet->setCellValue('S' . $rowBarrioIndex, $rowBarrio['total_por_barrio']);
+    
+    $rowBarrioIndex++;
+}
+
+// Agregar fila de totales generales
+$sheet->setCellValue('A' . $rowBarrioIndex, 'TOTALES GENERALES');
+$sheet->setCellValue('B' . $rowBarrioIndex, '');
+$sheet->setCellValue('C' . $rowBarrioIndex, $totales['masculino_0_6']);
+$sheet->setCellValue('D' . $rowBarrioIndex, $totales['masculino_7_12']);
+$sheet->setCellValue('E' . $rowBarrioIndex, $totales['masculino_13_17']);
+$sheet->setCellValue('F' . $rowBarrioIndex, $totales['masculino_18_28']);
+$sheet->setCellValue('G' . $rowBarrioIndex, $totales['masculino_39_45']);
+$sheet->setCellValue('H' . $rowBarrioIndex, $totales['masculino_46_64']);
+$sheet->setCellValue('I' . $rowBarrioIndex, $totales['masculino_mayor_65']);
+$sheet->setCellValue('J' . $rowBarrioIndex, $totales['total_masculino']);
+$sheet->setCellValue('K' . $rowBarrioIndex, $totales['femenino_0_6']);
+$sheet->setCellValue('L' . $rowBarrioIndex, $totales['femenino_7_12']);
+$sheet->setCellValue('M' . $rowBarrioIndex, $totales['femenino_13_17']);
+$sheet->setCellValue('N' . $rowBarrioIndex, $totales['femenino_18_28']);
+$sheet->setCellValue('O' . $rowBarrioIndex, $totales['femenino_39_45']);
+$sheet->setCellValue('P' . $rowBarrioIndex, $totales['femenino_46_64']);
+$sheet->setCellValue('Q' . $rowBarrioIndex, $totales['femenino_mayor_65']);
+$sheet->setCellValue('R' . $rowBarrioIndex, $totales['total_femenino']);
+$sheet->setCellValue('S' . $rowBarrioIndex, $totales['total_general']);
+
+// Aplicar estilo especial a la fila de totales
+$sheet->getStyle("A$rowBarrioIndex:S$rowBarrioIndex")->applyFromArray(['font' => $boldFontStyle]);
+$sheet->getStyle("A$rowBarrioIndex:S$rowBarrioIndex")->applyFromArray([
+    'fill' => [
+        'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+        'startColor' => [
+            'rgb' => 'ffcc99', // Color diferente para los totales
+        ],
+    ],
+]);
+
 
 
 // Nombre del archivo con la fecha actual

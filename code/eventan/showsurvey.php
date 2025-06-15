@@ -18,10 +18,10 @@ header("Content-Type: text/html;charset=utf-8");
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>BD SISBEN</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">	<title>BD SISBEN</title>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+	<script src="https://kit.fontawesome.com/fed2435e21.js" crossorigin="anonymous"></script>
 
 	<style>
 		.hover-bg:hover {
@@ -141,6 +141,7 @@ header("Content-Type: text/html;charset=utf-8");
 								<th>NOMBRE</th>
 								<th>FICHA</th>
 								<th>ESTADO</th>
+								<th>EDITAR</th>
 								<th>ELIMINAR REG.</th>
 							</tr>
 						</thead>
@@ -168,7 +169,6 @@ header("Content-Type: text/html;charset=utf-8");
 	while ($row = mysqli_fetch_array($result)) {		// Determinar si la fila debe tener el estilo de ficha retirada
 		$claseFilaRetirada = ($row['estado_ficha'] == 0) ? 'ficha-retirada' : '';
 		$estadoFicha = ($row['estado_ficha'] == 0) ? 'estado-ficha-retirada' : 'estado-ficha-activa';
-
 		echo '
 				<tr class="' . $claseFilaRetirada . '">
 		<td>' . $i++ . '</td>
@@ -177,6 +177,11 @@ header("Content-Type: text/html;charset=utf-8");
 		<td>' . $row['nom_encVenta'] . '</td>
 		<td>' . $row['num_ficha_encVenta'] . '</td>
 		<td><span class="' . $estadoFicha . '">' . $row['estado_ficha_texto'] . '</span></td>
+		<td>
+			<a href="editEncuesta.php?id_encVenta=' . $row['id_encVenta'] . '" class="btn btn-sm btn-primary" title="Editar Encuesta">
+				<i class="fas fa-edit"></i>
+			</a>
+		</td>
 		<td>
 			<a href="eliminarVentanilla.php?id_encVenta=' . $row['id_encVenta'] . '" onclick="return confirm(\'¿ESTÁS SEGURO DE ELIMINAR ESTE REGISTRO?\')">
 				<img src="../../img/eliminar.png" width="28" height="28" alt="Eliminar">

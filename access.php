@@ -4,6 +4,9 @@ if (!isset($_SESSION['id_usu'])) {
   header("Location: index.php");
 }
 
+// Configurar zona horaria de Colombia desde el inicio
+date_default_timezone_set("America/Bogota");
+
 $usuario      = $_SESSION['usuario'];
 $nombre       = $_SESSION['nombre'];
 $tipo_usu     = $_SESSION['tipo_usu'];
@@ -11,7 +14,6 @@ $tipo_usu     = $_SESSION['tipo_usu'];
 ?>
 
 <!DOCTYPE html>
-<!-- Coding by CodingNepal || www.codingnepalweb.com -->
 <html lang="es">
 
 <head>
@@ -19,9 +21,139 @@ $tipo_usu     = $_SESSION['tipo_usu'];
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <!-- Boxicons CSS -->
   <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"> <!-- FontAwesome -->
   <script src="https://kit.fontawesome.com/fed2435e21.js" crossorigin="anonymous"></script>
-  <title>BD SISBEN</title>
+  <title>BD SISBEN - Dashboard</title>
   <link rel="stylesheet" href="menu/style.css" />
+
+  <style>
+    .main-content {
+      margin-left: 260px;
+      padding: 20px;
+      background: #f8f9fa;
+      min-height: 100vh;
+      transition: margin-left 0.3s ease;
+    }
+
+    .sidebar.close~.main-content {
+      margin-left: 78px;
+    }
+
+    .dashboard-header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 30px;
+      border-radius: 15px;
+      margin-bottom: 30px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .welcome-card {
+      background: white;
+      border-radius: 15px;
+      padding: 25px;
+      margin-bottom: 25px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+      border-left: 4px solid #667eea;
+    }
+
+    .stats-card {
+      background: white;
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border: none;
+      height: 100%;
+    }
+
+    .stats-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    }
+
+    .stats-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      color: white;
+      margin-bottom: 15px;
+    }
+
+    .stats-number {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #2c3e50;
+      margin: 10px 0;
+    }
+
+    .stats-label {
+      color: #6c757d;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .quick-actions {
+      background: white;
+      border-radius: 15px;
+      padding: 25px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+      margin-bottom: 25px;
+    }
+
+    .action-btn {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border: none;
+      border-radius: 10px;
+      padding: 15px 20px;
+      color: white;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      transition: all 0.3s ease;
+      margin-bottom: 10px;
+    }
+
+    .action-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+      color: white;
+    }
+
+    .action-btn i {
+      margin-right: 10px;
+      font-size: 18px;
+    }
+
+    .section-title {
+      color: #2c3e50;
+      font-weight: 600;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+    }
+
+    .section-title i {
+      margin-right: 10px;
+      color: #667eea;
+    }
+
+    @media (max-width: 768px) {
+      .main-content {
+        margin-left: 0;
+        padding: 15px;
+      }
+
+      .sidebar.close~.main-content {
+        margin-left: 0;
+      }
+    }
+  </style>
 </head>
 
 <body>
@@ -83,6 +215,7 @@ $tipo_usu     = $_SESSION['tipo_usu'];
             <ul class="menu_items submenu">
               <a href="code/eventan/showsurvey.php" class="nav_link sublink">Ventanilla</a>
               <a href="code/einfo/showsurvey.php" class="nav_link sublink">Informacion</a>
+              <a href="code/einfo/showsurvey.php" class="nav_link sublink">Movimientos</a>
 
             </ul>
           </li>
@@ -96,9 +229,7 @@ $tipo_usu     = $_SESSION['tipo_usu'];
             </div>
 
             <ul class="menu_items submenu">
-              <a href="code/exportares/exportar.php" class="nav_link sublink">Ventanilla</a>
-              <a href="code/report/report13.php" class="nav_link sublink">Información</a>
-              <!-- <a href="code/report/report17.php" class="nav_link sublink">Movimiento</a> -->
+              <a href="code/exportares/exportar.php" class="nav_link sublink">Ver Informes</a>
             </ul>
           </li>
 
@@ -263,6 +394,9 @@ $tipo_usu     = $_SESSION['tipo_usu'];
             <ul class="menu_items submenu">
               <!-- <a href="code/emovim/showsurvey.php" class="nav_link sublink">Movimientos</a> -->
               <a href="code/einfo/showsurvey.php" class="nav_link sublink">Información</a>
+              <a href="code/eventan/showMovimientos.php" class="nav_link sublink">Movimientos</a>
+              <a href="code/eventan/showsurvey.php" class="nav_link sublink">Encuesta Nueva</a>
+
             </ul>
           </li>
           <li class="item">
@@ -452,7 +586,7 @@ $tipo_usu     = $_SESSION['tipo_usu'];
               <span class="navlink_icon">
                 <i class="fa-solid fa-chart-pie"></i>
               </span>
-              <span class="navlink">Informes</span>
+              <span class="navlink">Informesss</span>
               <i class="bx bx-chevron-right arrow-left"></i>
             </div>
 
@@ -526,7 +660,7 @@ $tipo_usu     = $_SESSION['tipo_usu'];
               <span class="navlink_icon">
                 <i class="fa-solid fa-chart-pie"></i>
               </span>
-              <span class="navlink">Informes</span>
+              <span class="navlink">Informesxx</span>
               <i class="bx bx-chevron-right arrow-left"></i>
             </div>
 
@@ -564,12 +698,299 @@ $tipo_usu     = $_SESSION['tipo_usu'];
             </div>
           </div>
       </div>
-    </nav>
-  <?php } ?>
+    </nav> <?php } ?>
 
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- Dashboard Header -->
+    <div class="dashboard-header">
+      <div class="row align-items-center">
+        <div class="col-md-8">
+          <h1 class="mb-2">
+            <i class="fas fa-tachometer-alt me-3"></i>
+            Bienvenido al Sistema SISBEN
+          </h1>
+          <p class="mb-0 opacity-75">
+            Hola <strong><?php echo $nombre; ?></strong>, estás conectado como:
+            <span class="badge bg-light text-dark ms-2">
+              <?php
+              switch ($tipo_usu) {
+                case 1:
+                  echo "Administrador";
+                  break;
+                case 2:
+                  echo "Encuestas de Campo";
+                  break;
+                case 3:
+                  echo "Ventanilla";
+                  break;
+                case 4:
+                  echo "Encuestas (Campo y Ventanilla)";
+                  break;
+                case 5:
+                  echo "Supervisor Campo";
+                  break;
+                case 6:
+                  echo "Supervisor Ventanilla";
+                  break;
+                default:
+                  echo "Usuario";
+                  break;
+              }
+              ?>
+            </span>
+          </p>
+        </div>
+        <div class="col-md-4 text-end">
+          <p class="mb-0">
+            <i class="fas fa-calendar-alt me-2"></i>
+            <?php echo date('d/m/Y H:i'); ?> (COT)
+          </p>
+        </div>
+      </div>
+    </div> <?php
+            // Incluir conexión para obtener estadísticas
+            include("conexion.php");
+
+            // Obtener estadísticas básicas con manejo de errores
+            $total_encuestas = 0;
+            $total_movimientos = 0;
+            $total_informacion = 0;
+            $encuestas_hoy = 0;
+
+            // Total de encuestas (tabla: encventanilla)
+            try {
+              $result = mysqli_query($mysqli, "SELECT COUNT(*) as total FROM encventanilla");
+              if ($result && $row = mysqli_fetch_assoc($result)) {
+                $total_encuestas = $row['total'];
+              }
+            } catch (Exception $e) {
+              $total_encuestas = 0;
+            }
+
+            // Total de información (tabla: informacion)
+            try {
+              $result = mysqli_query($mysqli, "SELECT COUNT(*) as total FROM informacion");
+              if ($result && $row = mysqli_fetch_assoc($result)) {
+                $total_informacion = $row['total'];
+              }
+            } catch (Exception $e) {
+              $total_informacion = 0;
+            }
+
+            // Total de movimientos (tabla: movimientos)
+            try {
+              $result = mysqli_query($mysqli, "SELECT COUNT(*) as total FROM movimientos");
+              if ($result && $row = mysqli_fetch_assoc($result)) {
+                $total_movimientos = $row['total'];
+              }
+            } catch (Exception $e) {
+              $total_movimientos = 0;
+            }
+
+            // Encuestas de hoy - buscar la columna de fecha correcta
+            $encuestas_hoy = 0;
+
+            // Primero obtener información sobre las columnas de la tabla
+            $columnas_query = "SHOW COLUMNS FROM encventanilla";
+            $columnas_result = @mysqli_query($mysqli, $columnas_query);
+
+            if ($columnas_result) {
+              $columnas_fecha = [];
+              while ($columna = mysqli_fetch_assoc($columnas_result)) {
+                $nombre_col = strtolower($columna['Field']);
+                // Buscar columnas que contengan 'fecha', 'fec', 'date' o 'time'
+                if (
+                  strpos($nombre_col, 'fecha') !== false ||
+                  strpos($nombre_col, 'fec') !== false ||
+                  strpos($nombre_col, 'date') !== false ||
+                  strpos($nombre_col, 'time') !== false
+                ) {
+                  $columnas_fecha[] = $columna['Field'];
+                }
+              }
+
+              // Probar cada columna de fecha encontrada
+              foreach ($columnas_fecha as $columna_fecha) {
+                $query_fecha = "SELECT COUNT(*) as total FROM encventanilla WHERE DATE($columna_fecha) = CURDATE()";
+                $result_fecha = @mysqli_query($mysqli, $query_fecha);
+
+                if ($result_fecha && $row_fecha = mysqli_fetch_assoc($result_fecha)) {
+                  $encuestas_hoy = $row_fecha['total'];
+                  break; // Si funciona, salir del bucle
+                }
+              }
+            }
+            ?>
+
+    <!-- Statistics Cards -->
+    <div class="row mb-4">
+      <div class="col-xl-3 col-md-6 mb-4">
+        <div class="stats-card">
+          <div class="stats-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+            <i class="fas fa-clipboard-list"></i>
+          </div>
+          <div class="stats-number"><?php echo number_format($total_encuestas); ?></div>
+          <div class="stats-label">Total Encuestas</div>
+        </div>
+      </div>
+
+      <div class="col-xl-3 col-md-6 mb-4">
+        <div class="stats-card">
+          <div class="stats-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+            <i class="fas fa-info-circle"></i>
+          </div>
+          <div class="stats-number"><?php echo number_format($total_informacion); ?></div>
+          <div class="stats-label">Registros de Información</div>
+        </div>
+      </div>
+
+      <div class="col-xl-3 col-md-6 mb-4">
+        <div class="stats-card">
+          <div class="stats-icon" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+            <i class="fas fa-exchange-alt"></i>
+          </div>
+          <div class="stats-number"><?php echo number_format($total_movimientos); ?></div>
+          <div class="stats-label">Total Movimientos</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <!-- Quick Actions -->
+      <div class="col-lg-4 mb-4">
+        <div class="quick-actions">
+          <h3 class="section-title">
+            <i class="fas fa-bolt"></i>
+            Acciones Rápidas
+          </h3>
+
+          <?php if ($tipo_usu == 1 || $tipo_usu == 3 || $tipo_usu == 4) { ?>
+            <a href="code/eventan/addsurvey1.php" class="action-btn">
+              <i class="fas fa-plus-circle"></i>
+              Nueva Encuesta
+            </a>
+          <?php } ?>
+
+          <?php if ($tipo_usu == 1 || $tipo_usu == 3 || $tipo_usu == 4) { ?>
+            <a href="code/einfo/addsurvey1.php" class="action-btn">
+              <i class="fas fa-info-circle"></i>
+              Registrar Información
+            </a>
+          <?php } ?>
+
+          <?php if ($tipo_usu == 1 || $tipo_usu == 3) { ?>
+            <a href="code/eventan/movimientosEncuesta.php" class="action-btn">
+              <i class="fas fa-exchange-alt"></i>
+              Gestionar Movimientos
+            </a>
+          <?php } ?>
+
+          <?php if ($tipo_usu == 2) { ?>
+            <a href="code/ecampo/addsurvey1.php" class="action-btn">
+              <i class="fas fa-clipboard-check"></i>
+              Digitación Encuesta Campo
+            </a>
+          <?php } ?>
+
+          <a href="code/exportares/exportar.php" class="action-btn">
+            <i class="fas fa-download"></i>
+            Generar Reportes
+          </a>
+        </div>
+      </div> <!-- System Information -->
+      <div class="col-lg-8 mb-4">
+        <div class="welcome-card">
+          <h3 class="section-title">
+            <i class="fas fa-info-circle"></i>
+            Resumen del Sistema
+          </h3>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="d-flex align-items-center mb-3">
+                <div class="stats-icon me-3" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); width: 40px; height: 40px; font-size: 16px;">
+                  <i class="fas fa-server"></i>
+                </div>
+                <div>
+                  <strong>Estado del Sistema</strong><br>
+                  <span class="text-success">Operativo</span>
+                </div>
+              </div>
+              <div class="d-flex align-items-center mb-3">
+                <div class="stats-icon me-3" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); width: 40px; height: 40px; font-size: 16px;">
+                  <i class="fas fa-database"></i>
+                </div>
+                <div>
+                  <strong>Base de Datos</strong><br>
+                  <span class="text-success">Conectada</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="d-flex align-items-center mb-3">
+                <div class="stats-icon me-3" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); width: 40px; height: 40px; font-size: 16px;">
+                  <i class="fas fa-shield-alt"></i>
+                </div>
+                <div>
+                  <strong>Seguridad</strong><br>
+                  <span class="text-success">Activa</span>
+                </div>
+              </div>
+              <div class="d-flex align-items-center mb-3">
+                <div class="stats-icon me-3" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); width: 40px; height: 40px; font-size: 16px;">
+                  <i class="fas fa-clock"></i>
+                </div>
+                <div>
+                  <strong>Última Actualización</strong><br>
+                  <span class="text-primary"><?php echo date('H:i'); ?> COT</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> <!-- Recent Activity -->
+    <div class="welcome-card">
+      <h3 class="section-title">
+        <i class="fas fa-chart-line"></i>
+        Estadísticas Rápidas
+      </h3>
+      <div class="row text-center">
+        <div class="col-md-3">
+          <div class="p-3">
+            <i class="fas fa-users fa-2x text-primary mb-2"></i>
+            <h5><?php echo number_format($total_encuestas + $total_informacion); ?></h5>
+            <small class="text-muted">Total Registros</small>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="p-3">
+            <i class="fas fa-chart-pie fa-2x text-success mb-2"></i>
+            <h5><?php echo number_format($total_movimientos); ?></h5>
+            <small class="text-muted">Movimientos</small>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="p-3">
+            <i class="fas fa-calendar-day fa-2x text-warning mb-2"></i>
+            <h5><?php echo number_format($encuestas_hoy); ?></h5>
+            <small class="text-muted">Registros Hoy</small>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="p-3">
+            <i class="fas fa-clock fa-2x text-info mb-2"></i>
+            <h5><?php echo date('H:i'); ?></h5>
+            <small class="text-muted">Hora Colombia (COT)</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
 
   <!-- JavaScript -->
   <script src="menu/script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
