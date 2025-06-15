@@ -225,19 +225,29 @@ if (isset($_POST['confirmar_migracion'])) {
         } else {
             throw new Exception("Error creando tabla: " . $mysqli->error);
         }
-        
-        echo "<h3>Paso 2: Verificando índices y estructura</h3>";
+          echo "<h3>Paso 2: Verificando índices y estructura</h3>";
         
         // Verificar y crear índices adicionales si no existen
-        $indices = [
-            "ALTER TABLE integmovimientos_independiente ADD INDEX IF NOT EXISTS idx_gen_rango (gen_integMovIndep, rango_integMovIndep)",
-            "ALTER TABLE integmovimientos_independiente ADD INDEX IF NOT EXISTS idx_usuario_fecha (id_usu, fecha_alta_integMovIndep)"
+        $indices_verificar = [
+            'idx_gen_rango' => "ALTER TABLE integmovimientos_independiente ADD INDEX idx_gen_rango (gen_integMovIndep, rango_integMovIndep)",
+            'idx_usuario_fecha' => "ALTER TABLE integmovimientos_independiente ADD INDEX idx_usuario_fecha (id_usu, fecha_alta_integMovIndep)"
         ];
         
-        foreach ($indices as $sql_index) {
-            $mysqli->query($sql_index); // No arrojar error si ya existe
+        foreach ($indices_verificar as $nombre_indice => $sql_index) {
+            // Verificar si el índice ya existe
+            $check_index = $mysqli->query("SHOW INDEX FROM integmovimientos_independiente WHERE Key_name = '$nombre_indice'");
+            if ($check_index && $check_index->num_rows == 0) {
+                // El índice no existe, crearlo
+                if ($mysqli->query($sql_index)) {
+                    echo "<p style='color: green;'>✅ Índice $nombre_indice creado</p>";
+                } else {
+                    echo "<p style='color: orange;'>⚠️ No se pudo crear índice $nombre_indice (puede existir ya): " . $mysqli->error . "</p>";
+                }
+            } else {
+                echo "<p style='color: green;'>✅ Índice $nombre_indice ya existe</p>";
+            }
         }
-        echo "<p style='color: green;'>✅ Índices verificados</p>";
+        echo "<p style='color: green;'>✅ Verificación de índices completada</p>";
         
         echo "<h3>Paso 3: Verificando compatibilidad con tabla movimientos</h3>";
         

@@ -26,8 +26,8 @@ try {
     
     echo "   Movimientos actuales: $count_movimientos\n";
     
-    if ($count_movimientos != 119) {
-        echo "   ⚠️  ADVERTENCIA: Se esperaban 119 movimientos, hay $count_movimientos\n";
+    if ($count_movimientos != 128) {
+        echo "   ⚠️  ADVERTENCIA: Se esperaban 128 movimientos, hay $count_movimientos\n";
         echo "   ¿Desea continuar? (Presione Ctrl+C para cancelar)\n";
         // Continuar automáticamente en script
     }
@@ -186,12 +186,12 @@ try {
         $id_encVenta = $mov_enc['id_encVenta'];
         
         // Buscar integrantes para esta encuesta
-        $sql_integrantes = "SELECT * FROM integVentanilla WHERE id_encVenta = $id_encVenta";
+        $sql_integrantes = "SELECT * FROM integventanilla WHERE id_encVenta = $id_encVenta";
         $result_integrantes = $mysqli->query($sql_integrantes);
         
         while ($integrante = $result_integrantes->fetch_assoc()) {
             $sql_insert_integrante = "INSERT INTO integmovimientos_independiente (
-                id_movimiento, doc_encVenta, cant_integVenta, gen_integVenta, rango_integVenta,
+                id_movimiento, doc_encVenta, cant_integMovIndep, gen_integMovIndep, rango_integMovIndep,
                 orientacionSexual, condicionDiscapacidad, tipoDiscapacidad, grupoEtnico,
                 victima, mujerGestante, cabezaFamilia, experienciaMigratoria,
                 seguridadSalud, nivelEducativo, condicionOcupacion, id_usu

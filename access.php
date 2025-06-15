@@ -972,13 +972,6 @@ $tipo_usu     = $_SESSION['tipo_usu'];
         </div>
         <div class="col-md-3">
           <div class="p-3">
-            <i class="fas fa-calendar-day fa-2x text-warning mb-2"></i>
-            <h5><?php echo number_format($encuestas_hoy); ?></h5>
-            <small class="text-muted">Registros Hoy</small>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="p-3">
             <i class="fas fa-clock fa-2x text-info mb-2"></i>
             <h5><?php echo date('H:i'); ?></h5>
             <small class="text-muted">Hora Colombia (COT)</small>
