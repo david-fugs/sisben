@@ -12,7 +12,7 @@ $nombre     = $_SESSION['nombre'];
 $tipo_usu   = $_SESSION['tipo_usu'];
 
 // Obtener ID de la encuesta a editar
-$id_encuesta = isset($_GET['id']) ? intval($_GET['id']) : 0;
+$id_encuesta = isset($_GET['id_encVenta']) ? intval($_GET['id_encVenta']) : 0;
 
 if ($id_encuesta == 0) {
     header("Location: showEncuestas.php");
