@@ -626,15 +626,16 @@ header("Content-Type: text/html;charset=utf-8");
                                 mensajeContainer.removeClass("d-none alert-danger alert-warning").addClass("alert alert-warning")
                                     .html('<i class="fas fa-exclamation-triangle"></i> <strong>Encuesta Ya Realizada</strong><br>' +
                                           'Esta encuesta ya fue registrada el ' + new Date(response.data.fecha_alta_encVenta).toLocaleDateString() + '. ' +
-                                          'Puede ver los datos existentes o crear una nueva entrada.<br>' +
+                                          'Puede ver los datos existentes, crear una nueva entrada, o continuar con el formulario actual.<br>' +
                                           '<button type="button" class="btn btn-info btn-sm mt-2 me-2" onclick="verEncuestaExistente()">Ver Encuesta Existente</button>' +
-                                          '<button type="button" class="btn btn-success btn-sm mt-2" onclick="permitirNuevaEncuesta()">Crear Nueva Encuesta</button>');
+                                          '<button type="button" class="btn btn-success btn-sm mt-2 me-2" onclick="permitirNuevaEncuesta()">Crear Nueva Encuesta</button>' +
+                                          '<button type="button" class="btn btn-primary btn-sm mt-2" onclick="continuarConFormulario()">Continuar de Todas Formas</button>');
                                 
                                 // Guardar los datos existentes para referencia
                                 window.encuestaExistente = response.data;
                                 
-                                // Deshabilitar el botón de envío inicialmente
-                                $("#btnEnviar").prop("disabled", true);
+                                // No deshabilitar el botón de envío, solo mostrar la alerta
+                                // $("#btnEnviar").prop("disabled", true);
                                 
                                 // Llenar los campos con los datos de la encuesta existente para visualización
                                 llenarDatosExistentes(response.data);
@@ -1275,8 +1276,10 @@ header("Content-Type: text/html;charset=utf-8");
     </script>
 
 </body>
-<script type="text/javascript">
-    $(document).ready(function() {
+<script type="text/javascript">    $(document).ready(function() {
+        // Inicializar el botón de envío como habilitado por defecto
+        $("#btnEnviar").prop("disabled", false);
+        
         //  Agregar LOGS para ver qué tiene id_bar al cambiar
         $('#id_bar').on('change', function() {
             $('#id_bar option:selected').each(function() {
@@ -1417,10 +1420,12 @@ header("Content-Type: text/html;charset=utf-8");
                                             ` : ''}
                                             
                                             ${tablaIntegrantes}
-                                        </div>
-                                        <div class="modal-footer">
+                                        </div>                                        <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">
                                                 <i class="fas fa-times"></i> Cerrar
+                                            </button>
+                                            <button type="button" class="btn btn-primary" onclick="continuarConFormulario(); $('#modalEncuestaExistente').modal('hide');">
+                                                <i class="fas fa-arrow-right"></i> Continuar de Todas Formas
                                             </button>
                                             <button type="button" class="btn btn-success" onclick="permitirNuevaEncuesta(); $('#modalEncuestaExistente').modal('hide');">
                                                 <i class="fas fa-plus"></i> Crear Nueva Encuesta
@@ -1450,11 +1455,12 @@ header("Content-Type: text/html;charset=utf-8");
                 }
             });
         }
-    }
-
-    function permitirNuevaEncuesta() {
-        // Confirmar con el usuario
-        if (confirm('¿Está seguro que desea crear una nueva encuesta? Esto creará un registro adicional para el mismo documento.')) {
+    }    function permitirNuevaEncuesta() {
+        // Confirmar con el usuario de manera más clara
+        if (confirm('🔄 CREAR NUEVA ENCUESTA\n\n' +
+                   'Esto limpiará todos los campos del formulario y le permitirá ' +
+                   'crear una nueva encuesta desde cero.\n\n' +
+                   '¿Desea continuar?')) {
             // Limpiar los campos del formulario
             $('#formulario')[0].reset();
             
@@ -1470,8 +1476,11 @@ header("Content-Type: text/html;charset=utf-8");
             // Habilitar el botón de envío
             $("#btnEnviar").prop("disabled", false);
             
-            // Ocultar el mensaje de advertencia
-            $('.alert').addClass('d-none');
+            // Mostrar mensaje de confirmación
+            let mensajeContainer = $("#mensajeConsulta");
+            mensajeContainer.removeClass('d-none alert-warning alert-danger').addClass('alert alert-success')
+                .html('<i class="fas fa-check-circle"></i> <strong>Formulario Limpio</strong><br>' +
+                      'Puede proceder a llenar el formulario para crear una nueva encuesta.');
             
             // Limpiar la sección de integrantes
             $('#integrantesContainer').empty();
@@ -1483,6 +1492,29 @@ header("Content-Type: text/html;charset=utf-8");
             // Mostrar mensaje de confirmación
             $('.alert').removeClass('d-none alert-warning alert-danger').addClass('alert alert-info')
                 .html('<i class="fas fa-info-circle"></i> <strong>Nuevo Registro</strong><br>Puede proceder a llenar el formulario para crear una nueva encuesta.');
+        }    }
+
+    function continuarConFormulario() {
+        // Mostrar una confirmación más clara al usuario
+        if (confirm('⚠️ CONFIRMACIÓN REQUERIDA\n\n' +
+                   'Ya existe una encuesta registrada para este documento. ' +
+                   'Si continúa, se creará un registro adicional en la base de datos.\n\n' +
+                   '¿Está seguro que desea continuar y guardar esta nueva encuesta?')) {
+            
+            // Cambiar el mensaje a información
+            let mensajeContainer = $("#mensajeConsulta");
+            mensajeContainer.removeClass("alert-warning alert-danger").addClass("alert-info")
+                .html('<i class="fas fa-info-circle"></i> <strong>Continuando con Nueva Encuesta</strong><br>' +
+                      'Se guardará una nueva encuesta aunque ya exista una registrada anteriormente. ' +
+                      'Puede proceder a completar y enviar el formulario.');
+            
+            // Asegurar que el botón de envío esté habilitado
+            $("#btnEnviar").prop("disabled", false);
+            
+            // Opcional: scroll hacia arriba para que vea el mensaje
+            $('html, body').animate({
+                scrollTop: mensajeContainer.offset().top - 100
+            }, 500);
         }
     }
 
