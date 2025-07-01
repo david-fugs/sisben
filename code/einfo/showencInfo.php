@@ -1,6 +1,10 @@
 <?php
 session_start();
 
+// Activar reporte de errores para debugging (comentar en producción)
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 if (!isset($_SESSION['id_usu'])) {
     header("Location: ../../index.php");
     exit();  // Asegúrate de salir del script después de redirigir
@@ -68,9 +72,16 @@ header("Content-Type: text/html;charset=utf-8");
     }
     $time = time();
     $id_informacion  = $_GET['id_informacion'];
+    $row = array(); // Inicializar array vacío por defecto
+    
     if (isset($_GET['id_informacion'])) {
         $sql = mysqli_query($mysqli, "SELECT * FROM informacion WHERE id_informacion = '$id_informacion'");
-        $row = mysqli_fetch_array($sql);
+        if ($sql && mysqli_num_rows($sql) > 0) {
+            $row = mysqli_fetch_array($sql);
+        } else {
+            // Si no se encuentra el registro, mostrar mensaje de error
+            echo "<div class='alert alert-warning'>No se encontró información para el ID proporcionado.</div>";
+        }
     }
 
     ?>
@@ -150,50 +161,40 @@ header("Content-Type: text/html;charset=utf-8");
 
 
 
-                <div class="form-group" id="tipoDiscapacidadContainer" style="display: <?php echo ($row['condicionDiscapacidad'] == 'Si') ? 'block' : 'none'; ?>;">
+                <div class="form-group" id="tipoDiscapacidadContainer">
                     <div class="row">
                         <div class="form-group col-md-3">
                             <label for="condicionDiscapacidad">* CONDICION DISCAPACIDAD:</label>
                             <select name="condicionDiscapacidad" class="form-control" id="condicionDiscapacidad">
                                 <option value=""></option>
-                                <option value="Si" <?php echo ($row['condicionDiscapacidad'] == 'Si') ? 'selected' : ''; ?>>Si</option>
-                                <option value="No" <?php echo ($row['condicionDiscapacidad'] == 'No') ? 'selected' : ''; ?>>No</option>
+                                <option value="Si" <?php echo (isset($row['condicionDiscapacidad']) && $row['condicionDiscapacidad'] == 'Si') ? 'selected' : ''; ?>>Si</option>
+                                <option value="No" <?php echo (isset($row['condicionDiscapacidad']) && $row['condicionDiscapacidad'] == 'No') ? 'selected' : ''; ?>>No</option>
                             </select>
                         </div>
                         <div class="form-group col-md-3">
                             <label for="tipoDiscapacidad">* TIPO DISCAPACIDAD:</label>
                             <select class="form-control" name="tipoDiscapacidad" id="tipoDiscapacidad">
                                 <option value=""></option>
-                                <option value="Auditiva" <?php echo ($row['tipoDiscapacidad'] == 'Auditiva') ? 'selected' : ''; ?>>Auditiva</option>
-                                <option value="Fisica" <?php echo ($row['tipoDiscapacidad'] == 'Fisica') ? 'selected' : ''; ?>>Fisica</option>
-                                <option value="Intelectual" <?php echo ($row['tipoDiscapacidad'] == 'Intelectual') ? 'selected' : ''; ?>>Intelectual</option>
-                                <option value="Multiple" <?php echo ($row['tipoDiscapacidad'] == 'Multiple') ? 'selected' : ''; ?>>Multiple</option>
-                                <option value="Psicosocial" <?php echo ($row['tipoDiscapacidad'] == 'Psicosocial') ? 'selected' : ''; ?>>Psicosocial</option>
-                                <option value="SordoCeguera" <?php echo ($row['tipoDiscapacidad'] == 'SordoCeguera') ? 'selected' : ''; ?>>SordoCeguera</option>
-                                <option value="Visual" <?php echo ($row['tipoDiscapacidad'] == 'Visual') ? 'selected' : ''; ?>>Visual</option>
+                                <option value="Auditiva" <?php echo (isset($row['tipoDiscapacidad']) && $row['tipoDiscapacidad'] == 'Auditiva') ? 'selected' : ''; ?>>Auditiva</option>
+                                <option value="Fisica" <?php echo (isset($row['tipoDiscapacidad']) && $row['tipoDiscapacidad'] == 'Fisica') ? 'selected' : ''; ?>>Fisica</option>
+                                <option value="Intelectual" <?php echo (isset($row['tipoDiscapacidad']) && $row['tipoDiscapacidad'] == 'Intelectual') ? 'selected' : ''; ?>>Intelectual</option>
+                                <option value="Multiple" <?php echo (isset($row['tipoDiscapacidad']) && $row['tipoDiscapacidad'] == 'Multiple') ? 'selected' : ''; ?>>Multiple</option>
+                                <option value="Psicosocial" <?php echo (isset($row['tipoDiscapacidad']) && $row['tipoDiscapacidad'] == 'Psicosocial') ? 'selected' : ''; ?>>Psicosocial</option>
+                                <option value="SordoCeguera" <?php echo (isset($row['tipoDiscapacidad']) && $row['tipoDiscapacidad'] == 'SordoCeguera') ? 'selected' : ''; ?>>SordoCeguera</option>
+                                <option value="Visual" <?php echo (isset($row['tipoDiscapacidad']) && $row['tipoDiscapacidad'] == 'Visual') ? 'selected' : ''; ?>>Visual</option>
                             </select>
                         </div>
                         <div class="form-group col-md-3">
                             <label for="rango_integVenta">* RANGO DE EDAD:</label>
-                            <!-- <select name="rango_integVenta" class="form-control" id="rango_integVenta">
-                                <option value=""></option>
-                                <option value="0 - 6">0 - 6</option>
-                                <option value="7 - 12">7 - 12</option>
-                                <option value="13 - 17">13 - 17</option>
-                                <option value="18 - 28">18 - 28</option>
-                                <option value="29-45">29-45</option>
-                                <option value="46-64">46-64</option>
-                                <option value="Mayor o igual a 65">Mayor o igual a 65</option>
-                            </select> -->
                             <select name="rango_integVenta" class="form-control" id="rango_integVenta">
                                 <option value=""></option>
-                                <option value="0 - 6" <?php echo ($row['rango_integVenta'] == '0 - 6') ? 'selected' : ''; ?>>0 - 6</option>
-                                <option value="7 - 12" <?php echo ($row['rango_integVenta'] == '7 - 12') ? 'selected' : ''; ?>>7 - 12</option>
-                                <option value="13 - 17" <?php echo ($row['rango_integVenta'] == '13 - 17') ? 'selected' : ''; ?>>13 - 17</option>
-                                <option value="18 - 28" <?php echo ($row['rango_integVenta'] == '18 - 28') ? 'selected' : ''; ?>>18 - 28</option>
-                                <option value="29-45" <?php echo ($row['rango_integVenta'] == '29-45') ? 'selected' : ''; ?>>29-45</option>
-                                <option value="46-64" <?php echo ($row['rango_integVenta'] == '46-64') ? 'selected' : ''; ?>>46-64</option>
-                                <option value="Mayor o igual a 65" <?php echo ($row['rango_integVenta'] == 'Mayor o igual a 65') ? 'selected' : ''; ?>>Mayor o igual a 65</option>
+                                <option value="0 - 6" <?php echo (isset($row['rango_integVenta']) && $row['rango_integVenta'] == '0 - 6') ? 'selected' : ''; ?>>0 - 6</option>
+                                <option value="7 - 12" <?php echo (isset($row['rango_integVenta']) && $row['rango_integVenta'] == '7 - 12') ? 'selected' : ''; ?>>7 - 12</option>
+                                <option value="13 - 17" <?php echo (isset($row['rango_integVenta']) && $row['rango_integVenta'] == '13 - 17') ? 'selected' : ''; ?>>13 - 17</option>
+                                <option value="18 - 28" <?php echo (isset($row['rango_integVenta']) && $row['rango_integVenta'] == '18 - 28') ? 'selected' : ''; ?>>18 - 28</option>
+                                <option value="29-45" <?php echo (isset($row['rango_integVenta']) && $row['rango_integVenta'] == '29-45') ? 'selected' : ''; ?>>29-45</option>
+                                <option value="46-64" <?php echo (isset($row['rango_integVenta']) && $row['rango_integVenta'] == '46-64') ? 'selected' : ''; ?>>46-64</option>
+                                <option value="Mayor o igual a 65" <?php echo (isset($row['rango_integVenta']) && $row['rango_integVenta'] == 'Mayor o igual a 65') ? 'selected' : ''; ?>>Mayor o igual a 65</option>
                             </select>
 
                         </div>
@@ -205,27 +206,27 @@ header("Content-Type: text/html;charset=utf-8");
                                 <label for="mujerGestante">* MUJER GESTANTE/LACTANTE:</label>
                                 <select name="mujerGestante" class="form-control" id="mujerGestante">
                                     <option value=""></option>
-                                    <option value="Si" <?php echo ($row['mujerGestante'] == 'Si') ? 'selected' : ''; ?>>Si</option>
-                                    <option value="No" <?php echo ($row['mujerGestante'] == 'No') ? 'selected' : ''; ?>>No</option>
+                                    <option value="Si" <?php echo (isset($row['mujerGestante']) && $row['mujerGestante'] == 'Si') ? 'selected' : ''; ?>>Si</option>
+                                    <option value="No" <?php echo (isset($row['mujerGestante']) && $row['mujerGestante'] == 'No') ? 'selected' : ''; ?>>No</option>
                                 </select>
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="cabezaFamilia">* HOMBRE/MUJER CABEZA FAMILIA:</label>
                                 <select name="cabezaFamilia" class="form-control" id="cabezaFamilia">
                                     <option value=""></option>
-                                    <option value="Si" <?php echo ($row['cabezaFamilia'] == 'Si') ? 'selected' : ''; ?>>Si</option>
-                                    <option value="No" <?php echo ($row['cabezaFamilia'] == 'No') ? 'selected' : ''; ?>>No</option>
+                                    <option value="Si" <?php echo (isset($row['cabezaFamilia']) && $row['cabezaFamilia'] == 'Si') ? 'selected' : ''; ?>>Si</option>
+                                    <option value="No" <?php echo (isset($row['cabezaFamilia']) && $row['cabezaFamilia'] == 'No') ? 'selected' : ''; ?>>No</option>
                                 </select>
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="orientacionSexual">* ORIENTACION SEXUAL:</label>
                                 <select name="orientacionSexual" class="form-control" id="orientacionSexual">
                                     <option value=""></option>
-                                    <option value="Asexual" <?php echo ($row['orientacionSexual'] == 'Asexual') ? 'selected' : ''; ?>>Asexual</option>
-                                    <option value="Bisexual" <?php echo ($row['orientacionSexual'] == 'Bisexual') ? 'selected' : ''; ?>>Bisexual</option>
-                                    <option value="Homosexual" <?php echo ($row['orientacionSexual'] == 'Homosexual') ? 'selected' : ''; ?>>Homosexual</option>
-                                    <option value="Heterosexual" <?php echo ($row['orientacionSexual'] == 'Heterosexual') ? 'selected' : ''; ?>>Heterosexual</option>
-                                    <option value="Otro" <?php echo ($row['orientacionSexual'] == 'Otro') ? 'selected' : ''; ?>>Otro</option>
+                                    <option value="Asexual" <?php echo (isset($row['orientacionSexual']) && $row['orientacionSexual'] == 'Asexual') ? 'selected' : ''; ?>>Asexual</option>
+                                    <option value="Bisexual" <?php echo (isset($row['orientacionSexual']) && $row['orientacionSexual'] == 'Bisexual') ? 'selected' : ''; ?>>Bisexual</option>
+                                    <option value="Homosexual" <?php echo (isset($row['orientacionSexual']) && $row['orientacionSexual'] == 'Homosexual') ? 'selected' : ''; ?>>Homosexual</option>
+                                    <option value="Heterosexual" <?php echo (isset($row['orientacionSexual']) && $row['orientacionSexual'] == 'Heterosexual') ? 'selected' : ''; ?>>Heterosexual</option>
+                                    <option value="Otro" <?php echo (isset($row['orientacionSexual']) && $row['orientacionSexual'] == 'Otro') ? 'selected' : ''; ?>>Otro</option>
                                 </select>
                             </div>
                         </div>
@@ -237,31 +238,31 @@ header("Content-Type: text/html;charset=utf-8");
                                 <label for="experienciaMigratoria">* EXPERIENCIA MIGRATORIA</label>
                                 <select name="experienciaMigratoria" class="form-control" id="experienciaMigratoria">
                                     <option value=""></option>
-                                    <option value="Si" <?php echo ($row['experienciaMigratoria'] == 'Si') ? 'selected' : ''; ?>>Si</option>
-                                    <option value="No" <?php echo ($row['experienciaMigratoria'] == 'No') ? 'selected' : ''; ?>>No</option>
+                                    <option value="Si" <?php echo (isset($row['experienciaMigratoria']) && $row['experienciaMigratoria'] == 'Si') ? 'selected' : ''; ?>>Si</option>
+                                    <option value="No" <?php echo (isset($row['experienciaMigratoria']) && $row['experienciaMigratoria'] == 'No') ? 'selected' : ''; ?>>No</option>
                                 </select>
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="grupoEtnico">* GRUPO ETNICO:</label>
                                 <select name="grupoEtnico" class="form-control" id="grupoEtnico">
                                     <option value=""></option>
-                                    <option value="Indigena" <?php echo ($row['grupoEtnico'] == 'Indigena') ? 'selected' : ''; ?>>Indigena</option>
-                                    <option value="ROM (Gitano)" <?php echo ($row['grupoEtnico'] == 'ROM (Gitano)') ? 'selected' : ''; ?>>ROM (Gitano)</option>
-                                    <option value="Raizal" <?php echo ($row['grupoEtnico'] == 'Raizal') ? 'selected' : ''; ?>>Raizal</option>
-                                    <option value="Palanquero de San Basilio" <?php echo ($row['grupoEtnico'] == 'Palanquero de San Basilio') ? 'selected' : ''; ?>>Palanquero de San Basilio</option>
-                                    <option value="Negro(a), Mulato(a), Afrocolobiano(a)" <?php echo ($row['grupoEtnico'] == 'Negro(a), Mulato(a), Afrocolobiano(a)') ? 'selected' : ''; ?>>Negro(a), Mulato(a), Afrocolobiano(a)</option>
-                                    <option value="Mestizo" <?php echo ($row['grupoEtnico'] == 'Mestizo') ? 'selected' : ''; ?>>Mestizo</option>
-                                    <option value="Ninguno" <?php echo ($row['grupoEtnico'] == 'Ninguno') ? 'selected' : ''; ?>>Ninguno</option>
+                                    <option value="Indigena" <?php echo (isset($row['grupoEtnico']) && $row['grupoEtnico'] == 'Indigena') ? 'selected' : ''; ?>>Indigena</option>
+                                    <option value="ROM (Gitano)" <?php echo (isset($row['grupoEtnico']) && $row['grupoEtnico'] == 'ROM (Gitano)') ? 'selected' : ''; ?>>ROM (Gitano)</option>
+                                    <option value="Raizal" <?php echo (isset($row['grupoEtnico']) && $row['grupoEtnico'] == 'Raizal') ? 'selected' : ''; ?>>Raizal</option>
+                                    <option value="Palanquero de San Basilio" <?php echo (isset($row['grupoEtnico']) && $row['grupoEtnico'] == 'Palanquero de San Basilio') ? 'selected' : ''; ?>>Palanquero de San Basilio</option>
+                                    <option value="Negro(a), Mulato(a), Afrocolobiano(a)" <?php echo (isset($row['grupoEtnico']) && $row['grupoEtnico'] == 'Negro(a), Mulato(a), Afrocolobiano(a)') ? 'selected' : ''; ?>>Negro(a), Mulato(a), Afrocolobiano(a)</option>
+                                    <option value="Mestizo" <?php echo (isset($row['grupoEtnico']) && $row['grupoEtnico'] == 'Mestizo') ? 'selected' : ''; ?>>Mestizo</option>
+                                    <option value="Ninguno" <?php echo (isset($row['grupoEtnico']) && $row['grupoEtnico'] == 'Ninguno') ? 'selected' : ''; ?>>Ninguno</option>
                                 </select>
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="seguridadSalud">* TIPO SEGURIDAD SALUD:</label>
                                 <select name="seguridadSalud" class="form-control" id="seguridadSalud">
                                     <option value=""></option>
-                                    <option value="Regimen Contributivo" <?php echo ($row['seguridadSalud'] == 'Regimen Contributivo') ? 'selected' : ''; ?>>Regimen Contributivo</option>
-                                    <option value="Regimen Subsidiado" <?php echo ($row['seguridadSalud'] == 'Regimen Subsidiado') ? 'selected' : ''; ?>>Regimen Subsidiado</option>
-                                    <option value="Poblacion Vinculada" <?php echo ($row['seguridadSalud'] == 'Poblacion Vinculada') ? 'selected' : ''; ?>>Poblacion Vinculada</option>
-                                    <option value="Ninguno" <?php echo ($row['seguridadSalud'] == 'Ninguno') ? 'selected' : ''; ?>>Ninguno</option>
+                                    <option value="Regimen Contributivo" <?php echo (isset($row['seguridadSalud']) && $row['seguridadSalud'] == 'Regimen Contributivo') ? 'selected' : ''; ?>>Regimen Contributivo</option>
+                                    <option value="Regimen Subsidiado" <?php echo (isset($row['seguridadSalud']) && $row['seguridadSalud'] == 'Regimen Subsidiado') ? 'selected' : ''; ?>>Regimen Subsidiado</option>
+                                    <option value="Poblacion Vinculada" <?php echo (isset($row['seguridadSalud']) && $row['seguridadSalud'] == 'Poblacion Vinculada') ? 'selected' : ''; ?>>Poblacion Vinculada</option>
+                                    <option value="Ninguno" <?php echo (isset($row['seguridadSalud']) && $row['seguridadSalud'] == 'Ninguno') ? 'selected' : ''; ?>>Ninguno</option>
                                 </select>
                             </div>
                         </div>
@@ -273,34 +274,34 @@ header("Content-Type: text/html;charset=utf-8");
                                 <label for="nivelEducativo">* NIVEL EDUCATIVO</label>
                                 <select name="nivelEducativo" class="form-control" id="nivelEducativo">
                                     <option value=""></option>
-                                    <option value="Preescolar" <?php echo ($row['nivelEducativo'] == 'Preescolar') ? 'selected' : ''; ?>>Preescolar</option>
-                                    <option value="Basica Primaria" <?php echo ($row['nivelEducativo'] == 'Basica Primaria') ? 'selected' : ''; ?>>Basica Primaria</option>
-                                    <option value="Basica Secundaria" <?php echo ($row['nivelEducativo'] == 'Basica Secundaria') ? 'selected' : ''; ?>>Basica Secundaria</option>
-                                    <option value="Media Academica o clasica" <?php echo ($row['nivelEducativo'] == 'Media Academica o clasica') ? 'selected' : ''; ?>>Media Academica o clasica</option>
-                                    <option value="Media Tecnica" <?php echo ($row['nivelEducativo'] == 'Media Tecnica') ? 'selected' : ''; ?>>Media Tecnica</option>
-                                    <option value="Normalista" <?php echo ($row['nivelEducativo'] == 'Normalista') ? 'selected' : ''; ?>>Normalista</option>
-                                    <option value="Universitario" <?php echo ($row['nivelEducativo'] == 'Universitario') ? 'selected' : ''; ?>>Universitario</option>
-                                    <option value="Tecnico profesional" <?php echo ($row['nivelEducativo'] == 'Tecnico profesional') ? 'selected' : ''; ?>>Tecnico profesional</option>
-                                    <option value="Tecnologo" <?php echo ($row['nivelEducativo'] == 'Tecnologo') ? 'selected' : ''; ?>>Tecnologo</option>
-                                    <option value="Profesional" <?php echo ($row['nivelEducativo'] == 'Profesional') ? 'selected' : ''; ?>>Profesional</option>
-                                    <option value="Especializacion" <?php echo ($row['nivelEducativo'] == 'Especializacion') ? 'selected' : ''; ?>>Especializacion</option>
-                                    <option value="Maestria" <?php echo ($row['nivelEducativo'] == 'Maestria') ? 'selected' : ''; ?>>Maestria</option>
-                                    <option value="Doctorado" <?php echo ($row['nivelEducativo'] == 'Doctorado') ? 'selected' : ''; ?>>Doctorado</option>
-                                    <option value="Ninguno" <?php echo ($row['nivelEducativo'] == 'Ninguno') ? 'selected' : ''; ?>>Ninguno</option>
+                                    <option value="Preescolar" <?php echo (isset($row['nivelEducativo']) && $row['nivelEducativo'] == 'Preescolar') ? 'selected' : ''; ?>>Preescolar</option>
+                                    <option value="Basica Primaria" <?php echo (isset($row['nivelEducativo']) && $row['nivelEducativo'] == 'Basica Primaria') ? 'selected' : ''; ?>>Basica Primaria</option>
+                                    <option value="Basica Secundaria" <?php echo (isset($row['nivelEducativo']) && $row['nivelEducativo'] == 'Basica Secundaria') ? 'selected' : ''; ?>>Basica Secundaria</option>
+                                    <option value="Media Academica o clasica" <?php echo (isset($row['nivelEducativo']) && $row['nivelEducativo'] == 'Media Academica o clasica') ? 'selected' : ''; ?>>Media Academica o clasica</option>
+                                    <option value="Media Tecnica" <?php echo (isset($row['nivelEducativo']) && $row['nivelEducativo'] == 'Media Tecnica') ? 'selected' : ''; ?>>Media Tecnica</option>
+                                    <option value="Normalista" <?php echo (isset($row['nivelEducativo']) && $row['nivelEducativo'] == 'Normalista') ? 'selected' : ''; ?>>Normalista</option>
+                                    <option value="Universitario" <?php echo (isset($row['nivelEducativo']) && $row['nivelEducativo'] == 'Universitario') ? 'selected' : ''; ?>>Universitario</option>
+                                    <option value="Tecnico profesional" <?php echo (isset($row['nivelEducativo']) && $row['nivelEducativo'] == 'Tecnico profesional') ? 'selected' : ''; ?>>Tecnico profesional</option>
+                                    <option value="Tecnologo" <?php echo (isset($row['nivelEducativo']) && $row['nivelEducativo'] == 'Tecnologo') ? 'selected' : ''; ?>>Tecnologo</option>
+                                    <option value="Profesional" <?php echo (isset($row['nivelEducativo']) && $row['nivelEducativo'] == 'Profesional') ? 'selected' : ''; ?>>Profesional</option>
+                                    <option value="Especializacion" <?php echo (isset($row['nivelEducativo']) && $row['nivelEducativo'] == 'Especializacion') ? 'selected' : ''; ?>>Especializacion</option>
+                                    <option value="Maestria" <?php echo (isset($row['nivelEducativo']) && $row['nivelEducativo'] == 'Maestria') ? 'selected' : ''; ?>>Maestria</option>
+                                    <option value="Doctorado" <?php echo (isset($row['nivelEducativo']) && $row['nivelEducativo'] == 'Doctorado') ? 'selected' : ''; ?>>Doctorado</option>
+                                    <option value="Ninguno" <?php echo (isset($row['nivelEducativo']) && $row['nivelEducativo'] == 'Ninguno') ? 'selected' : ''; ?>>Ninguno</option>
                                 </select>
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="condicionOcupacion">* CONDICION OCUPACION:</label>
                                 <select name="condicionOcupacion" class="form-control" id="condicionOcupacion">
                                     <option value=""></option>
-                                    <option value="Ama de Casa" <?php echo ($row['condicionOcupacion'] == 'Ama de Casa') ? 'selected' : ''; ?>>Ama de Casa</option>
-                                    <option value="Buscando Empleo" <?php echo ($row['condicionOcupacion'] == 'Buscando Empleo') ? 'selected' : ''; ?>>Buscando Empleo</option>
-                                    <option value="Desempleado(a)" <?php echo ($row['condicionOcupacion'] == 'Desempleado(a)') ? 'selected' : ''; ?>>Desempleado(a)</option>
-                                    <option value="Empleado(a)" <?php echo ($row['condicionOcupacion'] == 'Empleado(a)') ? 'selected' : ''; ?>>Empleado(a)</option>
-                                    <option value="Estudiante" <?php echo ($row['condicionOcupacion'] == 'Estudiante') ? 'selected' : ''; ?>>Estudiante</option>
-                                    <option value="Independiente" <?php echo ($row['condicionOcupacion'] == 'Independiente') ? 'selected' : ''; ?>>Independiente</option>
-                                    <option value="Pensionado(a)" <?php echo ($row['condicionOcupacion'] == 'Pensionado(a)') ? 'selected' : ''; ?>>Pensionado(a)</option>
-                                    <option value="Ninguno" <?php echo ($row['condicionOcupacion'] == 'Ninguno') ? 'selected' : ''; ?>>Ninguno</option>
+                                    <option value="Ama de Casa" <?php echo (isset($row['condicionOcupacion']) && $row['condicionOcupacion'] == 'Ama de Casa') ? 'selected' : ''; ?>>Ama de Casa</option>
+                                    <option value="Buscando Empleo" <?php echo (isset($row['condicionOcupacion']) && $row['condicionOcupacion'] == 'Buscando Empleo') ? 'selected' : ''; ?>>Buscando Empleo</option>
+                                    <option value="Desempleado(a)" <?php echo (isset($row['condicionOcupacion']) && $row['condicionOcupacion'] == 'Desempleado(a)') ? 'selected' : ''; ?>>Desempleado(a)</option>
+                                    <option value="Empleado(a)" <?php echo (isset($row['condicionOcupacion']) && $row['condicionOcupacion'] == 'Empleado(a)') ? 'selected' : ''; ?>>Empleado(a)</option>
+                                    <option value="Estudiante" <?php echo (isset($row['condicionOcupacion']) && $row['condicionOcupacion'] == 'Estudiante') ? 'selected' : ''; ?>>Estudiante</option>
+                                    <option value="Independiente" <?php echo (isset($row['condicionOcupacion']) && $row['condicionOcupacion'] == 'Independiente') ? 'selected' : ''; ?>>Independiente</option>
+                                    <option value="Pensionado(a)" <?php echo (isset($row['condicionOcupacion']) && $row['condicionOcupacion'] == 'Pensionado(a)') ? 'selected' : ''; ?>>Pensionado(a)</option>
+                                    <option value="Ninguno" <?php echo (isset($row['condicionOcupacion']) && $row['condicionOcupacion'] == 'Ninguno') ? 'selected' : ''; ?>>Ninguno</option>
                                 </select>
                             </div>
                         </div>

@@ -518,7 +518,8 @@ header("Content-Type: text/html;charset=utf-8");
                         .append('<option value="">Seguridad Salud</option>')
                         .append('<option value="Regimen Contributivo">Regimen Contributivo</option>')
                         .append('<option value="Regimen Subsidiado">Regimen Subsidiado</option>')
-                        .append('<option value="Poblacion Vinculada">Poblacion Vinculada</option>');
+                        .append('<option value="Poblacion Vinculada">Poblacion Vinculada</option>')
+                        .append('<option value="Ninguno">Ninguno</option>');
 
                     var nivelEducativo = $("<select>")
                         .attr("name", "nivelEducativo[]")

@@ -517,6 +517,7 @@ header("Content-Type: text/html;charset=utf-8");
                                     <option value="Regimen Contributivo" <?php echo (($integrante['seguridadSalud'] ?? '') == 'Regimen Contributivo') ? 'selected' : ''; ?>>Regimen Contributivo</option>
                                     <option value="Regimen Subsidiado" <?php echo (($integrante['seguridadSalud'] ?? '') == 'Regimen Subsidiado') ? 'selected' : ''; ?>>Regimen Subsidiado</option>
                                     <option value="Poblacion Vinculada" <?php echo (($integrante['seguridadSalud'] ?? '') == 'Poblacion Vinculada') ? 'selected' : ''; ?>>Poblacion Vinculada</option>
+                                    <option value="Ninguno" <?php echo (($integrante['seguridadSalud'] ?? '') == 'Ninguno') ? 'selected' : ''; ?>>Ninguno</option>
                                 </select>
                             </div>
                             
@@ -796,6 +797,7 @@ header("Content-Type: text/html;charset=utf-8");
                             <option value="Regimen Contributivo">Regimen Contributivo</option>
                             <option value="Regimen Subsidiado">Regimen Subsidiado</option>
                             <option value="Poblacion Vinculada">Poblacion Vinculada</option>
+                            <option value="Ninguno">Ninguno</option>
                         </select>
                     </div>
                     

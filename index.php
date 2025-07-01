@@ -56,20 +56,19 @@
           {
             
             header("Location: index.php");
-          }
-        }else
+          }        }else
         {
-          echo "La contraseña no coincide";
+          echo "Password does not match";
         }
       }else
       {
-        echo "NO existe usuario";
+        echo "User does not exist";
       }
   }
 ?>
 
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -87,15 +86,13 @@
 			<img src="img/sisben.png">
 		</div>
 		<div class="login-content">
-			<form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-				<img src="img/avatar.svg">
-				<h2 class="title">Bienvenid@</h2>
+			<form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">				<img src="img/avatar.svg">
+				<h2 class="title">Welcome</h2>
            		<div class="input-div one">
            		   <div class="i">
            		   		<i class="fas fa-user"></i>
-           		   </div>
-           		   <div class="div">
-           		   		<h5>Usuario</h5>
+           		   </div>           		   <div class="div">
+           		   		<h5>Username</h5>
            		   		<input type="text" class="input" name="usuario" type="text" />
            		   </div>
            		</div>
