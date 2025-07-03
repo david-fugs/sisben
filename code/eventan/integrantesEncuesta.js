@@ -70,12 +70,12 @@ $(document).ready(function () {
                 .append(
                   '<option value="0 - 6"' +
                     (integrante.rango_integVenta == "1" ? " selected" : "") +
-                    ">0 - 6</option>"
+                    ">0 - 5</option>"
                 )
                 .append(
                   '<option value="7 - 12"' +
                     (integrante.rango_integVenta == "2" ? " selected" : "") +
-                    ">7 - 12</option>"
+                    ">6 - 12</option>"
                 )
                 .append(
                   '<option value="13 - 17"' +

@@ -350,8 +350,9 @@ $totales = [
     'total_masculino' => 0, 'total_femenino' => 0, 'total_general' => 0
 ];
 
+
 while ($rowBarrio = mysqli_fetch_assoc($res_barrio)) {
-    // Calcular totales por género
+    // Calcular totales por género para ESTA fila
     $totalMasculino = $rowBarrio['masculino_0_6'] + $rowBarrio['masculino_7_12'] + $rowBarrio['masculino_13_17'] + 
                      $rowBarrio['masculino_18_28'] + $rowBarrio['masculino_39_45'] + $rowBarrio['masculino_46_64'] + 
                      $rowBarrio['masculino_mayor_65'];
@@ -360,7 +361,7 @@ while ($rowBarrio = mysqli_fetch_assoc($res_barrio)) {
                     $rowBarrio['femenino_18_28'] + $rowBarrio['femenino_39_45'] + $rowBarrio['femenino_46_64'] + 
                     $rowBarrio['femenino_mayor_65'];
     
-    // Acumular totales generales
+    // Acumular totales GENERALES (suma de todos los barrios)
     $totales['masculino_0_6'] += $rowBarrio['masculino_0_6'];
     $totales['masculino_7_12'] += $rowBarrio['masculino_7_12'];
     $totales['masculino_13_17'] += $rowBarrio['masculino_13_17'];
@@ -375,13 +376,16 @@ while ($rowBarrio = mysqli_fetch_assoc($res_barrio)) {
     $totales['femenino_39_45'] += $rowBarrio['femenino_39_45'];
     $totales['femenino_46_64'] += $rowBarrio['femenino_46_64'];
     $totales['femenino_mayor_65'] += $rowBarrio['femenino_mayor_65'];
+    
+    // IMPORTANTE: Acumular totales por género y general
     $totales['total_masculino'] += $totalMasculino;
     $totales['total_femenino'] += $totalFemenino;
-    $totales['total_general'] += $rowBarrio['total_por_barrio'];
+    $totales['total_general'] += ($totalMasculino + $totalFemenino); // Suma calculada, no la de BD
     
+    // Escribir datos de este barrio
     $sheet->setCellValue('A' . $rowBarrioIndex, $rowBarrio['nombre_bar']);
     $sheet->setCellValue('B' . $rowBarrioIndex, $rowBarrio['nombre_com']);
-    // Hombres primero
+    // Hombres
     $sheet->setCellValue('C' . $rowBarrioIndex, $rowBarrio['masculino_0_6']);
     $sheet->setCellValue('D' . $rowBarrioIndex, $rowBarrio['masculino_7_12']);
     $sheet->setCellValue('E' . $rowBarrioIndex, $rowBarrio['masculino_13_17']);
@@ -390,7 +394,7 @@ while ($rowBarrio = mysqli_fetch_assoc($res_barrio)) {
     $sheet->setCellValue('H' . $rowBarrioIndex, $rowBarrio['masculino_46_64']);
     $sheet->setCellValue('I' . $rowBarrioIndex, $rowBarrio['masculino_mayor_65']);
     $sheet->setCellValue('J' . $rowBarrioIndex, $totalMasculino);
-    // Mujeres después
+    // Mujeres
     $sheet->setCellValue('K' . $rowBarrioIndex, $rowBarrio['femenino_0_6']);
     $sheet->setCellValue('L' . $rowBarrioIndex, $rowBarrio['femenino_7_12']);
     $sheet->setCellValue('M' . $rowBarrioIndex, $rowBarrio['femenino_13_17']);
@@ -399,12 +403,13 @@ while ($rowBarrio = mysqli_fetch_assoc($res_barrio)) {
     $sheet->setCellValue('P' . $rowBarrioIndex, $rowBarrio['femenino_46_64']);
     $sheet->setCellValue('Q' . $rowBarrioIndex, $rowBarrio['femenino_mayor_65']);
     $sheet->setCellValue('R' . $rowBarrioIndex, $totalFemenino);
-    $sheet->setCellValue('S' . $rowBarrioIndex, $rowBarrio['total_por_barrio']);
+    $sheet->setCellValue('S' . $rowBarrioIndex, $totalMasculino + $totalFemenino);
     
     $rowBarrioIndex++;
 }
 
 // Agregar fila de totales generales
+
 $sheet->setCellValue('A' . $rowBarrioIndex, 'TOTALES GENERALES');
 $sheet->setCellValue('B' . $rowBarrioIndex, '');
 $sheet->setCellValue('C' . $rowBarrioIndex, $totales['masculino_0_6']);
@@ -424,7 +429,6 @@ $sheet->setCellValue('P' . $rowBarrioIndex, $totales['femenino_46_64']);
 $sheet->setCellValue('Q' . $rowBarrioIndex, $totales['femenino_mayor_65']);
 $sheet->setCellValue('R' . $rowBarrioIndex, $totales['total_femenino']);
 $sheet->setCellValue('S' . $rowBarrioIndex, $totales['total_general']);
-
 // Aplicar estilo especial a la fila de totales
 $sheet->getStyle("A$rowBarrioIndex:S$rowBarrioIndex")->applyFromArray(['font' => $boldFontStyle]);
 $sheet->getStyle("A$rowBarrioIndex:S$rowBarrioIndex")->applyFromArray([
@@ -435,8 +439,6 @@ $sheet->getStyle("A$rowBarrioIndex:S$rowBarrioIndex")->applyFromArray([
         ],
     ],
 ]);
-
-
 
 // Nombre del archivo con la fecha actual
 $nombreArchivo = 'Encuestas_' . $fecha_inicio . '_' . $fecha_fin . '.xlsx';

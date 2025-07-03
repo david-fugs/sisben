@@ -97,10 +97,10 @@ header("Content-Type: text/html;charset=utf-8");
                             <option value="">SELECCIONE:</option>
                             <option value=1 <?php if ($row['rango_integVenta'] == 1) {
                                                 echo 'selected';
-                                            } ?>>0 - 6</option>
+                                            } ?>>0 - 5</option>
                             <option value=2 <?php if ($row['rango_integVenta'] == 2) {
                                                 echo 'selected';
-                                            } ?>>7 - 12</option>
+                                            } ?>>6 - 12</option>
                             <option value=3 <?php if ($row['rango_integVenta'] == 3) {
                                                 echo 'selected';
                                             } ?>>13 - 17</option>

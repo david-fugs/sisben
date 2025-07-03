@@ -515,8 +515,8 @@ header("Content-Type: text/html;charset=utf-8");
                             </label>
                             <select name="rango_integVenta" class="form-select" id="rango_integVenta" required>
                                 <option value="">Seleccione rango</option>
-                                <option value="0 - 6">0 - 6 años</option>
-                                <option value="7 - 12">7 - 12 años</option>
+                                <option value="0 - 6">0 - 5 años</option>
+                                <option value="7 - 12">6 - 12 años</option>
                                 <option value="13 - 17">13 - 17 años</option>
                                 <option value="18 - 28">18 - 28 años</option>
                                 <option value="29 - 45">29 - 45 años</option>

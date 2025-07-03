@@ -415,8 +415,8 @@ header("Content-Type: text/html;charset=utf-8");
                             <div class="form-group-dinamico">
                                 <label>* Rango Edad</label>                                <select name="rango_integVenta[]" class="form-control smaller-input" required>
                                     <option value="">Seleccione</option>
-                                    <option value="0 - 6" <?php echo (($integrante['rango_integVenta_texto'] ?? '') == '0 - 6') ? 'selected' : ''; ?>>0 - 6</option>
-                                    <option value="7 - 12" <?php echo (($integrante['rango_integVenta_texto'] ?? '') == '7 - 12') ? 'selected' : ''; ?>>7 - 12</option>
+                                    <option value="0 - 6" <?php echo (($integrante['rango_integVenta_texto'] ?? '') == '0 - 6') ? 'selected' : ''; ?>>0 - 5</option>
+                                    <option value="7 - 12" <?php echo (($integrante['rango_integVenta_texto'] ?? '') == '7 - 12') ? 'selected' : ''; ?>>6 - 12</option>
                                     <option value="13 - 17" <?php echo (($integrante['rango_integVenta_texto'] ?? '') == '13 - 17') ? 'selected' : ''; ?>>13 - 17</option>
                                     <option value="18 - 28" <?php echo (($integrante['rango_integVenta_texto'] ?? '') == '18 - 28') ? 'selected' : ''; ?>>18 - 28</option>
                                     <option value="29 - 45" <?php echo (($integrante['rango_integVenta_texto'] ?? '') == '29 - 45') ? 'selected' : ''; ?>>29 - 45</option>
@@ -695,8 +695,8 @@ header("Content-Type: text/html;charset=utf-8");
                         <label>* Rango Edad</label>
                         <select name="rango_integVenta[]" class="form-control smaller-input" required>
                             <option value="">Seleccione</option>
-                            <option value="0 - 6">0 - 6</option>
-                            <option value="7 - 12">7 - 12</option>
+                            <option value="0 - 6">0 - 5</option>
+                            <option value="7 - 12">6 - 12</option>
                             <option value="13 - 17">13 - 17</option>
                             <option value="18 - 28">18 - 28</option>
                             <option value="29 - 45">29 - 45</option>

@@ -107,8 +107,8 @@
                             <td data-label="RANGO EDAD">
                                 <select class="form-control" name="rango_integVenta" disabled >
                                     <option value="">SELECCIONE:</option>   
-                                    <option value=1 '; if($row['rango_integVenta']==1){echo 'selected';} echo '>0 - 6</option>
-                                    <option value=2 '; if($row['rango_integVenta']==2){echo 'selected';} echo '>7 - 12</option>
+                                    <option value=1 '; if($row['rango_integVenta']==1){echo 'selected';} echo '>0 - 5</option>
+                                    <option value=2 '; if($row['rango_integVenta']==2){echo 'selected';} echo '>6 - 12</option>
                                     <option value=3 '; if($row['rango_integVenta']==3){echo 'selected';} echo '>13 - 17</option>
                                     <option value=4 '; if($row['rango_integVenta']==4){echo 'selected';} echo '>18 - 28</option>
                                     <option value=5 '; if($row['rango_integVenta']==5){echo 'selected';} echo '>29 - 45</option>

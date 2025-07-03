@@ -82,8 +82,8 @@
                             <label for="rango_integVenta">EDAD:</label>
                             <select class="form-control" name="rango_integVenta" readonly >
                                 <option value="">SELECCIONE:</option>   
-                                <option value=1 <?php if($row['rango_integVenta']==1){echo 'selected';} ?>>0 - 6</option>
-                                <option value=2 <?php if($row['rango_integVenta']==2){echo 'selected';} ?>>7 - 12</option>
+                                <option value=1 <?php if($row['rango_integVenta']==1){echo 'selected';} ?>>0 - 5</option>
+                                <option value=2 <?php if($row['rango_integVenta']==2){echo 'selected';} ?>>6 - 12</option>
                                 <option value=3 <?php if($row['rango_integVenta']==3){echo 'selected';} ?>>13 - 17</option>
                                 <option value=4 <?php if($row['rango_integVenta']==4){echo 'selected';} ?>>18 - 28</option>
                                 <option value=5 <?php if($row['rango_integVenta']==5){echo 'selected';} ?>>29 - 45</option>

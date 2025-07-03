@@ -59,7 +59,7 @@ $rango_edad_texto = [
     2 => "7 - 12", 
     3 => "13 - 17",
     4 => "18 - 28",
-    5 => "39 - 45",
+    5 => "29 - 45",
     6 => "46 - 64",
     7 => "Mayor o igual a 65"
 ];
@@ -236,11 +236,11 @@ while ($row = mysqli_fetch_assoc($resultado_departamentos)) {
                         <label>* Rango Edad</label>
                         <select name="rango_integMovIndep[]" class="form-control smaller-input" required>
                             <option value="">Seleccione</option>
-                            <option value="0 - 6">0 - 6</option>
-                            <option value="7 - 12">7 - 12</option>
+                            <option value="0 - 6">0 - 5</option>
+                            <option value="7 - 12">6 - 12</option>
                             <option value="13 - 17">13 - 17</option>
                             <option value="18 - 28">18 - 28</option>
-                            <option value="39 - 45">39 - 45</option>
+                            <option value="29 - 45">29 - 45</option>
                             <option value="46 - 64">46 - 64</option>
                             <option value="Mayor o igual a 65">Mayor o igual a 65</option>
                         </select>
@@ -681,11 +681,11 @@ while ($row = mysqli_fetch_assoc($resultado_departamentos)) {
                         </div>                          <div class="form-group-dinamico">
                             <label>* Rango Edad</label>                            <select name="rango_integMovIndep[]" class="form-control smaller-input" required>
                                 <option value="">Seleccione</option>
-                                <option value="0 - 6" <?php echo (($integrante['rango_integMovIndep_texto'] ?? '') == '0 - 6') ? 'selected' : ''; ?>>0 - 6</option>
-                                <option value="7 - 12" <?php echo (($integrante['rango_integMovIndep_texto'] ?? '') == '7 - 12') ? 'selected' : ''; ?>>7 - 12</option>
+                                <option value="0 - 6" <?php echo (($integrante['rango_integMovIndep_texto'] ?? '') == '0 - 6') ? 'selected' : ''; ?>>0 - 5</option>
+                                <option value="7 - 12" <?php echo (($integrante['rango_integMovIndep_texto'] ?? '') == '7 - 12') ? 'selected' : ''; ?>>6 - 12</option>
                                 <option value="13 - 17" <?php echo (($integrante['rango_integMovIndep_texto'] ?? '') == '13 - 17') ? 'selected' : ''; ?>>13 - 17</option>
                                 <option value="18 - 28" <?php echo (($integrante['rango_integMovIndep_texto'] ?? '') == '18 - 28') ? 'selected' : ''; ?>>18 - 28</option>
-                                <option value="39 - 45" <?php echo (($integrante['rango_integMovIndep_texto'] ?? '') == '39 - 45') ? 'selected' : ''; ?>>39 - 45</option>
+                                <option value="29 - 45" <?php echo (($integrante['rango_integMovIndep_texto'] ?? '') == '29 - 45') ? 'selected' : ''; ?>>29 - 45</option>
                                 <option value="46 - 64" <?php echo (($integrante['rango_integMovIndep_texto'] ?? '') == '46 - 64') ? 'selected' : ''; ?>>46 - 64</option>
                                 <option value="Mayor o igual a 65" <?php echo (($integrante['rango_integMovIndep_texto'] ?? '') == 'Mayor o igual a 65') ? 'selected' : ''; ?>>Mayor o igual a 65</option>
                             </select>

@@ -388,18 +388,20 @@ header("Content-Type: text/html;charset=utf-8");
             ordenarSelect('id_correg');
         });
 
-        $(document).ready(function() {
-            function actualizarTotal() {
-                let total = 0;
-                $("input[name='cant_integVenta[]']").each(function() {
-                    let valor = parseInt($(this).val()) || 0;
-                    total += valor;
-                });
-                $("#total_integrantes").val(total);
+        // Función global para actualizar totales
+        function actualizarTotal() {
+            let total = 0;
+            $("input[name='cant_integVenta[]']").each(function() {
+                let valor = parseInt($(this).val()) || 0;
+                total += valor;
+            });
+            $("#total_integrantes").val(total);
 
-                // Actualizar también el campo cant_integVenta con la cantidad total
-                $("#cant_integVenta").val($("input[name='cant_integVenta[]']").length);
-            }
+            // Actualizar también el campo cant_integVenta con la cantidad total
+            $("#cant_integVenta").val($("input[name='cant_integVenta[]']").length);
+        }
+
+        $(document).ready(function() {
 
             $("#agregar").click(function() {
                 var inputCantidad = $("#cant_integVenta");
@@ -668,6 +670,7 @@ header("Content-Type: text/html;charset=utf-8");
                                     },
                                     success: function(response) {
                                         console.log("✅ Respuesta del servidor:", response);
+                                        console.log("🔍 Integrantes recibidos:", response.integrantes);
 
                                         if (response.status === "ficha_retirada") {
                                             // Mostrar advertencia de ficha retirada
@@ -714,6 +717,11 @@ header("Content-Type: text/html;charset=utf-8");
                                                 response.integrantes.forEach(function(integrante) {
                                                     var integranteDiv = $("<div>").addClass("formulario-dinamico");
 
+                                                    // 🔧 MAPEO UNIVERSAL - Determinar los valores correctos según la tabla de origen
+                                                    var generoValue = integrante.gen_integVenta || integrante.gen_integMovIndep || '';
+                                                    var rangoValue = integrante.rango_integVenta || integrante.rango_integMovIndep || '';
+                                                    var cantidadValue = integrante.cant_integVenta || integrante.cant_integMovIndep || 1;
+
                                                     // Crear función auxiliar para elementos de solo lectura
                                                     function createReadOnlyFormGroup(name, label, value) {
                                                         return $("<div>").addClass("form-group-dinamico")
@@ -730,9 +738,9 @@ header("Content-Type: text/html;charset=utf-8");
 
                                                     // Crear todos los campos como solo lectura
                                                     var campos = [
-                                                        createReadOnlyFormGroup("cant_integVenta[]", "Cantidad", integrante.cant_integVenta),
-                                                        createReadOnlyFormGroup("gen_integVenta[]", "Género", integrante.gen_integVenta),
-                                                        createReadOnlyFormGroup("rango_integVenta[]", "Rango edad", integrante.rango_integVenta),
+                                                        createReadOnlyFormGroup("cant_integVenta[]", "Cantidad", cantidadValue),
+                                                        createReadOnlyFormGroup("gen_integVenta[]", "Género", generoValue),
+                                                        createReadOnlyFormGroup("rango_integVenta[]", "Rango edad", rangoValue),
                                                         createReadOnlyFormGroup("orientacionSexual[]", "Orientación sexual", integrante.orientacionSexual),
                                                         createReadOnlyFormGroup("condicionDiscapacidad[]", "Condición discapacidad", integrante.condicionDiscapacidad),
                                                         createReadOnlyFormGroup("tipoDiscapacidad[]", "Tipo discapacidad", integrante.tipoDiscapacidad),
@@ -767,7 +775,6 @@ header("Content-Type: text/html;charset=utf-8");
                                             $("#fec_reg_encVenta").val(response.data.fecha_alta_encVenta.split(' ')[0]); // Solo la fecha, sin la hora
                                             $("#nom_encVenta").val(response.data.nom_encVenta);
                                             $("#tipo_documento").val(response.data.tipo_documento);
-                                            $("#departamento_expedicion").val(response.data.departamento_expedicion);
                                             $("#fecha_expedicion").val(response.data.fecha_expedicion);
                                             $("#dir_encVenta").val(response.data.dir_encVenta);
                                             $("#zona_encVenta").val(response.data.zona_encVenta);
@@ -777,32 +784,41 @@ header("Content-Type: text/html;charset=utf-8");
                                             $("#obs_encVenta").val(response.data.obs_encVenta);
                                             $("#otro_bar_ver_encVenta").val(response.data.otro_bar_ver_encVenta);
 
-                                            // Cargar municipio
-                                            $.ajax({
-                                                url: '../obtener_municipios.php',
-                                                type: 'POST',
-                                                data: {
-                                                    cod_departamento: response.data.departamento_expedicion
-                                                },
-                                                dataType: 'json',
-                                                success: function(municipios) {
-                                                    let ciudadSelect = $("#ciudad_expedicion");
-                                                    ciudadSelect.empty().append('<option value="">Seleccione un municipio</option>');
-                                                    $.each(municipios, function(index, municipio) {
-                                                        ciudadSelect.append(
-                                                            $('<option>', {
-                                                                value: municipio.cod_municipio,
-                                                                text: municipio.nombre_municipio,
-                                                                selected: municipio.cod_municipio === response.data.ciudad_expedicion
-                                                            })
-                                                        );
-                                                    });
-                                                    ciudadSelect.prop('disabled', false);
-                                                }
-                                            });
+                                            // Cargar departamento y después municipio
+                                            $("#departamento_expedicion").val(response.data.departamento_expedicion);
+                                            
+                                            // Cargar municipio usando AJAX
+                                            if (response.data.departamento_expedicion) {
+                                                $.ajax({
+                                                    url: '../obtener_municipios.php',
+                                                    type: 'POST',
+                                                    data: {
+                                                        cod_departamento: response.data.departamento_expedicion
+                                                    },
+                                                    dataType: 'json',
+                                                    success: function(municipios) {
+                                                        let ciudadSelect = $("#ciudad_expedicion");
+                                                        ciudadSelect.empty().append('<option value="">Seleccione un municipio</option>');
+                                                        $.each(municipios, function(index, municipio) {
+                                                            ciudadSelect.append(
+                                                                $('<option>', {
+                                                                    value: municipio.cod_municipio,
+                                                                    text: municipio.nombre_municipio,
+                                                                    selected: municipio.cod_municipio === response.data.ciudad_expedicion
+                                                                })
+                                                            );
+                                                        });
+                                                        ciudadSelect.prop('disabled', false);
+                                                    },
+                                                    error: function() {
+                                                        console.error("Error al cargar municipios");
+                                                    }
+                                                });
+                                            }
 
                                             // Cargar barrio y comuna
                                             if (response.data.id_bar) {
+                                                // Buscar el barrio específico y cargarlo
                                                 $.ajax({
                                                     type: 'GET',
                                                     url: '../buscar_barrios.php',
@@ -814,23 +830,35 @@ header("Content-Type: text/html;charset=utf-8");
                                                     success: function(data) {
                                                         if (data.length > 0) {
                                                             let barrio = data[0];
+                                                            
+                                                            // Limpiar select y agregar la opción
+                                                            $('#id_barrios').empty();
                                                             let option = new Option(barrio.text, barrio.id, true, true);
                                                             $('#id_barrios').append(option).trigger('change');
 
-                                                            // Cargar comuna
-                                                            $.ajax({
-                                                                url: '../comunaGet.php',
-                                                                type: 'GET',
-                                                                data: {
-                                                                    id_barrio: barrio.id
-                                                                },
-                                                                success: function(comunasHtml) {
-                                                                    $('#id_comunas').html(comunasHtml);
-                                                                    $('#id_comunas').prop('disabled', false);
-                                                                    $('#id_comunas').val(response.data.id_com);
-                                                                }
-                                                            });
+                                                            // Cargar comuna después de cargar el barrio
+                                                            setTimeout(function() {
+                                                                $.ajax({
+                                                                    url: '../comunaGet.php',
+                                                                    type: 'GET',
+                                                                    data: {
+                                                                        id_barrio: barrio.id
+                                                                    },
+                                                                    success: function(comunasHtml) {
+                                                                        $('#id_comunas').html(comunasHtml);
+                                                                        $('#id_comunas').prop('disabled', false);
+                                                                        // Seleccionar la comuna específica
+                                                                        $('#id_comunas').val(response.data.id_com);
+                                                                    },
+                                                                    error: function() {
+                                                                        console.error("Error al cargar comunas");
+                                                                    }
+                                                                });
+                                                            }, 500); // Esperar 500ms para que se complete la carga del barrio
                                                         }
+                                                    },
+                                                    error: function() {
+                                                        console.error("Error al cargar barrio");
                                                     }
                                                 });
                                             }
@@ -840,6 +868,17 @@ header("Content-Type: text/html;charset=utf-8");
 
                                             // Cargar integrantes
                                             if (response.integrantes && response.integrantes.length > 0) {
+                                                // Mapeo de rangos de edad (número a texto)
+                                                var rangoEdadMap = {
+                                                    1: '0 - 6',
+                                                    2: '7 - 12',
+                                                    3: '13 - 17',
+                                                    4: '18 - 28',
+                                                    5: '29 - 45',
+                                                    6: '46 - 64',
+                                                    7: 'Mayor o igual a 65'
+                                                };
+
                                                 response.integrantes.forEach(function(integrante) {
                                                     var integranteDiv = $("<div>").addClass("formulario-dinamico");
 
@@ -850,11 +889,28 @@ header("Content-Type: text/html;charset=utf-8");
                                                         return group;
                                                     }
 
+                                                    // 🔧 MAPEO UNIVERSAL - Determinar los valores correctos según la tabla de origen
+                                                    var generoValue = integrante.gen_integVenta || integrante.gen_integMovIndep || '';
+                                                    var rangoValue = integrante.rango_integVenta || integrante.rango_integMovIndep || '';
+                                                    var cantidadValue = integrante.cant_integVenta || integrante.cant_integMovIndep || 1;
+
+                                                    // Mapear el rango de edad de número a texto
+                                                    var rangoTexto = rangoEdadMap[rangoValue] || rangoValue;
+                                                    
+                                                    // Debug para verificar los valores
+                                                    console.log("Integrante data:", {
+                                                        origen: response.origen || 'no_definido',
+                                                        genero: generoValue,
+                                                        rangoOriginal: rangoValue,
+                                                        rangoMapeado: rangoTexto,
+                                                        integranteCompleto: integrante
+                                                    });
+
                                                     var cantidadInput = $("<input>")
                                                         .attr("type", "hidden")
                                                         .attr("name", "cant_integVenta[]")
                                                         .addClass("form-control smaller-input")
-                                                        .val(1)
+                                                        .val(cantidadValue)
                                                         .attr("readonly", true);
 
                                                     var generoSelect = createFormGroup(
@@ -864,9 +920,9 @@ header("Content-Type: text/html;charset=utf-8");
                                                         .attr("name", "gen_integVenta[]")
                                                         .addClass("form-control smaller-input")
                                                         .append('<option value="">Seleccione...</option>')
-                                                        .append('<option value="F"' + (integrante.gen_integVenta === 'F' ? ' selected' : '') + '>Femenino</option>')
-                                                        .append('<option value="M"' + (integrante.gen_integVenta === 'M' ? ' selected' : '') + '>Masculino</option>')
-                                                        .append('<option value="O"' + (integrante.gen_integVenta === 'O' ? ' selected' : '') + '>Otro</option>')
+                                                        .append('<option value="F"' + (generoValue === 'F' ? ' selected' : '') + '>Femenino</option>')
+                                                        .append('<option value="M"' + (generoValue === 'M' ? ' selected' : '') + '>Masculino</option>')
+                                                        .append('<option value="O"' + (generoValue === 'O' ? ' selected' : '') + '>Otro</option>')
                                                     );
 
                                                     var rangoEdadSelect = createFormGroup(
@@ -876,13 +932,13 @@ header("Content-Type: text/html;charset=utf-8");
                                                         .attr("name", "rango_integVenta[]")
                                                         .addClass("form-control smaller-input")
                                                         .append('<option value="">Seleccione...</option>')
-                                                        .append('<option value="0 - 6"' + (integrante.rango_integVenta === '0 - 6' ? ' selected' : '') + '>0 - 6</option>')
-                                                        .append('<option value="7 - 12"' + (integrante.rango_integVenta === '7 - 12' ? ' selected' : '') + '>7 - 12</option>')
-                                                        .append('<option value="13 - 17"' + (integrante.rango_integVenta === '13 - 17' ? ' selected' : '') + '>13 - 17</option>')
-                                                        .append('<option value="18 - 28"' + (integrante.rango_integVenta === '18 - 28' ? ' selected' : '') + '>18 - 28</option>')
-                                                        .append('<option value="29 - 45"' + (integrante.rango_integVenta === '29 - 45' ? ' selected' : '') + '>29 - 45</option>')
-                                                        .append('<option value="46 - 64"' + (integrante.rango_integVenta === '46 - 64' ? ' selected' : '') + '>46 - 64</option>')
-                                                        .append('<option value="Mayor o igual a 65"' + (integrante.rango_integVenta === 'Mayor o igual a 65' ? ' selected' : '') + '>Mayor o igual a 65</option>')
+                                                        .append('<option value="0 - 6"' + (rangoTexto === '0 - 6' ? ' selected' : '') + '>0 - 6</option>')
+                                                        .append('<option value="7 - 12"' + (rangoTexto === '7 - 12' ? ' selected' : '') + '>7 - 12</option>')
+                                                        .append('<option value="13 - 17"' + (rangoTexto === '13 - 17' ? ' selected' : '') + '>13 - 17</option>')
+                                                        .append('<option value="18 - 28"' + (rangoTexto === '18 - 28' ? ' selected' : '') + '>18 - 28</option>')
+                                                        .append('<option value="29 - 45"' + (rangoTexto === '29 - 45' ? ' selected' : '') + '>29 - 45</option>')
+                                                        .append('<option value="46 - 64"' + (rangoTexto === '46 - 64' ? ' selected' : '') + '>46 - 64</option>')
+                                                        .append('<option value="Mayor o igual a 65"' + (rangoTexto === 'Mayor o igual a 65' ? ' selected' : '') + '>Mayor o igual a 65</option>')
                                                     );
 
                                                     var OrientacionSexual = createFormGroup(
@@ -1360,7 +1416,7 @@ header("Content-Type: text/html;charset=utf-8");
                         cache: true
                     },
                     placeholder: 'Seleccione un barrio',
-                    minimumInputLength: 1,
+                    minimumInputLength: 0, // Cambiar a 0 para permitir búsquedas vacías
                     width: '100%'
                 });
 

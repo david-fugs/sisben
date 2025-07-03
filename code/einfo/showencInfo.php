@@ -188,8 +188,8 @@ header("Content-Type: text/html;charset=utf-8");
                             <label for="rango_integVenta">* RANGO DE EDAD:</label>
                             <select name="rango_integVenta" class="form-control" id="rango_integVenta">
                                 <option value=""></option>
-                                <option value="0 - 6" <?php echo (isset($row['rango_integVenta']) && $row['rango_integVenta'] == '0 - 6') ? 'selected' : ''; ?>>0 - 6</option>
-                                <option value="7 - 12" <?php echo (isset($row['rango_integVenta']) && $row['rango_integVenta'] == '7 - 12') ? 'selected' : ''; ?>>7 - 12</option>
+                                <option value="0 - 6" <?php echo (isset($row['rango_integVenta']) && $row['rango_integVenta'] == '0 - 6') ? 'selected' : ''; ?>>0 - 5</option>
+                                <option value="7 - 12" <?php echo (isset($row['rango_integVenta']) && $row['rango_integVenta'] == '7 - 12') ? 'selected' : ''; ?>>6 - 12</option>
                                 <option value="13 - 17" <?php echo (isset($row['rango_integVenta']) && $row['rango_integVenta'] == '13 - 17') ? 'selected' : ''; ?>>13 - 17</option>
                                 <option value="18 - 28" <?php echo (isset($row['rango_integVenta']) && $row['rango_integVenta'] == '18 - 28') ? 'selected' : ''; ?>>18 - 28</option>
                                 <option value="29-45" <?php echo (isset($row['rango_integVenta']) && $row['rango_integVenta'] == '29-45') ? 'selected' : ''; ?>>29-45</option>

@@ -101,7 +101,7 @@ try {
     ];
 
     // Aplicar estilos a la hoja 1
-    $sheet1->getStyle('A1:Q1')->applyFromArray($styleHeader);
+    $sheet1->getStyle('A1:AD1')->applyFromArray($styleHeader);
 
     // Encabezados para ENCUESTAS
     $sheet1->setCellValue('A1', 'FECHA ENCUESTA');
@@ -122,11 +122,56 @@ try {
     $sheet1->setCellValue('P1', 'SISBEN NOCTURNO');
     $sheet1->setCellValue('Q1', 'OBSERVACIONES');
 
+    // Si el filtro es TODOS, agregamos encabezados de primer integrante (ajustados)
+    $isTodos = (!isset($_GET['id_usu']) || $_GET['id_usu'] == '' || $_GET['id_usu'] == 'todos');
+    if ($isTodos) {
+        $sheet1->setCellValue('R1', 'GÉNERO');
+        $sheet1->setCellValue('S1', 'RANGO EDAD');
+        $sheet1->setCellValue('T1', 'VICTIMA');
+        $sheet1->setCellValue('U1', 'CONDICION DISCAPACIDAD');
+        $sheet1->setCellValue('V1', 'TIPO DISCAPACIDAD');
+        $sheet1->setCellValue('W1', 'MUJER GESTANTE');
+        $sheet1->setCellValue('X1', 'CABEZA FAMILIA');
+        $sheet1->setCellValue('Y1', 'ORIENTACION SEXUAL');
+        $sheet1->setCellValue('Z1', 'EXPERIENCIA MIGRATORIA');
+        $sheet1->setCellValue('AA1', 'GRUPO ETNICO');
+        $sheet1->setCellValue('AB1', 'SEGURIDAD SALUD');
+        $sheet1->setCellValue('AC1', 'NIVEL EDUCATIVO');
+        $sheet1->setCellValue('AD1', 'CONDICION OCUPACION');
+        // Forzar ancho de columnas de los campos de integrante
+        foreach(['R','S','T','U','V','W','X','Y','Z','AA','AB','AC','AD','AE','AF'] as $col) {
+            $sheet1->getColumnDimension($col)->setWidth(30);
+        }
+    }
+
     // Ajustar ancho de columnas para ENCUESTAS
-    foreach(range('A','Q') as $col) {
+    foreach ([
+        'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q',
+        'R','S','T','U','V','W','X','Y','Z','AA','AB','AC','AD'
+    ] as $col) {
         $sheet1->getColumnDimension($col)->setWidth(20);
     }
+    if ($isTodos) {
+        foreach(['R','S','T','U','V','W','X','Y','Z','AA','AB','AC','AD','AE','AF'] as $col) {
+            $sheet1->getColumnDimension($col)->setWidth(30);
+        }
+    }
     $sheet1->getDefaultRowDimension()->setRowHeight(25);
+
+    // --- FUNCION PARA LIMPIAR TEXTO DE TIPO DISCAPACIDAD ---
+if (!function_exists('limpiarTexto')) {
+    function limpiarTexto($texto) {
+        // Normaliza a UTF-8 si es necesario (opcional, solo si hay problemas de codificación)
+        // $texto = mb_convert_encoding($texto, 'UTF-8', 'auto');
+        // Reemplaza casos conocidos
+        $texto = str_replace(['FÃ­sica', 'Física', 'FISICA', 'FÍSICA'], 'Fisica', $texto);
+        // Elimina tildes
+        $texto = strtr($texto, 'áéíóúÁÉÍÓÚ', 'aeiouAEIOU');
+        // Elimina otros caracteres raros
+        $texto = preg_replace('/[^A-Za-z0-9 ]/', '', $texto);
+        return $texto;
+    }
+}
 
     // Escribir datos de ENCUESTAS
     $rowIndex1 = 2;
@@ -148,6 +193,43 @@ try {
         $sheet1->setCellValue('O' . $rowIndex1, $row['num_ficha_encVenta']);
         $sheet1->setCellValue('P' . $rowIndex1, $row['sisben_nocturno']);
         $sheet1->setCellValue('Q' . $rowIndex1, $row['obs_encVenta']);
+        
+        // Si el filtro es TODOS, buscar y agregar el primer integrante (ajustado)
+        if ($isTodos) {
+            $id_encVenta = $row['id_encVenta'];
+            $sql_integrante = "SELECT * FROM integventanilla WHERE id_encVenta = '$id_encVenta' ORDER BY id_integVenta ASC LIMIT 1";
+            $res_integrante = mysqli_query($mysqli, $sql_integrante);
+            $integ = mysqli_fetch_assoc($res_integrante);
+            // Mapeo de rango edad
+            $rangoEdadMap = [
+                1 => '0 - 6',
+                2 => '7 - 12',
+                3 => '13 - 17',
+                4 => '18 - 28',
+                5 => '29 - 45',
+                6 => '46 - 64',
+                7 => 'Mayor o igual a 65',
+            ];
+            if ($integ) {
+                $sheet1->setCellValue('R' . $rowIndex1, $integ['gen_integVenta'] ?? '');
+                $sheet1->setCellValue('S' . $rowIndex1, isset($rangoEdadMap[$integ['rango_integVenta'] ?? null]) ? $rangoEdadMap[$integ['rango_integVenta']] : '');
+                $sheet1->setCellValue('T' . $rowIndex1, $integ['victima'] ?? '');
+                $sheet1->setCellValue('U' . $rowIndex1, $integ['condicionDiscapacidad'] ?? '');
+                // Aquí aplicamos la limpieza a tipoDiscapacidad
+                $tipoDiscapacidadLimpio = isset($integ['tipoDiscapacidad']) ? limpiarTexto($integ['tipoDiscapacidad']) : '';
+                $sheet1->setCellValue('V' . $rowIndex1, $tipoDiscapacidadLimpio);
+                $sheet1->setCellValue('W' . $rowIndex1, $integ['mujerGestante'] ?? '');
+                $sheet1->setCellValue('X' . $rowIndex1, $integ['cabezaFamilia'] ?? '');
+                $sheet1->setCellValue('Y' . $rowIndex1, $integ['orientacionSexual'] ?? '');
+                $sheet1->setCellValue('Z' . $rowIndex1, $integ['experienciaMigratoria'] ?? '');
+                $sheet1->setCellValue('AA' . $rowIndex1, $integ['grupoEtnico'] ?? '');
+                $sheet1->setCellValue('AB' . $rowIndex1, $integ['seguridadSalud'] ?? '');
+                $sheet1->setCellValue('AC' . $rowIndex1, $integ['nivelEducativo'] ?? '');
+                $sheet1->setCellValue('AD' . $rowIndex1, $integ['condicionOcupacion'] ?? '');
+                $sheet1->setCellValue('AE' . $rowIndex1, $integ['tipo_solic_encInfo'] ?? '');
+                $sheet1->setCellValue('AF' . $rowIndex1, $integ['observacion'] ?? '');
+            }
+        }
         $rowIndex1++;
     }
     logError("Datos de encuestas escritos en la hoja 1");
