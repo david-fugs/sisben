@@ -106,3 +106,75 @@
 [2025-07-03 11:23:15] Datos de movimientos escritos en la hoja 3
 [2025-07-03 11:23:15] Archivo Excel generado: Reporte_Completo_Sisben_2025-06-01_2025-07-30.xlsx
 [2025-07-03 11:23:16] Archivo Excel enviado para descarga
+[2025-07-04 19:11:33] Iniciando exportarEncuestador.php
+[2025-07-04 19:11:33] Iniciando exportarEncuestador.php
+[2025-07-04 19:11:33] Autoload cargado correctamente
+[2025-07-04 19:11:33] Autoload cargado correctamente
+[2025-07-04 19:11:33] Sesión iniciada
+[2025-07-04 19:11:33] Conexión incluida
+[2025-07-04 19:11:33] Conexión a BD verificada
+[2025-07-04 12:11:33] Parámetros recibidos - fecha_inicio: 2025-06-01, fecha_fin: 2025-07-01
+[2025-07-04 12:11:33] Hoja 1 - ENCUESTAS creada
+[2025-07-04 12:11:33] Exportando TODOS los encuestadores en el rango de fechas
+[2025-07-04 12:11:33] Consulta de encuestas ejecutada correctamente
+[2025-07-04 12:11:34] Datos de encuestas escritos en la hoja 1
+[2025-07-04 12:11:34] Hoja 2 - INFORMACIÓN creada
+[2025-07-04 12:11:34] Consulta de información ejecutada correctamente
+[2025-07-04 12:11:34] Datos de información escritos en la hoja 2
+[2025-07-04 12:11:34] Hoja 3 - MOVIMIENTOS creada
+[2025-07-04 12:11:34] Consulta de movimientos ejecutada correctamente
+[2025-07-04 12:11:34] Datos de movimientos escritos en la hoja 3
+[2025-07-04 12:11:34] Archivo Excel generado: Reporte_Completo_Sisben_2025-06-01_2025-07-01.xlsx
+[2025-07-04 12:11:34] Archivo Excel enviado para descarga
+[2025-07-04 19:11:34] Sesión iniciada
+[2025-07-04 19:11:34] Conexión incluida
+[2025-07-04 19:11:34] Conexión a BD verificada
+[2025-07-04 12:11:34] Parámetros recibidos - fecha_inicio: 2025-06-01, fecha_fin: 2025-07-01
+[2025-07-04 12:11:34] Hoja 1 - ENCUESTAS creada
+[2025-07-04 12:11:34] Exportando TODOS los encuestadores en el rango de fechas
+[2025-07-04 12:11:34] Consulta de encuestas ejecutada correctamente
+[2025-07-04 12:11:34] Datos de encuestas escritos en la hoja 1
+[2025-07-04 12:11:34] Hoja 2 - INFORMACIÓN creada
+[2025-07-04 12:11:34] Consulta de información ejecutada correctamente
+[2025-07-04 12:11:34] Datos de información escritos en la hoja 2
+[2025-07-04 12:11:34] Hoja 3 - MOVIMIENTOS creada
+[2025-07-04 12:11:34] Consulta de movimientos ejecutada correctamente
+[2025-07-04 12:11:34] Datos de movimientos escritos en la hoja 3
+[2025-07-04 12:11:34] Archivo Excel generado: Reporte_Completo_Sisben_2025-06-01_2025-07-01.xlsx
+[2025-07-04 12:11:34] Archivo Excel enviado para descarga
+[2025-07-04 19:38:21] Iniciando exportarEncuestador.php
+[2025-07-04 19:38:21] Autoload cargado correctamente
+[2025-07-04 19:38:21] Sesión iniciada
+[2025-07-04 19:38:21] Conexión incluida
+[2025-07-04 19:38:21] Conexión a BD verificada
+[2025-07-04 12:38:21] Parámetros recibidos - fecha_inicio: 2025-06-01, fecha_fin: 2025-07-01
+[2025-07-04 12:38:21] Hoja 1 - ENCUESTAS creada
+[2025-07-04 12:38:21] Exportando TODOS los encuestadores en el rango de fechas
+[2025-07-04 12:38:21] Consulta de encuestas ejecutada correctamente
+[2025-07-04 12:38:21] Datos de encuestas escritos en la hoja 1
+[2025-07-04 12:38:21] Hoja 2 - INFORMACIÓN creada
+[2025-07-04 12:38:21] Consulta de información ejecutada correctamente
+[2025-07-04 12:38:21] Datos de información escritos en la hoja 2
+[2025-07-04 12:38:21] Hoja 3 - MOVIMIENTOS creada
+[2025-07-04 12:38:21] Consulta de movimientos ejecutada correctamente
+[2025-07-04 12:38:21] Datos de movimientos escritos en la hoja 3
+[2025-07-04 12:38:21] Archivo Excel generado: Reporte_Completo_Sisben_2025-06-01_2025-07-01.xlsx
+[2025-07-04 12:38:21] Archivo Excel enviado para descarga
+[2025-07-04 19:49:08] Iniciando exportarEncuestador.php
+[2025-07-04 19:49:08] Autoload cargado correctamente
+[2025-07-04 19:49:08] Sesión iniciada
+[2025-07-04 19:49:08] Conexión incluida
+[2025-07-04 19:49:08] Conexión a BD verificada
+[2025-07-04 12:49:08] Parámetros recibidos - fecha_inicio: 2025-06-01, fecha_fin: 2025-07-01
+[2025-07-04 12:49:08] Hoja 1 - ENCUESTAS creada
+[2025-07-04 12:49:08] Exportando TODOS los encuestadores en el rango de fechas
+[2025-07-04 12:49:08] Consulta de encuestas ejecutada correctamente
+[2025-07-04 12:49:08] Datos de encuestas escritos en la hoja 1
+[2025-07-04 12:49:08] Hoja 2 - INFORMACIÓN creada
+[2025-07-04 12:49:08] Consulta de información ejecutada correctamente
+[2025-07-04 12:49:08] Datos de información escritos en la hoja 2
+[2025-07-04 12:49:08] Hoja 3 - MOVIMIENTOS creada
+[2025-07-04 12:49:08] Consulta de movimientos ejecutada correctamente
+[2025-07-04 12:49:08] Datos de movimientos escritos en la hoja 3
+[2025-07-04 12:49:08] Archivo Excel generado: Reporte_Completo_Sisben_2025-06-01_2025-07-01.xlsx
+[2025-07-04 12:49:08] Archivo Excel enviado para descarga

@@ -77,12 +77,14 @@ try {
     // Consulta para encuestas
     $sql_encuestas = "
     SELECT ev.*, b.nombre_bar AS barrio_nombre, d.nombre_departamento AS departamento_nombre, 
-           c.nombre_com AS comuna_nombre, m.nombre_municipio as ciudad_nombre
+           c.nombre_com AS comuna_nombre, m.nombre_municipio as ciudad_nombre,
+           u.nombre AS nombre_usuario
     FROM encventanilla ev
     LEFT JOIN barrios b ON ev.id_bar = b.id_bar
     LEFT JOIN departamentos d ON ev.departamento_expedicion = d.cod_departamento
     LEFT JOIN comunas c ON ev.id_com = c.id_com
     LEFT JOIN municipios m ON ev.ciudad_expedicion = m.cod_municipio
+    LEFT JOIN usuarios u ON ev.id_usu = u.id_usu
     $where_encuestas
     ";
     $res_encuestas = mysqli_query($mysqli, $sql_encuestas);
@@ -101,7 +103,7 @@ try {
     ];
 
     // Aplicar estilos a la hoja 1
-    $sheet1->getStyle('A1:AD1')->applyFromArray($styleHeader);
+    $sheet1->getStyle('A1:AE1')->applyFromArray($styleHeader);
 
     // Encabezados para ENCUESTAS
     $sheet1->setCellValue('A1', 'FECHA ENCUESTA');
@@ -138,23 +140,27 @@ try {
         $sheet1->setCellValue('AB1', 'SEGURIDAD SALUD');
         $sheet1->setCellValue('AC1', 'NIVEL EDUCATIVO');
         $sheet1->setCellValue('AD1', 'CONDICION OCUPACION');
+        $sheet1->setCellValue('AE1', 'ASESOR');
         // Forzar ancho de columnas de los campos de integrante
-        foreach(['R','S','T','U','V','W','X','Y','Z','AA','AB','AC','AD','AE','AF'] as $col) {
+        foreach(['R','S','T','U','V','W','X','Y','Z','AA','AB','AC','AD'] as $col) {
             $sheet1->getColumnDimension($col)->setWidth(30);
         }
+    } else {
+        $sheet1->setCellValue('R1', 'ASESOR');
     }
 
     // Ajustar ancho de columnas para ENCUESTAS
     foreach ([
-        'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q',
-        'R','S','T','U','V','W','X','Y','Z','AA','AB','AC','AD'
+        'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R',
+        'S','T','U','V','W','X','Y','Z','AA','AB','AC','AD','AE'
     ] as $col) {
         $sheet1->getColumnDimension($col)->setWidth(20);
     }
+    // Ajustar ancho específico para ASESOR
     if ($isTodos) {
-        foreach(['R','S','T','U','V','W','X','Y','Z','AA','AB','AC','AD','AE','AF'] as $col) {
-            $sheet1->getColumnDimension($col)->setWidth(30);
-        }
+        $sheet1->getColumnDimension('AE')->setWidth(25);
+    } else {
+        $sheet1->getColumnDimension('R')->setWidth(25);
     }
     $sheet1->getDefaultRowDimension()->setRowHeight(25);
 
@@ -226,9 +232,12 @@ if (!function_exists('limpiarTexto')) {
                 $sheet1->setCellValue('AB' . $rowIndex1, $integ['seguridadSalud'] ?? '');
                 $sheet1->setCellValue('AC' . $rowIndex1, $integ['nivelEducativo'] ?? '');
                 $sheet1->setCellValue('AD' . $rowIndex1, $integ['condicionOcupacion'] ?? '');
-                $sheet1->setCellValue('AE' . $rowIndex1, $integ['tipo_solic_encInfo'] ?? '');
-                $sheet1->setCellValue('AF' . $rowIndex1, $integ['observacion'] ?? '');
             }
+            // ASESOR siempre al final cuando es TODOS
+            $sheet1->setCellValue('AE' . $rowIndex1, $row['nombre_usuario'] ?? '');
+        } else {
+            // Si no es TODOS, ASESOR va en columna R
+            $sheet1->setCellValue('R' . $rowIndex1, $row['nombre_usuario'] ?? '');
         }
         $rowIndex1++;
     }
@@ -260,10 +269,12 @@ if (!function_exists('limpiarTexto')) {
 
     // Consulta para información
     $sql_informacion = "
-    SELECT i.*, d.nombre_departamento AS departamento_nombre, m.nombre_municipio as ciudad_nombre
+    SELECT i.*, d.nombre_departamento AS departamento_nombre, m.nombre_municipio as ciudad_nombre,
+           u.nombre AS nombre_usuario
     FROM informacion i
     LEFT JOIN departamentos d ON i.departamento_expedicion = d.cod_departamento
     LEFT JOIN municipios m ON i.ciudad_expedicion = m.cod_municipio
+    LEFT JOIN usuarios u ON i.id_usu = u.id_usu
     $where_info
     ";
     $res_informacion = mysqli_query($mysqli, $sql_informacion);
@@ -272,8 +283,8 @@ if (!function_exists('limpiarTexto')) {
         exit;
     }    logError("Consulta de información ejecutada correctamente");
 
-    // Aplicar estilos a la hoja 2 - CORREGIR RANGO HASTA W1
-    $sheet2->getStyle('A1:W1')->applyFromArray($styleHeader);
+    // Aplicar estilos a la hoja 2 - CORREGIR RANGO HASTA X1
+    $sheet2->getStyle('A1:X1')->applyFromArray($styleHeader);
 
     // Encabezados para INFORMACIÓN (basados en los campos de addsurvey2.php)
     $sheet2->setCellValue('A1', 'FECHA REGISTRO');
@@ -299,11 +310,14 @@ if (!function_exists('limpiarTexto')) {
     $sheet2->setCellValue('U1', 'TIPO SOLICITUD');
     $sheet2->setCellValue('V1', 'OBSERVACION');
     $sheet2->setCellValue('W1', 'INFO ADICIONAL');
+    $sheet2->setCellValue('X1', 'ASESOR');
 
     // Ajustar ancho de columnas para INFORMACIÓN
-    foreach(range('A','W') as $col) {
+    foreach(range('A','X') as $col) {
         $sheet2->getColumnDimension($col)->setWidth(20);
     }
+    // Ajustar ancho específico para ASESOR
+    $sheet2->getColumnDimension('X')->setWidth(25);
     $sheet2->getDefaultRowDimension()->setRowHeight(25);
 
     // Escribir datos de INFORMACIÓN
@@ -332,6 +346,7 @@ if (!function_exists('limpiarTexto')) {
         $sheet2->setCellValue('U' . $rowIndex2, $row['tipo_solic_encInfo']);
         $sheet2->setCellValue('V' . $rowIndex2, $row['observacion']);
         $sheet2->setCellValue('W' . $rowIndex2, $row['info_adicional']);
+        $sheet2->setCellValue('X' . $rowIndex2, $row['nombre_usuario'] ?? '');
         $rowIndex2++;    }
     logError("Datos de información escritos en la hoja 2");    // ===============================================
     // HOJA 3: MOVIMIENTOS (datos de movimientos)
