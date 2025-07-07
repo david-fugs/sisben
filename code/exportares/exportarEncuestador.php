@@ -117,6 +117,7 @@ try {
     LEFT JOIN comunas c ON ev.id_com = c.id_com
     LEFT JOIN municipios m ON ev.ciudad_expedicion = m.cod_municipio
     LEFT JOIN movimientos mov ON ev.doc_encVenta = mov.doc_encVenta
+    LEFT JOIN usuarios u ON ev.id_usu = u.id_usu
     $where_encuestas
     ";
     $res_encuestas = mysqli_query($mysqli, $sql_encuestas);
@@ -135,7 +136,7 @@ try {
     ];
 
     // Aplicar estilos a la hoja 1
-    $sheet1->getStyle('A1:AD1')->applyFromArray($styleHeader);
+    $sheet1->getStyle('A1:AE1')->applyFromArray($styleHeader);
 
     // Encabezados para ENCUESTAS
     $sheet1->setCellValue('A1', 'FECHA ENCUESTA');
@@ -172,10 +173,13 @@ try {
         $sheet1->setCellValue('AB1', 'SEGURIDAD SALUD');
         $sheet1->setCellValue('AC1', 'NIVEL EDUCATIVO');
         $sheet1->setCellValue('AD1', 'CONDICION OCUPACION');
+        $sheet1->setCellValue('AE1', 'ASESOR');
         // Forzar ancho de columnas de los campos de integrante
         foreach (['R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'AA', 'AB', 'AC', 'AD', 'AE', 'AF'] as $col) {
             $sheet1->getColumnDimension($col)->setWidth(30);
         }
+    } else {
+        $sheet1->setCellValue('R1', 'ASESOR');
     }
 
     // Ajustar ancho de columnas para ENCUESTAS
@@ -215,6 +219,7 @@ try {
     ) {
         $sheet1->getColumnDimension($col)->setWidth(20);
     }
+    // Ajustar ancho específico para ASESOR
     if ($isTodos) {
         foreach (['R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'AA', 'AB', 'AC', 'AD', 'AE', 'AF'] as $col) {
             $sheet1->getColumnDimension($col)->setWidth(30);
@@ -303,6 +308,11 @@ try {
                 $sheet1->setCellValue('AE' . $rowIndex1, normalizeUtf8($integ['tipo_solic_encInfo'] ?? ''));
                 $sheet1->setCellValue('AF' . $rowIndex1, normalizeUtf8($integ['observacion'] ?? ''));
             }
+            // ASESOR siempre al final cuando es TODOS
+            $sheet1->setCellValue('AE' . $rowIndex1, $row['nombre_usuario'] ?? '');
+        } else {
+            // Si no es TODOS, ASESOR va en columna R
+            $sheet1->setCellValue('R' . $rowIndex1, $row['nombre_usuario'] ?? '');
         }
         $rowIndex1++;
     }
@@ -334,10 +344,12 @@ try {
 
     // Consulta para información
     $sql_informacion = "
-    SELECT i.*, d.nombre_departamento AS departamento_nombre, m.nombre_municipio as ciudad_nombre
+    SELECT i.*, d.nombre_departamento AS departamento_nombre, m.nombre_municipio as ciudad_nombre,
+           u.nombre AS nombre_usuario
     FROM informacion i
     LEFT JOIN departamentos d ON i.departamento_expedicion = d.cod_departamento
     LEFT JOIN municipios m ON i.ciudad_expedicion = m.cod_municipio
+    LEFT JOIN usuarios u ON i.id_usu = u.id_usu
     $where_info
     ";
     $res_informacion = mysqli_query($mysqli, $sql_informacion);
@@ -347,8 +359,8 @@ try {
     }
     logError("Consulta de información ejecutada correctamente");
 
-    // Aplicar estilos a la hoja 2 - CORREGIR RANGO HASTA W1
-    $sheet2->getStyle('A1:W1')->applyFromArray($styleHeader);
+    // Aplicar estilos a la hoja 2 - CORREGIR RANGO HASTA X1
+    $sheet2->getStyle('A1:X1')->applyFromArray($styleHeader);
 
     // Encabezados para INFORMACIÓN (basados en los campos de addsurvey2.php)
     $sheet2->setCellValue('A1', 'FECHA REGISTRO');
@@ -374,11 +386,14 @@ try {
     $sheet2->setCellValue('U1', 'TIPO SOLICITUD');
     $sheet2->setCellValue('V1', 'OBSERVACION');
     $sheet2->setCellValue('W1', 'INFO ADICIONAL');
+    $sheet2->setCellValue('X1', 'ASESOR');
 
     // Ajustar ancho de columnas para INFORMACIÓN
     foreach (range('A', 'W') as $col) {
         $sheet2->getColumnDimension($col)->setWidth(20);
     }
+    // Ajustar ancho específico para ASESOR
+    $sheet2->getColumnDimension('X')->setWidth(25);
     $sheet2->getDefaultRowDimension()->setRowHeight(25);
 
     // Escribir datos de INFORMACIÓN
@@ -407,6 +422,7 @@ try {
         $sheet2->setCellValue('U' . $rowIndex2, normalizeUtf8($row['tipo_solic_encInfo']));
         $sheet2->setCellValue('V' . $rowIndex2, normalizeUtf8($row['observacion']));
         $sheet2->setCellValue('W' . $rowIndex2, normalizeUtf8($row['info_adicional']));
+        $sheet2->setCellValue('X' . $rowIndex2, $row['nombre_usuario'] ?? '');
         $rowIndex2++;
     }
     logError("Datos de información escritos en la hoja 2");    // ===============================================
