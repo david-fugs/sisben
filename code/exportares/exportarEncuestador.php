@@ -110,7 +110,8 @@ try {
     $sql_encuestas = "
     SELECT ev.*, b.nombre_bar AS barrio_nombre, d.nombre_departamento AS departamento_nombre, 
            c.nombre_com AS comuna_nombre, m.nombre_municipio as ciudad_nombre,
-           COALESCE(mov.tipo_movimiento, ev.tram_solic_encVenta) as tipo_movimiento_final
+           COALESCE(mov.tipo_movimiento, ev.tram_solic_encVenta) as tipo_movimiento_final,
+           u.nombre AS nombre_usuario
     FROM encventanilla ev
     LEFT JOIN barrios b ON ev.id_bar = b.id_bar
     LEFT JOIN departamentos d ON ev.departamento_expedicion = d.cod_departamento
@@ -136,7 +137,7 @@ try {
     ];
 
     // Aplicar estilos a la hoja 1
-    $sheet1->getStyle('A1:AE1')->applyFromArray($styleHeader);
+    $sheet1->getStyle('A1:AG1')->applyFromArray($styleHeader);
 
     // Encabezados para ENCUESTAS
     $sheet1->setCellValue('A1', 'FECHA ENCUESTA');
@@ -173,9 +174,11 @@ try {
         $sheet1->setCellValue('AB1', 'SEGURIDAD SALUD');
         $sheet1->setCellValue('AC1', 'NIVEL EDUCATIVO');
         $sheet1->setCellValue('AD1', 'CONDICION OCUPACION');
-        $sheet1->setCellValue('AE1', 'ASESOR');
+        $sheet1->setCellValue('AE1', 'TIPO SOLICITUD');
+        $sheet1->setCellValue('AF1', 'OBSERVACION INTEGRANTE');
+        $sheet1->setCellValue('AG1', 'ASESOR');
         // Forzar ancho de columnas de los campos de integrante
-        foreach (['R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'AA', 'AB', 'AC', 'AD', 'AE', 'AF'] as $col) {
+        foreach (['R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'AA', 'AB', 'AC', 'AD', 'AE', 'AF', 'AG'] as $col) {
             $sheet1->getColumnDimension($col)->setWidth(30);
         }
     } else {
@@ -201,27 +204,18 @@ try {
             'N',
             'O',
             'P',
-            'Q',
-            'R',
-            'S',
-            'T',
-            'U',
-            'V',
-            'W',
-            'X',
-            'Y',
-            'Z',
-            'AA',
-            'AB',
-            'AC',
-            'AD'
+            'Q'
         ] as $col
     ) {
         $sheet1->getColumnDimension($col)->setWidth(20);
     }
-    // Ajustar ancho específico para ASESOR
+    // Ajustar ancho específico para ASESOR cuando no es TODOS
+    if (!$isTodos) {
+        $sheet1->getColumnDimension('R')->setWidth(25);
+    }
+    // Ajustar ancho específico para campos de integrante cuando es TODOS
     if ($isTodos) {
-        foreach (['R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'AA', 'AB', 'AC', 'AD', 'AE', 'AF'] as $col) {
+        foreach (['R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'AA', 'AB', 'AC', 'AD', 'AE', 'AF', 'AG'] as $col) {
             $sheet1->getColumnDimension($col)->setWidth(30);
         }
     }
@@ -308,8 +302,8 @@ try {
                 $sheet1->setCellValue('AE' . $rowIndex1, normalizeUtf8($integ['tipo_solic_encInfo'] ?? ''));
                 $sheet1->setCellValue('AF' . $rowIndex1, normalizeUtf8($integ['observacion'] ?? ''));
             }
-            // ASESOR siempre al final cuando es TODOS
-            $sheet1->setCellValue('AE' . $rowIndex1, $row['nombre_usuario'] ?? '');
+            // ASESOR va en columna AG cuando es TODOS (después de la información del integrante)
+            $sheet1->setCellValue('AG' . $rowIndex1, $row['nombre_usuario'] ?? '');
         } else {
             // Si no es TODOS, ASESOR va en columna R
             $sheet1->setCellValue('R' . $rowIndex1, $row['nombre_usuario'] ?? '');
