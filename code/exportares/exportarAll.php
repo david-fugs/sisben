@@ -310,8 +310,8 @@ $rowBarrioIndex = 10; // Directamente en la fila 10
 // Establecer encabezados de columnas para los rangos
 $sheet->setCellValue('A' . $rowBarrioIndex, 'BARRIO');
 $sheet->setCellValue('B' . $rowBarrioIndex, 'COMUNA');
-$sheet->setCellValue('C' . $rowBarrioIndex, 'M 0-6');
-$sheet->setCellValue('D' . $rowBarrioIndex, 'M 7-12');
+$sheet->setCellValue('C' . $rowBarrioIndex, 'M 0-5');
+$sheet->setCellValue('D' . $rowBarrioIndex, 'M 6-12');
 $sheet->setCellValue('E' . $rowBarrioIndex, 'M 13-17');
 $sheet->setCellValue('F' . $rowBarrioIndex, 'M 18-28');
 $sheet->setCellValue('G' . $rowBarrioIndex, 'M 39-45');

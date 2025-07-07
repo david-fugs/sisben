@@ -68,15 +68,17 @@ try {
         $where_encuestas = 'WHERE ' . implode(' AND ', $condiciones);
     }
 
-    // Consulta para encuestas
+    // Consulta para encuestas con tipo_movimiento desde la tabla movimientos
     $sql_encuestas = "
     SELECT ev.*, b.nombre_bar AS barrio_nombre, d.nombre_departamento AS departamento_nombre, 
-           c.nombre_com AS comuna_nombre, m.nombre_municipio as ciudad_nombre
+           c.nombre_com AS comuna_nombre, m.nombre_municipio as ciudad_nombre,
+           COALESCE(mov.tipo_movimiento, ev.tram_solic_encVenta) as tipo_movimiento_final
     FROM encventanilla ev
     LEFT JOIN barrios b ON ev.id_bar = b.id_bar
     LEFT JOIN departamentos d ON ev.departamento_expedicion = d.id_departamento
     LEFT JOIN comunas c ON ev.id_com = c.id_com
     LEFT JOIN municipios m ON ev.ciudad_expedicion = m.id_municipio
+    LEFT JOIN movimientos mov ON ev.doc_encVenta = mov.doc_encVenta
     $where_encuestas
     ";
     $res_encuestas = mysqli_query($mysqli, $sql_encuestas);
@@ -110,7 +112,7 @@ try {
     $sheet1->setCellValue('J1', 'COMUNA');
     $sheet1->setCellValue('K1', 'BARRIO');
     $sheet1->setCellValue('L1', 'QUE OTRO BARRIO');
-    $sheet1->setCellValue('M1', 'TRAMITE SOLICITADO');
+    $sheet1->setCellValue('M1', 'TIPO MOVIMIENTO');
     $sheet1->setCellValue('N1', 'CANTIDAD INTEGRANTES');
     $sheet1->setCellValue('O1', 'NUMERO FICHA');
     $sheet1->setCellValue('P1', 'SISBEN NOCTURNO');
@@ -137,7 +139,7 @@ try {
         $sheet1->setCellValue('J' . $rowIndex1, $row['comuna_nombre']);
         $sheet1->setCellValue('K' . $rowIndex1, $row['barrio_nombre']);
         $sheet1->setCellValue('L' . $rowIndex1, $row['otro_bar_ver_encVenta']);
-        $sheet1->setCellValue('M' . $rowIndex1, $row['tram_solic_encVenta']);
+        $sheet1->setCellValue('M' . $rowIndex1, $row['tipo_movimiento_final']);
         $sheet1->setCellValue('N' . $rowIndex1, $row['integra_encVenta']);
         $sheet1->setCellValue('O' . $rowIndex1, $row['num_ficha_encVenta']);
         $sheet1->setCellValue('P' . $rowIndex1, $row['sisben_nocturno']);
