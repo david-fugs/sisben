@@ -385,7 +385,8 @@ include("../../conexion.php");
                                     break;
                             }
 
-                            $estado_class = ($row['estado_ficha'] == 0) ? 'estado-retirada' : 'estado-activa';                            echo '
+                            $estado_class = ($row['estado_ficha'] == 0) ? 'estado-retirada' : 'estado-activa';
+                            echo '
                             <tr>
                                 <td>' . $registro_actual++ . '</td>
                                 <td>' . date('d/m/Y H:i', strtotime($row['fecha_movimiento'])) . '</td>
@@ -402,8 +403,32 @@ include("../../conexion.php");
                                     <a href="verMovimiento.php?id_movimiento=' . $row['id_movimiento'] . '" class="btn btn-sm btn-outline-info" title="Ver detalles">
                                         <i class="fas fa-eye"></i>
                                     </a>
+                                    <form method="post" action="" style="display:inline;" class="form-borrar-movimiento">
+                                        <input type="hidden" name="borrar_movimiento" value="1">
+                                        <input type="hidden" name="id_movimiento" value="' . $row['id_movimiento'] . '">
+                                        <button type="submit" class="btn btn-sm btn-outline-danger" title="Borrar">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>';
+// Lógica para borrar movimiento y sus vinculados
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['borrar_movimiento']) && isset($_POST['id_movimiento'])) {
+    $id_movimiento_borrar = intval($_POST['id_movimiento']);
+    // Borrar vinculados primero
+    $stmt1 = $mysqli->prepare("DELETE FROM integmovimientos_independiente WHERE id_movimiento = ?");
+    $stmt1->bind_param('i', $id_movimiento_borrar);
+    $stmt1->execute();
+    $stmt1->close();
+    // Borrar movimiento principal
+    $stmt2 = $mysqli->prepare("DELETE FROM movimientos WHERE id_movimiento = ?");
+    $stmt2->bind_param('i', $id_movimiento_borrar);
+    $stmt2->execute();
+    $stmt2->close();
+    // Redirigir para evitar reenvío de formulario
+    echo '<script>window.location.href = "showMovimientos.php";</script>';
+    exit();
+}
                         }
                         ?>
 
@@ -428,6 +453,31 @@ include("../../conexion.php");
     </div>
 
     <script src="https://www.jose-aguilar.com/scripts/fontawesome/js/all.min.js" data-auto-replace-svg="nest"></script>
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.form-borrar-movimiento').forEach(function(form) {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                Swal.fire({
+                    title: '¿Está seguro?',
+                    text: '¡Esta acción borrará el movimiento y todos los registros vinculados!',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Sí, borrar',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
+                });
+            });
+        });
+    });
+    </script>
 </body>
 
 </html>

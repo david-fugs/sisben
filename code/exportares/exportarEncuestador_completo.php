@@ -454,111 +454,118 @@ if (!function_exists('limpiarTexto')) {
         exit;
     }
     logError("Consulta de movimientos ejecutada correctamente");    // Aplicar estilos a la hoja 3 - MOVIMIENTOS con todas las columnas
-    $sheet3->getStyle('A1:AE1')->applyFromArray($styleHeader);
+    $sheet3->getStyle('A1:AD1')->applyFromArray($styleHeader);
 
-    // Encabezados para MOVIMIENTOS (mismo orden que ENCUESTAS)
-    $sheet3->setCellValue('A1', 'FECHA MOVIMIENTO');
-    $sheet3->setCellValue('B1', 'DOCUMENTO ENCUESTA');
-    $sheet3->setCellValue('C1', 'TIPO DOCUMENTO');
-    $sheet3->setCellValue('D1', 'FECHA EXPEDICION');
-    $sheet3->setCellValue('E1', 'DEPARTAMENTO EXPEDICION');
-    $sheet3->setCellValue('F1', 'CIUDAD EXPEDICION');
-    $sheet3->setCellValue('G1', 'NOMBRE PERSONA');
-    $sheet3->setCellValue('H1', 'DIRECCION');
-    $sheet3->setCellValue('I1', 'ZONA');
-    $sheet3->setCellValue('J1', 'COMUNA');
-    $sheet3->setCellValue('K1', 'BARRIO');
-    $sheet3->setCellValue('L1', 'OTRO BARRIO');
-    $sheet3->setCellValue('M1', 'TRAMITE SOLICITADO');
-    $sheet3->setCellValue('N1', 'CANTIDAD INTEGRANTES');
-    $sheet3->setCellValue('O1', 'NUMERO FICHA');
-    $sheet3->setCellValue('P1', 'SISBEN NOCTURNO');
-    $sheet3->setCellValue('Q1', 'OBSERVACIONES');
+    // Encabezados para MOVIMIENTOS (mismo orden que ENCUESTAS pero sin FECHA ALTA)
+    $sheet3->setCellValue('A1', 'DOCUMENTO');
+    $sheet3->setCellValue('B1', 'TIPO DOCUMENTO');
+    $sheet3->setCellValue('C1', 'FECHA EXPEDICION');
+    $sheet3->setCellValue('D1', 'DEPARTAMENTO EXPEDICION');
+    $sheet3->setCellValue('E1', 'CIUDAD EXPEDICION');
+    $sheet3->setCellValue('F1', 'NOMBRE');
+    $sheet3->setCellValue('G1', 'DIRECCION');
+    $sheet3->setCellValue('H1', 'ZONA');
+    $sheet3->setCellValue('I1', 'COMUNA');
+    $sheet3->setCellValue('J1', 'BARRIO');
+    $sheet3->setCellValue('K1', 'QUE OTRO BARRIO');
+    $sheet3->setCellValue('L1', 'TIPO MOVIMIENTO');
+    $sheet3->setCellValue('M1', 'CANTIDAD INTEGRANTES');
+    $sheet3->setCellValue('N1', 'NUMERO FICHA');
+    $sheet3->setCellValue('O1', 'SISBEN NOCTURNO');
+    $sheet3->setCellValue('P1', 'OBSERVACIONES');
+    $sheet3->setCellValue('Q1', 'GÉNERO');
+    $sheet3->setCellValue('R1', 'RANGO EDAD');
+    $sheet3->setCellValue('S1', 'VICTIMA');
+    $sheet3->setCellValue('T1', 'CONDICION DISCAPACIDAD');
+    $sheet3->setCellValue('U1', 'TIPO DISCAPACIDAD');
+    $sheet3->setCellValue('V1', 'MUJER GESTANTE');
+    $sheet3->setCellValue('W1', 'CABEZA FAMILIA');
+    $sheet3->setCellValue('X1', 'ORIENTACION SEXUAL');
+    $sheet3->setCellValue('Y1', 'EXPERIENCIA MIGRATORIA');
+    $sheet3->setCellValue('Z1', 'GRUPO ETNICO');
+    $sheet3->setCellValue('AA1', 'SEGURIDAD SALUD');
+    $sheet3->setCellValue('AB1', 'NIVEL EDUCATIVO');
+    $sheet3->setCellValue('AC1', 'CONDICION OCUPACION');
+    $sheet3->setCellValue('AD1', 'ASESOR');
 
-    // Agregar columnas de caracterización (siempre presentes en MOVIMIENTOS)
-    $sheet3->setCellValue('R1', 'GÉNERO');
-    $sheet3->setCellValue('S1', 'RANGO EDAD');
-    $sheet3->setCellValue('T1', 'VICTIMA');
-    $sheet3->setCellValue('U1', 'CONDICION DISCAPACIDAD');
-    $sheet3->setCellValue('V1', 'TIPO DISCAPACIDAD');
-    $sheet3->setCellValue('W1', 'MUJER GESTANTE');
-    $sheet3->setCellValue('X1', 'CABEZA FAMILIA');
-    $sheet3->setCellValue('Y1', 'ORIENTACION SEXUAL');
-    $sheet3->setCellValue('Z1', 'EXPERIENCIA MIGRATORIA');
-    $sheet3->setCellValue('AA1', 'GRUPO ETNICO');
-    $sheet3->setCellValue('AB1', 'SEGURIDAD SALUD');
-    $sheet3->setCellValue('AC1', 'NIVEL EDUCATIVO');
-    $sheet3->setCellValue('AD1', 'CONDICION OCUPACION');
-    $sheet3->setCellValue('AE1', 'ASESOR');// Ajustar ancho de columnas para MOVIMIENTOS (mismo que ENCUESTAS)
+    // Ajustar ancho de columnas para MOVIMIENTOS (mismo que ENCUESTAS pero sin FECHA ALTA)
     foreach ([
         'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R',
-        'S','T','U','V','W','X','Y','Z','AA','AB','AC','AD','AE'
+        'S','T','U','V','W','X','Y','Z','AA','AB','AC','AD'
     ] as $col) {
         $sheet3->getColumnDimension($col)->setWidth(20);
     }
     // Ajustar ancho específico para columnas de caracterización
-    foreach(['R','S','T','U','V','W','X','Y','Z','AA','AB','AC','AD'] as $col) {
+    foreach(['Q','R','S','T','U','V','W','X','Y','Z','AA','AB','AC'] as $col) {
         $sheet3->getColumnDimension($col)->setWidth(30);
     }
     // Ajustar ancho específico para ASESOR
-    $sheet3->getColumnDimension('AE')->setWidth(25);
-    $sheet3->getDefaultRowDimension()->setRowHeight(25);// Escribir datos de MOVIMIENTOS (mismo orden que ENCUESTAS)
+    $sheet3->getColumnDimension('AD')->setWidth(25);
+    $sheet3->getDefaultRowDimension()->setRowHeight(25);// Escribir datos de MOVIMIENTOS (basado en integmovimientos_independiente)
     $rowIndex3 = 2;
     while ($row = mysqli_fetch_array($res_movimientos, MYSQLI_ASSOC)) {
-        $sheet3->setCellValue('A' . $rowIndex3, $row['fecha_movimiento'] ?? '');
-        $sheet3->setCellValue('B' . $rowIndex3, $row['doc_encVenta'] ?? '');
-        $sheet3->setCellValue('C' . $rowIndex3, $row['tipo_documento'] ?? '');
-        $sheet3->setCellValue('D' . $rowIndex3, $row['fecha_expedicion'] ?? '');
-        $sheet3->setCellValue('E' . $rowIndex3, $row['departamento_nombre'] ?? '');
-        $sheet3->setCellValue('F' . $rowIndex3, $row['ciudad_nombre'] ?? '');
-        $sheet3->setCellValue('G' . $rowIndex3, $row['nombre_persona_encuesta'] ?? '');
-        $sheet3->setCellValue('H' . $rowIndex3, $row['direccion_encuesta'] ?? '');
-        $sheet3->setCellValue('I' . $rowIndex3, $row['zona_encVenta'] ?? '');
-        $sheet3->setCellValue('J' . $rowIndex3, $row['comuna_nombre'] ?? '');
-        $sheet3->setCellValue('K' . $rowIndex3, $row['barrio_nombre'] ?? '');
-        $sheet3->setCellValue('L' . $rowIndex3, $row['otro_bar_ver_encVenta'] ?? '');
-        $sheet3->setCellValue('M' . $rowIndex3, $row['tram_solic_encVenta'] ?? '');
-        $sheet3->setCellValue('N' . $rowIndex3, $row['integra_encVenta'] ?? '');
-        $sheet3->setCellValue('O' . $rowIndex3, $row['num_ficha_encVenta'] ?? '');
-        $sheet3->setCellValue('P' . $rowIndex3, $row['sisben_nocturno'] ?? '');
-        $sheet3->setCellValue('Q' . $rowIndex3, $row['observacion'] ?? '');
-
-        // Buscar datos de caracterización en integmovimientos_independiente
+        // Buscar el primer registro de integmovimientos_independiente para este movimiento
         $id_movimiento = $row['id_movimiento'];
         $sql_integ_mov = "SELECT * FROM integmovimientos_independiente WHERE id_movimiento = '$id_movimiento' ORDER BY id_integmov_indep ASC LIMIT 1";
         $res_integ_mov = mysqli_query($mysqli, $sql_integ_mov);
         $integ_mov = mysqli_fetch_assoc($res_integ_mov);
         
-        // Mapeo de rango edad (mismo que ENCUESTAS)
-        $rangoEdadMap = [
-            1 => "0 - 6",
-            2 => "7 - 12", 
-            3 => "13 - 17",
-            4 => "18 - 28",
-            5 => "29 - 45",
-            6 => "46 - 64",
-            7 => "Mayor o igual a 65"
-        ];
-        
+        // Si hay datos en integmovimientos_independiente, usar esos; sino usar los del movimiento base
         if ($integ_mov) {
-            $sheet3->setCellValue('R' . $rowIndex3, $integ_mov['gen_integMovIndep'] ?? '');
-            // Para rango de edad, usar directamente el valor de la BD ya que viene como texto
-            $sheet3->setCellValue('S' . $rowIndex3, $integ_mov['rango_integMovIndep'] ?? '');
-            $sheet3->setCellValue('T' . $rowIndex3, $integ_mov['victima'] ?? '');
-            $sheet3->setCellValue('U' . $rowIndex3, $integ_mov['condicionDiscapacidad'] ?? '');
+            $sheet3->setCellValue('A' . $rowIndex3, $integ_mov['doc_encVenta'] ?? $row['doc_encVenta']);
+            $sheet3->setCellValue('B' . $rowIndex3, $row['tipo_documento'] ?? '');
+            $sheet3->setCellValue('C' . $rowIndex3, $row['fecha_expedicion'] ?? '');
+            $sheet3->setCellValue('D' . $rowIndex3, $row['departamento_nombre'] ?? '');
+            $sheet3->setCellValue('E' . $rowIndex3, $row['ciudad_nombre'] ?? '');
+            $sheet3->setCellValue('F' . $rowIndex3, $row['nom_encVenta'] ?? '');
+            $sheet3->setCellValue('G' . $rowIndex3, $row['dir_encVenta'] ?? '');
+            $sheet3->setCellValue('H' . $rowIndex3, $row['zona_encVenta'] ?? '');
+            $sheet3->setCellValue('I' . $rowIndex3, $row['comuna_nombre'] ?? '');
+            $sheet3->setCellValue('J' . $rowIndex3, $row['barrio_nombre'] ?? '');
+            $sheet3->setCellValue('K' . $rowIndex3, $row['otro_bar_ver_encVenta'] ?? '');
+            $sheet3->setCellValue('L' . $rowIndex3, $row['tipo_movimiento'] ?? '');
+            $sheet3->setCellValue('M' . $rowIndex3, $integ_mov['cant_integMovIndep'] ?? $row['integra_encVenta']);
+            $sheet3->setCellValue('N' . $rowIndex3, $row['num_ficha_encVenta'] ?? '');
+            $sheet3->setCellValue('O' . $rowIndex3, $row['sisben_nocturno'] ?? '');
+            $sheet3->setCellValue('P' . $rowIndex3, $row['observacion'] ?? '');
+            
+            // Datos de caracterización del primer integrante
+            $sheet3->setCellValue('Q' . $rowIndex3, $integ_mov['gen_integMovIndep'] ?? '');
+            $sheet3->setCellValue('R' . $rowIndex3, $integ_mov['rango_integMovIndep'] ?? '');
+            $sheet3->setCellValue('S' . $rowIndex3, $integ_mov['victima'] ?? '');
+            $sheet3->setCellValue('T' . $rowIndex3, $integ_mov['condicionDiscapacidad'] ?? '');
             // Aplicar limpieza a tipoDiscapacidad
             $tipoDiscapacidadLimpio = isset($integ_mov['tipoDiscapacidad']) ? limpiarTexto($integ_mov['tipoDiscapacidad']) : '';
-            $sheet3->setCellValue('V' . $rowIndex3, $tipoDiscapacidadLimpio);
-            $sheet3->setCellValue('W' . $rowIndex3, $integ_mov['mujerGestante'] ?? '');
-            $sheet3->setCellValue('X' . $rowIndex3, $integ_mov['cabezaFamilia'] ?? '');
-            $sheet3->setCellValue('Y' . $rowIndex3, $integ_mov['orientacionSexual'] ?? '');
-            $sheet3->setCellValue('Z' . $rowIndex3, $integ_mov['experienciaMigratoria'] ?? '');
-            $sheet3->setCellValue('AA' . $rowIndex3, $integ_mov['grupoEtnico'] ?? '');
-            $sheet3->setCellValue('AB' . $rowIndex3, $integ_mov['seguridadSalud'] ?? '');
-            $sheet3->setCellValue('AC' . $rowIndex3, $integ_mov['nivelEducativo'] ?? '');
-            $sheet3->setCellValue('AD' . $rowIndex3, $integ_mov['condicionOcupacion'] ?? '');
+            $sheet3->setCellValue('U' . $rowIndex3, $tipoDiscapacidadLimpio);
+            $sheet3->setCellValue('V' . $rowIndex3, $integ_mov['mujerGestante'] ?? '');
+            $sheet3->setCellValue('W' . $rowIndex3, $integ_mov['cabezaFamilia'] ?? '');
+            $sheet3->setCellValue('X' . $rowIndex3, $integ_mov['orientacionSexual'] ?? '');
+            $sheet3->setCellValue('Y' . $rowIndex3, $integ_mov['experienciaMigratoria'] ?? '');
+            $sheet3->setCellValue('Z' . $rowIndex3, $integ_mov['grupoEtnico'] ?? '');
+            $sheet3->setCellValue('AA' . $rowIndex3, $integ_mov['seguridadSalud'] ?? '');
+            $sheet3->setCellValue('AB' . $rowIndex3, $integ_mov['nivelEducativo'] ?? '');
+            $sheet3->setCellValue('AC' . $rowIndex3, $integ_mov['condicionOcupacion'] ?? '');
         } else {
-            // Si no hay datos de caracterización, dejar vacío
+            // Si no hay datos en integmovimientos_independiente, usar datos del movimiento base
+            $sheet3->setCellValue('A' . $rowIndex3, $row['doc_encVenta'] ?? '');
+            $sheet3->setCellValue('B' . $rowIndex3, $row['tipo_documento'] ?? '');
+            $sheet3->setCellValue('C' . $rowIndex3, $row['fecha_expedicion'] ?? '');
+            $sheet3->setCellValue('D' . $rowIndex3, $row['departamento_nombre'] ?? '');
+            $sheet3->setCellValue('E' . $rowIndex3, $row['ciudad_nombre'] ?? '');
+            $sheet3->setCellValue('F' . $rowIndex3, $row['nom_encVenta'] ?? '');
+            $sheet3->setCellValue('G' . $rowIndex3, $row['dir_encVenta'] ?? '');
+            $sheet3->setCellValue('H' . $rowIndex3, $row['zona_encVenta'] ?? '');
+            $sheet3->setCellValue('I' . $rowIndex3, $row['comuna_nombre'] ?? '');
+            $sheet3->setCellValue('J' . $rowIndex3, $row['barrio_nombre'] ?? '');
+            $sheet3->setCellValue('K' . $rowIndex3, $row['otro_bar_ver_encVenta'] ?? '');
+            $sheet3->setCellValue('L' . $rowIndex3, $row['tipo_movimiento'] ?? '');
+            $sheet3->setCellValue('M' . $rowIndex3, $row['integra_encVenta'] ?? '');
+            $sheet3->setCellValue('N' . $rowIndex3, $row['num_ficha_encVenta'] ?? '');
+            $sheet3->setCellValue('O' . $rowIndex3, $row['sisben_nocturno'] ?? '');
+            $sheet3->setCellValue('P' . $rowIndex3, $row['observacion'] ?? '');
+            
+            // Dejar vacías las columnas de caracterización si no hay datos
+            $sheet3->setCellValue('Q' . $rowIndex3, '');
             $sheet3->setCellValue('R' . $rowIndex3, '');
             $sheet3->setCellValue('S' . $rowIndex3, '');
             $sheet3->setCellValue('T' . $rowIndex3, '');
@@ -571,11 +578,10 @@ if (!function_exists('limpiarTexto')) {
             $sheet3->setCellValue('AA' . $rowIndex3, '');
             $sheet3->setCellValue('AB' . $rowIndex3, '');
             $sheet3->setCellValue('AC' . $rowIndex3, '');
-            $sheet3->setCellValue('AD' . $rowIndex3, '');
         }
         
         // ASESOR siempre al final
-        $sheet3->setCellValue('AE' . $rowIndex3, $row['nombre_usuario'] ?? '');
+        $sheet3->setCellValue('AD' . $rowIndex3, $row['nombre_usuario'] ?? '');
         $rowIndex3++;
     }logError("Datos de movimientos escritos en la hoja 3");
 
