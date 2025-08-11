@@ -178,12 +178,27 @@ $tipo_usu     = $_SESSION['tipo_usu'];
 
   <!--************************INICIA MENÚ ADMINISTRADOR************************-->
 
-  <?php if ($tipo_usu == 1) { ?>
+  <?php if (in_array($tipo_usu, [1,2,3,4,5,6])) { ?>
     <!-- sidebar -->
     <nav class="sidebar">
       <div class="menu_content">
         <ul class="menu_items">
           <div class="menu_title menu_dahsboard"></div>
+          <!-- Menú Comuna / Barrios para todos los tipos de usuario -->
+          <li class="item">
+            <div href="#" class="nav_link submenu_item">
+              <span class="navlink_icon">
+                <i class="fa-solid fa-city"></i>
+              </span>
+              <span class="navlink">Comuna / Barrios</span>
+              <i class="bx bx-chevron-right arrow-left"></i>
+            </div>
+            <ul class="menu_items submenu">
+              <a href="code/einfo/comunas.php" class="nav_link sublink">Ver Comunas</a>
+              <a href="code/einfo/barrios.php" class="nav_link sublink">Ver Barrios</a>
+            </ul>
+          </li>
+          <!-- end menú comuna/barrios -->
           <!-- duplicate or remove this li tag if you want to add or remove navlink with submenu -->
           <!-- start -->
           <li class="item">

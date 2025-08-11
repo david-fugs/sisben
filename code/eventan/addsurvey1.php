@@ -458,7 +458,7 @@ header("Content-Type: text/html;charset=utf-8");
                         .addClass("form-control smaller-input")
                         .attr("required", true)
                         .append('<option value="">Rango Edad</option>')
-                        .append('<option value="0 a 6">0 a 6</option>')
+                        .append('<option value="0 - 6">0 - 5</option>')
                         .append('<option value="6 - 12">6 - 12</option>')
                         .append('<option value="13 - 17">13 - 17</option>')
                         .append('<option value="18 - 28">18 - 28</option>')
