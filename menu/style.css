@@ -141,10 +141,11 @@ body.dark {
 .navlink_icon {
   position: relative;
   font-size: 22px;
-  min-width: 50px;
+  min-width: 40px;
   line-height: 40px;
   display: inline-block;
-  text-align: center;
+  text-align: left;
+  padding-left: 8px;
   border-radius: 6px;
 }
 .navlink_icon::before {
@@ -160,8 +161,9 @@ body.dark {
 .sidebar .nav_link {
   display: flex;
   align-items: center;
+  gap: 10px;
   width: 100%;
-  padding: 4px 15px;
+  padding: 6px 12px;
   border-radius: 8px;
   text-decoration: none;
   color: var(--grey-color);

@@ -24,6 +24,13 @@ $tipo_usu     = $_SESSION['tipo_usu'];
   <!-- Bootstrap 5 CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"> <!-- FontAwesome -->
   <script src="https://kit.fontawesome.com/fed2435e21.js" crossorigin="anonymous"></script>
+  <!-- Fallback/local Font Awesome (uses local files in /fontawesome/) -->
+  <link rel="stylesheet" href="fontawesome/css/all.min.css" />
+  <style>
+    /* Map FA6 style class to the local FA5 webfont so "fa-solid" icons still render
+       if the external kit is blocked or unavailable. */
+    .fa-solid { font-family: "Font Awesome 5 Free"; font-weight: 900; }
+  </style>
   <title>BD SISBEN - Dashboard</title>
   <link rel="stylesheet" href="menu/style.css" />
 
@@ -188,14 +195,13 @@ $tipo_usu     = $_SESSION['tipo_usu'];
           <li class="item">
             <div href="#" class="nav_link submenu_item">
               <span class="navlink_icon">
-                <i class="fa-solid fa-city"></i>
               </span>
-              <span class="navlink">Comuna / Barrios</span>
+              <span class="navlink"><i class="fa-solid fa-city me-2"></i>Comuna / Barrios</span>
               <i class="bx bx-chevron-right arrow-left"></i>
             </div>
             <ul class="menu_items submenu">
-              <a href="code/einfo/comunas.php" class="nav_link sublink">Ver Comunas</a>
-              <a href="code/einfo/barrios.php" class="nav_link sublink">Ver Barrios</a>
+              <a href="code/einfo/comunas.php" class="nav_link sublink"><i class="fa-solid fa-map-location-dot me-2"></i>Ver Comunas</a>
+              <a href="code/einfo/barrios.php" class="nav_link sublink"><i class="fa-solid fa-road me-2"></i>Ver Barrios</a>
             </ul>
           </li>
           <!-- end menú comuna/barrios -->
@@ -204,17 +210,16 @@ $tipo_usu     = $_SESSION['tipo_usu'];
           <li class="item">
             <div href="#" class="nav_link submenu_item">
               <span class="navlink_icon">
-                <i class="fa-solid fa-user-pen"></i>
                 <!--<i class="bx bx-home-alt"></i>-->
               </span>
 
-              <span class="navlink">Usuarios</span>
+              <span class="navlink"><i class="fa-solid fa-users me-2"></i>Usuarios</span>
               <i class="bx bx-chevron-right arrow-left"></i>
             </div>
 
             <ul class="menu_items submenu">
-              <a href="code/users/showusers.php" class="nav_link sublink">Permisos</a>
-              <a href="code/users/register.php" class="nav_link sublink">Crear Nuevo</a>
+              <a href="code/users/showusers.php" class="nav_link sublink"><i class="fa-solid fa-key me-2"></i>Permisos</a>
+              <a href="code/users/register.php" class="nav_link sublink"><i class="fa-solid fa-user-plus me-2"></i>Crear Nuevo</a>
             </ul>
           </li>
 
@@ -223,28 +228,27 @@ $tipo_usu     = $_SESSION['tipo_usu'];
               <span class="navlink_icon">
                 <i class="fa-solid fa-magnifying-glass"></i>
               </span>
-              <span class="navlink">Consultar</span>
+              <span class="navlink"><i class="fa-solid fa-magnifying-glass me-2"></i>Consultar</span>
               <i class="bx bx-chevron-right arrow-left"></i>
             </div>
 
             <ul class="menu_items submenu">
-              <a href="code/eventan/showsurvey.php" class="nav_link sublink">Ventanilla</a>
-              <a href="code/einfo/showsurvey.php" class="nav_link sublink">Informacion</a>
-              <a href="code/eventan/showMovimientos.php" class="nav_link sublink">Movimientos</a>
+              <a href="code/eventan/showsurvey.php" class="nav_link sublink"><i class="fa-solid fa-window-restore me-2"></i>Ventanilla</a>
+              <a href="code/einfo/showsurvey.php" class="nav_link sublink"><i class="fa-solid fa-info-circle me-2"></i>Informacion</a>
+              <a href="code/eventan/showMovimientos.php" class="nav_link sublink"><i class="fa-solid fa-people-arrows-left-right me-2"></i>Movimientos</a>
 
             </ul>
           </li>
           <li class="item">
             <div href="#" class="nav_link submenu_item">
               <span class="navlink_icon">
-                <i class="fa-solid fa-chart-pie"></i>
               </span>
-              <span class="navlink">Informes</span>
+              <span class="navlink"><i class="fa-solid fa-chart-pie me-2"></i>Informes</span>
               <i class="bx bx-chevron-right arrow-left"></i>
             </div>
 
             <ul class="menu_items submenu">
-              <a href="code/exportares/exportar.php" class="nav_link sublink">Ver Informes</a>
+              <a href="code/exportares/exportar.php" class="nav_link sublink"><i class="fa-solid fa-file-export me-2"></i>Ver Informes</a>
             </ul>
           </li>
 
@@ -256,12 +260,12 @@ $tipo_usu     = $_SESSION['tipo_usu'];
               <span class="navlink_icon">
                 <i class="fa-solid fa-screwdriver-wrench"></i>
               </span>
-              <span class="navlink">Mi Cuenta</span>
+              <span class="navlink"><i class="fa-solid fa-user-cog me-2"></i>Mi Cuenta</span>
               <i class="bx bx-chevron-right arrow-left"></i>
             </div>
 
             <ul class="menu_items submenu">
-              <a href="reset-password.php" class="nav_link sublink">Cambiar Contraseña</a>
+              <a href="reset-password.php" class="nav_link sublink"><i class="fa-solid fa-lock me-2"></i>Cambiar Contraseña</a>
             </ul>
           </li>
 
@@ -297,12 +301,12 @@ $tipo_usu     = $_SESSION['tipo_usu'];
                 <!--<i class="bx bx-home-alt"></i>-->
               </span>
 
-              <span class="navlink">Salidas Campo</span>
+              <span class="navlink"><i class="fa-solid fa-van-shuttle me-2"></i>Salidas Campo</span>
               <i class="bx bx-chevron-right arrow-left"></i>
             </div>
 
             <ul class="menu_items submenu">
-              <a href="code/ecampo/addsurvey1.php" class="nav_link sublink">Digitación Encuesta</a>
+              <a href="code/ecampo/addsurvey1.php" class="nav_link sublink"><i class="fa-solid fa-pencil me-2"></i>Digitación Encuesta</a>
             </ul>
           </li>
           <!-- end -->
@@ -312,12 +316,12 @@ $tipo_usu     = $_SESSION['tipo_usu'];
               <span class="navlink_icon">
                 <i class="fa-solid fa-magnifying-glass"></i>
               </span>
-              <span class="navlink">Editar Encuesta</span>
+              <span class="navlink"><i class="fa-solid fa-edit me-2"></i>Editar Encuesta</span>
               <i class="bx bx-chevron-right arrow-left"></i>
             </div>
 
             <ul class="menu_items submenu">
-              <a href="code/ecampo/showsurvey.php" class="nav_link sublink">Modificar</a>
+              <a href="code/ecampo/showsurvey.php" class="nav_link sublink"><i class="fa-solid fa-edit me-2"></i>Modificar</a>
             </ul>
           </li>
           <li class="item">
@@ -325,12 +329,12 @@ $tipo_usu     = $_SESSION['tipo_usu'];
               <span class="navlink_icon">
                 <i class="fa-solid fa-chart-pie"></i>
               </span>
-              <span class="navlink">Descargue</span>
+              <span class="navlink"><i class="fa-solid fa-download me-2"></i>Descargue</span>
               <i class="bx bx-chevron-right arrow-left"></i>
             </div>
 
             <ul class="menu_items submenu">
-              <a href="code/exportares/exportar.php" class="nav_link sublink">Informes</a>
+              <a href="code/exportares/exportar.php" class="nav_link sublink"><i class="fa-solid fa-file-export me-2"></i>Informes</a>
             </ul>
           </li>
           <!-- duplicate this li tag if you want to add or remove  navlink with submenu -->
@@ -340,12 +344,12 @@ $tipo_usu     = $_SESSION['tipo_usu'];
               <span class="navlink_icon">
                 <i class="fa-solid fa-screwdriver-wrench"></i>
               </span>
-              <span class="navlink">Mi Cuenta</span>
+              <span class="navlink"><i class="fa-solid fa-user-cog me-2"></i>Mi Cuenta</span>
               <i class="bx bx-chevron-right arrow-left"></i>
             </div>
 
             <ul class="menu_items submenu">
-              <a href="reset-password.php" class="nav_link sublink">Cambiar Contraseña</a>
+              <a href="reset-password.php" class="nav_link sublink"><i class="fa-solid fa-lock me-2"></i>Cambiar Contraseña</a>
               <!--<a href="#" class="nav_link sublink">Nav Sub Link</a>
               <a href="#" class="nav_link sublink">Nav Sub Link</a>
               <a href="#" class="nav_link sublink">Nav Sub Link</a>-->
@@ -384,15 +388,15 @@ $tipo_usu     = $_SESSION['tipo_usu'];
                 <!--<i class="bx bx-home-alt"></i>-->
               </span>
 
-              <span class="navlink">Ventanilla</span>
+              <span class="navlink"><i class="fa-solid fa-building-circle-check me-2"></i>Ventanilla</span>
               <i class="bx bx-chevron-right arrow-left"></i>
             </div>
 
             <ul class="menu_items submenu">
-              <a href="code/eventan/addsurvey1.php" class="nav_link sublink">Nueva Encuesta</a>
-              <a href="code/eventan/movimientosEncuesta.php" class="nav_link sublink">Movimientos</a>
-              <a href="code/einfo/addsurvey1.php" class="nav_link sublink">Información</a>
-              <a href="code/eventan/showsurvey.php" class="nav_link sublink">Lista Encuesta</a>
+              <a href="code/eventan/addsurvey1.php" class="nav_link sublink"><i class="fa-solid fa-file-circle-plus me-2"></i>Nueva Encuesta</a>
+              <a href="code/eventan/movimientosEncuesta.php" class="nav_link sublink"><i class="fa-solid fa-arrows-rotate me-2"></i>Movimientos</a>
+              <a href="code/einfo/addsurvey1.php" class="nav_link sublink"><i class="fa-solid fa-info me-2"></i>Información</a>
+              <a href="code/eventan/showsurvey.php" class="nav_link sublink"><i class="fa-solid fa-list me-2"></i>Lista Encuesta</a>
             </ul>
           </li>
           <!-- end -->
@@ -402,15 +406,15 @@ $tipo_usu     = $_SESSION['tipo_usu'];
               <span class="navlink_icon">
                 <i class="fa-solid fa-magnifying-glass"></i>
               </span>
-              <span class="navlink">Editar Encuesta</span>
+              <span class="navlink"><i class="fa-solid fa-edit me-2"></i>Editar Encuesta</span>
               <i class="bx bx-chevron-right arrow-left"></i>
             </div>
 
             <ul class="menu_items submenu">
               <!-- <a href="code/emovim/showsurvey.php" class="nav_link sublink">Movimientos</a> -->
-              <a href="code/einfo/showsurvey.php" class="nav_link sublink">Información</a>
-              <a href="code/eventan/showMovimientos.php" class="nav_link sublink">Movimientos</a>
-              <a href="code/eventan/showsurvey.php" class="nav_link sublink">Encuesta Nueva</a>
+              <a href="code/einfo/showsurvey.php" class="nav_link sublink"><i class="fa-solid fa-info-circle me-2"></i>Información</a>
+              <a href="code/eventan/showMovimientos.php" class="nav_link sublink"><i class="fa-solid fa-people-arrows-left-right me-2"></i>Movimientos</a>
+              <a href="code/eventan/showsurvey.php" class="nav_link sublink"><i class="fa-solid fa-file-circle-plus me-2"></i>Encuesta Nueva</a>
 
             </ul>
           </li>
@@ -419,12 +423,12 @@ $tipo_usu     = $_SESSION['tipo_usu'];
               <span class="navlink_icon">
                 <i class="fa-solid fa-chart-pie"></i>
               </span>
-              <span class="navlink">Descargue</span>
+              <span class="navlink"><i class="fa-solid fa-download me-2"></i>Descargue</span>
               <i class="bx bx-chevron-right arrow-left"></i>
             </div>
 
             <ul class="menu_items submenu">
-              <a href="code/exportares/exportar.php" class="nav_link sublink">Informes</a>
+              <a href="code/exportares/exportar.php" class="nav_link sublink"><i class="fa-solid fa-file-export me-2"></i>Informes</a>
 
             </ul>
           </li>
@@ -435,12 +439,12 @@ $tipo_usu     = $_SESSION['tipo_usu'];
               <span class="navlink_icon">
                 <i class="fa-solid fa-screwdriver-wrench"></i>
               </span>
-              <span class="navlink">Mi Cuenta</span>
+              <span class="navlink"><i class="fa-solid fa-user-cog me-2"></i>Mi Cuenta</span>
               <i class="bx bx-chevron-right arrow-left"></i>
             </div>
 
             <ul class="menu_items submenu">
-              <a href="reset-password.php" class="nav_link sublink">Cambiar Contraseña</a>
+              <a href="reset-password.php" class="nav_link sublink"><i class="fa-solid fa-lock me-2"></i>Cambiar Contraseña</a>
               <!--<a href="#" class="nav_link sublink">Nav Sub Link</a>
               <a href="#" class="nav_link sublink">Nav Sub Link</a>
               <a href="#" class="nav_link sublink">Nav Sub Link</a>-->
@@ -479,14 +483,14 @@ $tipo_usu     = $_SESSION['tipo_usu'];
                 <!--<i class="bx bx-home-alt"></i>-->
               </span>
 
-              <span class="navlink">Ventanilla</span>
+              <span class="navlink"><i class="fa-solid fa-building-circle-check me-2"></i>Ventanilla</span>
               <i class="bx bx-chevron-right arrow-left"></i>
             </div>
 
             <ul class="menu_items submenu">
-              <a href="code/eventan/addsurvey1.php" class="nav_link sublink">Nueva Encuesta</a>
+              <a href="code/eventan/addsurvey1.php" class="nav_link sublink"><i class="fa-solid fa-file-circle-plus me-2"></i>Nueva Encuesta</a>
               <!-- <a href="code/emovim/addsurvey1.php" class="nav_link sublink">Movimientos</a> -->
-              <a href="code/einfo/addsurvey1.php" class="nav_link sublink">Información</a>
+              <a href="code/einfo/addsurvey1.php" class="nav_link sublink"><i class="fa-solid fa-info-circle me-2"></i>Información</a>
             </ul>
           </li>
           <!-- end -->
@@ -496,14 +500,14 @@ $tipo_usu     = $_SESSION['tipo_usu'];
               <span class="navlink_icon">
                 <i class="fa-solid fa-magnifying-glass"></i>
               </span>
-              <span class="navlink">Editar Encuesta</span>
+              <span class="navlink"><i class="fa-solid fa-edit me-2"></i>Editar Encuesta</span>
               <i class="bx bx-chevron-right arrow-left"></i>
             </div>
 
             <ul class="menu_items submenu">
-              <a href="code/eventan/showsurvey.php" class="nav_link sublink">Encue. Nueva</a>
+              <a href="code/eventan/showsurvey.php" class="nav_link sublink"><i class="fa-solid fa-file-circle-plus me-2"></i>Encue. Nueva</a>
               <!-- <a href="code/emovim/showsurvey.php" class="nav_link sublink">Movimientos</a> -->
-              <a href="code/einfo/showsurvey.php" class="nav_link sublink">Información</a>
+              <a href="code/einfo/showsurvey.php" class="nav_link sublink"><i class="fa-solid fa-info-circle me-2"></i>Información</a>
             </ul>
           </li>
           <li class="item">
@@ -511,12 +515,12 @@ $tipo_usu     = $_SESSION['tipo_usu'];
               <span class="navlink_icon">
                 <i class="fa-solid fa-magnifying-glass"></i>
               </span>
-              <span class="navlink">Consultar</span>
+              <span class="navlink"><i class="fa-solid fa-magnifying-glass me-2"></i>Consultar</span>
               <i class="bx bx-chevron-right arrow-left"></i>
             </div>
             <ul class="menu_items submenu">
-              <a href="code/eventan/showsurvey.php" class="nav_link sublink">Ventanilla</a>
-              <a href="code/einfo/showsurvey.php" class="nav_link sublink">Informacion</a>
+              <a href="code/eventan/showsurvey.php" class="nav_link sublink"><i class="fa-solid fa-window-restore me-2"></i>Ventanilla</a>
+              <a href="code/einfo/showsurvey.php" class="nav_link sublink"><i class="fa-solid fa-info-circle me-2"></i>Informacion</a>
 
             </ul>
           </li>
@@ -525,7 +529,7 @@ $tipo_usu     = $_SESSION['tipo_usu'];
               <span class="navlink_icon">
                 <i class="fa-solid fa-chart-pie"></i>
               </span>
-              <span class="navlink">Descargue</span>
+              <span class="navlink"><i class="fa-solid fa-download me-2"></i>Descargue</span>
               <i class="bx bx-chevron-right arrow-left"></i>
             </div>
 
@@ -541,7 +545,7 @@ $tipo_usu     = $_SESSION['tipo_usu'];
               <span class="navlink_icon">
                 <i class="fa-solid fa-screwdriver-wrench"></i>
               </span>
-              <span class="navlink">Mi Cuenta</span>
+              <span class="navlink"><i class="fa-solid fa-user-cog me-2"></i>Mi Cuenta</span>
               <i class="bx bx-chevron-right arrow-left"></i>
             </div>
 
@@ -584,12 +588,12 @@ $tipo_usu     = $_SESSION['tipo_usu'];
               <span class="navlink_icon">
                 <i class="fa-solid fa-magnifying-glass"></i>
               </span>
-              <span class="navlink">Supervisión</span>
+              <span class="navlink"><i class="fa-solid fa-eye me-2"></i>Supervisión</span>
               <i class="bx bx-chevron-right arrow-left"></i>
             </div>
 
             <ul class="menu_items submenu">
-              <a href="code/supervisor/campo/showEncCampo.php" class="nav_link sublink">Campo</a>
+              <a href="code/supervisor/campo/showEncCampo.php" class="nav_link sublink"><i class="fa-solid fa-map me-2"></i>Campo</a>
               <!--<a href="code/users/addsurvey.php" class="nav_link sublink">Nueva</a>
               <a href="code/users//addsurvey.php" class="nav_link sublink">Movimientos</a>
               <a href="code/users/addsurvey.php" class="nav_link sublink">Información</a>
@@ -601,12 +605,12 @@ $tipo_usu     = $_SESSION['tipo_usu'];
               <span class="navlink_icon">
                 <i class="fa-solid fa-chart-pie"></i>
               </span>
-              <span class="navlink">Informesss</span>
+              <span class="navlink"><i class="fa-solid fa-chart-pie me-2"></i>Informes</span>
               <i class="bx bx-chevron-right arrow-left"></i>
             </div>
 
             <ul class="menu_items submenu">
-              <a href="code/report/report1.php" class="nav_link sublink">Campo</a>
+              <a href="code/report/report1.php" class="nav_link sublink"><i class="fa-solid fa-chart-line me-2"></i>Campo</a>
             </ul>
           </li>
 
@@ -618,12 +622,12 @@ $tipo_usu     = $_SESSION['tipo_usu'];
               <span class="navlink_icon">
                 <i class="fa-solid fa-screwdriver-wrench"></i>
               </span>
-              <span class="navlink">Mi Cuenta</span>
+              <span class="navlink"><i class="fa-solid fa-user-cog me-2"></i>Mi Cuenta</span>
               <i class="bx bx-chevron-right arrow-left"></i>
             </div>
 
             <ul class="menu_items submenu">
-              <a href="reset-password.php" class="nav_link sublink">Cambiar Contraseña</a>
+              <a href="reset-password.php" class="nav_link sublink"><i class="fa-solid fa-lock me-2"></i>Cambiar Contraseña</a>
             </ul>
           </li>
 
