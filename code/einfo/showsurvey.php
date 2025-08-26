@@ -407,13 +407,15 @@ header("Content-Type: text/html;charset=utf-8");
 							</table>
 						</div>
 					</div>
-				</div>
+				</div>';
+			?>
 
-				<div class="mt-4">
-					<?php $paginacion->render(); ?>
-				</div>';			?>
-			
-			<div class="text-center mt-4">
+			<div class="mt-4">
+				<?php $paginacion->render(); ?>
+			</div>
+		</div>
+		
+		<div class="text-center mt-4">
 				<a href="../../access.php" class="btn btn-secondary btn-lg">
 					<i class="fas fa-arrow-left me-2"></i> Regresar al Menú Principal
 				</a>

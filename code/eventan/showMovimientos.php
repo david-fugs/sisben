@@ -245,7 +245,7 @@ include("../../conexion.php");
     // Filtros de búsqueda
     if (!empty($_GET['doc_encVenta'])) {
         $doc_encVenta = $mysqli->real_escape_string($_GET['doc_encVenta']);
-        $where[] = "m.doc_encVenta LIKE '%$doc_encVenta%'";
+        $where[] = "m.doc_encVenta = '$doc_encVenta'"; // Cambié LIKE por = para búsqueda exacta
     }
 
     if (!empty($_GET['nom_encVenta'])) {
@@ -255,7 +255,15 @@ include("../../conexion.php");
 
     if (!empty($_GET['tipo_movimiento'])) {
         $tipo_movimiento = $mysqli->real_escape_string($_GET['tipo_movimiento']);
-        $where[] = "m.tipo_movimiento = '$tipo_movimiento'";
+        if ($tipo_movimiento == 'modificacion datos persona') {
+            // Buscar tanto la versión correcta como la con codificación incorrecta
+            $where[] = "(m.tipo_movimiento = 'modificacion datos persona' OR m.tipo_movimiento = 'modificaciÃ³n datos persona')";
+        } elseif ($tipo_movimiento == 'Retiro personas') {
+            // Buscar tanto la versión correcta como la con codificación incorrecta
+            $where[] = "(m.tipo_movimiento = 'Retiro personas' OR m.tipo_movimiento = 'RetiroÂ personas')";
+        } else {
+            $where[] = "m.tipo_movimiento = '$tipo_movimiento'";
+        }
     }
 
     // Construir consulta base
@@ -302,7 +310,7 @@ include("../../conexion.php");
                             <small>Inconformidades</small>
                         </div>
                         <div class="col">
-                            <strong><?php echo $stats['modificacion datos persona'] ?? 0; ?></strong><br>
+                            <strong><?php echo ($stats['modificacion datos persona'] ?? 0) + ($stats['modificaciÃ³n datos persona'] ?? 0); ?></strong><br>
                             <small>Modificaciones</small>
                         </div>
                         <div class="col">
@@ -310,7 +318,7 @@ include("../../conexion.php");
                             <small>Retiros Ficha</small>
                         </div>
                         <div class="col">
-                            <strong><?php echo $stats['Retiro personas'] ?? 0; ?></strong><br>
+                            <strong><?php echo ($stats['Retiro personas'] ?? 0) + ($stats['RetiroÂ personas'] ?? 0); ?></strong><br>
                             <small>Retiros Personas</small>
                         </div>
                         <div class="col">
@@ -337,6 +345,10 @@ include("../../conexion.php");
                 ?>
                 <div class="info-pagination">
                     <strong>Mostrando <?php echo $registro_inicio_pagina; ?> - <?php echo $registro_fin_pagina; ?> de <?php echo $num_registros; ?> registros</strong>
+                    <!-- Información de depuración temporal -->
+                    <?php if (!empty($_GET['doc_encVenta']) || !empty($_GET['nom_encVenta'])): ?>
+                        <br><small class="text-muted">Usuario: <?php echo $nombre; ?> (Tipo: <?php echo $tipo_usu; ?>) | Búsqueda activa</small>
+                    <?php endif; ?>
                 </div>
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped table-hover align-middle text-center">
@@ -365,15 +377,24 @@ include("../../conexion.php");
                         $registro_actual = $registro_inicio;
                         
                         while ($row = mysqli_fetch_array($result)) {
+                            // Corregir codificación de texto
+                            $tipo_movimiento_corregido = str_replace(
+                                ['modificaciÃ³n', 'RetiroÂ'],
+                                ['modificación', 'Retiro'],
+                                $row['tipo_movimiento']
+                            );
+                            
                             // Determinar clase del badge según el tipo de movimiento
                             $badge_class = 'badge-default';
-                            switch (strtolower($row['tipo_movimiento'])) {
+                            $tipo_lower = strtolower($tipo_movimiento_corregido);
+                            switch ($tipo_lower) {
                                 case 'inclusion':
                                     $badge_class = 'badge-inclusion';
                                     break;
                                 case 'inconformidad por clasificacion':
                                     $badge_class = 'badge-inconformidad';
                                     break;
+                                case 'modificación datos persona':
                                 case 'modificacion datos persona':
                                     $badge_class = 'badge-modificacion';
                                     break;
@@ -392,7 +413,7 @@ include("../../conexion.php");
                                 <td>' . date('d/m/Y H:i', strtotime($row['fecha_movimiento'])) . '</td>
                                 <td><span class="badge bg-info">' . $row['doc_encVenta'] . '</span></td>
                                 <td>' . $row['nom_encVenta'] . '</td>
-                                <td><span class="badge-movimiento ' . $badge_class . '">' . $row['tipo_movimiento'] . '</span></td>
+                                <td><span class="badge-movimiento ' . $badge_class . '">' . $tipo_movimiento_corregido . '</span></td>
                                 <td>' . $row['num_ficha_encVenta'] . '</td>
                                 <td><span class="' . $estado_class . '">' . $row['estado_ficha_texto'] . '</span></td>
                                 <td>' . $row['nombre_usuario'] . '</td>
@@ -439,7 +460,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['borrar_movimiento']) 
         </div>
 
         <div class="mt-4">
-            <?php $paginacion->render(); ?>
+            <?php 
+            // Mantener parámetros de búsqueda en la paginación
+            ob_start();
+            $paginacion->render();
+            $pagination_html = ob_get_clean();
+            
+            // Si hay parámetros de búsqueda, agregarlos a los enlaces de paginación
+            if (!empty($_GET['doc_encVenta']) || !empty($_GET['nom_encVenta']) || !empty($_GET['tipo_movimiento']) || !empty($_GET['asesor'])) {
+                $search_params = array();
+                if (!empty($_GET['doc_encVenta'])) $search_params[] = 'doc_encVenta=' . urlencode($_GET['doc_encVenta']);
+                if (!empty($_GET['nom_encVenta'])) $search_params[] = 'nom_encVenta=' . urlencode($_GET['nom_encVenta']);
+                if (!empty($_GET['tipo_movimiento'])) $search_params[] = 'tipo_movimiento=' . urlencode($_GET['tipo_movimiento']);
+                if (!empty($_GET['asesor'])) $search_params[] = 'asesor=' . urlencode($_GET['asesor']);
+                
+                $search_string = implode('&', $search_params);
+                
+                // Reemplazar enlaces para mantener parámetros
+                $pagination_html = preg_replace('/href="([^"]*)\?page=(\d+)"/', 'href="$1?page=$2&' . $search_string . '"', $pagination_html);
+                $pagination_html = preg_replace('/href="([^"]*)"(?![^>]*page=)/', 'href="$1?' . $search_string . '"', $pagination_html);
+            }
+            
+            echo $pagination_html;
+            ?>
         </div>
 
         <div class="text-center mt-4">

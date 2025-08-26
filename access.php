@@ -230,7 +230,7 @@ $tipo_usu     = $_SESSION['tipo_usu'];
             <ul class="menu_items submenu">
               <a href="code/eventan/showsurvey.php" class="nav_link sublink">Ventanilla</a>
               <a href="code/einfo/showsurvey.php" class="nav_link sublink">Informacion</a>
-              <a href="code/einfo/showsurvey.php" class="nav_link sublink">Movimientos</a>
+              <a href="code/eventan/showMovimientos.php" class="nav_link sublink">Movimientos</a>
 
             </ul>
           </li>
