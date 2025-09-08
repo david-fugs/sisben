@@ -266,28 +266,20 @@ include("../../conexion.php");
         }
     }
 
-    // Construir consulta base
-    $base_query = "SELECT m.*, u.nombre AS nombre_usuario,
-                   CASE 
-                       WHEN m.estado_ficha = 0 THEN 'FICHA RETIRADA'
-                       ELSE 'ACTIVA'
-                   END as estado_ficha_texto
+    // Construir consulta base (sin CASE para estado): calculamos el texto de estado por fila más abajo
+    $base_query = "SELECT m.*, u.nombre AS nombre_usuario
                    FROM movimientos m 
                    LEFT JOIN usuarios u ON m.id_usu = u.id_usu
                    WHERE " . implode(" AND ", $where);
 
     // Contar registros totales
-    $count_query = str_replace("SELECT m.*, u.nombre AS nombre_usuario,", "SELECT COUNT(*) as total,", $base_query);
-    $count_query = preg_replace("/CASE.*?END as estado_ficha_texto/s", "1", $count_query);
-      $count_result = $mysqli->query($count_query);
+    $count_query = str_replace("SELECT m.*, u.nombre AS nombre_usuario", "SELECT COUNT(*) as total", $base_query);
+    $count_result = $mysqli->query($count_query);
     $num_registros = $count_result->fetch_assoc()['total'];
     $resul_x_pagina = 25;
 
-    // Mostrar estadísticas
-    $stats_query = str_replace("SELECT m.*, u.nombre AS nombre_usuario,", "SELECT COUNT(*) as total, m.tipo_movimiento,", $base_query);
-    $stats_query = preg_replace("/CASE.*?END as estado_ficha_texto/s", "1", $stats_query);
-    $stats_query .= " GROUP BY m.tipo_movimiento";
-    
+    // Mostrar estadísticas por tipo de movimiento
+    $stats_query = "SELECT COUNT(*) as total, m.tipo_movimiento FROM movimientos m LEFT JOIN usuarios u ON m.id_usu = u.id_usu WHERE " . implode(" AND ", $where) . " GROUP BY m.tipo_movimiento";
     $stats_result = $mysqli->query($stats_query);
     $stats = [];
     while ($row = $stats_result->fetch_assoc()) {
@@ -406,7 +398,14 @@ include("../../conexion.php");
                                     break;
                             }
 
-                            $estado_class = ($row['estado_ficha'] == 0) ? 'estado-retirada' : 'estado-activa';
+                            // Determinar si esta fila debe mostrar 'FICHA RETIRADA' solo cuando el movimiento fue Retiro ficha
+                            $tipo_mov_minus = strtolower($tipo_movimiento_corregido);
+                            $es_retiro_ficha = (strpos($tipo_mov_minus, 'retiro ficha') !== false || strpos($tipo_mov_minus, 'retiro ficha') !== false);
+
+                            // Texto de estado: si el movimiento actual es 'Retiro ficha' mostramos 'FICHA RETIRADA', sino 'ACTIVA'
+                            $estado_texto = $es_retiro_ficha ? 'FICHA RETIRADA' : 'ACTIVA';
+                            $estado_class = $es_retiro_ficha ? 'estado-retirada' : 'estado-activa';
+
                             echo '
                             <tr>
                                 <td>' . $registro_actual++ . '</td>
@@ -415,7 +414,7 @@ include("../../conexion.php");
                                 <td>' . $row['nom_encVenta'] . '</td>
                                 <td><span class="badge-movimiento ' . $badge_class . '">' . $tipo_movimiento_corregido . '</span></td>
                                 <td>' . $row['num_ficha_encVenta'] . '</td>
-                                <td><span class="' . $estado_class . '">' . $row['estado_ficha_texto'] . '</span></td>
+                                <td><span class="' . $estado_class . '">' . $estado_texto . '</span></td>
                                 <td>' . $row['nombre_usuario'] . '</td>
                                 <td>
                                     <a href="editMovimiento.php?id_movimiento=' . $row['id_movimiento'] . '" class="btn btn-sm btn-outline-primary" title="Editar">

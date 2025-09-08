@@ -673,12 +673,16 @@ header("Content-Type: text/html;charset=utf-8");
                                         console.log("🔍 Integrantes recibidos:", response.integrantes);
 
                                         if (response.status === "ficha_retirada") {
-                                            // Mostrar advertencia de ficha retirada
-                                            mensajeContainer.removeClass("d-none alert-success alert-warning").addClass("alert alert-danger")
-                                                .html(response.message);
+                                            // Mostrar advertencia de ficha retirada (eliminando la frase restrictiva)
+                                            var cleanMessage = response.message.replace(/No se pueden realizar movimientos\.?/i, '').trim();
+                                            if (cleanMessage === '') {
+                                                cleanMessage = '⚠️ ADVERTENCIA: Esta persona tiene la ficha RETIRADA.';
+                                            }
+                                            mensajeContainer.removeClass("d-none alert-success alert-warning").addClass("alert alert-danger").html(cleanMessage);
 
                                             // Cargar los datos pero deshabilitar el botón de enviar
-                                            $("#btnEnviar").prop("disabled", true);
+                                            // Permitir crear un nuevo movimiento incluso si la ficha está retirada
+                                            $("#btnEnviar").prop("disabled", false);
 
                                             // Continuar cargando los datos normalmente
                                             $("#dir_encVenta").val(response.data.dir_encVenta);
