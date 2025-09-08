@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Prueba Export Encuesta Campo</title>
+</head>
+<body>
+    <h2>Prueba de Exportación - Encuesta Campo</h2>
+    
+    <h3>Enlaces de prueba:</h3>
+    
+    <p><strong>1. Sin filtros (todos los registros):</strong></p>
+    <a href="test_export.php" target="_blank">test_export.php (sin parámetros)</a>
+    
+    <p><strong>2. Con rango de septiembre 2025:</strong></p>
+    <a href="test_export.php?fecha_inicio=2025-09-01&fecha_fin=2025-09-09&id_usu=todos" target="_blank">
+        test_export.php con fechas 01/09/2025 - 09/09/2025
+    </a>
+    
+    <p><strong>3. Exportar directamente (todos los registros):</strong></p>
+    <a href="exportarEncuestaCampo.php" target="_blank">exportarEncuestaCampo.php (sin filtros)</a>
+    
+    <p><strong>4. Exportar con rango correcto:</strong></p>
+    <a href="exportarEncuestaCampo.php?fecha_inicio=2025-09-01&fecha_fin=2025-09-09&id_usu=todos" target="_blank">
+        exportarEncuestaCampo.php con fechas correctas
+    </a>
+    
+    <p><strong>5. Ver datos en la tabla:</strong></p>
+    <a href="debug_datos.php" target="_blank">debug_datos.php</a>
+    
+    <hr>
+    
+    <h3>Formulario manual de prueba:</h3>
+    <form action="exportarEncuestaCampo.php" method="GET" target="_blank">
+        <p>
+            <label>Fecha Inicio:</label>
+            <input type="date" name="fecha_inicio" value="2025-09-01">
+        </p>
+        <p>
+            <label>Fecha Fin:</label>
+            <input type="date" name="fecha_fin" value="2025-09-09">
+        </p>
+        <p>
+            <label>Usuario:</label>
+            <select name="id_usu">
+                <option value="todos">Todos los usuarios</option>
+                <option value="1">Usuario ID 1</option>
+            </select>
+        </p>
+        <p>
+            <button type="submit">Exportar Excel</button>
+        </p>
+    </form>
+    
+    <hr>
+    
+    <h3>Información:</h3>
+    <p>Los registros en la base de datos están fechados el <strong>2025-09-08</strong> (8 de septiembre), no en agosto.</p>
+    <p>Por eso cuando buscabas en el rango 01/08/2025 - 09/08/2025 no encontraba nada.</p>
+    <p>Usa el rango 01/09/2025 - 09/09/2025 para incluir los registros actuales.</p>
+</body>
+</html>
