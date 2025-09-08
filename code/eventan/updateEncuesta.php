@@ -25,6 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $doc_encVenta            = $_POST['doc_encVenta'];
         $tipo_documento          = $_POST['tipo_documento'];
         $fecha_expedicion        = $_POST['fecha_expedicion'];
+    $fecha_nacimiento        = $_POST['fecha_nacimiento'] ?? '';
         $departamento_expedicion = $_POST['departamento_expedicion'];
         $ciudad_expedicion       = $_POST['ciudad_expedicion'];
         $nom_encVenta           = mb_strtoupper($_POST['nom_encVenta']);
@@ -69,6 +70,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 fecha_edit_encVenta = '$fecha_edit_encVenta',
                 tipo_documento = '$tipo_documento',
                 fecha_expedicion = '$fecha_expedicion',
+                fecha_nacimiento = '$fecha_nacimiento',
                 departamento_expedicion = '$departamento_expedicion',
                 ciudad_expedicion = '$ciudad_expedicion',
                 sisben_nocturno = '$sisben_nocturno',
@@ -87,13 +89,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 doc_encVenta, fec_reg_encVenta, nom_encVenta, dir_encVenta, zona_encVenta, 
                 id_com, id_bar, otro_bar_ver_encVenta, tram_solic_encVenta, integra_encVenta, 
                 num_ficha_encVenta, obs_encVenta, fecha_alta_encVenta, fecha_edit_encVenta,
-                tipo_documento, fecha_expedicion, departamento_expedicion, ciudad_expedicion,
+                tipo_documento, fecha_expedicion, departamento_expedicion, ciudad_expedicion,fecha_nacimiento,
                 sisben_nocturno, estado_ficha, id_usu
             ) VALUES (
                 '$doc_encVenta', '$fec_reg_encVenta', '$nom_encVenta', '$dir_encVenta', '$zona_encVenta',
                 '$id_com', '$id_bar', '$otro_bar_ver_encVenta', 'ENCUESTA NUEVA', '$integra_encVenta',
                 '$num_ficha_encVenta', 'CREADO DESDE MOVIMIENTOS', '$fecha_alta_encVenta', '$fecha_edit_encVenta',
-                '$tipo_documento', '$fecha_expedicion', '$departamento_expedicion', '$ciudad_expedicion',
+                '$tipo_documento', '$fecha_expedicion', '$departamento_expedicion', '$ciudad_expedicion','$fecha_nacimiento',
                 '$sisben_nocturno', '$estado_ficha', '$id_usu'
             )";
 

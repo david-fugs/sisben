@@ -37,6 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $doc_encVenta            = $_POST['doc_encVenta'];
         $tipo_documento          = $_POST['tipo_documento'];
         $fecha_expedicion        = $_POST['fecha_expedicion'];
+    $fecha_nacimiento        = $_POST['fecha_nacimiento'] ?? NULL;
         $departamento_expedicion = $_POST['departamento_expedicion'];
         $ciudad_expedicion       = $_POST['ciudad_expedicion'];
         $nom_encVenta           = mb_strtoupper($_POST['nom_encVenta']);
@@ -71,6 +72,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 nom_encVenta = '$nom_encVenta',
                 fec_reg_encVenta = '$fec_reg_encVenta',
                 tipo_documento = '$tipo_documento',
+                fecha_nacimiento = " . ($fecha_nacimiento ? "'" . $mysqli->real_escape_string($fecha_nacimiento) . "'" : "NULL") . ",
                 departamento_expedicion = '$departamento_expedicion',
                 ciudad_expedicion = '$ciudad_expedicion',
                 fecha_expedicion = '$fecha_expedicion',
@@ -94,6 +96,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Crear NUEVO REGISTRO de movimiento para mantener historial
             $sql_new_movement = "INSERT INTO movimientos (
                 doc_encVenta, nom_encVenta, fec_reg_encVenta, tipo_documento,
+                fecha_nacimiento,
                 departamento_expedicion, ciudad_expedicion, fecha_expedicion,
                 dir_encVenta, zona_encVenta, id_com, id_bar, otro_bar_ver_encVenta,
                 integra_encVenta, num_ficha_encVenta, sisben_nocturno, estado_ficha,
@@ -101,6 +104,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 fecha_alta_movimiento, fecha_edit_movimiento
             ) VALUES (
                 '$doc_encVenta', '$nom_encVenta', '$fec_reg_encVenta', '$tipo_documento',
+                " . ($fecha_nacimiento ? "'" . $mysqli->real_escape_string($fecha_nacimiento) . "'" : "NULL") . ",
                 '$departamento_expedicion', '$ciudad_expedicion', '$fecha_expedicion',
                 '$dir_encVenta', '$zona_encVenta', '$id_com', '$id_bar', '$otro_bar_ver_encVenta',
                 '$integra_encVenta', '$num_ficha_encVenta', '$sisben_nocturno', '$estado_ficha',
@@ -118,6 +122,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // CREAR PRIMER REGISTRO PARA ESTE DOCUMENTO
             $sql_insert = "INSERT INTO movimientos (
                 doc_encVenta, nom_encVenta, fec_reg_encVenta, tipo_documento,
+                fecha_nacimiento,
                 departamento_expedicion, ciudad_expedicion, fecha_expedicion,
                 dir_encVenta, zona_encVenta, id_com, id_bar, otro_bar_ver_encVenta,
                 integra_encVenta, num_ficha_encVenta, sisben_nocturno, estado_ficha,
@@ -125,6 +130,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 fecha_alta_movimiento, fecha_edit_movimiento
             ) VALUES (
                 '$doc_encVenta', '$nom_encVenta', '$fec_reg_encVenta', '$tipo_documento',
+                " . ($fecha_nacimiento ? "'" . $mysqli->real_escape_string($fecha_nacimiento) . "'" : "NULL") . ",
                 '$departamento_expedicion', '$ciudad_expedicion', '$fecha_expedicion',
                 '$dir_encVenta', '$zona_encVenta', '$id_com', '$id_bar', '$otro_bar_ver_encVenta',
                 '$integra_encVenta', '$num_ficha_encVenta', '$sisben_nocturno', '$estado_ficha',

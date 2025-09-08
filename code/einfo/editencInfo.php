@@ -53,6 +53,7 @@ header("Content-Type: text/html;charset=utf-8");
             'fecha_reg_info',
             'doc_info',
             'nom_info',
+            'fecha_nacimiento',
             'tipo_documento',
             'departamento_expedicion',
             'ciudad_expedicion',

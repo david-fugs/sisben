@@ -571,6 +571,10 @@ while ($row = mysqli_fetch_assoc($resultado_departamentos)) {
                         <label for="nom_encVenta">* NOMBRES COMPLETOS:</label>
                         <input type='text' name='nom_encVenta' id="nom_encVenta" class='form-control' value="<?php echo $movimiento['nom_encVenta']; ?>" required style="text-transform:uppercase;" />
                     </div>
+                    <div class="form-group col-md-3">
+                        <label for="fecha_nacimiento">Fecha de Nacimiento</label>
+                        <input type='date' name='fecha_nacimiento' id="fecha_nacimiento" class='form-control' value="<?php echo (!empty($movimiento['fecha_nacimiento']) ? $movimiento['fecha_nacimiento'] : ''); ?>" />
+                    </div>
                 </div>
             </div>
 

@@ -26,12 +26,14 @@ header("Content-Type: text/html;charset=utf-8");
     <title>BD SISBEN</title>
     <script type="text/javascript" src="../../js/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
-    <script src="https://kit.fontawesome.com/fed2435e21.js"></script>    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://kit.fontawesome.com/fed2435e21.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../barrios.js"> </script>
-    <script src="integrantesEncuesta.js" ></script><style>
+    <script src="integrantesEncuesta.js"></script>
+    <style>
         .responsive {
             max-width: 100%;
             height: auto;
@@ -302,10 +304,20 @@ header("Content-Type: text/html;charset=utf-8");
         }
 
         @keyframes shake {
-            0%, 20%, 40%, 60%, 80% {
+
+            0%,
+            20%,
+            40%,
+            60%,
+            80% {
                 transform: translateX(0);
             }
-            10%, 30%, 50%, 70%, 90% {
+
+            10%,
+            30%,
+            50%,
+            70%,
+            90% {
                 transform: translateX(-5px);
             }
         }
@@ -407,13 +419,14 @@ header("Content-Type: text/html;charset=utf-8");
                 if (!cantidadValor || cantidadValor <= 0) {
                     alert("Por favor, ingresa una cantidad válida de integrantes.");
                     return;
-                }                for (var i = 0; i < cantidadValor; i++) {
+                }
+                for (var i = 0; i < cantidadValor; i++) {
                     var integranteDiv = $("<div>").addClass("formulario-dinamico");
-                    
+
                     // Agregar header del integrante
                     var integranteHeader = $("<div>").addClass("integrante-header").text("Integrante " + (i + 1));
                     integranteDiv.append(integranteHeader);
-                    
+
                     // Crear contenedor para los campos en grid
                     var fieldsContainer = $("<div>").addClass("form-row-custom");
 
@@ -427,7 +440,9 @@ header("Content-Type: text/html;charset=utf-8");
                         .attr("readonly", true); // Hacer el campo de solo lectura
 
                     // Crear grupos de campos con labels
-                    var generoGroup = $("<div>").addClass("form-group-dinamico");                    generoGroup.append($("<label>").text("Identidad de Género"));                    var generoSelect = $("<select>")
+                    var generoGroup = $("<div>").addClass("form-group-dinamico");
+                    generoGroup.append($("<label>").text("Identidad de Género"));
+                    var generoSelect = $("<select>")
                         .attr("name", "gen_integVenta[]")
                         .addClass("form-control smaller-input")
                         .attr("required", true)
@@ -439,7 +454,8 @@ header("Content-Type: text/html;charset=utf-8");
                     fieldsContainer.append(generoGroup);
 
                     var orientacionGroup = $("<div>").addClass("form-group-dinamico");
-                    orientacionGroup.append($("<label>").text("Orientación Sexual"));                    var OrientacionSexual = $("<select>")
+                    orientacionGroup.append($("<label>").text("Orientación Sexual"));
+                    var OrientacionSexual = $("<select>")
                         .attr("name", "orientacionSexual[]")
                         .addClass("form-control smaller-input")
                         .attr("required", true)
@@ -453,7 +469,8 @@ header("Content-Type: text/html;charset=utf-8");
                     fieldsContainer.append(orientacionGroup);
 
                     var rangoEdadGroup = $("<div>").addClass("form-group-dinamico");
-                    rangoEdadGroup.append($("<label>").text("Rango de Edad"));                    var rangoEdadSelect = $("<select>")
+                    rangoEdadGroup.append($("<label>").text("Rango de Edad"));
+                    var rangoEdadSelect = $("<select>")
                         .attr("name", "rango_integVenta[]")
                         .addClass("form-control smaller-input")
                         .attr("required", true)
@@ -469,7 +486,8 @@ header("Content-Type: text/html;charset=utf-8");
                     fieldsContainer.append(rangoEdadGroup);
 
                     var discapacidadGroup = $("<div>").addClass("form-group-dinamico");
-                    discapacidadGroup.append($("<label>").text("Condición de Discapacidad"));                    var condicionDiscapacidad = $("<select>")
+                    discapacidadGroup.append($("<label>").text("Condición de Discapacidad"));
+                    var condicionDiscapacidad = $("<select>")
                         .attr("name", "condicionDiscapacidad[]")
                         .addClass("form-control smaller-input")
                         .attr("required", true)
@@ -480,7 +498,8 @@ header("Content-Type: text/html;charset=utf-8");
                     fieldsContainer.append(discapacidadGroup);
 
                     var tipoDiscapacidadGroup = $("<div>").addClass("form-group-dinamico");
-                    tipoDiscapacidadGroup.append($("<label>").text("Tipo de Discapacidad"));                    var discapacidadSelect = $("<select>")
+                    tipoDiscapacidadGroup.append($("<label>").text("Tipo de Discapacidad"));
+                    var discapacidadSelect = $("<select>")
                         .attr("name", "tipoDiscapacidad[]")
                         .addClass("form-control smaller-input tipo-discapacidad")
                         .append('<option value="">Tipo Discapacidad</option>')
@@ -512,14 +531,15 @@ header("Content-Type: text/html;charset=utf-8");
                         .attr("required", true)
                         .append('<option value="">Victima</option>')
                         .append('<option value="Si">Si</option>')
-                        .append('<option value="No">No</option>');                    var mujerGestante = $("<select>")
+                        .append('<option value="No">No</option>');
+                    var mujerGestante = $("<select>")
                         .attr("name", "mujerGestante[]")
                         .addClass("form-control smaller-input")
                         .attr("required", true)
                         .append('<option value="">Mujer Gestante</option>')
                         .append('<option value="Si">Si</option>')
                         .append('<option value="No">No</option>');
-                        
+
                     var cabezaFamilia = $("<select>")
                         .attr("name", "cabezaFamilia[]")
                         .addClass("form-control smaller-input")
@@ -658,28 +678,30 @@ header("Content-Type: text/html;charset=utf-8");
                         },
                         dataType: "json",
                         beforeSend: function() {
-                           // console.log("⏳ Consultando en la base de datos...");
+                            // console.log("⏳ Consultando en la base de datos...");
                             mensajeContainer.removeClass("alert-danger alert-success alert-warning").addClass("alert d-none").html("");
                         },
                         success: function(response) {
-                            console.log("✅ Respuesta del servidor:", response);                            if (response.status === "existe_encuesta") {
+                            console.log("✅ Respuesta del servidor:", response);
+                            if (response.status === "existe_encuesta") {
                                 mensajeContainer.removeClass("d-none alert-danger alert-warning").addClass("alert alert-warning")
                                     .html('<i class="fas fa-exclamation-triangle"></i> <strong>Encuesta Ya Realizada</strong><br>' +
-                                          'Esta encuesta ya fue registrada el ' + new Date(response.data.fecha_alta_encVenta).toLocaleDateString() + '. ' +
-                                          'Puede ver los datos existentes, crear una nueva entrada, o continuar con el formulario actual.<br>' +
-                                          '<button type="button" class="btn btn-info btn-sm mt-2 me-2" onclick="verEncuestaExistente()">Ver Encuesta Existente</button>' +
-                                          '<button type="button" class="btn btn-success btn-sm mt-2 me-2" onclick="permitirNuevaEncuesta()">Crear Nueva Encuesta</button>' +
-                                          '<button type="button" class="btn btn-primary btn-sm mt-2" onclick="continuarConFormulario()">Continuar de Todas Formas</button>');
-                                
+                                        'Esta encuesta ya fue registrada el ' + new Date(response.data.fecha_alta_encVenta).toLocaleDateString() + '. ' +
+                                        'Puede ver los datos existentes, crear una nueva entrada, o continuar con el formulario actual.<br>' +
+                                        '<button type="button" class="btn btn-info btn-sm mt-2 me-2" onclick="verEncuestaExistente()">Ver Encuesta Existente</button>' +
+                                        '<button type="button" class="btn btn-success btn-sm mt-2 me-2" onclick="permitirNuevaEncuesta()">Crear Nueva Encuesta</button>' +
+                                        '<button type="button" class="btn btn-primary btn-sm mt-2" onclick="continuarConFormulario()">Continuar de Todas Formas</button>');
+
                                 // Guardar los datos existentes para referencia
                                 window.encuestaExistente = response.data;
-                                
+
                                 // No deshabilitar el botón de envío, solo mostrar la alerta
                                 // $("#btnEnviar").prop("disabled", true);
-                                
+
                                 // Llenar los campos con los datos de la encuesta existente para visualización
                                 llenarDatosExistentes(response.data);
-                                //traer el municipio
+                                // Setear departamento de expedición y traer el municipio
+                                $("#departamento_expedicion").val(response.data.departamento_expedicion);
                                 $.ajax({
                                     url: '../obtener_municipios.php',
                                     type: 'POST',
@@ -707,6 +729,9 @@ header("Content-Type: text/html;charset=utf-8");
                                 });
 
                                 $("#fecha_expedicion").val(response.data.fecha_expedicion);
+                                $("#nom_encVenta").val(response.data.nom_encVenta || '');
+                                $("#tipo_documento").val(response.data.tipo_documento || '');
+                                $("#fecha_nacimiento").val(response.data.fecha_nacimiento || '');
                                 $("#dir_encVenta").val(response.data.dir_encVenta);
                                 $("#zona_encVenta").val(response.data.zona_encVenta);
                                 $("#num_ficha_encVenta").val(response.data.num_ficha_encVenta);
@@ -741,7 +766,8 @@ header("Content-Type: text/html;charset=utf-8");
                                             });
                                         }
                                     }
-                                });                            } else if (response.status === "existe_info") {
+                                });
+                            } else if (response.status === "existe_info") {
                                 mensajeContainer.removeClass("d-none alert-danger alert-warning").addClass("alert alert-success")
                                     .html("✔ Documento encontrado en Información.");
                                 $("#btnEnviar").prop("disabled", false);
@@ -751,6 +777,7 @@ header("Content-Type: text/html;charset=utf-8");
                                 $("#tipo_documento").val(response.data.tipo_documento);
                                 $("#departamento_expedicion").val(response.data.departamento_expedicion).trigger('change');
                                 $("#fecha_expedicion").val(response.data.fecha_expedicion);
+                                $("#fecha_nacimiento").val(response.data.fecha_nacimiento || '');
                                 $("#obs1_encInfo").val(response.data.observacion);
                                 $("#obs2_encInfo").val(response.data.info_adicional);
 
@@ -814,7 +841,7 @@ header("Content-Type: text/html;charset=utf-8");
                                         "Identidad de Género",
                                         $("<select>")
                                         .attr("name", "gen_integVenta[]")
-                                        .addClass("form-control smaller-input")                                        .append('<option value="">Identidad Genero</option>')
+                                        .addClass("form-control smaller-input").append('<option value="">Identidad Genero</option>')
                                         .append('<option value="F"' + (response.data.gen_integVenta === 'F' ? ' selected' : '') + '>F</option>')
                                         .append('<option value="M"' + (response.data.gen_integVenta === 'M' ? ' selected' : '') + '>M</option>')
                                         .append('<option value="O"' + (response.data.gen_integVenta === 'O' ? ' selected' : '') + '>Otro</option>')
@@ -823,7 +850,7 @@ header("Content-Type: text/html;charset=utf-8");
                                 var rangoEdadSelect =
                                     createFormGroup(
                                         "rango_integVenta[]",
-                                        "Rango de edad",                                        $("<select>")
+                                        "Rango de edad", $("<select>")
                                         .attr("name", "rango_integVenta[]")
                                         .addClass("form-control smaller-input")
                                         .append('<option value="">Rango Edad</option>')
@@ -841,7 +868,7 @@ header("Content-Type: text/html;charset=utf-8");
                                         "orientacionSexual[]",
                                         "Orientación Sexual",
                                         $("<select>")
-                                        .attr("name", "orientacionSexual[]")                                        .addClass("form-control smaller-input")
+                                        .attr("name", "orientacionSexual[]").addClass("form-control smaller-input")
                                         .append('<option value="">Orientacion Sexual</option>')
                                         .append('<option value="Asexual"' + (response.data.orientacionSexual === 'Asexual' ? ' selected' : '') + '>Asexual</option>')
                                         .append('<option value="Bisexual"' + (response.data.orientacionSexual === 'Bisexual' ? ' selected' : '') + '>Bisexual</option>')
@@ -855,7 +882,7 @@ header("Content-Type: text/html;charset=utf-8");
                                     "Condición de Discapacidad",
                                     $("<select>")
                                     .attr("name", "condicionDiscapacidad[]")
-                                    .attr("id", "condicionDiscapacidad")                                    .addClass("form-control smaller-input")
+                                    .attr("id", "condicionDiscapacidad").addClass("form-control smaller-input")
                                     .append('<option value="">Condicion Discapacidad</option>')
                                     .append('<option value="Si"' + (response.data.condicionDiscapacidad === 'Si' ? ' selected' : '') + '>Si</option>')
                                     .append('<option value="No"' + (response.data.condicionDiscapacidad === 'No' ? ' selected' : '') + '>No</option>')
@@ -866,7 +893,7 @@ header("Content-Type: text/html;charset=utf-8");
                                     "Tipo de Discapacidad",
                                     $("<select>")
                                     .attr("name", "tipoDiscapacidad[]")
-                                    .attr("id", "tipoDiscapacidad")                                    .addClass("form-control smaller-input tipo-discapacidad")
+                                    .attr("id", "tipoDiscapacidad").addClass("form-control smaller-input tipo-discapacidad")
                                     .append('<option value="">Tipo Discapacidad</option>')
                                     .append('<option value="Auditiva"' + (response.data.tipoDiscapacidad === 'Auditiva' ? ' selected' : '') + '>Auditiva</option>')
                                     .append('<option value="Física"' + (response.data.tipoDiscapacidad === 'Física' ? ' selected' : '') + '>Física</option>')
@@ -1037,11 +1064,12 @@ header("Content-Type: text/html;charset=utf-8");
                                     }
                                 });
                                 // Actualizar el total
-                                actualizarTotal();                            } else if (response.status === "no_existe") {
+                                actualizarTotal();
+                            } else if (response.status === "no_existe") {
                                 mensajeContainer.removeClass("d-none alert-danger alert-success").addClass("alert alert-warning")
                                     .html("⚠️ El documento no está registrado en ninguna base de datos.");
                                 $("#btnEnviar").prop("disabled", false);
-                                
+
                                 // Mantener la fecha actual cuando el documento no existe
                                 $("#fec_reg_encVenta").val("<?php echo date('Y-m-d'); ?>");
                             } else {
@@ -1055,12 +1083,13 @@ header("Content-Type: text/html;charset=utf-8");
                             }
                         },
                         error: function(jqXHR, textStatus, errorThrown) {
-                           // console.log("❌ Error AJAX:", textStatus, errorThrown);
+                            // console.log("❌ Error AJAX:", textStatus, errorThrown);
                             mensajeContainer.removeClass("d-none alert-success alert-warning").addClass("alert alert-danger")
                                 .html("❌ Error en la consulta. Intente nuevamente.");
                             $("#btnEnviar").prop("disabled", false);
                         }
-                    });                } else {
+                    });
+                } else {
                     // Si el campo está vacío, limpiar todo excepto la fecha
                     mensajeContainer.addClass("d-none").html("");
                     $("#btnEnviar").prop("disabled", false);
@@ -1069,194 +1098,207 @@ header("Content-Type: text/html;charset=utf-8");
                 }
             });
         });
-    </script>    <form id="form_contacto" action='addsurvey2.php' method="POST" enctype="multipart/form-data">
+    </script>
+    <form id="form_contacto" action='addsurvey2.php' method="POST" enctype="multipart/form-data">
         <div class="container">
             <div class="main-container">
                 <div class="header-info">
                     <h1><b><i class="fa-solid fa-building"></i> REGISTRO ENCUESTAS NUEVA VENTANILLA</b></h1>
                     <p><i><b>*Datos obligatorios</b></i></p>
                 </div>
-                
+
                 <div id="mensajeDocumentoContainer" class="alert d-none"></div> <!-- Mensaje arriba -->
-                
+
                 <div class="form-section">
                     <h5 class="section-title">Información Personal</h5>
-            <div class="form-group">
-                <div class="row">
-                    <div class="form-group col-md-3">
-                        <label for="doc_encVenta">* DOCUMENTO:</label>
-                        <input type='number' name='doc_encVenta' class='form-control' id="doc_encVenta" required />
-                        <small id="mensajeDocumento" class="text-danger"></small>
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="fec_reg_encVenta">* FECHA REGISTRO:</label>
-                        <input type="date" name="fec_reg_encVenta" class="form-control" id="fec_reg_encVenta"
-                            value="<?php echo date('Y-m-d'); ?>"  autofocus disabled />
-                    </div>
-
-                    <div class="form-group col-md-6">
-                        <label for="tipo_doc">* TIPO DE DOCUMENTO:</label>
-                        <select name="tipo_documento" class="form-control" id="tipo_documento">
-                            <option value="">SELECCIONE:</option>
-                            <option value="cedula">CEDULA</option>
-                            <option value="ppt">PPT</option>
-                            <option value="cedula_extranjeria">CEDULA EXTRANJERIA</option>
-                            <option value="otro">otro</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="row">
-                    <div class="form-group col-md-3">
-                        <label for="departamento_expedicion">* DEPARTAMENTO EXPEDICION:</label>
-                        <select class="form-control" name="departamento_expedicion" id="departamento_expedicion">
-                            <option value="">Seleccione un departamento</option>
-                            <?php
-                            foreach ($departamentos as $departamento) {
-                                echo "<option value='{$departamento['cod_departamento']}'>{$departamento['nombre_departamento']}</option>";
-                            }
-                            ?>
-                        </select>
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="ciudad_expedicion">* MUNICIPIO EXPEDICION:</label>
-                        <select id="ciudad_expedicion" name="ciudad_expedicion" class="form-control" disabled required>
-                        </select>
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="fecha_expedicion">* FECHA EXPEDICION:</label>
-                        <input type='date' name='fecha_expedicion' id="fecha_expedicion" class='form-control' required style="text-transform:uppercase;" />
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="nom_encVenta">* NOMBRES COMPLETOS:</label>
-                        <input type='text' name='nom_encVenta' id="nom_encVenta" class='form-control' required style="text-transform:uppercase;" />
-                    </div>
-                </div>                </div>
-            </div>
-            
-            <div class="form-section">
-                <h5 class="section-title">Información de Ubicación</h5>
-            <div class="form-group">
-                <div class="row">
-                    <div class="form-group col-md-4">
-                        <label for="dir_encVenta">* DIRECCIÓN:</label>
-                        <input type='text' name='dir_encVenta' id="dir_encVenta" class='form-control' />
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="id_barrios">* BARRIO O VEREDA:</label>
-                        <select id="id_barrios" class="form-control" name="id_bar" style="width: 100%;min-height: 55px; "></select>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="id_comunas">* COMUNA O CORREGIMIENTO:</label>
-                        <select id="id_comunas" class="form-control" name="id_com" disabled>
-                            <option value="" disabled>Seleccione comuna</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="row">
-                    <div class="form-group col-md-4" id="otro_barrio_container" style="display: none;">
-                        <label for="otro_bar_ver_encVenta">ESPECIFIQUE BARRIO, VEREDA O INVASIÓN:</label>
-                        <input type="text" id="otro_bar_ver_encVenta" name="otro_bar_ver_encVenta" class="form-control" placeholder="Ingrese el barrio">
-                    </div>
-                </div>
-            </div>
-                </div>
-
-            <div class="form-section">
-                <h5 class="section-title">Trámite y Ficha</h5>
-
-
-            <div class="form-group">
-                <div class="row">
-                    <div class="form-group col-md-4">
-                        <label for="zona_encVenta">* ZONA:</label>
-                        <select id="zona_encVenta" class="form-control" name="zona_encVenta">
-                            <option value="">* SELECCIONE LA ZONA:</option>
-                            <option value="URBANA">URBANA</option>
-                            <option value="RURAL">RURAL</option>
-                        </select>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="tram_solic_encVenta">* TRÁMITE SOLICITADO:</label>
-                        <select class="form-control" name="tram_solic_encVenta" id="selectEF">
-                            <option value=""></option>
-                            <option value="ENCUESTA NUEVA">ENCUESTA NUEVA</option>
-                            <option value="ENCUESTA NUEVA POR VERIFICACION">ENCUESTA NUEVA POR VERIFICACION</option>
-                            <option value="CAMBIO DIRECCION">CAMBIO DIRECCION</option>
-                            <option value="INCONFORMIDAD">INCONFORMIDAD</option>
-                            <option value=" DESCENTRALIZADO"> DESCENTRALIZADO</option>
-                            <option value="FAVORES">FAVORES</option>
-                        </select>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="num_ficha_encVenta">* No. FICHA o RADICADO:</label>
-                        <input type='number' id="num_ficha_encVenta" name='num_ficha_encVenta' class='form-control' required />
-                    </div>                </div>
-            </div>
-            </div>
-
-            <script>
-                $("#id_bar").select2({
-                    tags: true
-                });
-                $("#id_vere").select2({
-                    tags: true
-                });
-            </script>
-
-            <div class="integrantes-section">
-                <h5 class="section-title">Información de Integrantes</h5>
-                <div class="agregar-integrantes-section">
                     <div class="form-group">
                         <div class="row">
-                            <div class="form-group col-md-4">
-                                <label for="integra_encVenta">INTEGRANTES:</label>
-                                <input type='number' id='total_integrantes' name='integra_encVenta' class='form-control' value="" readonly />
+                            <div class="form-group col-md-3">
+                                <label for="doc_encVenta">* DOCUMENTO:</label>
+                                <input type='number' name='doc_encVenta' class='form-control' id="doc_encVenta" required />
+                                <small id="mensajeDocumento" class="text-danger"></small>
                             </div>
-                            <div class="form-group col-md-4">
-                                <label for="sisben_nocturno">* SISBEN NOCTURNO:</label>
-                                <select class="form-control" name="sisben_nocturno" id="nocturno">
-                                    <option value=""></option>
-                                    <option value="SI">SI</option>
-                                    <option value="NO">NO</option>
+                            <div class="form-group col-md-3">
+                                <label for="fec_reg_encVenta">* FECHA REGISTRO:</label>
+                                <input type="date" name="fec_reg_encVenta" class="form-control" id="fec_reg_encVenta"
+                                    value="<?php echo date('Y-m-d'); ?>" autofocus disabled />
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label for="tipo_doc">* TIPO DE DOCUMENTO:</label>
+                                <select name="tipo_documento" class="form-control" id="tipo_documento">
+                                    <option value="">SELECCIONE:</option>
+                                    <option value="cedula">CEDULA</option>
+                                    <option value="ppt">PPT</option>
+                                    <option value="cedula_extranjeria">CEDULA EXTRANJERIA</option>
+                                    <option value="otro">otro</option>
                                 </select>
-                            </div>
-                            <div class="form-group col-md-2">
-                                <label for="cant_integVenta">CANTIDAD:</label>
-                                <input type="number" id="cant_integVenta" name="cant_integVenta" class="form-control" />
-                            </div>
-                            <div class="form-group col-md-2 d-flex flex-column align-items-start">
-                                <label for=""></label>
-                                <button type="button" class="btn btn-primary mt-auto" id="agregar">Agregar +</button>
                             </div>
                         </div>
                     </div>
-                </div>                <div id="integrantes-container"></div>
-            </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="form-group col-md-3">
+                                <label for="departamento_expedicion">* DEPARTAMENTO EXPEDICION:</label>
+                                <select class="form-control" name="departamento_expedicion" id="departamento_expedicion">
+                                    <option value="">Seleccione un departamento</option>
+                                    <?php
+                                    foreach ($departamentos as $departamento) {
+                                        echo "<option value='{$departamento['cod_departamento']}'>{$departamento['nombre_departamento']}</option>";
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="ciudad_expedicion">* MUNICIPIO EXPEDICION:</label>
+                                <select id="ciudad_expedicion" name="ciudad_expedicion" class="form-control" disabled required>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="fecha_expedicion">* FECHA EXPEDICION:</label>
+                                <input type='date' name='fecha_expedicion' id="fecha_expedicion" class='form-control' required style="text-transform:uppercase;" />
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="nom_encVenta">* NOMBRES COMPLETOS:</label>
+                                <input type='text' name='nom_encVenta' id="nom_encVenta" class='form-control' required style="text-transform:uppercase;" />
+                            </div>
+                        </div>
+                        <div class="row">
+                        <div class="form-group col-md-3">
+                            <label for="fecha_nacimiento">FECHA DE NACIMIENTO:</label>
+                            <input type='date' name='fecha_nacimiento' id="fecha_nacimiento" class='form-control' />
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    
+                </div>
 
-            <div class="form-section">
-                <h5 class="section-title">Observaciones</h5>
-                <div class="form-row">
-                    <div class="form-group col-md-12">
-                        <label for="obs_encVenta">OBSERVACIONES y/o COMENTARIOS ADICIONALES:</label>
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="2" name="obs_encVenta" style="text-transform:uppercase;"></textarea>
+                <div class="form-section">
+                    <h5 class="section-title">Información de Ubicación</h5>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="form-group col-md-4">
+                                <label for="dir_encVenta">* DIRECCIÓN:</label>
+                                <input type='text' name='dir_encVenta' id="dir_encVenta" class='form-control' />
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="id_barrios">* BARRIO O VEREDA:</label>
+                                <select id="id_barrios" class="form-control" name="id_bar" style="width: 100%;min-height: 55px; "></select>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="id_comunas">* COMUNA O CORREGIMIENTO:</label>
+                                <select id="id_comunas" class="form-control" name="id_com" disabled>
+                                    <option value="" disabled>Seleccione comuna</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="form-group col-md-4" id="otro_barrio_container" style="display: none;">
+                                <label for="otro_bar_ver_encVenta">ESPECIFIQUE BARRIO, VEREDA O INVASIÓN:</label>
+                                <input type="text" id="otro_bar_ver_encVenta" name="otro_bar_ver_encVenta" class="form-control" placeholder="Ingrese el barrio">
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="text-center mt-4">
-                    <button type="submit" class="btn btn-success me-3" id="btnEnviar">
-                        <span class="spinner-border spinner-border-sm"></span>
-                        INGRESAR ENCUESTA
-                    </button>
+                <div class="form-section">
+                    <h5 class="section-title">Trámite y Ficha</h5>
 
-                    <button type="reset" class="btn btn-outline-dark" role='link' onclick="history.back();" type='reset'>
-                        <img src='../../img/atras.png' width=27 height=27> REGRESAR
-                    </button>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="form-group col-md-4">
+                                <label for="zona_encVenta">* ZONA:</label>
+                                <select id="zona_encVenta" class="form-control" name="zona_encVenta">
+                                    <option value="">* SELECCIONE LA ZONA:</option>
+                                    <option value="URBANA">URBANA</option>
+                                    <option value="RURAL">RURAL</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="tram_solic_encVenta">* TRÁMITE SOLICITADO:</label>
+                                <select class="form-control" name="tram_solic_encVenta" id="selectEF">
+                                    <option value=""></option>
+                                    <option value="ENCUESTA NUEVA">ENCUESTA NUEVA</option>
+                                    <option value="ENCUESTA NUEVA POR VERIFICACION">ENCUESTA NUEVA POR VERIFICACION</option>
+                                    <option value="CAMBIO DIRECCION">CAMBIO DIRECCION</option>
+                                    <option value="INCONFORMIDAD">INCONFORMIDAD</option>
+                                    <option value=" DESCENTRALIZADO"> DESCENTRALIZADO</option>
+                                    <option value="FAVORES">FAVORES</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="num_ficha_encVenta">* No. FICHA o RADICADO:</label>
+                                <input type='number' id="num_ficha_encVenta" name='num_ficha_encVenta' class='form-control' required />
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
+
+                <script>
+                    $("#id_bar").select2({
+                        tags: true
+                    });
+                    $("#id_vere").select2({
+                        tags: true
+                    });
+                </script>
+
+                <div class="integrantes-section">
+                    <h5 class="section-title">Información de Integrantes</h5>
+                    <div class="agregar-integrantes-section">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="form-group col-md-4">
+                                    <label for="integra_encVenta">INTEGRANTES:</label>
+                                    <input type='number' id='total_integrantes' name='integra_encVenta' class='form-control' value="" readonly />
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="sisben_nocturno">* SISBEN NOCTURNO:</label>
+                                    <select class="form-control" name="sisben_nocturno" id="nocturno">
+                                        <option value=""></option>
+                                        <option value="SI">SI</option>
+                                        <option value="NO">NO</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <label for="cant_integVenta">CANTIDAD:</label>
+                                    <input type="number" id="cant_integVenta" name="cant_integVenta" class="form-control" />
+                                </div>
+                                <div class="form-group col-md-2 d-flex flex-column align-items-start">
+                                    <label for=""></label>
+                                    <button type="button" class="btn btn-primary mt-auto" id="agregar">Agregar +</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="integrantes-container"></div>
+                </div>
+
+                <div class="form-section">
+                    <h5 class="section-title">Observaciones</h5>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label for="obs_encVenta">OBSERVACIONES y/o COMENTARIOS ADICIONALES:</label>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="2" name="obs_encVenta" style="text-transform:uppercase;"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="text-center mt-4">
+                        <button type="submit" class="btn btn-success me-3" id="btnEnviar">
+                            <span class="spinner-border spinner-border-sm"></span>
+                            INGRESAR ENCUESTA
+                        </button>
+
+                        <button type="reset" class="btn btn-outline-dark" role='link' onclick="history.back();" type='reset'>
+                            <img src='../../img/atras.png' width=27 height=27> REGRESAR
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </form>
@@ -1316,14 +1358,15 @@ header("Content-Type: text/html;charset=utf-8");
     </script>
 
 </body>
-<script type="text/javascript">    $(document).ready(function() {
+<script type="text/javascript">
+    $(document).ready(function() {
         // Inicializar el botón de envío como habilitado por defecto
         $("#btnEnviar").prop("disabled", false);
-        
+
         //  Agregar LOGS para ver qué tiene id_bar al cambiar
         $('#id_bar').on('change', function() {
             $('#id_bar option:selected').each(function() {
-              //  console.log("Valor:", $(this).val(), "Texto:", $(this).text());
+                //  console.log("Valor:", $(this).val(), "Texto:", $(this).text());
             });
 
             let selectedText = $("#id_bar option:selected").text().trim();
@@ -1347,21 +1390,24 @@ header("Content-Type: text/html;charset=utf-8");
                 $('#id_vere').load('../ecampo/veredasGet.php?id_correg=' + $('#id_correg').val());
             }
         });
-    });    var cargarDocumentoCheckbox = document.getElementById("cargarDocumento");
+    });
+    var cargarDocumentoCheckbox = document.getElementById("cargarDocumento");
     var campoArchivo = document.getElementById("campoArchivo");
 
     cargarDocumentoCheckbox.addEventListener("change", function() {
         campoArchivo.style.display = cargarDocumentoCheckbox.checked ? "block" : "none";
-    });    // Funciones para manejar encuesta existente
+    }); // Funciones para manejar encuesta existente
     function verEncuestaExistente() {
         if (window.encuestaExistente) {
             // Obtener detalles completos de la encuesta
             let docEncuesta = $('#doc_encVenta').val();
-            
+
             $.ajax({
                 url: 'consultar_encuesta_detalle.php',
                 type: 'POST',
-                data: { doc_encVenta: docEncuesta },
+                data: {
+                    doc_encVenta: docEncuesta
+                },
                 dataType: 'json',
                 beforeSend: function() {
                     // Mostrar loading
@@ -1369,11 +1415,11 @@ header("Content-Type: text/html;charset=utf-8");
                 },
                 success: function(response) {
                     $('#loadingModal').remove();
-                    
+
                     if (response.status === 'success') {
                         let encuesta = response.encuesta;
                         let integrantes = response.integrantes;
-                        
+
                         // Generar tabla de integrantes
                         let tablaIntegrantes = '';
                         if (integrantes.length > 0) {
@@ -1392,7 +1438,7 @@ header("Content-Type: text/html;charset=utf-8");
                                             </thead>
                                             <tbody>
                             `;
-                            
+
                             integrantes.forEach(function(integrante) {
                                 tablaIntegrantes += `
                                     <tr>
@@ -1403,7 +1449,7 @@ header("Content-Type: text/html;charset=utf-8");
                                     </tr>
                                 `;
                             });
-                            
+
                             tablaIntegrantes += `
                                             </tbody>
                                         </table>
@@ -1411,7 +1457,7 @@ header("Content-Type: text/html;charset=utf-8");
                                 </div>
                             `;
                         }
-                        
+
                         let modalContent = `
                             <div class="modal fade" id="modalEncuestaExistente" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-xl">
@@ -1475,13 +1521,13 @@ header("Content-Type: text/html;charset=utf-8");
                                 </div>
                             </div>
                         `;
-                        
+
                         // Remover modal existente si existe
                         $('#modalEncuestaExistente').remove();
-                        
+
                         // Agregar el modal al body
                         $('body').append(modalContent);
-                        
+
                         // Mostrar el modal
                         $('#modalEncuestaExistente').modal('show');
                     } else {
@@ -1495,66 +1541,77 @@ header("Content-Type: text/html;charset=utf-8");
                 }
             });
         }
-    }    function permitirNuevaEncuesta() {
+    }
+
+    function permitirNuevaEncuesta() {
         // Confirmar con el usuario de manera más clara
         if (confirm('🔄 CREAR NUEVA ENCUESTA\n\n' +
-                   'Esto limpiará todos los campos del formulario y le permitirá ' +
-                   'crear una nueva encuesta desde cero.\n\n' +
-                   '¿Desea continuar?')) {
-            // Limpiar los campos del formulario
-            $('#formulario')[0].reset();
-            
+                'Esto limpiará todos los campos del formulario y le permitirá ' +
+                'crear una nueva encuesta desde cero.\n\n' +
+                '¿Desea continuar?')) {
+            // Limpiar los campos del formulario (usar el id real del form)
+            var formElem = $('#form_contacto')[0];
+            if (formElem) formElem.reset();
+
             // Limpiar selects específicos
             $('#departamento_expedicion').val('').trigger('change');
             $('#ciudad_expedicion').empty().append('<option value="">Seleccione un municipio</option>').prop('disabled', true);
             $('#id_barrios').val(null).trigger('change');
             $('#id_comunas').empty().append('<option value="">Seleccione una comuna</option>').prop('disabled', true);
-            
+
             // Restablecer la fecha actual
             $('#fec_reg_encVenta').val("<?php echo date('Y-m-d'); ?>");
-            
+
             // Habilitar el botón de envío
             $("#btnEnviar").prop("disabled", false);
-            
-            // Mostrar mensaje de confirmación
+
+            // Mostrar mensaje de confirmación (usar fallback si #mensajeConsulta no existe)
             let mensajeContainer = $("#mensajeConsulta");
+            if (mensajeContainer.length === 0) mensajeContainer = $("#mensajeDocumentoContainer");
             mensajeContainer.removeClass('d-none alert-warning alert-danger').addClass('alert alert-success')
                 .html('<i class="fas fa-check-circle"></i> <strong>Formulario Limpio</strong><br>' +
-                      'Puede proceder a llenar el formulario para crear una nueva encuesta.');
-            
-            // Limpiar la sección de integrantes
-            $('#integrantesContainer').empty();
-            $('#integra_encVenta').val('');
-            
+                    'Puede proceder a llenar el formulario para crear una nueva encuesta.');
+
+            // Limpiar la sección de integrantes (IDs reales)
+            $('#integrantes-container').empty();
+            $('#total_integrantes').val('');
+
             // Limpiar la variable global
             delete window.encuestaExistente;
-            
+
             // Mostrar mensaje de confirmación
             $('.alert').removeClass('d-none alert-warning alert-danger').addClass('alert alert-info')
                 .html('<i class="fas fa-info-circle"></i> <strong>Nuevo Registro</strong><br>Puede proceder a llenar el formulario para crear una nueva encuesta.');
-        }    }
+        }
+    }
 
     function continuarConFormulario() {
         // Mostrar una confirmación más clara al usuario
         if (confirm('⚠️ CONFIRMACIÓN REQUERIDA\n\n' +
-                   'Ya existe una encuesta registrada para este documento. ' +
-                   'Si continúa, se creará un registro adicional en la base de datos.\n\n' +
-                   '¿Está seguro que desea continuar y guardar esta nueva encuesta?')) {
-            
-            // Cambiar el mensaje a información
+                'Ya existe una encuesta registrada para este documento. ' +
+                'Si continúa, se creará un registro adicional en la base de datos.\n\n' +
+                '¿Está seguro que desea continuar y guardar esta nueva encuesta?')) {
+
+            // Cambiar el mensaje a información (usar fallback si no existe)
             let mensajeContainer = $("#mensajeConsulta");
+            if (mensajeContainer.length === 0) mensajeContainer = $("#mensajeDocumentoContainer");
             mensajeContainer.removeClass("alert-warning alert-danger").addClass("alert-info")
                 .html('<i class="fas fa-info-circle"></i> <strong>Continuando con Nueva Encuesta</strong><br>' +
-                      'Se guardará una nueva encuesta aunque ya exista una registrada anteriormente. ' +
-                      'Puede proceder a completar y enviar el formulario.');
-            
+                    'Se guardará una nueva encuesta aunque ya exista una registrada anteriormente. ' +
+                    'Puede proceder a completar y enviar el formulario.');
+
             // Asegurar que el botón de envío esté habilitado
             $("#btnEnviar").prop("disabled", false);
-            
-            // Opcional: scroll hacia arriba para que vea el mensaje
-            $('html, body').animate({
-                scrollTop: mensajeContainer.offset().top - 100
-            }, 500);
+
+            // Opcional: scroll hacia arriba para que vea el mensaje (solo si existe)
+            if (mensajeContainer.length > 0 && typeof mensajeContainer.offset === 'function') {
+                var off = mensajeContainer.offset();
+                if (off && off.top) {
+                    $('html, body').animate({
+                        scrollTop: off.top - 100
+                    }, 500);
+                }
+            }
         }
     }
 
@@ -1576,29 +1633,29 @@ header("Content-Type: text/html;charset=utf-8");
     function validarIntegrantes() {
         var integrantesContainer = $("#integrantes-container");
         var formulariosDinamicos = integrantesContainer.find(".formulario-dinamico");
-        
+
         if (formulariosDinamicos.length === 0) {
             alert("Debe agregar al menos un integrante antes de enviar el formulario.");
             return false;
         }
-        
+
         var errores = [];
         var integranteNumero = 1;
-        
+
         formulariosDinamicos.each(function(index) {
             var formulario = $(this);
             var camposRequeridos = formulario.find("select[required]");
-            
+
             camposRequeridos.each(function() {
                 var campo = $(this);
                 var valor = campo.val();
                 var nombre = campo.attr("name");
-                
+
                 if (!valor || valor === "") {
                     // Obtener el label del campo para un mensaje más amigable
                     var label = campo.closest('.form-group-dinamico').find('label').text() || nombre;
                     errores.push("Integrante " + integranteNumero + ": " + label + " es requerido");
-                    
+
                     // Agregar clase de error visual
                     campo.addClass("is-invalid");
                 } else {
@@ -1606,14 +1663,14 @@ header("Content-Type: text/html;charset=utf-8");
                     campo.removeClass("is-invalid");
                 }
             });
-            
+
             integranteNumero++;
         });
-        
+
         if (errores.length > 0) {
             var mensajeError = "Por favor complete los siguientes campos:\n\n" + errores.join("\n");
             alert(mensajeError);
-            
+
             // Scroll al primer campo con error
             var primerCampoError = $(".is-invalid").first();
             if (primerCampoError.length > 0) {
@@ -1621,10 +1678,10 @@ header("Content-Type: text/html;charset=utf-8");
                     scrollTop: primerCampoError.offset().top - 100
                 }, 500);
             }
-            
+
             return false;
         }
-        
+
         return true;
     }
 
@@ -1636,7 +1693,7 @@ header("Content-Type: text/html;charset=utf-8");
                 return false;
             }
         });
-        
+
         // Remover clase de error cuando el usuario selecciona un valor
         $(document).on("change", "select.is-invalid", function() {
             if ($(this).val() !== "") {

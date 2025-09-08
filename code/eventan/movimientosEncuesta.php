@@ -636,6 +636,8 @@ header("Content-Type: text/html;charset=utf-8");
 
                         // Limpiar fecha (mantener fecha actual)
                         $("#fec_reg_encVenta").val("<?php echo date('Y-m-d'); ?>");
+                        // Limpiar fecha de nacimiento
+                        $("#fecha_nacimiento").val("");
 
                         // Limpiar integrantes
                         $("#integrantes-container").empty();
@@ -705,6 +707,7 @@ header("Content-Type: text/html;charset=utf-8");
                                             }
                                             $("#tipo_documento").val(response.data.tipo_documento);
                                             $("#fecha_expedicion").val(response.data.fecha_expedicion);
+                                            $("#fecha_nacimiento").val(response.data.fecha_nacimiento || '');
                                             $("#nom_encVenta").val(response.data.nom_encVenta);
                                             $("#fec_reg_encVenta").val(response.data.fecha_alta_encVenta.split(' ')[0]); // Solo la fecha, sin la hora
 
@@ -780,6 +783,7 @@ header("Content-Type: text/html;charset=utf-8");
                                             $("#nom_encVenta").val(response.data.nom_encVenta);
                                             $("#tipo_documento").val(response.data.tipo_documento);
                                             $("#fecha_expedicion").val(response.data.fecha_expedicion);
+                                                $("#fecha_nacimiento").val(response.data.fecha_nacimiento || '');
                                             $("#dir_encVenta").val(response.data.dir_encVenta);
                                             $("#zona_encVenta").val(response.data.zona_encVenta);
                                             $("#num_ficha_encVenta").val(response.data.num_ficha_encVenta);
@@ -1232,6 +1236,10 @@ header("Content-Type: text/html;charset=utf-8");
                             <div class="col-md-4">
                                 <label for="fecha_expedicion" class="form-label">Fecha Expedición <span class="text-danger">*</span></label>
                                 <input type='date' name='fecha_expedicion' id="fecha_expedicion" class='form-control' required />
+                            </div>
+                            <div class="col-md-4">
+                                <label for="fecha_nacimiento" class="form-label">Fecha de Nacimiento</label>
+                                <input type='date' name='fecha_nacimiento' id="fecha_nacimiento" class='form-control' />
                             </div>
                         </div>
                     </div>

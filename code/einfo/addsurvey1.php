@@ -266,6 +266,12 @@ header("Content-Type: text/html;charset=utf-8");
                                 $('#tipo_documento').val(response.data.tipo_documento);
                                 $('#departamento_expedicion').val(response.data.departamento_expedicion);
                                 $('#fecha_expedicion').val(response.data.fecha_expedicion);
+                                // Precargar fecha de nacimiento si viene
+                                if (response.data.fecha_nacimiento) {
+                                    $('#fecha_nacimiento').val(response.data.fecha_nacimiento);
+                                } else {
+                                    $('#fecha_nacimiento').val('');
+                                }
                                 
                                 // Precargar campos demográficos
                                 $('#gen_integVenta').val(response.data.gen_integVenta);
@@ -348,6 +354,7 @@ header("Content-Type: text/html;charset=utf-8");
               // Función para limpiar formulario (excepto fecha y documento)
             function limpiarFormulario() {
                 $('#nom_info, #tipo_documento, #departamento_expedicion, #fecha_expedicion').val('');
+                $('#fecha_nacimiento').val('');
                 $('#gen_integVenta, #rango_integVenta, #victima, #condicionDiscapacidad').val('');
                 $('#tipoDiscapacidad, #mujerGestante, #cabezaFamilia, #orientacionSexual').val('');
                 $('#experienciaMigratoria, #grupoEtnico, #seguridadSalud, #nivelEducativo').val('');
@@ -486,6 +493,15 @@ header("Content-Type: text/html;charset=utf-8");
                                 * Nombres Completos
                             </label>
                             <input type='text' name='nom_info' id='nom_info' class='form-control' required style="text-transform:uppercase;" placeholder="Nombres completos" />
+                        </div>
+                    </div>
+                    <div class="row g-3 mt-2">
+                        <div class="col-md-3">
+                            <label for="fecha_nacimiento" class="form-label">
+                                <i class="fas fa-birthday-cake text-primary me-1"></i>
+                                Fecha de Nacimiento
+                            </label>
+                            <input type='date' name='fecha_nacimiento' id='fecha_nacimiento' class='form-control' />
                         </div>
                     </div>
                 </div>                <!-- Información Demográfica -->

@@ -259,6 +259,11 @@ header("Content-Type: text/html;charset=utf-8");
                             <!-- Se cargará dinámicamente -->
                         </select>
                     </div>
+                    <div class="col-md-3">
+                        <label for="fecha_nacimiento" class="form-label">Fecha de Nacimiento</label>
+                        <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento"
+                               value="<?php echo isset($encuesta['fecha_nacimiento']) ? $encuesta['fecha_nacimiento'] : ''; ?>">
+                    </div>
                 </div>
             </div>
 

@@ -157,6 +157,10 @@ header("Content-Type: text/html;charset=utf-8");
                         <label for="nom_info">* NOMBRES COMPLETOS:</label>
                         <input type='text' name='nom_info' class='form-control' style="text-transform:uppercase;" value="<?php echo isset($row['nom_info']) ? $row['nom_info'] : ''; ?>" />
                     </div>
+                    <div class="form-group col-md-3">
+                        <label for="fecha_nacimiento">FECHA DE NACIMIENTO:</label>
+                        <input type='date' name='fecha_nacimiento' id='fecha_nacimiento' class='form-control' value="<?php echo isset($row['fecha_nacimiento']) ? $row['fecha_nacimiento'] : ''; ?>" />
+                    </div>
                 </div>
 
 

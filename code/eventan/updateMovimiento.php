@@ -50,6 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id_movimiento'])) {
         $num_ficha_encVenta     = $_POST['num_ficha_encVenta'];
         $obs_encVenta           = mb_strtoupper($_POST['obs_encVenta'] ?? '', 'UTF-8');
         $fecha_edit_movimiento  = date('Y-m-d H:i:s');
+        $fecha_nacimiento       = $_POST['fecha_nacimiento'] ?? null;
 
         // Determinar el estado de la ficha según el tipo de movimiento
         $estado_ficha = ($movimientos == "Retiro ficha") ? 0 : 1; // 0 = retirada, 1 = activa
@@ -73,7 +74,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id_movimiento'])) {
             estado_ficha = '$estado_ficha',
             tipo_movimiento = '$movimientos',
             observacion = '$obs_encVenta',
-            fecha_edit_movimiento = '$fecha_edit_movimiento'
+            fecha_edit_movimiento = '$fecha_edit_movimiento',
+            fecha_nacimiento = " . ($fecha_nacimiento ? "'$fecha_nacimiento'" : "NULL") . "
             WHERE id_movimiento = '$id_movimiento'";
         if (!$mysqli->query($sql_update)) {
             throw new Exception("Error al actualizar el movimiento: " . $mysqli->error);

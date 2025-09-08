@@ -21,6 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $fec_reg_info        = $_POST['fec_reg_info'];
     $doc_info            = $_POST['doc_info'];
     $nom_info            = mb_strtoupper($_POST['nom_info']);
+    $fecha_nacimiento    = isset($_POST['fecha_nacimiento']) ? $_POST['fecha_nacimiento'] : '';
     $gen_integVenta      = $_POST['gen_integVenta'];
     $tipo_documento          = $_POST['tipo_documento'];
     $departamento_expedicion = $_POST['departamento_expedicion'];
@@ -58,6 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         departamento_expedicion,
         ciudad_expedicion,
         fecha_expedicion,
+    fecha_nacimiento,
         
         rango_integVenta,
         victima,
@@ -86,6 +88,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         '$departamento_expedicion',
         '$ciudad_expedicion',
         '$fecha_expedicion',
+    '$fecha_nacimiento',
         '$rango_integVenta',
         '$victima',
         '$condicionDiscapacidad',

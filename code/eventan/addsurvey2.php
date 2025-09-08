@@ -20,6 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $doc_encVenta            = $_POST['doc_encVenta'];
     $tipo_documento          = $_POST['tipo_documento'];
     $fecha_expedicion        = $_POST['fecha_expedicion'];
+    $fecha_nacimiento        = $_POST['fecha_nacimiento'] ?? '';
     $departamento_expedicion = $_POST['departamento_expedicion'];
     $ciudad_expedicion       = $_POST['ciudad_expedicion'];
     $nom_encVenta           = mb_strtoupper($_POST['nom_encVenta']);
@@ -47,8 +48,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($encuesta_existente['total'] > 0) {
         $obs_encVenta .= " [REGISTRO ADICIONAL - Ya existe encuesta previa para este documento]";
     }// Inserción en encVentanilla
-    $sql = "INSERT INTO encventanilla (fec_reg_encVenta, doc_encVenta, nom_encVenta, dir_encVenta, zona_encVenta, id_com, id_bar, otro_bar_ver_encVenta, tram_solic_encVenta, integra_encVenta, num_ficha_encVenta, obs_encVenta, estado_encVenta, fecha_alta_encVenta, fecha_edit_encVenta, tipo_documento, fecha_expedicion,departamento_expedicion,ciudad_expedicion,id_usu ,sisben_nocturno, estado_ficha) 
-        VALUES ('$fec_reg_encVenta', '$doc_encVenta', '$nom_encVenta', '$dir_encVenta', '$zona_encVenta', '$id_com', '$id_bar', '$otro_bar_ver_encVenta', '$tram_solic_encVenta', '$integra_encVenta', '$num_ficha_encVenta', '$obs_encVenta', '$estado_encVenta', '$fecha_alta_encVenta', '$fecha_edit_encVenta','$tipo_documento','$fecha_expedicion', '$departamento_expedicion','$ciudad_expedicion', '$id_usu', '$sisben_nocturno', 1)";
+    $sql = "INSERT INTO encventanilla (fec_reg_encVenta, doc_encVenta, nom_encVenta, dir_encVenta, zona_encVenta, id_com, id_bar, otro_bar_ver_encVenta, tram_solic_encVenta, integra_encVenta, num_ficha_encVenta, obs_encVenta, estado_encVenta, fecha_alta_encVenta, fecha_edit_encVenta, tipo_documento, fecha_expedicion, departamento_expedicion, ciudad_expedicion, fecha_nacimiento, id_usu, sisben_nocturno, estado_ficha) 
+        VALUES ('$fec_reg_encVenta', '$doc_encVenta', '$nom_encVenta', '$dir_encVenta', '$zona_encVenta', '$id_com', '$id_bar', '$otro_bar_ver_encVenta', '$tram_solic_encVenta', '$integra_encVenta', '$num_ficha_encVenta', '$obs_encVenta', '$estado_encVenta', '$fecha_alta_encVenta', '$fecha_edit_encVenta', '$tipo_documento', '$fecha_expedicion', '$departamento_expedicion', '$ciudad_expedicion', '$fecha_nacimiento', '$id_usu', '$sisben_nocturno', 1)";
 
     $resultado = $mysqli->query($sql);
 

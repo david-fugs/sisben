@@ -103,7 +103,7 @@ try {
     ];
 
     // Aplicar estilos a la hoja 1
-    $sheet1->getStyle('A1:AE1')->applyFromArray($styleHeader);
+    $sheet1->getStyle('A1:AF1')->applyFromArray($styleHeader);
 
     // Encabezados para ENCUESTAS
     $sheet1->setCellValue('A1', 'FECHA ENCUESTA');
@@ -139,6 +139,7 @@ try {
     $sheet1->setCellValue('AC1', 'NIVEL EDUCATIVO');
     $sheet1->setCellValue('AD1', 'CONDICION OCUPACION');
     $sheet1->setCellValue('AE1', 'ASESOR');
+    $sheet1->setCellValue('AF1', 'EDAD');
 
     // Si el filtro es TODOS, usamos datos de integrantes, sino dejamos vacío
     $isTodos = (!isset($_GET['id_usu']) || $_GET['id_usu'] == '' || $_GET['id_usu'] == 'todos');
@@ -146,7 +147,7 @@ try {
     // Ajustar ancho de columnas para ENCUESTAS
     foreach ([
         'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R',
-        'S','T','U','V','W','X','Y','Z','AA','AB','AC','AD','AE'
+        'S','T','U','V','W','X','Y','Z','AA','AB','AC','AD','AE','AF'
     ] as $col) {
         $sheet1->getColumnDimension($col)->setWidth(20);
     }
@@ -194,8 +195,9 @@ if (!function_exists('limpiarTexto')) {
         $sheet1->setCellValue('P' . $rowIndex1, $row['sisben_nocturno']);
         $sheet1->setCellValue('Q' . $rowIndex1, $row['obs_encVenta']);
         
-        // Si el filtro es TODOS, buscar y agregar el primer integrante
-        if ($isTodos) {
+    // Si el filtro es TODOS, buscar y agregar el primer integrante
+    $integ = null;
+    if ($isTodos) {
             $id_encVenta = $row['id_encVenta'];
             $sql_integrante = "SELECT * FROM integventanilla WHERE id_encVenta = '$id_encVenta' ORDER BY id_integVenta ASC LIMIT 1";
             $res_integrante = mysqli_query($mysqli, $sql_integrante);
@@ -259,8 +261,27 @@ if (!function_exists('limpiarTexto')) {
             $sheet1->setCellValue('AD' . $rowIndex1, '');
         }
         
-        // ASESOR siempre al final
+        // Calcular edad: preferir fecha_nacimiento del registro principal o del integrante
+        $edad_enc = '';
+        if (!empty($row['fecha_nacimiento'])) {
+            try {
+                $dob = new DateTime($row['fecha_nacimiento']);
+                $edad_enc = $dob->diff(new DateTime())->y;
+            } catch (Exception $e) {
+                $edad_enc = '';
+            }
+        } elseif (!empty($integ) && !empty($integ['fecha_nacimiento'])) {
+            try {
+                $dob = new DateTime($integ['fecha_nacimiento']);
+                $edad_enc = $dob->diff(new DateTime())->y;
+            } catch (Exception $e) {
+                $edad_enc = '';
+            }
+        }
+
+        // ASESOR en AE y EDAD en AF
         $sheet1->setCellValue('AE' . $rowIndex1, $row['nombre_usuario'] ?? '');
+        $sheet1->setCellValue('AF' . $rowIndex1, $edad_enc);
         $rowIndex1++;
     }
     logError("Datos de encuestas escritos en la hoja 1");
@@ -306,7 +327,7 @@ if (!function_exists('limpiarTexto')) {
     }    logError("Consulta de información ejecutada correctamente");
 
     // Aplicar estilos a la hoja 2 - INFORMACIÓN (mismo orden que ENCUESTAS)
-    $sheet2->getStyle('A1:AE1')->applyFromArray($styleHeader);
+    $sheet2->getStyle('A1:AF1')->applyFromArray($styleHeader);
 
     // Encabezados para INFORMACIÓN (mismo orden que ENCUESTAS)
     $sheet2->setCellValue('A1', 'FECHA REGISTRO');
@@ -340,11 +361,12 @@ if (!function_exists('limpiarTexto')) {
     $sheet2->setCellValue('AC1', 'NIVEL EDUCATIVO');
     $sheet2->setCellValue('AD1', 'CONDICION OCUPACION');
     $sheet2->setCellValue('AE1', 'ASESOR');
+    $sheet2->setCellValue('AF1', 'EDAD');
 
     // Ajustar ancho de columnas para INFORMACIÓN (mismo que ENCUESTAS)
     foreach ([
         'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R',
-        'S','T','U','V','W','X','Y','Z','AA','AB','AC','AD','AE'
+        'S','T','U','V','W','X','Y','Z','AA','AB','AC','AD','AE','AF'
     ] as $col) {
         $sheet2->getColumnDimension($col)->setWidth(20);
     }
@@ -403,8 +425,20 @@ if (!function_exists('limpiarTexto')) {
         $sheet2->setCellValue('AC' . $rowIndex2, $row['nivelEducativo']);
         $sheet2->setCellValue('AD' . $rowIndex2, $row['condicionOcupacion']);
         
-        // ASESOR siempre al final
+        // Calcular edad desde fecha_nacimiento
+        $edad_info = '';
+        if (!empty($row['fecha_nacimiento'])) {
+            try {
+                $dob = new DateTime($row['fecha_nacimiento']);
+                $edad_info = $dob->diff(new DateTime())->y;
+            } catch (Exception $e) {
+                $edad_info = '';
+            }
+        }
+
+        // ASESOR siempre al final y EDAD en AF
         $sheet2->setCellValue('AE' . $rowIndex2, $row['nombre_usuario'] ?? '');
+        $sheet2->setCellValue('AF' . $rowIndex2, $edad_info);
         $rowIndex2++;
     }
     logError("Datos de información escritos en la hoja 2");    // ===============================================
@@ -454,7 +488,7 @@ if (!function_exists('limpiarTexto')) {
         exit;
     }
     logError("Consulta de movimientos ejecutada correctamente");    // Aplicar estilos a la hoja 3 - MOVIMIENTOS con todas las columnas
-    $sheet3->getStyle('A1:AE1')->applyFromArray($styleHeader);
+    $sheet3->getStyle('A1:AF1')->applyFromArray($styleHeader);
 
     // Encabezados para MOVIMIENTOS (igual que ENCUESTAS, con FECHA MOVIMIENTO al inicio)
     $sheet3->setCellValue('A1', 'FECHA MOVIMIENTO');
@@ -488,11 +522,12 @@ if (!function_exists('limpiarTexto')) {
     $sheet3->setCellValue('AC1', 'NIVEL EDUCATIVO');
     $sheet3->setCellValue('AD1', 'CONDICION OCUPACION');
     $sheet3->setCellValue('AE1', 'ASESOR');
+    $sheet3->setCellValue('AF1', 'EDAD');
 
     // Ajustar ancho de columnas para MOVIMIENTOS (mismo que ENCUESTAS pero sin FECHA ALTA)
     foreach ([
         'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R',
-        'S','T','U','V','W','X','Y','Z','AA','AB','AC','AD','AE'
+        'S','T','U','V','W','X','Y','Z','AA','AB','AC','AD','AE','AF'
     ] as $col) {
         $sheet3->getColumnDimension($col)->setWidth(20);
     }
@@ -586,8 +621,27 @@ if (!function_exists('limpiarTexto')) {
             $sheet3->setCellValue('AD' . $rowIndex3, '');
         }
 
-        // ASESOR siempre al final
+        // Calcular edad: preferir fecha_nacimiento del integ_mov o del registro base
+        $edad_mov = '';
+        if (!empty($integ_mov) && !empty($integ_mov['fecha_nacimiento'])) {
+            try {
+                $dob = new DateTime($integ_mov['fecha_nacimiento']);
+                $edad_mov = $dob->diff(new DateTime())->y;
+            } catch (Exception $e) {
+                $edad_mov = '';
+            }
+        } elseif (!empty($row['fecha_nacimiento'])) {
+            try {
+                $dob = new DateTime($row['fecha_nacimiento']);
+                $edad_mov = $dob->diff(new DateTime())->y;
+            } catch (Exception $e) {
+                $edad_mov = '';
+            }
+        }
+
+        // ASESOR siempre al final y EDAD en AF
         $sheet3->setCellValue('AE' . $rowIndex3, $row['nombre_usuario'] ?? '');
+        $sheet3->setCellValue('AF' . $rowIndex3, $edad_mov);
         $rowIndex3++;
     }
     logError("Datos de movimientos escritos en la hoja 3");
