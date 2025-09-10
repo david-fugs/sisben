@@ -1,11 +1,13 @@
 <?php
 include("../../conexion.php");
 
-if (isset($_POST['doc_encVenta'])) {
-    $doc_encVenta = mysqli_real_escape_string($mysqli, $_POST['doc_encVenta']);
+if (isset($_POST['doc_encVenta']) || isset($_GET['doc_encVenta'])) {
+    $doc_encVenta = isset($_POST['doc_encVenta']) ? 
+        mysqli_real_escape_string($mysqli, $_POST['doc_encVenta']) : 
+        mysqli_real_escape_string($mysqli, $_GET['doc_encVenta']);
 
-    // 1️⃣ Verificar si ya tiene una encuesta en `encventanilla`
-    $sql_encuesta = "SELECT * FROM encventanilla WHERE doc_encVenta = '$doc_encVenta' ORDER BY fecha_alta_encVenta DESC LIMIT 1";
+    // 1️⃣ Verificar si ya tiene una encuesta en `encuestacampo`
+    $sql_encuesta = "SELECT * FROM encuestacampo WHERE doc_encVenta = '$doc_encVenta' ORDER BY fecha_alta_encVenta DESC LIMIT 1";
     $resultado_encuesta = mysqli_query($mysqli, $sql_encuesta);
 
     if (mysqli_num_rows($resultado_encuesta) > 0) {
@@ -13,7 +15,7 @@ if (isset($_POST['doc_encVenta'])) {
         
         // Buscar integrantes asociados
         $integrantes = [];
-        $sql_integ = "SELECT * FROM integventanilla WHERE id_encuesta = " . intval($datos['id_encVenta']) . " ORDER BY id_integVenta ASC";
+        $sql_integ = "SELECT * FROM integcampo WHERE id_encuesta = " . intval($datos['id_encCampo']) . " ORDER BY id_integCampo ASC";
         $res_integ = mysqli_query($mysqli, $sql_integ);
         if ($res_integ) {
             while ($integ = mysqli_fetch_assoc($res_integ)) {

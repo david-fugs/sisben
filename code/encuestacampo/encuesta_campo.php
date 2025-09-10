@@ -238,6 +238,36 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
             border-color: #dc3545;
             box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
         }
+
+        .readonly-integrante {
+            opacity: 1;
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.15);
+        }
+
+        .readonly-integrante .form-control[readonly] {
+            background-color: #ffffff !important;
+            border-color: #28a745 !important;
+            color: #495057 !important;
+            font-weight: 500 !important;
+        }
+
+        .readonly-integrante .integrante-header {
+            color: #28a745 !important;
+            font-weight: bold !important;
+            border-bottom: 2px solid #28a745;
+            padding-bottom: 0.5rem;
+        }
+
+        .readonly-integrante .form-group label {
+            color: #495057 !important;
+            font-weight: 600 !important;
+            font-size: 0.9rem;
+        }
+
+        .readonly-integrante .badge-success {
+            background-color: #28a745 !important;
+            box-shadow: 0 2px 8px rgba(40, 167, 69, 0.3);
+        }
     </style>
 
     <script>
@@ -295,13 +325,26 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
         $(document).ready(function() {
             function actualizarTotal() {
                 let total = 0;
-                $("input[name='cant_integVenta[]']").each(function() {
+                let totalReadOnly = 0;
+                let totalEditables = 0;
+                
+                // Contar integrantes precargados (solo lectura)
+                $(".readonly-integrante input[name='cant_integVenta[]']").each(function() {
                     let valor = parseInt($(this).val()) || 0;
-                    total += valor;
+                    totalReadOnly += valor;
                 });
+                
+                // Contar integrantes editables (nuevos)
+                $(".formulario-dinamico:not(.readonly-integrante) input[name='cant_integVenta[]']").each(function() {
+                    let valor = parseInt($(this).val()) || 0;
+                    totalEditables += valor;
+                });
+                
+                total = totalReadOnly + totalEditables;
                 $("#total_integrantes").val(total);
-
-                $("#cant_integVenta").val($("input[name='cant_integVenta[]']").length);
+                
+                // Actualizar solo el contador de formularios dinámicos (editables)
+                $("#cant_integVenta").val($(".formulario-dinamico:not(.readonly-integrante)").length);
             }
 
             $("#agregar").click(function() {
@@ -556,73 +599,270 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
     </script>
 
     <script>
-        // AJAX para consulta de documento
+        // AJAX para consulta de documento al perder foco o al presionar Enter
         $(document).ready(function() {
-            $("#doc_encVenta").on("input", function() {
-                var documento = $(this).val().trim();
+            var buscarEncuesta = function() {
+                var documento = $("#doc_encVenta").val().toString().trim();
+                console.log('buscarEncuesta triggered for documento:', documento);
+
+                // evitar búsquedas muy cortas (mínimo 3 caracteres)
+                if (documento.length < 3) {
+                    console.log('documento demasiado corto (<3), se omite la búsqueda');
+                    return;
+                }
                 var mensajeContainer = $("#mensajeDocumentoContainer");
 
-                if (documento.length >= 8) {
-                    $("#btnEnviar").prop("disabled", true);
+                if (!documento) {
+                    // Limpiar mensajes y rehabilitar controles cuando no hay documento
+                    mensajeContainer.addClass("d-none").html("");
+                    limpiarIntegrantesPrecargados();
+                    $("#btnEnviar").prop("disabled", false);
+                    return;
+                }
 
-                    $.ajax({
-                        url: '../eventan/verificar_documento_ajax.php',
-                        type: 'POST',
-                        dataType: 'json',
-                        data: {
-                            documento: documento
-                        },
-                        beforeSend: function() {
-                            mensajeContainer.removeClass("d-none").addClass("alert alert-info")
-                                .html("🔍 Consultando documento...");
-                        },
-                        success: function(response) {
-                            if (response.status === "existe") {
-                                mensajeContainer.removeClass("d-none alert-info alert-warning").addClass("alert alert-success")
-                                    .html("✅ <strong>Documento encontrado:</strong> " + response.data.nom_encVenta);
+                $("#btnEnviar").prop("disabled", true);
+                mensajeContainer.removeClass("d-none").removeClass('alert-success alert-warning alert-danger').addClass("alert alert-info").html("🔍 Consultando encuesta previa...");
 
-                                $("#fec_reg_encVenta").val("<?php echo date('Y-m-d'); ?>");
-                                $("#nom_encVenta").val(response.data.nom_encVenta || "");
-                                $("#tipo_documento").val(response.data.tipo_documento || "");
+                $.ajax({
+                    url: 'verificar_documento.php',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: { doc_encVenta: documento },
+                    success: function(response) {
+                        if (response.status === 'existe_encuesta') {
+                            var d = response.data;
+                            mensajeContainer.removeClass('alert-info alert-warning alert-danger').addClass('alert alert-success')
+                                .html('✅ Encuesta previa encontrada: ' + (d.nom_encVenta || ''));
 
-                                if (response.data.departamento_expedicion) {
-                                    $("#departamento_expedicion").val(response.data.departamento_expedicion);
-                                    if (typeof window.setCiudadSeleccionada === 'function') {
-                                        window.setCiudadSeleccionada(response.data.ciudad_expedicion);
+                            // Prefill main fields
+                            $("#fec_reg_encVenta").val(d.fec_reg_encVenta ? d.fec_reg_encVenta.split(' ')[0] : "<?php echo date('Y-m-d'); ?>");
+                            $("#nom_encVenta").val(d.nom_encVenta || "");
+                            $("#tipo_documento").val(d.tipo_documento || "");
+
+                            if (d.departamento_expedicion) {
+                                $("#departamento_expedicion").val(d.departamento_expedicion);
+                                
+                                // Cargar municipios del departamento y seleccionar el correcto
+                                $.ajax({
+                                    url: '../obtener_municipios.php',
+                                    type: 'POST',
+                                    data: {
+                                        cod_departamento: d.departamento_expedicion
+                                    },
+                                    dataType: 'json',
+                                    success: function(municipios) {
+                                        let ciudadSelect = $("#ciudad_expedicion");
+                                        ciudadSelect.empty().append('<option value="">Seleccione un municipio</option>');
+                                        $.each(municipios, function(index, municipio) {
+                                            ciudadSelect.append(
+                                                $('<option>', {
+                                                    value: municipio.cod_municipio,
+                                                    text: municipio.nombre_municipio,
+                                                    selected: municipio.cod_municipio === d.ciudad_expedicion
+                                                })
+                                            );
+                                        });
+                                        ciudadSelect.prop('disabled', false);
+                                    },
+                                    error: function(xhr, status, error) {
+                                        console.error("Error al obtener municipios:", error);
                                     }
-                                    $("#departamento_expedicion").trigger('change');
-                                }
-
-                                $("#fecha_expedicion").val(response.data.fecha_expedicion || "");
-                                $("#fecha_nacimiento").val(response.data.fecha_nacimiento || "");
-
-                                $("#btnEnviar").prop("disabled", false);
-                            } else if (response.status === "no_existe") {
-                                mensajeContainer.removeClass("d-none alert-danger alert-success").addClass("alert alert-warning")
-                                    .html("⚠️ El documento no está registrado en ninguna base de datos.");
-                                $("#btnEnviar").prop("disabled", false);
-
-                                $("#fec_reg_encVenta").val("<?php echo date('Y-m-d'); ?>");
-                            } else {
-                                mensajeContainer.removeClass("d-none alert-danger alert-success").addClass("alert alert-warning")
-                                    .html("⚠️ El documento no está registrado.");
-                                $("#btnEnviar").prop("disabled", false);
-
-                                $("#fec_reg_encVenta").val("<?php echo date('Y-m-d'); ?>");
-                                $("#nom_encVenta, #tipo_documento, #ciudad_expedicion, #fecha_expedicion").val("");
+                                });
                             }
-                        },
-                        error: function(jqXHR, textStatus, errorThrown) {
-                            mensajeContainer.removeClass("d-none alert-success alert-warning").addClass("alert alert-danger")
-                                .html("❌ Error en la consulta. Intente nuevamente.");
+
+                            $("#fecha_expedicion").val(d.fecha_expedicion || "");
+                            $("#fecha_nacimiento").val(d.fecha_nacimiento || "");
+                            $("#dir_encVenta").val(d.dir_encVenta || "");
+
+                            // Barrio/vereda (select2) - precarga correcta con nombre real
+                            if (d.id_bar) {
+                                var idbar = d.id_bar;
+                                
+                                // Buscar el nombre real del barrio desde la base de datos
+                                $.ajax({
+                                    url: '../buscar_barrios.php',
+                                    type: 'GET',
+                                    data: { id: idbar },
+                                    dataType: 'json',
+                                    success: function(barrioData) {
+                                        if (barrioData && barrioData.length > 0) {
+                                            var barrio = barrioData[0];
+                                            var labelBar = barrio.text;
+                                            
+                                            // Crear la opción con el nombre real
+                                            if ($("#id_barrios").find("option[value='"+idbar+"']").length === 0) {
+                                                var newOpt = new Option(labelBar, idbar, true, true);
+                                                $("#id_barrios").append(newOpt);
+                                            } else {
+                                                $("#id_barrios").val(idbar);
+                                            }
+                                            
+                                            // Disparar el evento de cambio para cargar las comunas correspondientes
+                                            $("#id_barrios").trigger('change');
+                                            
+                                            // Configurar comuna después de que se carguen
+                                            setTimeout(function() {
+                                                if (d.id_com) {
+                                                    $("#id_comunas").val(d.id_com);
+                                                }
+                                            }, 500);
+                                        }
+                                    },
+                                    error: function() {
+                                        console.log('Error al obtener nombre del barrio, usando fallback');
+                                        var labelBar = d.id_bar_nombre || 'Barrio ID: ' + idbar;
+                                        
+                                        if ($("#id_barrios").find("option[value='"+idbar+"']").length === 0) {
+                                            var newOpt = new Option(labelBar, idbar, true, true);
+                                            $("#id_barrios").append(newOpt);
+                                        } else {
+                                            $("#id_barrios").val(idbar);
+                                        }
+                                        
+                                        $("#id_barrios").trigger('change');
+                                        setTimeout(function() {
+                                            if (d.id_com) {
+                                                $("#id_comunas").val(d.id_com);
+                                            }
+                                        }, 500);
+                                    }
+                                });
+                            }
+                            
+                            // Comuna/corregimiento - fallback si no hay barrio pero sí comuna
+                            if (d.id_com && !d.id_bar) {
+                                var labelCom = (d.id_com_nombre && d.id_com_nombre !== '') ? d.id_com_nombre : 'Cargado';
+                                if ($("#id_comunas").find("option[value='"+d.id_com+"']").length === 0) {
+                                    $("#id_comunas").append(new Option(labelCom, d.id_com, true, true));
+                                } else {
+                                    $("#id_comunas").val(d.id_com);
+                                }
+                            }
+
+                            $("#zona_encVenta").val(d.zona_encVenta || "");
+                            $("#tram_solic_encVenta").val(d.tram_solic_encVenta || "");
+                            $("#num_ficha_encVenta").val(d.num_ficha_encVenta || "");
+                            $("#num_visita").val(d.num_visita || "");
+                            $("#estado_ficha").val(d.estado_ficha || "");
+                            $("#tipo_proceso").val(d.tipo_proceso || "");
+                            $("#integra_encVenta").val(d.integra_encVenta || "");
+                            $("#sisben_nocturno").val(d.sisben_nocturno || "");
+                            $("#obs_encVenta").val(d.obs_encVenta || "");
+
+                            // Cargar integrantes existentes como solo lectura
+                            if (d.integrantes && d.integrantes.length > 0) {
+                                // Limpiar container de integrantes
+                                $("#integrantes-container").empty();
+                                
+                                // Crear integrantes como solo lectura
+                                d.integrantes.forEach(function(integ, index) {
+                                    crearIntegranteReadOnly(integ, index + 1);
+                                });
+                                
+                                // Actualizar contador total
+                                $("#total_integrantes").val(d.integrantes.length);
+                                
+                                // NO deshabilitar el botón - permitir agregar más integrantes
+                                $("#agregar").text("Agregar Más +")
+                                    .removeClass("btn-secondary")
+                                    .addClass("btn-primary");
+                                $("#cant_integVenta").prop("disabled", false);
+                                
+                                // Mostrar mensaje informativo
+                                var infoMessage = $('<div class="alert alert-info mt-3">')
+                                    .html('<i class="fas fa-info-circle"></i> <strong>Integrantes Precargados:</strong> Se encontraron ' + d.integrantes.length + ' integrante(s) existente(s). Puede agregar integrantes adicionales si es necesario.');
+                                $("#integrantes-container").prepend(infoMessage);
+                            }
+
+                            $("#btnEnviar").prop("disabled", false);
+                        } else if (response.status === 'existe_info') {
+                            mensajeContainer.removeClass('alert-info alert-warning alert-danger').addClass('alert alert-success')
+                                .html('✅ Documento encontrado en Información.');
+                            
+                            var d = response.data;
+                            $("#fec_reg_encVenta").val("<?php echo date('Y-m-d'); ?>");
+                            $("#nom_encVenta").val(d.nom_info || "");
+                            $("#tipo_documento").val(d.tipo_documento || "");
+                            
+                            if (d.departamento_expedicion) {
+                                $("#departamento_expedicion").val(d.departamento_expedicion);
+                                
+                                // Cargar municipios del departamento y seleccionar el correcto
+                                $.ajax({
+                                    url: '../obtener_municipios.php',
+                                    type: 'POST',
+                                    data: {
+                                        cod_departamento: d.departamento_expedicion
+                                    },
+                                    dataType: 'json',
+                                    success: function(municipios) {
+                                        let ciudadSelect = $("#ciudad_expedicion");
+                                        ciudadSelect.empty().append('<option value="">Seleccione un municipio</option>');
+                                        $.each(municipios, function(index, municipio) {
+                                            ciudadSelect.append(
+                                                $('<option>', {
+                                                    value: municipio.cod_municipio,
+                                                    text: municipio.nombre_municipio,
+                                                    selected: municipio.cod_municipio === d.ciudad_expedicion
+                                                })
+                                            );
+                                        });
+                                        ciudadSelect.prop('disabled', false);
+                                    },
+                                    error: function(xhr, status, error) {
+                                        console.error("Error al obtener municipios:", error);
+                                    }
+                                });
+                            }
+                            
+                            $("#fecha_expedicion").val(d.fecha_expedicion || "");
+                            $("#fecha_nacimiento").val(d.fecha_nacimiento || "");
+                            
+                            // Limpiar integrantes precargados ya que es información nueva
+                            limpiarIntegrantesPrecargados();
+                            
+                            $("#btnEnviar").prop("disabled", false);
+                        } else if (response.status === 'no_existe' || response.status === 'not_found' || response.status === 'empty') {
+                            mensajeContainer.removeClass('alert-info alert-success alert-danger').addClass('alert alert-warning')
+                                .html('⚠️ No se encontró encuesta previa con ese documento.');
+                            $("#fec_reg_encVenta").val("<?php echo date('Y-m-d'); ?>");
+                            
+                            // Limpiar integrantes precargados y rehabilitar controles
+                            limpiarIntegrantesPrecargados();
+                            
+                            $("#btnEnviar").prop("disabled", false);
+                        } else {
+                            mensajeContainer.removeClass('alert-info alert-success alert-warning').addClass('alert alert-danger')
+                                .html('❌ Error en la búsqueda de la encuesta.');
+                            
+                            // Limpiar integrantes precargados y rehabilitar controles
+                            limpiarIntegrantesPrecargados();
+                            
                             $("#btnEnviar").prop("disabled", false);
                         }
-                    });
-                } else {
-                    mensajeContainer.addClass("d-none").html("");
-                    $("#btnEnviar").prop("disabled", false);
-                    $("#fec_reg_encVenta").val("<?php echo date('Y-m-d'); ?>");
-                    $("#nom_encVenta, #tipo_documento, #ciudad_expedicion, #fecha_expedicion").val("");
+                    },
+                    error: function() {
+                        mensajeContainer.removeClass('alert-info alert-success alert-warning').addClass('alert alert-danger')
+                            .html('❌ Error en la consulta. Intente nuevamente.');
+                        
+                        // Limpiar integrantes precargados y rehabilitar controles
+                        limpiarIntegrantesPrecargados();
+                        
+                        $("#btnEnviar").prop("disabled", false);
+                    }
+                });
+            };
+
+            // Disparar búsqueda al perder foco o al cambiar el campo
+            $("#doc_encVenta").on('blur change', function() {
+                buscarEncuesta();
+            });
+
+            // También permitir buscar al presionar Enter (keydown para mejor compatibilidad)
+            $("#doc_encVenta").on('keydown', function(e) {
+                if (e.key === 'Enter' || e.which === 13) {
+                    e.preventDefault();
+                    buscarEncuesta();
                 }
             });
         });
@@ -904,9 +1144,17 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
         // Función para validar los integrantes antes del envío
         function validarIntegrantes() {
             var integrantesContainer = $("#integrantes-container");
-            var formulariosDinamicos = integrantesContainer.find(".formulario-dinamico");
+            var formulariosDinamicos = integrantesContainer.find(".formulario-dinamico:not(.readonly-integrante)"); // Excluir integrantes de solo lectura
 
-            if (formulariosDinamicos.length === 0) {
+            // Si solo hay integrantes de solo lectura, no es necesario validar
+            var totalIntegrantes = integrantesContainer.find(".formulario-dinamico").length;
+            var integrantesReadOnly = integrantesContainer.find(".readonly-integrante").length;
+            
+            if (totalIntegrantes === integrantesReadOnly && integrantesReadOnly > 0) {
+                return true; // Válido si solo hay integrantes precargados
+            }
+
+            if (formulariosDinamicos.length === 0 && integrantesReadOnly === 0) {
                 alert("Debe agregar al menos un integrante antes de enviar el formulario.");
                 return false;
             }
@@ -967,6 +1215,109 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                 }
             });
         });
+
+        // Función para crear integrantes precargados como solo lectura
+        function crearIntegranteReadOnly(integ, numero) {
+            var integranteDiv = $("<div>").addClass("formulario-dinamico readonly-integrante")
+                .css({
+                    'background': '#f8f9fa',
+                    'border': '2px solid #28a745',
+                    'border-radius': '10px',
+                    'padding': '1.5rem',
+                    'margin-bottom': '1.5rem',
+                    'position': 'relative'
+                });
+
+            var header = $("<div>").addClass("integrante-header")
+                .html('<i class="fas fa-user-check text-success"></i> Integrante ' + numero + ' (Precargado)')
+                .css({'color': '#28a745', 'font-weight': 'bold', 'margin-bottom': '1.5rem', 'font-size': '1.1rem'});
+
+            var fieldsContainer = $("<div>").addClass("row"); // Usar row de Bootstrap
+
+            // Input oculto para cantidad (siempre 1 por integrante)
+            var cantidadInput = $("<input>")
+                .attr("type", "hidden")
+                .attr("name", "cant_integVenta[]")
+                .val(1);
+
+            // Función para crear campos de solo lectura más anchos
+            function createReadOnlyField(label, value, colSize = "col-md-4") {
+                var group = $("<div>").addClass("form-group mb-3 " + colSize);
+                group.append($("<label>").text(label).css({'font-weight': '600', 'color': '#495057', 'margin-bottom': '0.5rem'}));
+                var input = $("<input>")
+                    .addClass("form-control form-control-lg")
+                    .attr("readonly", true)
+                    .val(value || 'No especificado')
+                    .css({
+                        'background-color': '#ffffff',
+                        'border': '2px solid #28a745',
+                        'color': '#495057',
+                        'font-weight': '500',
+                        'font-size': '0.95rem'
+                    });
+                group.append(input);
+                return group;
+            }
+
+            // Crear campos con datos del integrante - organizados en filas más legibles
+            var fila1 = $("<div>").addClass("row");
+            fila1.append(createReadOnlyField("Identidad de Género", integ.gen_integVenta, "col-md-4"));
+            fila1.append(createReadOnlyField("Rango de Edad", integ.rango_integVenta, "col-md-4"));
+            fila1.append(createReadOnlyField("Orientación Sexual", integ.orientacionSexual, "col-md-4"));
+            
+            var fila2 = $("<div>").addClass("row");
+            fila2.append(createReadOnlyField("Condición Discapacidad", integ.condicionDiscapacidad, "col-md-4"));
+            if (integ.condicionDiscapacidad === 'Si') {
+                fila2.append(createReadOnlyField("Tipo Discapacidad", integ.tipoDiscapacidad, "col-md-4"));
+                fila2.append(createReadOnlyField("Grupo Étnico", integ.grupoEtnico, "col-md-4"));
+            } else {
+                fila2.append(createReadOnlyField("Grupo Étnico", integ.grupoEtnico, "col-md-8"));
+            }
+            
+            var fila3 = $("<div>").addClass("row");
+            fila3.append(createReadOnlyField("¿Es víctima?", integ.victima, "col-md-3"));
+            fila3.append(createReadOnlyField("¿Mujer gestante?", integ.mujerGestante, "col-md-3"));
+            fila3.append(createReadOnlyField("¿Cabeza de familia?", integ.cabezaFamilia, "col-md-3"));
+            fila3.append(createReadOnlyField("Experiencia migratoria", integ.experienciaMigratoria, "col-md-3"));
+            
+            var fila4 = $("<div>").addClass("row");
+            fila4.append(createReadOnlyField("Seguridad en salud", integ.seguridadSalud, "col-md-6"));
+            fila4.append(createReadOnlyField("Nivel educativo", integ.nivelEducativo, "col-md-6"));
+            
+            var fila5 = $("<div>").addClass("row");
+            fila5.append(createReadOnlyField("Condición de ocupación", integ.condicionOcupacion, "col-md-12"));
+
+            fieldsContainer.append(fila1, fila2, fila3, fila4, fila5);
+
+            // Badge indicativo mejorado
+            var badge = $("<div>")
+                .addClass("badge badge-success")
+                .css({
+                    'position': 'absolute',
+                    'top': '15px',
+                    'right': '15px',
+                    'font-size': '0.9rem',
+                    'padding': '0.5rem 1rem',
+                    'border-radius': '20px'
+                })
+                .text("SOLO LECTURA");
+
+            integranteDiv.append(cantidadInput, header, badge, fieldsContainer);
+            $("#integrantes-container").append(integranteDiv);
+        }
+
+        // Función para limpiar integrantes precargados y rehabilitar controles
+        function limpiarIntegrantesPrecargados() {
+            $(".readonly-integrante").remove();
+            
+            // Recalcular el total sin los integrantes precargados
+            actualizarTotal();
+            
+            $("#cant_integVenta").prop("disabled", false);
+            $("#agregar").text("Agregar +")
+                .removeClass("btn-secondary")
+                .addClass("btn-primary");
+        }
     </script>
 
 </body>
