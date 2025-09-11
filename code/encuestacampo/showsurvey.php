@@ -40,11 +40,11 @@ header("Content-Type: text/html;charset=utf-8");
 		}
 
 		.header-section {
-			background: #007bff;
+			background: linear-gradient(135deg, #d9f82bff 0%, #fefb4aff 100%);
 			border-radius: 10px;
 			padding: 25px;
 			margin-bottom: 30px;
-			color: white;
+			color: #222; /* texto oscuro para buena legibilidad sobre el amarillo */
 			text-align: center;
 		}
 
@@ -57,8 +57,8 @@ header("Content-Type: text/html;charset=utf-8");
 		}
 
 		.btn-search {
-			background: #007bff;
-			color: white;
+			background: linear-gradient(135deg, #d9f82bff 0%, #fefb4aff 100%);
+			color: #222;
 			border: none;
 			border-radius: 8px;
 			padding: 12px 20px;
@@ -67,8 +67,8 @@ header("Content-Type: text/html;charset=utf-8");
 		}
 
 		.btn-search:hover {
-			background: #0056b3;
 			transform: translateY(-1px);
+			filter: brightness(0.95);
 		}
 
 		.table-container {
@@ -83,8 +83,8 @@ header("Content-Type: text/html;charset=utf-8");
 		}
 
 		.table thead th {
-			background: #007bff;
-			color: white;
+			background: linear-gradient(135deg, #d9f82bff 0%, #fefb4aff 100%);
+			color: #222;
 			border: none;
 			padding: 15px 10px;
 			font-weight: 600;
@@ -96,9 +96,9 @@ header("Content-Type: text/html;charset=utf-8");
 			transition: all 0.2s ease;
 		}
 
-		.table tbody tr:hover {
-			background-color: rgba(0, 123, 255, 0.1);
-		}
+			.table tbody tr:hover {
+				background-color: rgba(217, 248, 43, 0.08);
+			}
 
 		.table tbody td {
 			padding: 12px 10px;
@@ -163,21 +163,33 @@ header("Content-Type: text/html;charset=utf-8");
 			bottom: 30px;
 			left: 50%;
 			transform: translateX(-50%);
-			background: #007bff;
+			background: linear-gradient(135deg, #d9f82bff 0%, #fefb4aff 100%);
 			border: none;
 			border-radius: 25px;
 			padding: 12px 20px;
-			color: white;
+			color: #222;
 			text-decoration: none;
 			font-weight: 600;
 			transition: all 0.3s ease;
-			box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+			box-shadow: 0 4px 12px rgba(217, 248, 43, 0.25);
 		}
 
 		.back-button:hover {
 			transform: translateX(-50%) translateY(-3px);
-			background: #0056b3;
-			color: white;
+			color: #222;
+			filter: brightness(0.95);
+		}
+
+		/* Override Bootstrap primary buttons used on the page (Export) */
+		.btn-primary{
+			background: linear-gradient(135deg, #d9f82bff 0%, #fefb4aff 100%) !important;
+			border-color: transparent !important;
+			color: #222 !important;
+		}
+
+		.btn-primary:hover{
+			filter: brightness(0.95);
+			color: #222 !important;
 		}
 
 		.responsive {
