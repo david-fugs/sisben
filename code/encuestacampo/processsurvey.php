@@ -111,6 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 $sql_integrante = "INSERT INTO integcampo (
                     id_encuesta,
+                    documento,
                     cant_integVenta,
                     gen_integVenta,
                     orientacionSexual,
@@ -126,7 +127,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     nivelEducativo,
                     condicionOcupacion,
                     fecha_alta_integCampo
-                ) VALUES (" . intval($id_encuesta) . ", 1, '" . $gen . "', '" . $orient . "', '" . $rango . "', '" . $cond_disc . "', '" . $tipo_disc . "', '" . $grupo . "', '" . $vict . "', '" . $mujer . "', '" . $cabeza . "', '" . $exp . "', '" . $seg . "', '" . $niv . "', '" . $ocup . "', NOW())";
+                ) VALUES (" . intval($id_encuesta) . ",'" . $doc_encVenta . "', 1, '" . $gen . "', '" . $orient . "', '" . $rango . "', '" . $cond_disc . "', '" . $tipo_disc . "', '" . $grupo . "', '" . $vict . "', '" . $mujer . "', '" . $cabeza . "', '" . $exp . "', '" . $seg . "', '" . $niv . "', '" . $ocup . "', NOW())";
 
                 if (!mysqli_query($mysqli, $sql_integrante)) {
                     throw new Exception("Error al insertar integrante: " . mysqli_error($mysqli) . " - SQL: " . $sql_integrante);

@@ -21,7 +21,14 @@ $(document).ready(function () {
         if (response.status === "existe_integrante") {
           response.data.forEach(function (integrante, index) {
             console.log(`Integrante ${index + 1}:`, integrante);
-            var integranteDiv = $("<div>").addClass("formulario-dinamico");
+            // Crear contenedor con estilo especial para solo lectura
+            var integranteDiv = $("<div>")
+              .addClass("formulario-dinamico")
+              .css({
+                "border": "2px solid #17a2b8",
+                "background-color": "#f8f9fa"
+              })
+              .attr("data-readonly", "true");
 
             function createFormGroup(name, labelText, inputElement) {
               var group = $("<div>").addClass("form-group-dinamico");
@@ -31,27 +38,29 @@ $(document).ready(function () {
             }
             var cantidadInput = $("<input>")
               .attr("type", "hidden")
-              .attr("name", "cant_integVenta[]")
+              .attr("name", "")  // No incluir en el envío del formulario
               .addClass("form-control smaller-input")
               .val(1)
               .attr("readonly", true);
 
             var generoSelect = createFormGroup(
-              "gen_integVenta[]",
-              "Identidad de Género",
+              "",  // No incluir name para evitar procesamiento
+              "Identidad de Género (Solo lectura)",
               $("<select>")
-                .attr("name", "gen_integVenta[]")
+                .attr("name", "")  // No incluir en el envío del formulario
                 .addClass("form-control smaller-input")
-                .append('<option value="">Seleccione...</option>')
+                .prop("disabled", true)  // Campo deshabilitado
+                .css("background-color", "#f8f9fa")  // Color de fondo para indicar solo lectura
+                .append('<option value="">Identidad Genero</option>')
                 .append(
                   '<option value="F"' +
                     (integrante.gen_integVenta === "F" ? " selected" : "") +
-                    ">Femenino</option>"
+                    ">F</option>"
                 )
                 .append(
                   '<option value="M"' +
                     (integrante.gen_integVenta === "M" ? " selected" : "") +
-                    ">Masculino</option>"
+                    ">M</option>"
                 )
                 .append(
                   '<option value="O"' +
@@ -61,12 +70,14 @@ $(document).ready(function () {
             );
 
             var rangoEdadSelect = createFormGroup(
-              "rango_integVenta[]",
-              "Rango de edad",
+              "",  // No incluir name para evitar procesamiento
+              "Rango de edad (Solo lectura)",
               $("<select>")
-                .attr("name", "rango_integVenta[]")
+                .attr("name", "")  // No incluir en el envío del formulario
                 .addClass("form-control smaller-input")
-                .append('<option value="">Seleccione...</option>')
+                .prop("disabled", true)  // Campo deshabilitado
+                .css("background-color", "#f8f9fa")  // Color de fondo para indicar solo lectura
+                .append('<option value="">Rango Edad</option>')
                 .append(
                   '<option value="0 - 6"' +
                     (integrante.rango_integVenta == "1" ? " selected" : "") +
@@ -108,12 +119,14 @@ $(document).ready(function () {
             // Por ejemplo:
              var OrientacionSexual =
                                     createFormGroup(
-                                        "orientacionSexual[]",
-                                        "Orientación Sexual",
+                                        "",  // No incluir name para evitar procesamiento
+                                        "Orientación Sexual (Solo lectura)",
                                         $("<select>")
-                                        .attr("name", "orientacionSexual[]")
+                                        .attr("name", "")  // No incluir en el envío del formulario
                                         .addClass("form-control smaller-input")
-                                        .append('<option value="">Seleccione...</option>')
+                                        .prop("disabled", true)  // Campo deshabilitado
+                                        .css("background-color", "#f8f9fa")  // Color de fondo para indicar solo lectura
+                                        .append('<option value="">Orientacion Sexual</option>')
                                         .append('<option value="Asexual"' + (integrante.orientacionSexual === 'Asexual' ? ' selected' : '') + '>Asexual</option>')
                                         .append('<option value="Bisexual"' + (integrante.orientacionSexual === 'Bisexual' ? ' selected' : '') + '>Bisexual</option>')
                                         .append('<option value="Heterosexual"' + (integrante.orientacionSexual === 'Heterosexual' ? ' selected' : '') + '>Heterosexual</option>')
@@ -122,19 +135,21 @@ $(document).ready(function () {
                                     );
 
             var condicionDiscapacidad = createFormGroup(
-              "condicionDiscapacidad[]",
-              "Condición de Discapacidad",
+              "",  // No incluir name para evitar procesamiento
+              "Condición de Discapacidad (Solo lectura)",
               $("<select>")
-                .attr("name", "condicionDiscapacidad[]")
-                .attr("id", "condicionDiscapacidad")
+                .attr("name", "")  // No incluir en el envío del formulario
+                .attr("id", "condicionDiscapacidadReadonly")
                 .addClass("form-control smaller-input")
-                .append('<option value="">Seleccione...</option>')
+                .attr("disabled", true)  // Campo deshabilitado
+                .css("background-color", "#f8f9fa")  // Color de fondo para indicar solo lectura
+                .append('<option value="">Condicion Discapacidad</option>')
                 .append(
                   '<option value="Si"' +
                     (integrante.condicionDiscapacidad == "Si"
                       ? " selected"
                       : "") +
-                    ">Sí</option>"
+                    ">Si</option>"
                 )
                 .append(
                   '<option value="No"' +
@@ -146,13 +161,15 @@ $(document).ready(function () {
             );
 
             var discapacidadSelect = createFormGroup(
-              "tipoDiscapacidad[]",
-              "Tipo de Discapacidad",
+              "",  // No incluir name para evitar procesamiento
+              "Tipo de Discapacidad (Solo lectura)",
               $("<select>")
-                .attr("name", "tipoDiscapacidad[]")
-                .attr("id", "tipoDiscapacidad")
+                .attr("name", "")  // No incluir en el envío del formulario
+                .attr("id", "tipoDiscapacidadReadonly")
                 .addClass("form-control smaller-input tipo-discapacidad")
-                .append('<option value="">Seleccione...</option>')
+                .attr("disabled", true)  // Campo deshabilitado
+                .css("background-color", "#f8f9fa")  // Color de fondo para indicar solo lectura
+                .append('<option value="">Tipo Discapacidad</option>')
                 .append(
                   '<option value="Auditiva"' +
                     (integrante.tipoDiscapacidad == "Auditiva"
@@ -204,15 +221,17 @@ $(document).ready(function () {
                 )
             );
 
-            discapacidadSelect.attr("id", "grupoDiscapacidad");
+            discapacidadSelect.attr("id", "grupoDiscapacidadReadonly");
 
             // Crear los demás campos con los datos de integrante
             var GrupoEtnico = createFormGroup(
-              "grupoEtnico[]",
-              "Grupo Étnico",
+              "",  // No incluir name para evitar procesamiento
+              "Grupo Étnico (Solo lectura)",
               $("<select>")
-                .attr("name", "grupoEtnico[]")
+                .attr("name", "")  // No incluir en el envío del formulario
                 .addClass("form-control smaller-input")
+                .attr("disabled", true)  // Campo deshabilitado
+                .css("background-color", "#f8f9fa")  // Color de fondo para indicar solo lectura
                 .append('<option value="">Seleccione...</option>')
                 .append(
                   '<option value="Indigena"' +
@@ -258,11 +277,13 @@ $(document).ready(function () {
                 )
             );
             var victima = createFormGroup(
-              "victima[]",
-              "¿Es víctima?",
+              "",  // No incluir name para evitar procesamiento
+              "¿Es víctima? (Solo lectura)",
               $("<select>")
-                .attr("name", "victima[]")
+                .attr("name", "")  // No incluir en el envío del formulario
                 .addClass("form-control smaller-input")
+                .attr("disabled", true)  // Campo deshabilitado
+                .css("background-color", "#f8f9fa")  // Color de fondo para indicar solo lectura
                 .append('<option value="">Seleccione...</option>')
                 .append(
                   '<option value="Si"' +
@@ -277,11 +298,13 @@ $(document).ready(function () {
             );
 
             var mujerGestante = createFormGroup(
-              "mujerGestante[]",
-              "¿Mujer gestante?",
+              "",  // No incluir name para evitar procesamiento
+              "¿Mujer gestante? (Solo lectura)",
               $("<select>")
-                .attr("name", "mujerGestante[]")
+                .attr("name", "")  // No incluir en el envío del formulario
                 .addClass("form-control smaller-input")
+                .attr("disabled", true)  // Campo deshabilitado
+                .css("background-color", "#f8f9fa")  // Color de fondo para indicar solo lectura
                 .append('<option value="">Seleccione...</option>')
                 .append(
                   '<option value="Si"' +
@@ -296,11 +319,13 @@ $(document).ready(function () {
             );
 
             var cabezaFamilia = createFormGroup(
-              "cabezaFamilia[]",
-              "¿Cabeza de familia?",
+              "",  // No incluir name para evitar procesamiento
+              "¿Cabeza de familia? (Solo lectura)",
               $("<select>")
-                .attr("name", "cabezaFamilia[]")
+                .attr("name", "")  // No incluir en el envío del formulario
                 .addClass("form-control smaller-input")
+                .attr("disabled", true)  // Campo deshabilitado
+                .css("background-color", "#f8f9fa")  // Color de fondo para indicar solo lectura
                 .append('<option value="">Seleccione...</option>')
                 .append(
                   '<option value="Si"' +

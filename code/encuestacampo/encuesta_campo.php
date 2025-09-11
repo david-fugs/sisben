@@ -635,7 +635,6 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                                 .html('✅ Encuesta previa encontrada: ' + (d.nom_encVenta || ''));
 
                             // Prefill main fields
-                            $("#fec_reg_encVenta").val(d.fec_reg_encVenta ? d.fec_reg_encVenta.split(' ')[0] : "<?php echo date('Y-m-d'); ?>");
                             $("#nom_encVenta").val(d.nom_encVenta || "");
                             $("#tipo_documento").val(d.tipo_documento || "");
 

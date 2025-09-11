@@ -15,7 +15,7 @@ if (isset($_POST['doc_encVenta']) || isset($_GET['doc_encVenta'])) {
         
         // Buscar integrantes asociados
         $integrantes = [];
-        $sql_integ = "SELECT * FROM integcampo WHERE id_encuesta = " . intval($datos['id_encCampo']) . " ORDER BY id_integCampo ASC";
+        $sql_integ = "SELECT * FROM integcampo WHERE documento = " . $doc_encVenta . " ORDER BY id_integCampo ASC";
         $res_integ = mysqli_query($mysqli, $sql_integ);
         if ($res_integ) {
             while ($integ = mysqli_fetch_assoc($res_integ)) {

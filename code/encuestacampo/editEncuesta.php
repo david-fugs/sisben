@@ -48,7 +48,7 @@ if (!$encuesta) {
 }
 
 // Obtener integrantes de la encuesta (usar id_encuesta como FK)
-$query_integrantes = "SELECT * FROM integcampo WHERE id_encuesta = $id_encuesta ORDER BY id_integCampo";
+$query_integrantes = "SELECT * FROM integcampo WHERE documento = " . $encuesta['doc_encVenta'] . " ORDER BY id_integCampo";
 $result_integrantes = mysqli_query($mysqli, $query_integrantes);
 
 // Validar que la consulta fue exitosa

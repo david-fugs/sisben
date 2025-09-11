@@ -170,3 +170,63 @@
 [2025-09-10 14:56:59] Hoja 2 - INTEGRANTES CAMPO creada
 [2025-09-10 14:56:59] Consulta de integrantes ejecutada correctamente
 [2025-09-10 14:56:59] Archivo Excel generado correctamente: encuestas_campo_2025-09-10_14-56-59.xlsx
+[2025-09-11 22:50:06] Iniciando exportarEncuestaCampo.php
+[2025-09-11 22:50:06] Autoload cargado correctamente
+[2025-09-11 22:50:06] Sesión iniciada
+[2025-09-11 22:50:06] Conexión incluida
+[2025-09-11 22:50:06] Conexión a BD verificada
+[2025-09-11 15:50:07] Parámetros recibidos - fecha_inicio: 2025-09-01, fecha_fin: 2025-09-11, id_usu: todos
+[2025-09-11 15:50:07] Hoja 1 - ENCUESTAS DE CAMPO creada
+[2025-09-11 15:50:07] Filtro de fechas aplicado: 2025-09-01 00:00:00 a 2025-09-11 23:59:59
+[2025-09-11 15:50:07] Exportando TODOS los encuestadores en el rango de fechas
+[2025-09-11 15:50:07] WHERE construido: WHERE ec.fecha_alta_encVenta BETWEEN '2025-09-01 00:00:00' AND '2025-09-11 23:59:59'
+[2025-09-11 15:50:07] Consulta de encuestas ejecutada correctamente. Filas encontradas: 2
+[2025-09-11 15:50:07] SQL ejecutado: 
+    SELECT ec.*, b.nombre_bar AS barrio_nombre, d.nombre_departamento AS departamento_nombre, 
+           c.nombre_com AS comuna_nombre, m.nombre_municipio as ciudad_nombre,
+           u.nombre AS nombre_usuario
+    FROM encuestacampo ec
+    LEFT JOIN barrios b ON ec.id_bar = b.id_bar
+    LEFT JOIN departamentos d ON ec.departamento_expedicion = d.cod_departamento
+    LEFT JOIN comunas c ON ec.id_com = c.id_com
+    LEFT JOIN municipios m ON ec.ciudad_expedicion = m.cod_municipio
+    LEFT JOIN usuarios u ON ec.id_usu = u.id_usu
+    WHERE ec.fecha_alta_encVenta BETWEEN '2025-09-01 00:00:00' AND '2025-09-11 23:59:59'
+    ORDER BY ec.fecha_alta_encVenta DESC
+    
+[2025-09-11 15:50:07] Procesando registro 1 - ID: 5 - Documento: 123
+[2025-09-11 15:50:07] Procesando registro 2 - ID: 4 - Documento: 123
+[2025-09-11 15:50:07] Total de registros escritos en hoja 1: 2
+[2025-09-11 15:50:07] Hoja 2 - INTEGRANTES CAMPO creada
+[2025-09-11 15:50:07] Consulta de integrantes ejecutada correctamente
+[2025-09-11 15:50:08] Archivo Excel generado correctamente: encuestas_campo_2025-09-11_15-50-08.xlsx
+[2025-09-11 23:12:04] Iniciando exportarEncuestaCampo.php
+[2025-09-11 23:12:04] Autoload cargado correctamente
+[2025-09-11 23:12:04] Sesión iniciada
+[2025-09-11 23:12:04] Conexión incluida
+[2025-09-11 23:12:04] Conexión a BD verificada
+[2025-09-11 16:12:04] Parámetros recibidos - fecha_inicio: 2025-09-01, fecha_fin: 2025-09-11, id_usu: todos
+[2025-09-11 16:12:04] Hoja 1 - ENCUESTAS DE CAMPO creada
+[2025-09-11 16:12:04] Filtro de fechas aplicado: 2025-09-01 00:00:00 a 2025-09-11 23:59:59
+[2025-09-11 16:12:04] Exportando TODOS los encuestadores en el rango de fechas
+[2025-09-11 16:12:04] WHERE construido: WHERE ec.fecha_alta_encVenta BETWEEN '2025-09-01 00:00:00' AND '2025-09-11 23:59:59'
+[2025-09-11 16:12:04] Consulta de encuestas ejecutada correctamente. Filas encontradas: 2
+[2025-09-11 16:12:04] SQL ejecutado: 
+    SELECT ec.*, b.nombre_bar AS barrio_nombre, d.nombre_departamento AS departamento_nombre, 
+           c.nombre_com AS comuna_nombre, m.nombre_municipio as ciudad_nombre,
+           u.nombre AS nombre_usuario
+    FROM encuestacampo ec
+    LEFT JOIN barrios b ON ec.id_bar = b.id_bar
+    LEFT JOIN departamentos d ON ec.departamento_expedicion = d.cod_departamento
+    LEFT JOIN comunas c ON ec.id_com = c.id_com
+    LEFT JOIN municipios m ON ec.ciudad_expedicion = m.cod_municipio
+    LEFT JOIN usuarios u ON ec.id_usu = u.id_usu
+    WHERE ec.fecha_alta_encVenta BETWEEN '2025-09-01 00:00:00' AND '2025-09-11 23:59:59'
+    ORDER BY ec.fecha_alta_encVenta DESC
+    
+[2025-09-11 16:12:04] Procesando registro 1 - ID: 7 - Documento: 123
+[2025-09-11 16:12:04] Procesando registro 2 - ID: 6 - Documento: 123
+[2025-09-11 16:12:04] Total de registros escritos en hoja 1: 2
+[2025-09-11 16:12:04] Hoja 2 - INTEGRANTES CAMPO creada
+[2025-09-11 16:12:04] Consulta de integrantes ejecutada correctamente
+[2025-09-11 16:12:04] Archivo Excel generado correctamente: encuestas_campo_2025-09-11_16-12-04.xlsx
