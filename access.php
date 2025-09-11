@@ -29,7 +29,10 @@ $tipo_usu     = $_SESSION['tipo_usu'];
   <style>
     /* Map FA6 style class to the local FA5 webfont so "fa-solid" icons still render
        if the external kit is blocked or unavailable. */
-    .fa-solid { font-family: "Font Awesome 5 Free"; font-weight: 900; }
+    .fa-solid {
+      font-family: "Font Awesome 5 Free";
+      font-weight: 900;
+    }
   </style>
   <title>BD SISBEN - Dashboard</title>
   <link rel="stylesheet" href="menu/style.css" />
@@ -185,7 +188,7 @@ $tipo_usu     = $_SESSION['tipo_usu'];
 
   <!--************************INICIA MENÚ ADMINISTRADOR************************-->
 
-  <?php if (in_array($tipo_usu, [1,2,3,4,5,6])) { ?>
+  <?php if (in_array($tipo_usu, [1, 3])) { ?>
     <!-- sidebar -->
     <nav class="sidebar">
       <div class="menu_content">
@@ -205,6 +208,7 @@ $tipo_usu     = $_SESSION['tipo_usu'];
             </ul>
           </li>
           <!-- end menú comuna/barrios -->
+
           <!-- duplicate or remove this li tag if you want to add or remove navlink with submenu -->
           <!-- start -->
           <li class="item">
@@ -236,6 +240,7 @@ $tipo_usu     = $_SESSION['tipo_usu'];
               <a href="code/eventan/showsurvey.php" class="nav_link sublink"><i class="fa-solid fa-window-restore me-2"></i>Ventanilla</a>
               <a href="code/einfo/showsurvey.php" class="nav_link sublink"><i class="fa-solid fa-info-circle me-2"></i>Informacion</a>
               <a href="code/eventan/showMovimientos.php" class="nav_link sublink"><i class="fa-solid fa-people-arrows-left-right me-2"></i>Movimientos</a>
+              <a href="code/encuestacampo/showsurvey.php" class="nav_link sublink"><i class="fa-solid fa-list me-2"></i>Campo</a>
 
             </ul>
           </li>
@@ -297,47 +302,19 @@ $tipo_usu     = $_SESSION['tipo_usu'];
           <li class="item">
             <div href="#" class="nav_link submenu_item">
               <span class="navlink_icon">
-                <i class="fa-solid fa-house-user"></i>
+                <i class="fa-solid fa-building-circle-check"></i>
                 <!--<i class="bx bx-home-alt"></i>-->
               </span>
 
-              <span class="navlink"><i class="fa-solid fa-van-shuttle me-2"></i>Salidas Campo</span>
+              <span class="navlink">Encuesta campo</span>
               <i class="bx bx-chevron-right arrow-left"></i>
             </div>
 
             <ul class="menu_items submenu">
-              <a href="code/ecampo/addsurvey1.php" class="nav_link sublink"><i class="fa-solid fa-pencil me-2"></i>Digitación Encuesta</a>
+              <a href="code/encuestacampo/encuesta_campo.php" class="nav_link sublink"><i class="fa-solid fa-file-circle-plus me-2"></i>Nueva Encuesta</a>
+              <a href="code/encuestacampo/showsurvey.php" class="nav_link sublink"><i class="fa-solid fa-list me-2"></i>Lista Encuesta campo</a>
             </ul>
           </li>
-          <!-- end -->
-
-          <li class="item">
-            <div href="#" class="nav_link submenu_item">
-              <span class="navlink_icon">
-                <i class="fa-solid fa-magnifying-glass"></i>
-              </span>
-              <span class="navlink"><i class="fa-solid fa-edit me-2"></i>Editar Encuesta</span>
-              <i class="bx bx-chevron-right arrow-left"></i>
-            </div>
-
-            <ul class="menu_items submenu">
-              <a href="code/ecampo/showsurvey.php" class="nav_link sublink"><i class="fa-solid fa-edit me-2"></i>Modificar</a>
-            </ul>
-          </li>
-          <li class="item">
-            <div href="#" class="nav_link submenu_item">
-              <span class="navlink_icon">
-                <i class="fa-solid fa-chart-pie"></i>
-              </span>
-              <span class="navlink"><i class="fa-solid fa-download me-2"></i>Descargue</span>
-              <i class="bx bx-chevron-right arrow-left"></i>
-            </div>
-
-            <ul class="menu_items submenu">
-              <a href="code/exportares/exportar.php" class="nav_link sublink"><i class="fa-solid fa-file-export me-2"></i>Informes</a>
-            </ul>
-          </li>
-          <!-- duplicate this li tag if you want to add or remove  navlink with submenu -->
           <!-- start -->
           <li class="item">
             <div href="#" class="nav_link submenu_item">
