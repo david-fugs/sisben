@@ -69,7 +69,7 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
             border-radius: 10px;
             padding: 1.5rem;
             margin-bottom: 1.5rem;
-            border-left: 4px solid #bbf072ff;
+            border-left: 4px solid #007bff;
         }
 
         .section-title {
@@ -97,7 +97,7 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
 
         .form-control:focus,
         .form-select:focus {
-            border-color: #afe952ff;
+            border-color: #007bff;
             box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
         }
 
@@ -132,7 +132,7 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
         }
 
         .header-info {
-            background: linear-gradient(135deg, #d9f82bff 0%, #fefb4aff 100%);
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
             color: white;
             border-radius: 10px;
             padding: 1.5rem;
