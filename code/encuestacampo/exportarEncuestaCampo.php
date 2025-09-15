@@ -159,6 +159,8 @@ try {
     // NUEVOS CAMPOS ESPECÍFICOS DE ENCUESTA DE CAMPO
     $sheet1->setCellValue('AH1', 'NUMERO DE VISITA');
     $sheet1->setCellValue('AI1', 'ESTADO DE LA FICHA');
+    $sheet1->setCellValue('AJ1', 'FECHA PREREGISTRO');
+
 
     // Para cada encuesta intentaremos obtener el primer integrante (si existe)
 
@@ -273,6 +275,7 @@ try {
         // NUEVOS CAMPOS ESPECÍFICOS DE ENCUESTA DE CAMPO
         $sheet1->setCellValue('AH' . $rowIndex1, $row['num_visita']);
         $sheet1->setCellValue('AI' . $rowIndex1, $row['estado_ficha']);
+        $sheet1->setCellValue('AJ' . $rowIndex1, $row['fecha_preregistro']);
 
         $rowIndex1++;
     }
