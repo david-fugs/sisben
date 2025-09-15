@@ -285,9 +285,13 @@ header("Content-Type: text/html;charset=utf-8");
 					<i class="fas fa-plus me-2"></i>
 					Nueva Encuesta de Campo
 				</a>
-				<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exportModal">
+				<button type="button" class="btn btn-primary me-3" data-bs-toggle="modal" data-bs-target="#exportModal">
 					<i class="fas fa-download me-2"></i>
-					Exportar a Excel
+					Exportar Encuestas
+				</button>
+				<button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#exportIntegrantesModal">
+					<i class="fas fa-users me-2"></i>
+					Exportar Integrantes
 				</button>
 			</div>
 
@@ -449,7 +453,7 @@ header("Content-Type: text/html;charset=utf-8");
 							<select class="form-control" id="id_usu" name="id_usu">
 								<?php
 								// Obtener usuarios de la tabla usuarios
-								$sql_users = "SELECT id_usu, nombre, tipo_usu FROM usuarios ORDER BY nombre";
+								$sql_users = "SELECT id_usu, nombre, tipo_usu FROM usuarios WHERE tipo_usu =2  ORDER BY nombre";
 								$result_users = mysqli_query($mysqli, $sql_users);
 								
 								// Determinar qué opciones mostrar según el tipo de usuario
@@ -479,6 +483,78 @@ header("Content-Type: text/html;charset=utf-8");
 						<button type="submit" class="btn btn-primary">
 							<i class="fas fa-download me-2"></i>
 							Exportar
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<!-- Modal para Exportar Integrantes -->
+	<div class="modal fade" id="exportIntegrantesModal" tabindex="-1" aria-labelledby="exportIntegrantesModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header bg-info text-white">
+					<h5 class="modal-title" id="exportIntegrantesModalLabel">
+						<i class="fas fa-users me-2"></i>
+						Exportar Integrantes de Encuestas de Campo
+					</h5>
+					<button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<form id="exportIntegrantesForm" action="exportarIntegrantesCampo.php" method="GET" target="_blank">
+					<div class="modal-body">
+						<div class="row mb-3">
+							<div class="col-md-6">
+								<label for="fecha_inicio_int" class="form-label">
+									<i class="fas fa-calendar-alt me-2"></i>
+									Fecha Inicio
+								</label>
+								<input type="date" class="form-control" id="fecha_inicio_int" name="fecha_inicio">
+								<small class="text-muted">Dejar vacío para exportar todos los registros</small>
+							</div>
+							<div class="col-md-6">
+								<label for="fecha_fin_int" class="form-label">
+									<i class="fas fa-calendar-alt me-2"></i>
+									Fecha Fin
+								</label>
+								<input type="date" class="form-control" id="fecha_fin_int" name="fecha_fin">
+								<small class="text-muted">Dejar vacío para exportar todos los registros</small>
+							</div>
+						</div>
+						<div class="mb-3">
+							<label for="id_usu_int" class="form-label">
+								<i class="fas fa-user me-2"></i>
+								Usuario
+							</label>
+							<select class="form-control" id="id_usu_int" name="id_usu">
+								<?php
+								// Obtener usuarios nuevamente para el modal de integrantes
+								$sql_users_int = "SELECT id_usu, nombre, tipo_usu FROM usuarios WHERE tipo_usu =2  ORDER BY nombre";
+								$result_users_int = mysqli_query($mysqli, $sql_users_int);
+								
+								if ($mostrar_todos) {
+									echo '<option value="todos">Todos los usuarios</option>';
+								}
+								
+								while ($user = mysqli_fetch_assoc($result_users_int)) {
+									if ($solo_usuario_actual && $user['id_usu'] != $id_usu) {
+										continue;
+									}
+									$selected = ($user['id_usu'] == $id_usu) ? 'selected' : '';
+									echo '<option value="' . $user['id_usu'] . '" ' . $selected . '>' . $user['nombre'] . '</option>';
+								}
+								?>
+							</select>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+							<i class="fas fa-times me-2"></i>
+							Cancelar
+						</button>
+						<button type="submit" class="btn btn-info">
+							<i class="fas fa-users me-2"></i>
+							Exportar Integrantes
 						</button>
 					</div>
 				</form>

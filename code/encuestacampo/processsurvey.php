@@ -7,8 +7,8 @@ if (!isset($_SESSION['id_usu'])) {
 }
 
 $id_usu = $_SESSION['id_usu'];
-$usuario = $_SESSION['usuario'];
-
+// Log POST for debugging (do not print to output to avoid header issues)
+@file_put_contents(__DIR__ . '/debug_post.log', date('Y-m-d H:i:s') . " POST: " . print_r($_POST, true) . PHP_EOL, FILE_APPEND);
 header("Content-Type: text/html;charset=utf-8");
 
 include('../../conexion.php');
@@ -17,18 +17,14 @@ include('../../conexion.php');
 mysqli_set_charset($mysqli, "utf8");
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    
+
     // Iniciar transacción
     mysqli_autocommit($mysqli, false);
-    
+
     try {
         // Datos principales de la encuesta
         $doc_encVenta = mysqli_real_escape_string($mysqli, $_POST['doc_encVenta']);
-        $fec_reg_encVenta = mysqli_real_escape_string($mysqli, $_POST['fec_reg_encVenta']);
         $tipo_documento = mysqli_real_escape_string($mysqli, $_POST['tipo_documento']);
-        $departamento_expedicion = mysqli_real_escape_string($mysqli, $_POST['departamento_expedicion']);
-        $ciudad_expedicion = mysqli_real_escape_string($mysqli, $_POST['ciudad_expedicion']);
-        $fecha_expedicion = mysqli_real_escape_string($mysqli, $_POST['fecha_expedicion']);
         $nom_encVenta = mysqli_real_escape_string($mysqli, $_POST['nom_encVenta']);
         $fecha_nacimiento = mysqli_real_escape_string($mysqli, $_POST['fecha_nacimiento'] ?? '');
         $dir_encVenta = mysqli_real_escape_string($mysqli, $_POST['dir_encVenta']);
@@ -37,22 +33,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $otro_bar_ver_encVenta = mysqli_real_escape_string($mysqli, $_POST['otro_bar_ver_encVenta'] ?? '');
         $zona_encVenta = mysqli_real_escape_string($mysqli, $_POST['zona_encVenta']);
         $tram_solic_encVenta = mysqli_real_escape_string($mysqli, $_POST['tram_solic_encVenta']);
-    $num_ficha_encVenta = mysqli_real_escape_string($mysqli, $_POST['num_ficha_encVenta']);
-    $num_visita = mysqli_real_escape_string($mysqli, $_POST['num_visita'] ?? '');
-    $estado_ficha = mysqli_real_escape_string($mysqli, $_POST['estado_ficha'] ?? '');
-    $tipo_proceso = mysqli_real_escape_string($mysqli, $_POST['tipo_proceso'] ?? '');
-    $integra_encVenta = mysqli_real_escape_string($mysqli, $_POST['integra_encVenta']);
-    $sisben_nocturno = mysqli_real_escape_string($mysqli, $_POST['sisben_nocturno']);
-    $obs_encVenta = mysqli_real_escape_string($mysqli, $_POST['obs_encVenta'] ?? '');
-        
+        $num_ficha_encVenta = mysqli_real_escape_string($mysqli, $_POST['num_ficha_encVenta']);
+        $num_visita = mysqli_real_escape_string($mysqli, $_POST['num_visita'] ?? '');
+        $estado_ficha = mysqli_real_escape_string($mysqli, $_POST['estado_ficha'] ?? '');
+        $integra_encVenta = mysqli_real_escape_string($mysqli, $_POST['integra_encVenta']);
+        $obs_encVenta = mysqli_real_escape_string($mysqli, $_POST['obs_encVenta'] ?? '');
+        $fecha_preregistro = mysqli_real_escape_string($mysqli, $_POST['fecha_preregistro'] ?? '');
+
         // Insertar en la tabla principal encuestacampo usando consulta plana
         $sql_encuesta = "INSERT INTO encuestacampo (
             doc_encVenta, 
             fec_reg_encVenta,
             tipo_documento,
-            departamento_expedicion,
-            ciudad_expedicion,
-            fecha_expedicion,
             nom_encVenta,
             fecha_nacimiento,
             dir_encVenta,
@@ -64,13 +56,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             num_ficha_encVenta,
             num_visita,
             estado_ficha,
-            tipo_proceso,
             integra_encVenta,
-            sisben_nocturno,
             obs_encVenta,
             fecha_alta_encVenta,
+            fecha_preregistro,
             id_usu
-        ) VALUES ('" . $doc_encVenta . "', '" . $fec_reg_encVenta . "', '" . $tipo_documento . "', '" . $departamento_expedicion . "', '" . $ciudad_expedicion . "', '" . $fecha_expedicion . "', '" . $nom_encVenta . "', '" . $fecha_nacimiento . "', '" . $dir_encVenta . "', '" . $id_bar . "', '" . $id_com . "', '" . $otro_bar_ver_encVenta . "', '" . $zona_encVenta . "', '" . $tram_solic_encVenta . "', '" . $num_ficha_encVenta . "', '" . $num_visita . "', '" . $estado_ficha . "', '" . $tipo_proceso . "', '" . $integra_encVenta . "', '" . $sisben_nocturno . "', '" . $obs_encVenta . "', NOW(), " . intval($id_usu) . ")";
+        ) VALUES ('" . $doc_encVenta . "', NOW(), '" . $tipo_documento . "', '" . $nom_encVenta . "', '" . $fecha_nacimiento . "', '" . $dir_encVenta . "', '" . $id_bar . "', '" . $id_com . "', '" . $otro_bar_ver_encVenta . "', '" . $zona_encVenta . "', '" . $tram_solic_encVenta . "', '" . $num_ficha_encVenta . "', '" . $num_visita . "', '" . $estado_ficha . "', '" . $integra_encVenta . "', '" . $obs_encVenta . "', NOW(), '" . $fecha_preregistro . "', " . intval($id_usu) . ")";
 
         if (!mysqli_query($mysqli, $sql_encuesta)) {
             throw new Exception("Error al insertar encuesta: " . mysqli_error($mysqli) . " - SQL: " . $sql_encuesta);
@@ -134,25 +125,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 }
             }
         }
-        
+
         // Confirmar transacción
         mysqli_commit($mysqli);
-        
+
         echo "<script>
             alert('Encuesta de campo registrada exitosamente');
             window.location.href = 'showsurvey.php';
         </script>";
-        
     } catch (Exception $e) {
         // Revertir transacción
         mysqli_rollback($mysqli);
-        echo "<script>
-            alert('Error al registrar la encuesta: " . $e->getMessage() . "');
-            window.history.back();
-        </script>";
+        // Log error to file for debugging
+        @file_put_contents(__DIR__ . '/debug_post.log', date('Y-m-d H:i:s') . " ERROR: " . $e->getMessage() . PHP_EOL, FILE_APPEND);
+        // Also show a plain error message (helps when JS alerts are not visible)
+        echo "Error al registrar la encuesta: " . htmlspecialchars($e->getMessage());
     }
-    
+
     mysqli_autocommit($mysqli, true);
     mysqli_close($mysqli);
 }
-?>

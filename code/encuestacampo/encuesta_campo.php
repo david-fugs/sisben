@@ -51,19 +51,6 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
             height: auto;
         }
 
-        body {
-            background-color: #f8f9fa;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        .main-container {
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
-            padding: 2rem;
-            margin: 2rem 0;
-        }
-
         .form-section {
             background: #f8f9fa;
             border-radius: 10px;
@@ -227,6 +214,34 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
             border: 2px dashed #007bff;
         }
 
+        .primer-integrante {
+            border: 2px solid #dc3545;
+            background-color: #fff5f5;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .primer-integrante .integrante-header {
+            color: #dc3545 !important;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .integrante-adicional {
+            border: 2px solid #6c757d;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .integrante-adicional .integrante-header {
+            color: #6c757d;
+            font-weight: normal;
+            margin-bottom: 1rem;
+        }
+
         .form-control.is-invalid,
         .form-select.is-invalid {
             border-color: #dc3545;
@@ -271,56 +286,7 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
     </style>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const departamentoSelect = document.getElementById('departamento_expedicion');
-            const ciudadSelect = document.getElementById('ciudad_expedicion');
-
-            let ciudadSeleccionada = null;
-
-            function cargarMunicipios(departamento) {
-                ciudadSelect.innerHTML = '<option value="">Seleccione una ciudad</option>';
-
-                if (departamento === '') {
-                    ciudadSelect.disabled = true;
-                    return;
-                }
-
-                const xhr = new XMLHttpRequest();
-                xhr.open('POST', '../obtener_municipios.php', true);
-                xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-
-                xhr.onload = function() {
-                    if (xhr.status === 200) {
-                        const municipios = JSON.parse(xhr.responseText);
-                        municipios.forEach(function(municipio) {
-                            const option = document.createElement('option');
-                            option.value = municipio.cod_municipio;
-                            option.textContent = municipio.nombre_municipio;
-                            ciudadSelect.appendChild(option);
-                        });
-
-                        ciudadSelect.disabled = false;
-
-                        if (ciudadSeleccionada) {
-                            ciudadSelect.value = ciudadSeleccionada;
-                            ciudadSeleccionada = null;
-                        }
-                    } else {
-                        alert('Error al cargar municipios');
-                    }
-                };
-
-                xhr.send('cod_departamento=' + departamento);
-            }
-
-            departamentoSelect.addEventListener('change', function() {
-                cargarMunicipios(this.value);
-            });
-
-            window.setCiudadSeleccionada = function(ciudad) {
-                ciudadSeleccionada = ciudad;
-            };
-        });
+        // departamento/ciudad expedicion handlers removed
 
         $(document).ready(function() {
             function actualizarTotal() {
@@ -355,10 +321,15 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                     alert("Por favor, ingresa una cantidad válida de integrantes.");
                     return;
                 }
+                
+                // Contar integrantes existentes para la numeración
+                var integrantesExistentes = $("#integrantes-container .formulario-dinamico").length;
+                
                 for (var i = 0; i < cantidadValor; i++) {
-                    var integranteDiv = $("<div>").addClass("formulario-dinamico");
+                    var numeroIntegrante = integrantesExistentes + i + 1;
+                    var integranteDiv = $("<div>").addClass("formulario-dinamico integrante-adicional");
 
-                    var integranteHeader = $("<div>").addClass("integrante-header").text("Integrante " + (i + 1));
+                    var integranteHeader = $("<div>").addClass("integrante-header").text("Integrante " + numeroIntegrante + " (Opcional)");
                     integranteDiv.append(integranteHeader);
 
                     var fieldsContainer = $("<div>").addClass("form-row-custom");
@@ -377,7 +348,7 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                     var generoSelect = $("<select>")
                         .attr("name", "gen_integVenta[]")
                         .addClass("form-control smaller-input")
-                        .attr("required", true)
+                        // NO agregamos required para integrantes adicionales
                         .append('<option value="">Identidad Genero</option>')
                         .append('<option value="F">F</option>')
                         .append('<option value="M">M</option>')
@@ -390,7 +361,7 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                     var OrientacionSexual = $("<select>")
                         .attr("name", "orientacionSexual[]")
                         .addClass("form-control smaller-input")
-                        .attr("required", true)
+                        // NO agregamos required para integrantes adicionales
                         .append('<option value="">Orientacion Sexual</option>')
                         .append('<option value="Asexual">Asexual</option>')
                         .append('<option value="Bisexual">Bisexual</option>')
@@ -405,7 +376,7 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                     var rangoEdadSelect = $("<select>")
                         .attr("name", "rango_integVenta[]")
                         .addClass("form-control smaller-input")
-                        .attr("required", true)
+                        // NO agregamos required para integrantes adicionales
                         .append('<option value="">Rango Edad</option>')
                         .append('<option value="0 - 6">0 - 5</option>')
                         .append('<option value="6 - 12">6 - 12</option>')
@@ -422,7 +393,7 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                     var condicionDiscapacidad = $("<select>")
                         .attr("name", "condicionDiscapacidad[]")
                         .addClass("form-control smaller-input")
-                        .attr("required", true)
+                        // NO agregamos required para integrantes adicionales
                         .append('<option value="">Condicion Discapacidad</option>')
                         .append('<option value="Si">Si</option>')
                         .append('<option value="No">No</option>');
@@ -451,7 +422,7 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                     var GrupoEtnico = $("<select>")
                         .attr("name", "grupoEtnico[]")
                         .addClass("form-control smaller-input")
-                        .attr("required", true)
+                        // NO agregamos required para integrantes adicionales
                         .append('<option value="">Grupo Etnico</option>')
                         .append('<option value="Indigena">Indigena</option>')
                         .append('<option value="Negro(a) / Mulato(a) / Afrocolombiano(a)">Negro(a) / Mulato(a) / Afrocolombiano(a)</option>')
@@ -468,7 +439,7 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                     var victima = $("<select>")
                         .attr("name", "victima[]")
                         .addClass("form-control smaller-input")
-                        .attr("required", true)
+                        // NO agregamos required para integrantes adicionales
                         .append('<option value="">Victima</option>')
                         .append('<option value="Si">Si</option>')
                         .append('<option value="No">No</option>');
@@ -480,7 +451,7 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                     var mujerGestante = $("<select>")
                         .attr("name", "mujerGestante[]")
                         .addClass("form-control smaller-input")
-                        .attr("required", true)
+                        // NO agregamos required para integrantes adicionales
                         .append('<option value="">Mujer Gestante</option>')
                         .append('<option value="Si">Si</option>')
                         .append('<option value="No">No</option>');
@@ -492,7 +463,7 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                     var cabezaFamilia = $("<select>")
                         .attr("name", "cabezaFamilia[]")
                         .addClass("form-control smaller-input")
-                        .attr("required", true)
+                        // NO agregamos required para integrantes adicionales
                         .append('<option value="">Cabeza de Familia</option>')
                         .append('<option value="Si">Si</option>')
                         .append('<option value="No">No</option>');
@@ -504,7 +475,7 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                     var experienciaMigratoria = $("<select>")
                         .attr("name", "experienciaMigratoria[]")
                         .addClass("form-control smaller-input")
-                        .attr("required", true)
+                        // NO agregamos required para integrantes adicionales
                         .append('<option value="">Experiencia Migratoria</option>')
                         .append('<option value="Si">Si</option>')
                         .append('<option value="No">No</option>');
@@ -516,7 +487,7 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                     var seguridadSalud = $("<select>")
                         .attr("name", "seguridadSalud[]")
                         .addClass("form-control smaller-input")
-                        .attr("required", true)
+                        // NO agregamos required para integrantes adicionales
                         .append('<option value="">Seguridad Salud</option>')
                         .append('<option value="Regimen Contributivo">Regimen Contributivo</option>')
                         .append('<option value="Regimen Subsidiado">Regimen Subsidiado</option>')
@@ -530,7 +501,7 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                     var nivelEducativo = $("<select>")
                         .attr("name", "nivelEducativo[]")
                         .addClass("form-control smaller-input")
-                        .attr("required", true)
+                        // NO agregamos required para integrantes adicionales
                         .append('<option value="">Nivel Educativo</option>')
                         .append('<option value="Ninguno">Ninguno</option>')
                         .append('<option value="Preescolar">Preescolar</option>')
@@ -552,7 +523,7 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                     var condicionOcupacion = $("<select>")
                         .attr("name", "condicionOcupacion[]")
                         .addClass("form-control smaller-input")
-                        .attr("required", true)
+                        // NO agregamos required para integrantes adicionales
                         .append('<option value="">Condicion Ocupacion</option>')
                         .append('<option value="Ama de casa">Ama de casa</option>')
                         .append('<option value="Buscando Empleo">Buscando Empleo</option>')
@@ -593,6 +564,242 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                 actualizarTotal();
                 inputCantidad.val("");
             });
+
+            // Función para crear el primer integrante con campos requeridos
+            function crearPrimerIntegrante() {
+                var integranteDiv = $("<div>").addClass("formulario-dinamico primer-integrante");
+
+                var integranteHeader = $("<div>").addClass("integrante-header").text("Integrante 1 (Requerido)").css({
+                    'color': '#dc3545',
+                    'font-weight': 'bold',
+                    'margin-bottom': '1rem'
+                });
+                integranteDiv.append(integranteHeader);
+
+                var fieldsContainer = $("<div>").addClass("form-row-custom");
+
+                var cantidadInput = $("<input>")
+                    .attr("type", "hidden")
+                    .attr("name", "cant_integVenta[]")
+                    .addClass("form-control smaller-input")
+                    .val(1)
+                    .on("input", actualizarTotal)
+                    .attr("placeholder", "Cantidad")
+                    .attr("readonly", true);
+
+                var generoGroup = $("<div>").addClass("form-group-dinamico");
+                generoGroup.append($("<label>").text("Identidad de Género *"));
+                var generoSelect = $("<select>")
+                    .attr("name", "gen_integVenta[]")
+                    .addClass("form-control smaller-input")
+                    .attr("required", true)
+                    .append('<option value="">Identidad Genero</option>')
+                    .append('<option value="F">F</option>')
+                    .append('<option value="M">M</option>')
+                    .append('<option value="O">Otro</option>');
+                generoGroup.append(generoSelect);
+                fieldsContainer.append(generoGroup);
+
+                var orientacionGroup = $("<div>").addClass("form-group-dinamico");
+                orientacionGroup.append($("<label>").text("Orientación Sexual *"));
+                var OrientacionSexual = $("<select>")
+                    .attr("name", "orientacionSexual[]")
+                    .addClass("form-control smaller-input")
+                    .attr("required", true)
+                    .append('<option value="">Orientacion Sexual</option>')
+                    .append('<option value="Asexual">Asexual</option>')
+                    .append('<option value="Bisexual">Bisexual</option>')
+                    .append('<option value="Heterosexual">Heterosexual</option>')
+                    .append('<option value="Homosexual">Homosexual</option>')
+                    .append('<option value="Otro">Otro</option>');
+                orientacionGroup.append(OrientacionSexual);
+                fieldsContainer.append(orientacionGroup);
+
+                var rangoEdadGroup = $("<div>").addClass("form-group-dinamico");
+                rangoEdadGroup.append($("<label>").text("Rango de Edad *"));
+                var rangoEdadSelect = $("<select>")
+                    .attr("name", "rango_integVenta[]")
+                    .addClass("form-control smaller-input")
+                    .attr("required", true)
+                    .append('<option value="">Rango Edad</option>')
+                    .append('<option value="0 - 6">0 - 5</option>')
+                    .append('<option value="6 - 12">6 - 12</option>')
+                    .append('<option value="13 - 17">13 - 17</option>')
+                    .append('<option value="18 - 28">18 - 28</option>')
+                    .append('<option value="29 - 45">29 - 45</option>')
+                    .append('<option value="46 - 64">46 - 64</option>')
+                    .append('<option value="Mayor o igual a 65">Mayor o igual a 65</option>');
+                rangoEdadGroup.append(rangoEdadSelect);
+                fieldsContainer.append(rangoEdadGroup);
+
+                var discapacidadGroup = $("<div>").addClass("form-group-dinamico");
+                discapacidadGroup.append($("<label>").text("Condición de Discapacidad *"));
+                var condicionDiscapacidad = $("<select>")
+                    .attr("name", "condicionDiscapacidad[]")
+                    .addClass("form-control smaller-input")
+                    .attr("required", true)
+                    .append('<option value="">Condicion Discapacidad</option>')
+                    .append('<option value="Si">Si</option>')
+                    .append('<option value="No">No</option>');
+                discapacidadGroup.append(condicionDiscapacidad);
+                fieldsContainer.append(discapacidadGroup);
+
+                var tipoDiscapacidadGroup = $("<div>").addClass("form-group-dinamico");
+                tipoDiscapacidadGroup.append($("<label>").text("Tipo de Discapacidad"));
+                var discapacidadSelect = $("<select>")
+                    .attr("name", "tipoDiscapacidad[]")
+                    .addClass("form-control smaller-input tipo-discapacidad")
+                    .append('<option value="">Tipo Discapacidad</option>')
+                    .append('<option value="Auditiva">Auditiva</option>')
+                    .append('<option value="Física">Física</option>')
+                    .append('<option value="Intelectual">Intelectual</option>')
+                    .append('<option value="Múltiple">Múltiple</option>')
+                    .append('<option value="Psicosocial">Psicosocial</option>')
+                    .append('<option value="Sordoceguera">Sordoceguera</option>')
+                    .append('<option value="Visual">Visual</option>')
+                    .hide();
+                tipoDiscapacidadGroup.append(discapacidadSelect);
+                fieldsContainer.append(tipoDiscapacidadGroup);
+
+                var grupoEtnicoGroup = $("<div>").addClass("form-group-dinamico");
+                grupoEtnicoGroup.append($("<label>").text("Grupo Étnico *"));
+                var GrupoEtnico = $("<select>")
+                    .attr("name", "grupoEtnico[]")
+                    .addClass("form-control smaller-input")
+                    .attr("required", true)
+                    .append('<option value="">Grupo Etnico</option>')
+                    .append('<option value="Indigena">Indigena</option>')
+                    .append('<option value="Negro(a) / Mulato(a) / Afrocolombiano(a)">Negro(a) / Mulato(a) / Afrocolombiano(a)</option>')
+                    .append('<option value="Raizal">Raizal</option>')
+                    .append('<option value="Palenquero de San Basilio">Palenquero de San Basilio</option>')
+                    .append('<option value="Mestizo">Mestizo</option>')
+                    .append('<option value="Gitano (rom)">Gitano (rom)</option>')
+                    .append('<option value="Ninguno">Ninguno</option>');
+                grupoEtnicoGroup.append(GrupoEtnico);
+                fieldsContainer.append(grupoEtnicoGroup);
+
+                var victimaGroup = $("<div>").addClass("form-group-dinamico");
+                victimaGroup.append($("<label>").text("¿Es víctima? *"));
+                var victima = $("<select>")
+                    .attr("name", "victima[]")
+                    .addClass("form-control smaller-input")
+                    .attr("required", true)
+                    .append('<option value="">Victima</option>')
+                    .append('<option value="Si">Si</option>')
+                    .append('<option value="No">No</option>');
+                victimaGroup.append(victima);
+                fieldsContainer.append(victimaGroup);
+
+                var mujerGestanteGroup = $("<div>").addClass("form-group-dinamico");
+                mujerGestanteGroup.append($("<label>").text("¿Mujer gestante? *"));
+                var mujerGestante = $("<select>")
+                    .attr("name", "mujerGestante[]")
+                    .addClass("form-control smaller-input")
+                    .attr("required", true)
+                    .append('<option value="">Mujer Gestante</option>')
+                    .append('<option value="Si">Si</option>')
+                    .append('<option value="No">No</option>');
+                mujerGestanteGroup.append(mujerGestante);
+                fieldsContainer.append(mujerGestanteGroup);
+
+                var cabezaFamiliaGroup = $("<div>").addClass("form-group-dinamico");
+                cabezaFamiliaGroup.append($("<label>").text("¿Cabeza de familia? *"));
+                var cabezaFamilia = $("<select>")
+                    .attr("name", "cabezaFamilia[]")
+                    .addClass("form-control smaller-input")
+                    .attr("required", true)
+                    .append('<option value="">Cabeza de Familia</option>')
+                    .append('<option value="Si">Si</option>')
+                    .append('<option value="No">No</option>');
+                cabezaFamiliaGroup.append(cabezaFamilia);
+                fieldsContainer.append(cabezaFamiliaGroup);
+
+                var experienciaMigratoriaGroup = $("<div>").addClass("form-group-dinamico");
+                experienciaMigratoriaGroup.append($("<label>").text("¿Tiene experiencia migratoria? *"));
+                var experienciaMigratoria = $("<select>")
+                    .attr("name", "experienciaMigratoria[]")
+                    .addClass("form-control smaller-input")
+                    .attr("required", true)
+                    .append('<option value="">Experiencia Migratoria</option>')
+                    .append('<option value="Si">Si</option>')
+                    .append('<option value="No">No</option>');
+                experienciaMigratoriaGroup.append(experienciaMigratoria);
+                fieldsContainer.append(experienciaMigratoriaGroup);
+
+                var seguridadSaludGroup = $("<div>").addClass("form-group-dinamico");
+                seguridadSaludGroup.append($("<label>").text("Seguridad en salud *"));
+                var seguridadSalud = $("<select>")
+                    .attr("name", "seguridadSalud[]")
+                    .addClass("form-control smaller-input")
+                    .attr("required", true)
+                    .append('<option value="">Seguridad Salud</option>')
+                    .append('<option value="Regimen Contributivo">Regimen Contributivo</option>')
+                    .append('<option value="Regimen Subsidiado">Regimen Subsidiado</option>')
+                    .append('<option value="Poblacion Vinculada">Poblacion Vinculada</option>')
+                    .append('<option value="Ninguno">Ninguno</option>');
+                seguridadSaludGroup.append(seguridadSalud);
+                fieldsContainer.append(seguridadSaludGroup);
+
+                var nivelEducativoGroup = $("<div>").addClass("form-group-dinamico");
+                nivelEducativoGroup.append($("<label>").text("Nivel educativo *"));
+                var nivelEducativo = $("<select>")
+                    .attr("name", "nivelEducativo[]")
+                    .addClass("form-control smaller-input")
+                    .attr("required", true)
+                    .append('<option value="">Nivel Educativo</option>')
+                    .append('<option value="Ninguno">Ninguno</option>')
+                    .append('<option value="Preescolar">Preescolar</option>')
+                    .append('<option value="Primaria">Primaria</option>')
+                    .append('<option value="Secundaria">Secundaria</option>')
+                    .append('<option value="Media Academica o Clasica">Media Academica o Clasica</option>')
+                    .append('<option value="Media Tecnica">Media Tecnica</option>')
+                    .append('<option value="Normalista">Normalista</option>')
+                    .append('<option value="Universitario">Universitario</option>')
+                    .append('<option value="Tecnica Profesional">Tecnica Profesional</option>')
+                    .append('<option value="Tecnologica">Tecnologica</option>')
+                    .append('<option value="Profesional">Profesional</option>')
+                    .append('<option value="Especializacion">Especializacion</option>');
+                nivelEducativoGroup.append(nivelEducativo);
+                fieldsContainer.append(nivelEducativoGroup);
+
+                var condicionOcupacionGroup = $("<div>").addClass("form-group-dinamico");
+                condicionOcupacionGroup.append($("<label>").text("Condición de ocupación *"));
+                var condicionOcupacion = $("<select>")
+                    .attr("name", "condicionOcupacion[]")
+                    .addClass("form-control smaller-input")
+                    .attr("required", true)
+                    .append('<option value="">Condicion Ocupacion</option>')
+                    .append('<option value="Ama de casa">Ama de casa</option>')
+                    .append('<option value="Buscando Empleo">Buscando Empleo</option>')
+                    .append('<option value="Desempleado(a)">Desempleado(a)</option>')
+                    .append('<option value="Empleado(a)">Empleado(a)</option>')
+                    .append('<option value="Independiente">Independiente</option>')
+                    .append('<option value="Estudiante">Estudiante</option>')
+                    .append('<option value="Pensionado">Pensionado</option>')
+                    .append('<option value="Ninguno">Ninguno</option>');
+                condicionOcupacionGroup.append(condicionOcupacion);
+                fieldsContainer.append(condicionOcupacionGroup);
+
+                integranteDiv.append(cantidadInput);
+                integranteDiv.append(fieldsContainer);
+                // No agregamos botón de eliminar al primer integrante
+
+                // Agregar funcionalidad de mostrar/ocultar tipo de discapacidad
+                condicionDiscapacidad.on("change", function() {
+                    const valor = $(this).val();
+                    if (valor === "Si") {
+                        $(this).closest('.formulario-dinamico').find('.tipo-discapacidad').show();
+                    } else {
+                        $(this).closest('.formulario-dinamico').find('.tipo-discapacidad').hide().val("");
+                    }
+                });
+
+                $("#integrantes-container").append(integranteDiv);
+                actualizarTotal();
+            }
+
+            // Crear el primer integrante automáticamente al cargar la página
+            crearPrimerIntegrante();
 
             window.actualizarTotal = actualizarTotal;
         });
@@ -638,38 +845,7 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                             $("#nom_encVenta").val(d.nom_encVenta || "");
                             $("#tipo_documento").val(d.tipo_documento || "");
 
-                            if (d.departamento_expedicion) {
-                                $("#departamento_expedicion").val(d.departamento_expedicion);
-                                
-                                // Cargar municipios del departamento y seleccionar el correcto
-                                $.ajax({
-                                    url: '../obtener_municipios.php',
-                                    type: 'POST',
-                                    data: {
-                                        cod_departamento: d.departamento_expedicion
-                                    },
-                                    dataType: 'json',
-                                    success: function(municipios) {
-                                        let ciudadSelect = $("#ciudad_expedicion");
-                                        ciudadSelect.empty().append('<option value="">Seleccione un municipio</option>');
-                                        $.each(municipios, function(index, municipio) {
-                                            ciudadSelect.append(
-                                                $('<option>', {
-                                                    value: municipio.cod_municipio,
-                                                    text: municipio.nombre_municipio,
-                                                    selected: municipio.cod_municipio === d.ciudad_expedicion
-                                                })
-                                            );
-                                        });
-                                        ciudadSelect.prop('disabled', false);
-                                    },
-                                    error: function(xhr, status, error) {
-                                        console.error("Error al obtener municipios:", error);
-                                    }
-                                });
-                            }
-
-                            $("#fecha_expedicion").val(d.fecha_expedicion || "");
+                            // departamento/ciudad expedicion and fecha_expedicion removed from form; no prefill performed
                             $("#fecha_nacimiento").val(d.fecha_nacimiento || "");
                             $("#dir_encVenta").val(d.dir_encVenta || "");
 
@@ -783,38 +959,7 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                             $("#nom_encVenta").val(d.nom_info || "");
                             $("#tipo_documento").val(d.tipo_documento || "");
                             
-                            if (d.departamento_expedicion) {
-                                $("#departamento_expedicion").val(d.departamento_expedicion);
-                                
-                                // Cargar municipios del departamento y seleccionar el correcto
-                                $.ajax({
-                                    url: '../obtener_municipios.php',
-                                    type: 'POST',
-                                    data: {
-                                        cod_departamento: d.departamento_expedicion
-                                    },
-                                    dataType: 'json',
-                                    success: function(municipios) {
-                                        let ciudadSelect = $("#ciudad_expedicion");
-                                        ciudadSelect.empty().append('<option value="">Seleccione un municipio</option>');
-                                        $.each(municipios, function(index, municipio) {
-                                            ciudadSelect.append(
-                                                $('<option>', {
-                                                    value: municipio.cod_municipio,
-                                                    text: municipio.nombre_municipio,
-                                                    selected: municipio.cod_municipio === d.ciudad_expedicion
-                                                })
-                                            );
-                                        });
-                                        ciudadSelect.prop('disabled', false);
-                                    },
-                                    error: function(xhr, status, error) {
-                                        console.error("Error al obtener municipios:", error);
-                                    }
-                                });
-                            }
-                            
-                            $("#fecha_expedicion").val(d.fecha_expedicion || "");
+                            // departamento/ciudad expedicion and fecha_expedicion removed from form; no prefill
                             $("#fecha_nacimiento").val(d.fecha_nacimiento || "");
                             
                             // Limpiar integrantes precargados ya que es información nueva
@@ -899,8 +1044,13 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                                 <select name="tipo_documento" class="form-control" id="tipo_documento">
                                     <option value="">SELECCIONE:</option>
                                     <option value="cedula">CEDULA</option>
-                                    <option value="ppt">PPT</option>
+                                    <option value="tarjeta identidad">TARJETA IDENTIDAD</option>
                                     <option value="cedula_extranjeria">CEDULA EXTRANJERIA</option>
+                                    <option value="DNI">DNI</option>
+                                    <option value="PASAPORTE">PASAPORTE</option>
+                                    <option value="SALVO CONDUCTO PARA REFUGIADOS">SALVO CONDUCTO PARA REFUGIADOS</option>
+                                    <option value="PERMISO PERMANENCIA">PERMISO PERMANENCIA</option>
+                                    <option value="PERMISO DE PROTECCION TEMPORAL">PERMISO DE PROTECCION TEMPORAL</option>
                                     <option value="otro">otro</option>
                                 </select>
                             </div>
@@ -908,36 +1058,19 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                     </div>
                     <div class="form-group">
                         <div class="row">
-                            <div class="form-group col-md-3">
-                                <label for="departamento_expedicion">* DEPARTAMENTO EXPEDICION:</label>
-                                <select class="form-control" name="departamento_expedicion" id="departamento_expedicion">
-                                    <option value="">Seleccione un departamento</option>
-                                    <?php
-                                    foreach ($departamentos as $departamento) {
-                                        echo "<option value='{$departamento['cod_departamento']}'>{$departamento['nombre_departamento']}</option>";
-                                    }
-                                    ?>
-                                </select>
-                            </div>
-                            <div class="form-group col-md-3">
-                                <label for="ciudad_expedicion">* MUNICIPIO EXPEDICION:</label>
-                                <select id="ciudad_expedicion" name="ciudad_expedicion" class="form-control" disabled required>
-                                </select>
-                            </div>
-                            <div class="form-group col-md-3">
-                                <label for="fecha_expedicion">* FECHA EXPEDICION:</label>
-                                <input type='date' name='fecha_expedicion' id="fecha_expedicion" class='form-control' required style="text-transform:uppercase;" />
-                            </div>
-                            <div class="form-group col-md-3">
+                            <div class="form-group col-md-4">
                                 <label for="nom_encVenta">* NOMBRES COMPLETOS:</label>
                                 <input type='text' name='nom_encVenta' id="nom_encVenta" class='form-control' required style="text-transform:uppercase;" />
                             </div>
-                        </div>
-                        <div class="row">
                             <div class="form-group col-md-3">
                                 <label for="fecha_nacimiento">FECHA DE NACIMIENTO:</label>
                                 <input type='date' name='fecha_nacimiento' id="fecha_nacimiento" class='form-control' />
                             </div>
+                            <div class="form-group col-md-3">
+                                <label for="fecha_preregistro">FECHA DE PREREGISTRO:</label>
+                                <input type='date' name='fecha_preregistro' id="fecha_preregistro" class='form-control' />
+                            </div>
+                            
                         </div>
                     </div>
                 </div>
@@ -1009,6 +1142,7 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                                 <label for="estado_ficha">Estado de la Ficha</label>
                                 <select id="estado_ficha" name="estado_ficha" class="form-control">
                                     <option value="">Seleccione estado</option>
+                                    <option value="Visita fallida">Visita fallida</option>
                                     <option value="Direccion errada">Direccion errada</option>
                                     <option value="Direccion incompleta">Direccion incompleta</option>
                                     <option value="Fallecido">Fallecido</option>
@@ -1021,20 +1155,7 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                                     <option value="Zona insegura">Zona insegura</option>
                                 </select>
                             </div>
-                            <div class="form-group col-md-4 mt-1">
-                                <label for="tipo_proceso">Tipo de Proceso</label>
-                                <select id="tipo_proceso" name="tipo_proceso" class="form-control">
-                                    <option value="">Seleccione tipo</option>
-                                    <option value="Descentralizado">Descentralizado</option>
-                                    <option value="Encuesta nueva">Encuesta nueva</option>
-                                    <option value="Encuesta por verificacion">Encuesta por verificacion</option>
-                                    <option value="Favor">Favor</option>
-                                    <option value="Inconformidad">Inconformidad</option>
-                                    <option value="Portal ciudadano">Portal ciudadano</option>
-                                    <option value="Prioridad">Prioridad</option>
-                                    <option value="Verificacion">Verificacion</option>
-                                </select>
-                            </div>
+                            <!-- Tipo de Proceso removed per request -->
                         </div>
                     </div>
                 </div>
@@ -1057,14 +1178,7 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                                     <label for="integra_encVenta">INTEGRANTES:</label>
                                     <input type='number' id='total_integrantes' name='integra_encVenta' class='form-control' value="" readonly />
                                 </div>
-                                <div class="form-group col-md-4">
-                                    <label for="sisben_nocturno">* SISBEN NOCTURNO:</label>
-                                    <select class="form-control" name="sisben_nocturno" id="nocturno">
-                                        <option value=""></option>
-                                        <option value="SI">SI</option>
-                                        <option value="NO">NO</option>
-                                    </select>
-                                </div>
+                                <!-- SISBEN NOCTURNO removed per request -->
                                 <div class="form-group col-md-2">
                                     <label for="cant_integVenta">CANTIDAD:</label>
                                     <input type="number" id="cant_integVenta" name="cant_integVenta" class="form-control" />
@@ -1143,6 +1257,7 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
         // Función para validar los integrantes antes del envío
         function validarIntegrantes() {
             var integrantesContainer = $("#integrantes-container");
+            var primerIntegrante = integrantesContainer.find(".primer-integrante").first(); // Solo el primer integrante
             var formulariosDinamicos = integrantesContainer.find(".formulario-dinamico:not(.readonly-integrante)"); // Excluir integrantes de solo lectura
 
             // Si solo hay integrantes de solo lectura, no es necesario validar
@@ -1159,11 +1274,10 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
             }
 
             var errores = [];
-            var integranteNumero = 1;
 
-            formulariosDinamicos.each(function(index) {
-                var formulario = $(this);
-                var camposRequeridos = formulario.find("select[required]");
+            // Solo validar el primer integrante (que tiene campos requeridos)
+            if (primerIntegrante.length > 0) {
+                var camposRequeridos = primerIntegrante.find("select[required]");
 
                 camposRequeridos.each(function() {
                     var campo = $(this);
@@ -1172,19 +1286,19 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
 
                     if (!valor || valor === "") {
                         var label = campo.closest('.form-group-dinamico').find('label').text() || nombre;
-                        errores.push("Integrante " + integranteNumero + ": " + label + " es requerido");
+                        // Limpiar el asterisco del label para el mensaje de error
+                        label = label.replace(' *', '');
+                        errores.push("Integrante 1 (Requerido): " + label + " es requerido");
 
                         campo.addClass("is-invalid");
                     } else {
                         campo.removeClass("is-invalid");
                     }
                 });
-
-                integranteNumero++;
-            });
+            }
 
             if (errores.length > 0) {
-                var mensajeError = "Por favor complete los siguientes campos:\n\n" + errores.join("\n");
+                var mensajeError = "Por favor complete los siguientes campos obligatorios del primer integrante:\n\n" + errores.join("\n");
                 alert(mensajeError);
 
                 var primerCampoError = $(".is-invalid").first();

@@ -158,11 +158,9 @@ try {
     
     // NUEVOS CAMPOS ESPECÍFICOS DE ENCUESTA DE CAMPO
     $sheet1->setCellValue('AH1', 'NUMERO DE VISITA');
-    $sheet1->setCellValue('AI1', 'TIPO DE PROCESO');
-    $sheet1->setCellValue('AJ1', 'ESTADO DE LA FICHA');
+    $sheet1->setCellValue('AI1', 'ESTADO DE LA FICHA');
 
-    // Si el filtro es TODOS, usamos datos de integrantes, sino dejamos vacío
-    $isTodos = (!isset($_GET['id_usu']) || $_GET['id_usu'] == '' || $_GET['id_usu'] == 'todos');
+    // Para cada encuesta intentaremos obtener el primer integrante (si existe)
 
     // Ajustar ancho de columnas para ENCUESTAS DE CAMPO
     foreach ([
@@ -223,11 +221,11 @@ try {
         $sheet1->setCellValue('Q' . $rowIndex1, $row['sisben_nocturno']);
         $sheet1->setCellValue('R' . $rowIndex1, $row['obs_encVenta']);
         
-        // Si el filtro es TODOS, buscar y agregar el primer integrante
+        // Buscar el primer integrante asociado a esta encuesta (si existe)
         $integ = null;
-        if ($isTodos) {
-            $sql_integ = "SELECT * FROM integcampo WHERE id_encuesta = " . $row['id_encCampo'] . " ORDER BY id_integCampo ASC LIMIT 1";
-            $res_integ = mysqli_query($mysqli, $sql_integ);
+        $sql_integ = "SELECT * FROM integcampo WHERE id_encuesta = " . intval($row['id_encCampo']) . " ORDER BY id_integCampo ASC LIMIT 1";
+        $res_integ = mysqli_query($mysqli, $sql_integ);
+        if ($res_integ && mysqli_num_rows($res_integ) > 0) {
             $integ = mysqli_fetch_array($res_integ, MYSQLI_ASSOC);
         }
 
@@ -249,9 +247,23 @@ try {
             $sheet1->setCellValue('AD' . $rowIndex1, $integ['nivelEducativo']);
             $sheet1->setCellValue('AE' . $rowIndex1, $integ['condicionOcupacion']);
             $sheet1->setCellValue('AF' . $rowIndex1, $row['nombre_usuario']);
-            $sheet1->setCellValue('AG' . $rowIndex1, ''); // No hay campo edad específico en integcampo
+            // Calcular edad a partir de fecha_nacimiento (campo en encuestacampo) respecto a fecha_alta_encVenta si existe
+            $edad = '';
+            $fechaNac = !empty($row['fecha_nacimiento']) ? $row['fecha_nacimiento'] : null;
+            $fechaRef = !empty($row['fecha_alta_encVenta']) ? $row['fecha_alta_encVenta'] : date('Y-m-d');
+            if ($fechaNac) {
+                try {
+                    $dn = new DateTime(substr($fechaNac,0,10));
+                    $dr = new DateTime(substr($fechaRef,0,10));
+                    $diff = $dn->diff($dr);
+                    $edad = $diff->y;
+                } catch (Exception $e) {
+                    $edad = '';
+                }
+            }
+            $sheet1->setCellValue('AG' . $rowIndex1, $edad);
         } else {
-            // Dejar campos vacíos si no hay integrantes o si no es filtro "todos"
+            // Dejar campos vacíos si no hay integrantes
             for ($col = 19; $col <= 33; $col++) { // Columnas S a AG
                 $sheet1->setCellValue(Coordinate::stringFromColumnIndex($col) . $rowIndex1, '');
             }
@@ -260,8 +272,7 @@ try {
         
         // NUEVOS CAMPOS ESPECÍFICOS DE ENCUESTA DE CAMPO
         $sheet1->setCellValue('AH' . $rowIndex1, $row['num_visita']);
-        $sheet1->setCellValue('AI' . $rowIndex1, $row['tipo_proceso']);
-        $sheet1->setCellValue('AJ' . $rowIndex1, $row['estado_ficha']);
+        $sheet1->setCellValue('AI' . $rowIndex1, $row['estado_ficha']);
 
         $rowIndex1++;
     }
@@ -275,101 +286,6 @@ try {
         logError("No se encontraron registros para exportar");
     }
 
-    // ===============================================
-    // HOJA 2: INTEGRANTES DE ENCUESTAS DE CAMPO
-    // ===============================================
-    $sheet2 = $spreadsheet->createSheet();
-    $sheet2->setTitle('INTEGRANTES CAMPO');
-    logError("Hoja 2 - INTEGRANTES CAMPO creada");
-
-    // Aplicar estilos a la hoja 2
-    $sheet2->getStyle('A1:V1')->applyFromArray($styleHeader);
-
-    // Encabezados para INTEGRANTES
-    $sheet2->setCellValue('A1', 'ID ENCUESTA');
-    $sheet2->setCellValue('B1', 'DOCUMENTO TITULAR');
-    $sheet2->setCellValue('C1', 'NOMBRE TITULAR');
-    $sheet2->setCellValue('D1', 'NUMERO FICHA');
-    $sheet2->setCellValue('E1', 'GÉNERO');
-    $sheet2->setCellValue('F1', 'ORIENTACION SEXUAL');
-    $sheet2->setCellValue('G1', 'RANGO EDAD');
-    $sheet2->setCellValue('H1', 'GRUPO ETNICO');
-    $sheet2->setCellValue('I1', 'VICTIMA');
-    $sheet2->setCellValue('J1', 'CONDICION DISCAPACIDAD');
-    $sheet2->setCellValue('K1', 'TIPO DISCAPACIDAD');
-    $sheet2->setCellValue('L1', 'MUJER GESTANTE');
-    $sheet2->setCellValue('M1', 'CABEZA FAMILIA');
-    $sheet2->setCellValue('N1', 'EXPERIENCIA MIGRATORIA');
-    $sheet2->setCellValue('O1', 'SEGURIDAD SALUD');
-    $sheet2->setCellValue('P1', 'NIVEL EDUCATIVO');
-    $sheet2->setCellValue('Q1', 'CONDICION OCUPACION');
-    $sheet2->setCellValue('R1', 'ASESOR');
-    $sheet2->setCellValue('S1', 'FECHA REGISTRO');
-    $sheet2->setCellValue('T1', 'NUMERO DE VISITA');
-    $sheet2->setCellValue('U1', 'TIPO DE PROCESO');
-    $sheet2->setCellValue('V1', 'ESTADO DE LA FICHA');
-
-    // Ajustar ancho de columnas para INTEGRANTES
-    foreach (['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V'] as $col) {
-        $sheet2->getColumnDimension($col)->setWidth(20);
-    }
-    $sheet2->getDefaultRowDimension()->setRowHeight(25);
-
-    // Consulta para integrantes de encuestas de campo
-    $where_integrantes = $where_encuestas;
-    // Cambiar alias en la consulta de integrantes
-    if (!empty($where_integrantes)) {
-        $where_integrantes = str_replace('ec.', 'ec.', $where_integrantes);
-    }
-    
-    $sql_integrantes = "
-    SELECT ic.*, ec.doc_encVenta, ec.nom_encVenta, ec.num_ficha_encVenta, 
-           ec.num_visita, ec.tipo_proceso, ec.estado_ficha, ec.fecha_alta_encVenta,
-           u.nombre AS nombre_usuario
-    FROM integcampo ic
-    INNER JOIN encuestacampo ec ON ic.id_encuesta = ec.id_encCampo
-    LEFT JOIN usuarios u ON ec.id_usu = u.id_usu
-    $where_integrantes
-    ORDER BY ec.fecha_alta_encVenta DESC, ic.id_integCampo ASC
-    ";
-
-    $res_integrantes = mysqli_query($mysqli, $sql_integrantes);
-    if ($res_integrantes === false) {
-        echo "Error en la consulta de integrantes: " . mysqli_error($mysqli);
-        exit;
-    }
-    logError("Consulta de integrantes ejecutada correctamente");
-
-    // Escribir datos de INTEGRANTES
-    $rowIndex2 = 2;
-    while ($row = mysqli_fetch_array($res_integrantes, MYSQLI_ASSOC)) {
-        $tipoDiscapacidad = isset($row['tipoDiscapacidad']) ? limpiarTexto($row['tipoDiscapacidad']) : '';
-        
-        $sheet2->setCellValue('A' . $rowIndex2, $row['id_encuesta']);
-        $sheet2->setCellValue('B' . $rowIndex2, $row['doc_encVenta']);
-        $sheet2->setCellValue('C' . $rowIndex2, $row['nom_encVenta']);
-        $sheet2->setCellValue('D' . $rowIndex2, $row['num_ficha_encVenta']);
-        $sheet2->setCellValue('E' . $rowIndex2, $row['gen_integVenta']);
-        $sheet2->setCellValue('F' . $rowIndex2, $row['orientacionSexual']);
-        $sheet2->setCellValue('G' . $rowIndex2, $row['rango_integVenta']);
-        $sheet2->setCellValue('H' . $rowIndex2, $row['grupoEtnico']);
-        $sheet2->setCellValue('I' . $rowIndex2, $row['victima']);
-        $sheet2->setCellValue('J' . $rowIndex2, $row['condicionDiscapacidad']);
-        $sheet2->setCellValue('K' . $rowIndex2, $tipoDiscapacidad);
-        $sheet2->setCellValue('L' . $rowIndex2, $row['mujerGestante']);
-        $sheet2->setCellValue('M' . $rowIndex2, $row['cabezaFamilia']);
-        $sheet2->setCellValue('N' . $rowIndex2, $row['experienciaMigratoria']);
-        $sheet2->setCellValue('O' . $rowIndex2, $row['seguridadSalud']);
-        $sheet2->setCellValue('P' . $rowIndex2, $row['nivelEducativo']);
-        $sheet2->setCellValue('Q' . $rowIndex2, $row['condicionOcupacion']);
-        $sheet2->setCellValue('R' . $rowIndex2, $row['nombre_usuario']);
-        $sheet2->setCellValue('S' . $rowIndex2, $row['fecha_alta_encVenta']);
-        $sheet2->setCellValue('T' . $rowIndex2, $row['num_visita']);
-        $sheet2->setCellValue('U' . $rowIndex2, $row['tipo_proceso']);
-        $sheet2->setCellValue('V' . $rowIndex2, $row['estado_ficha']);
-
-        $rowIndex2++;
-    }
 
     // Crear el archivo Excel
     $writer = new Xlsx($spreadsheet);

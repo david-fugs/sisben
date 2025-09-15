@@ -230,3 +230,246 @@
 [2025-09-11 16:12:04] Hoja 2 - INTEGRANTES CAMPO creada
 [2025-09-11 16:12:04] Consulta de integrantes ejecutada correctamente
 [2025-09-11 16:12:04] Archivo Excel generado correctamente: encuestas_campo_2025-09-11_16-12-04.xlsx
+[2025-09-15 21:03:31] Iniciando exportarIntegrantesCampo.php
+[2025-09-15 14:03:31] Parámetros recibidos - fecha_inicio: 2025-01-01, fecha_fin: 2025-09-20, id_usu: todos
+[2025-09-15 14:03:31] Hoja 1 - TOTALES INTEGRANTES creada
+[2025-09-15 14:03:31] Filtro de fechas aplicado: 2025-01-01 00:00:00 a 2025-09-20 23:59:59
+[2025-09-15 14:03:31] Consulta de totales ejecutada correctamente. Total integrantes: 3
+[2025-09-15 14:03:31] Hoja 2 - DETALLE POR BARRIO creada
+[2025-09-15 14:03:31] Hoja 3 - LISTADO INTEGRANTES creada
+[2025-09-15 14:03:31] Exportación completada exitosamente
+[2025-09-15 21:07:23] Iniciando exportarEncuestaCampo.php
+[2025-09-15 21:07:23] Autoload cargado correctamente
+[2025-09-15 21:07:23] Sesión iniciada
+[2025-09-15 21:07:23] Conexión incluida
+[2025-09-15 21:07:23] Conexión a BD verificada
+[2025-09-15 14:07:23] Parámetros recibidos - fecha_inicio: 2025-09-01, fecha_fin: 2025-09-15, id_usu: 1
+[2025-09-15 14:07:23] Hoja 1 - ENCUESTAS DE CAMPO creada
+[2025-09-15 14:07:23] Filtro de fechas aplicado: 2025-09-01 00:00:00 a 2025-09-15 23:59:59
+[2025-09-15 14:07:23] Filtrando por usuario específico: 1
+[2025-09-15 14:07:23] WHERE construido: WHERE ec.fecha_alta_encVenta BETWEEN '2025-09-01 00:00:00' AND '2025-09-15 23:59:59' AND ec.id_usu = '1'
+[2025-09-15 14:07:23] Consulta de encuestas ejecutada correctamente. Filas encontradas: 3
+[2025-09-15 14:07:23] SQL ejecutado: 
+    SELECT ec.*, b.nombre_bar AS barrio_nombre, 
+           c.nombre_com AS comuna_nombre,
+           u.nombre AS nombre_usuario
+    FROM encuestacampo ec
+    LEFT JOIN barrios b ON ec.id_bar = b.id_bar
+    LEFT JOIN comunas c ON ec.id_com = c.id_com
+    LEFT JOIN usuarios u ON ec.id_usu = u.id_usu 
+    WHERE ec.fecha_alta_encVenta BETWEEN '2025-09-01 00:00:00' AND '2025-09-15 23:59:59' AND ec.id_usu = '1'
+    ORDER BY ec.fecha_alta_encVenta DESC
+    
+[2025-09-15 14:07:23] Procesando registro 1 - ID: 8 - Documento: 789789
+[2025-09-15 14:07:23] Procesando registro 2 - ID: 7 - Documento: 123
+[2025-09-15 14:07:23] Procesando registro 3 - ID: 6 - Documento: 123
+[2025-09-15 14:07:23] Total de registros escritos en hoja 1: 3
+[2025-09-15 14:07:23] Archivo Excel generado correctamente: encuestas_campo_2025-09-15_14-07-23.xlsx
+[2025-09-15 21:08:15] Iniciando exportarEncuestaCampo.php
+[2025-09-15 21:08:15] Autoload cargado correctamente
+[2025-09-15 21:08:15] Sesión iniciada
+[2025-09-15 21:08:15] Conexión incluida
+[2025-09-15 21:08:15] Conexión a BD verificada
+[2025-09-15 14:08:15] Parámetros recibidos - fecha_inicio: 2025-09-01, fecha_fin: 2025-09-15, id_usu: 1
+[2025-09-15 14:08:15] Hoja 1 - ENCUESTAS DE CAMPO creada
+[2025-09-15 14:08:15] Filtro de fechas aplicado: 2025-09-01 00:00:00 a 2025-09-15 23:59:59
+[2025-09-15 14:08:15] Filtrando por usuario específico: 1
+[2025-09-15 14:08:15] WHERE construido: WHERE ec.fecha_alta_encVenta BETWEEN '2025-09-01 00:00:00' AND '2025-09-15 23:59:59' AND ec.id_usu = '1'
+[2025-09-15 14:08:15] Consulta de encuestas ejecutada correctamente. Filas encontradas: 3
+[2025-09-15 14:08:15] SQL ejecutado: 
+    SELECT ec.*, b.nombre_bar AS barrio_nombre, d.nombre_departamento AS departamento_nombre, 
+           c.nombre_com AS comuna_nombre, m.nombre_municipio as ciudad_nombre,
+           u.nombre AS nombre_usuario
+    FROM encuestacampo ec
+    LEFT JOIN barrios b ON ec.id_bar = b.id_bar
+    LEFT JOIN departamentos d ON ec.departamento_expedicion = d.cod_departamento
+    LEFT JOIN comunas c ON ec.id_com = c.id_com
+    LEFT JOIN municipios m ON ec.ciudad_expedicion = m.cod_municipio
+    LEFT JOIN usuarios u ON ec.id_usu = u.id_usu
+    WHERE ec.fecha_alta_encVenta BETWEEN '2025-09-01 00:00:00' AND '2025-09-15 23:59:59' AND ec.id_usu = '1'
+    ORDER BY ec.fecha_alta_encVenta DESC
+    
+[2025-09-15 14:08:15] Procesando registro 1 - ID: 8 - Documento: 789789
+[2025-09-15 14:08:15] Procesando registro 2 - ID: 7 - Documento: 123
+[2025-09-15 14:08:15] Procesando registro 3 - ID: 6 - Documento: 123
+[2025-09-15 14:08:15] Total de registros escritos en hoja 1: 3
+[2025-09-15 14:08:15] Archivo Excel generado correctamente: encuestas_campo_2025-09-15_14-08-15.xlsx
+[2025-09-15 21:08:22] Iniciando exportarEncuestaCampo.php
+[2025-09-15 21:08:22] Autoload cargado correctamente
+[2025-09-15 21:08:22] Sesión iniciada
+[2025-09-15 21:08:22] Conexión incluida
+[2025-09-15 21:08:22] Conexión a BD verificada
+[2025-09-15 14:08:22] Parámetros recibidos - fecha_inicio: 2025-09-01, fecha_fin: 2025-09-15, id_usu: 1
+[2025-09-15 14:08:22] Hoja 1 - ENCUESTAS DE CAMPO creada
+[2025-09-15 14:08:22] Filtro de fechas aplicado: 2025-09-01 00:00:00 a 2025-09-15 23:59:59
+[2025-09-15 14:08:22] Filtrando por usuario específico: 1
+[2025-09-15 14:08:22] WHERE construido: WHERE ec.fecha_alta_encVenta BETWEEN '2025-09-01 00:00:00' AND '2025-09-15 23:59:59' AND ec.id_usu = '1'
+[2025-09-15 14:08:22] Consulta de encuestas ejecutada correctamente. Filas encontradas: 3
+[2025-09-15 14:08:22] SQL ejecutado: 
+    SELECT ec.*, b.nombre_bar AS barrio_nombre, d.nombre_departamento AS departamento_nombre, 
+           c.nombre_com AS comuna_nombre, m.nombre_municipio as ciudad_nombre,
+           u.nombre AS nombre_usuario
+    FROM encuestacampo ec
+    LEFT JOIN barrios b ON ec.id_bar = b.id_bar
+    LEFT JOIN departamentos d ON ec.departamento_expedicion = d.cod_departamento
+    LEFT JOIN comunas c ON ec.id_com = c.id_com
+    LEFT JOIN municipios m ON ec.ciudad_expedicion = m.cod_municipio
+    LEFT JOIN usuarios u ON ec.id_usu = u.id_usu
+    WHERE ec.fecha_alta_encVenta BETWEEN '2025-09-01 00:00:00' AND '2025-09-15 23:59:59' AND ec.id_usu = '1'
+    ORDER BY ec.fecha_alta_encVenta DESC
+    
+[2025-09-15 14:08:22] Procesando registro 1 - ID: 8 - Documento: 789789
+[2025-09-15 14:08:22] Procesando registro 2 - ID: 7 - Documento: 123
+[2025-09-15 14:08:22] Procesando registro 3 - ID: 6 - Documento: 123
+[2025-09-15 14:08:22] Total de registros escritos en hoja 1: 3
+[2025-09-15 14:08:22] Archivo Excel generado correctamente: encuestas_campo_2025-09-15_14-08-22.xlsx
+[2025-09-15 21:19:29] Iniciando exportarEncuestaCampo.php
+[2025-09-15 21:19:29] Autoload cargado correctamente
+[2025-09-15 21:19:29] Sesión iniciada
+[2025-09-15 21:19:29] Conexión incluida
+[2025-09-15 21:19:29] Conexión a BD verificada
+[2025-09-15 14:19:29] Parámetros recibidos - fecha_inicio: 2025-09-01, fecha_fin: 2025-09-15, id_usu: 1
+[2025-09-15 14:19:29] Hoja 1 - ENCUESTAS DE CAMPO creada
+[2025-09-15 14:19:29] Filtro de fechas aplicado: 2025-09-01 00:00:00 a 2025-09-15 23:59:59
+[2025-09-15 14:19:29] Filtrando por usuario específico: 1
+[2025-09-15 14:19:29] WHERE construido: WHERE ec.fecha_alta_encVenta BETWEEN '2025-09-01 00:00:00' AND '2025-09-15 23:59:59' AND ec.id_usu = '1'
+[2025-09-15 14:19:29] Consulta de encuestas ejecutada correctamente. Filas encontradas: 4
+[2025-09-15 14:19:29] SQL ejecutado: 
+    SELECT ec.*, b.nombre_bar AS barrio_nombre, d.nombre_departamento AS departamento_nombre, 
+           c.nombre_com AS comuna_nombre, m.nombre_municipio as ciudad_nombre,
+           u.nombre AS nombre_usuario
+    FROM encuestacampo ec
+    LEFT JOIN barrios b ON ec.id_bar = b.id_bar
+    LEFT JOIN departamentos d ON ec.departamento_expedicion = d.cod_departamento
+    LEFT JOIN comunas c ON ec.id_com = c.id_com
+    LEFT JOIN municipios m ON ec.ciudad_expedicion = m.cod_municipio
+    LEFT JOIN usuarios u ON ec.id_usu = u.id_usu
+    WHERE ec.fecha_alta_encVenta BETWEEN '2025-09-01 00:00:00' AND '2025-09-15 23:59:59' AND ec.id_usu = '1'
+    ORDER BY ec.fecha_alta_encVenta DESC
+    
+[2025-09-15 14:19:29] Procesando registro 1 - ID: 9 - Documento: 6969
+[2025-09-15 14:19:29] Procesando registro 2 - ID: 8 - Documento: 789789
+[2025-09-15 14:19:29] Procesando registro 3 - ID: 7 - Documento: 123
+[2025-09-15 14:19:29] Procesando registro 4 - ID: 6 - Documento: 123
+[2025-09-15 14:19:29] Total de registros escritos en hoja 1: 4
+[2025-09-15 14:19:29] Archivo Excel generado correctamente: encuestas_campo_2025-09-15_14-19-29.xlsx
+[2025-09-15 21:23:21] Iniciando exportarEncuestaCampo.php
+[2025-09-15 21:23:21] Autoload cargado correctamente
+[2025-09-15 21:23:21] Sesión iniciada
+[2025-09-15 21:23:21] Conexión incluida
+[2025-09-15 21:23:21] Conexión a BD verificada
+[2025-09-15 14:23:21] Parámetros recibidos - fecha_inicio: 2025-09-01, fecha_fin: 2025-09-15, id_usu: 1
+[2025-09-15 14:23:21] Hoja 1 - ENCUESTAS DE CAMPO creada
+[2025-09-15 14:23:21] Filtro de fechas aplicado: 2025-09-01 00:00:00 a 2025-09-15 23:59:59
+[2025-09-15 14:23:21] Filtrando por usuario específico: 1
+[2025-09-15 14:23:21] WHERE construido: WHERE ec.fecha_alta_encVenta BETWEEN '2025-09-01 00:00:00' AND '2025-09-15 23:59:59' AND ec.id_usu = '1'
+[2025-09-15 14:23:21] Consulta de encuestas ejecutada correctamente. Filas encontradas: 4
+[2025-09-15 14:23:21] SQL ejecutado: 
+    SELECT ec.*, b.nombre_bar AS barrio_nombre, d.nombre_departamento AS departamento_nombre, 
+           c.nombre_com AS comuna_nombre, m.nombre_municipio as ciudad_nombre,
+           u.nombre AS nombre_usuario
+    FROM encuestacampo ec
+    LEFT JOIN barrios b ON ec.id_bar = b.id_bar
+    LEFT JOIN departamentos d ON ec.departamento_expedicion = d.cod_departamento
+    LEFT JOIN comunas c ON ec.id_com = c.id_com
+    LEFT JOIN municipios m ON ec.ciudad_expedicion = m.cod_municipio
+    LEFT JOIN usuarios u ON ec.id_usu = u.id_usu
+    WHERE ec.fecha_alta_encVenta BETWEEN '2025-09-01 00:00:00' AND '2025-09-15 23:59:59' AND ec.id_usu = '1'
+    ORDER BY ec.fecha_alta_encVenta DESC
+    
+[2025-09-15 14:23:21] Procesando registro 1 - ID: 9 - Documento: 6969
+[2025-09-15 14:23:21] Procesando registro 2 - ID: 8 - Documento: 789789
+[2025-09-15 14:23:21] Procesando registro 3 - ID: 7 - Documento: 123
+[2025-09-15 14:23:21] Procesando registro 4 - ID: 6 - Documento: 123
+[2025-09-15 14:23:21] Total de registros escritos en hoja 1: 4
+[2025-09-15 14:23:21] Archivo Excel generado correctamente: encuestas_campo_2025-09-15_14-23-21.xlsx
+[2025-09-15 21:25:19] Iniciando exportarEncuestaCampo.php
+[2025-09-15 21:25:19] Autoload cargado correctamente
+[2025-09-15 21:25:19] Sesión iniciada
+[2025-09-15 21:25:19] Conexión incluida
+[2025-09-15 21:25:19] Conexión a BD verificada
+[2025-09-15 14:25:19] Parámetros recibidos - fecha_inicio: 2025-09-01, fecha_fin: 2025-09-15, id_usu: 1
+[2025-09-15 14:25:19] Hoja 1 - ENCUESTAS DE CAMPO creada
+[2025-09-15 14:25:19] Filtro de fechas aplicado: 2025-09-01 00:00:00 a 2025-09-15 23:59:59
+[2025-09-15 14:25:19] Filtrando por usuario específico: 1
+[2025-09-15 14:25:19] WHERE construido: WHERE ec.fecha_alta_encVenta BETWEEN '2025-09-01 00:00:00' AND '2025-09-15 23:59:59' AND ec.id_usu = '1'
+[2025-09-15 14:25:19] Consulta de encuestas ejecutada correctamente. Filas encontradas: 4
+[2025-09-15 14:25:19] SQL ejecutado: 
+    SELECT ec.*, b.nombre_bar AS barrio_nombre, d.nombre_departamento AS departamento_nombre, 
+           c.nombre_com AS comuna_nombre, m.nombre_municipio as ciudad_nombre,
+           u.nombre AS nombre_usuario
+    FROM encuestacampo ec
+    LEFT JOIN barrios b ON ec.id_bar = b.id_bar
+    LEFT JOIN departamentos d ON ec.departamento_expedicion = d.cod_departamento
+    LEFT JOIN comunas c ON ec.id_com = c.id_com
+    LEFT JOIN municipios m ON ec.ciudad_expedicion = m.cod_municipio
+    LEFT JOIN usuarios u ON ec.id_usu = u.id_usu
+    WHERE ec.fecha_alta_encVenta BETWEEN '2025-09-01 00:00:00' AND '2025-09-15 23:59:59' AND ec.id_usu = '1'
+    ORDER BY ec.fecha_alta_encVenta DESC
+    
+[2025-09-15 14:25:19] Procesando registro 1 - ID: 9 - Documento: 6969
+[2025-09-15 14:25:19] Procesando registro 2 - ID: 8 - Documento: 789789
+[2025-09-15 14:25:19] Procesando registro 3 - ID: 7 - Documento: 123
+[2025-09-15 14:25:19] Procesando registro 4 - ID: 6 - Documento: 123
+[2025-09-15 14:25:19] Total de registros escritos en hoja 1: 4
+[2025-09-15 14:25:19] Archivo Excel generado correctamente: encuestas_campo_2025-09-15_14-25-19.xlsx
+[2025-09-15 21:25:51] Iniciando exportarEncuestaCampo.php
+[2025-09-15 21:25:51] Autoload cargado correctamente
+[2025-09-15 21:25:51] Sesión iniciada
+[2025-09-15 21:25:51] Conexión incluida
+[2025-09-15 21:25:51] Conexión a BD verificada
+[2025-09-15 14:25:51] Parámetros recibidos - fecha_inicio: 2025-09-01, fecha_fin: 2025-09-15, id_usu: 1
+[2025-09-15 14:25:51] Hoja 1 - ENCUESTAS DE CAMPO creada
+[2025-09-15 14:25:51] Filtro de fechas aplicado: 2025-09-01 00:00:00 a 2025-09-15 23:59:59
+[2025-09-15 14:25:51] Filtrando por usuario específico: 1
+[2025-09-15 14:25:51] WHERE construido: WHERE ec.fecha_alta_encVenta BETWEEN '2025-09-01 00:00:00' AND '2025-09-15 23:59:59' AND ec.id_usu = '1'
+[2025-09-15 14:25:51] Consulta de encuestas ejecutada correctamente. Filas encontradas: 4
+[2025-09-15 14:25:51] SQL ejecutado: 
+    SELECT ec.*, b.nombre_bar AS barrio_nombre, d.nombre_departamento AS departamento_nombre, 
+           c.nombre_com AS comuna_nombre, m.nombre_municipio as ciudad_nombre,
+           u.nombre AS nombre_usuario
+    FROM encuestacampo ec
+    LEFT JOIN barrios b ON ec.id_bar = b.id_bar
+    LEFT JOIN departamentos d ON ec.departamento_expedicion = d.cod_departamento
+    LEFT JOIN comunas c ON ec.id_com = c.id_com
+    LEFT JOIN municipios m ON ec.ciudad_expedicion = m.cod_municipio
+    LEFT JOIN usuarios u ON ec.id_usu = u.id_usu
+    WHERE ec.fecha_alta_encVenta BETWEEN '2025-09-01 00:00:00' AND '2025-09-15 23:59:59' AND ec.id_usu = '1'
+    ORDER BY ec.fecha_alta_encVenta DESC
+    
+[2025-09-15 14:25:51] Procesando registro 1 - ID: 9 - Documento: 6969
+[2025-09-15 14:25:51] Procesando registro 2 - ID: 8 - Documento: 789789
+[2025-09-15 14:25:51] Procesando registro 3 - ID: 7 - Documento: 123
+[2025-09-15 14:25:51] Procesando registro 4 - ID: 6 - Documento: 123
+[2025-09-15 14:25:51] Total de registros escritos en hoja 1: 4
+[2025-09-15 14:25:51] Archivo Excel generado correctamente: encuestas_campo_2025-09-15_14-25-51.xlsx
+[2025-09-15 21:26:46] Iniciando exportarEncuestaCampo.php
+[2025-09-15 21:26:46] Autoload cargado correctamente
+[2025-09-15 21:26:46] Sesión iniciada
+[2025-09-15 21:26:46] Conexión incluida
+[2025-09-15 21:26:46] Conexión a BD verificada
+[2025-09-15 14:26:47] Parámetros recibidos - fecha_inicio: 2025-09-01, fecha_fin: 2025-09-15, id_usu: 1
+[2025-09-15 14:26:47] Hoja 1 - ENCUESTAS DE CAMPO creada
+[2025-09-15 14:26:47] Filtro de fechas aplicado: 2025-09-01 00:00:00 a 2025-09-15 23:59:59
+[2025-09-15 14:26:47] Filtrando por usuario específico: 1
+[2025-09-15 14:26:47] WHERE construido: WHERE ec.fecha_alta_encVenta BETWEEN '2025-09-01 00:00:00' AND '2025-09-15 23:59:59' AND ec.id_usu = '1'
+[2025-09-15 14:26:47] Consulta de encuestas ejecutada correctamente. Filas encontradas: 4
+[2025-09-15 14:26:47] SQL ejecutado: 
+    SELECT ec.*, b.nombre_bar AS barrio_nombre, d.nombre_departamento AS departamento_nombre, 
+           c.nombre_com AS comuna_nombre, m.nombre_municipio as ciudad_nombre,
+           u.nombre AS nombre_usuario
+    FROM encuestacampo ec
+    LEFT JOIN barrios b ON ec.id_bar = b.id_bar
+    LEFT JOIN departamentos d ON ec.departamento_expedicion = d.cod_departamento
+    LEFT JOIN comunas c ON ec.id_com = c.id_com
+    LEFT JOIN municipios m ON ec.ciudad_expedicion = m.cod_municipio
+    LEFT JOIN usuarios u ON ec.id_usu = u.id_usu
+    WHERE ec.fecha_alta_encVenta BETWEEN '2025-09-01 00:00:00' AND '2025-09-15 23:59:59' AND ec.id_usu = '1'
+    ORDER BY ec.fecha_alta_encVenta DESC
+    
+[2025-09-15 14:26:47] Procesando registro 1 - ID: 9 - Documento: 6969
+[2025-09-15 14:26:47] Procesando registro 2 - ID: 8 - Documento: 789789
+[2025-09-15 14:26:47] Procesando registro 3 - ID: 7 - Documento: 123
+[2025-09-15 14:26:47] Procesando registro 4 - ID: 6 - Documento: 123
+[2025-09-15 14:26:47] Total de registros escritos en hoja 1: 4
+[2025-09-15 14:26:47] Archivo Excel generado correctamente: encuestas_campo_2025-09-15_14-26-47.xlsx
