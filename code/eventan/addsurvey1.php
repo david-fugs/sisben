@@ -1151,9 +1151,43 @@ header("Content-Type: text/html;charset=utf-8");
                             }
                         },
                         error: function(jqXHR, textStatus, errorThrown) {
-                            // console.log("❌ Error AJAX:", textStatus, errorThrown);
+                            console.log("❌ Error AJAX:", textStatus, errorThrown);
+                            console.log("❌ Response Text:", jqXHR.responseText);
+                            console.log("❌ Status Code:", jqXHR.status);
+                            
+                            let errorMessage = "❌ Error en la consulta. ";
+                            
+                            // Intentar parsear el error JSON si existe
+                            try {
+                                let errorResponse = JSON.parse(jqXHR.responseText);
+                                if (errorResponse.message) {
+                                    errorMessage += errorResponse.message;
+                                    if (errorResponse.debug && errorResponse.debug.error_message) {
+                                        console.log("🐛 Debug Info:", errorResponse.debug.error_message);
+                                    }
+                                }
+                            } catch (e) {
+                                // Si no es JSON válido, mostrar información del error HTTP
+                                if (jqXHR.status === 500) {
+                                    errorMessage += "Error interno del servidor (500). ";
+                                } else if (jqXHR.status === 0) {
+                                    errorMessage += "Error de conexión. ";
+                                } else {
+                                    errorMessage += `Error ${jqXHR.status}. `;
+                                }
+                                
+                                // Mostrar parte del response text si está disponible (truncado para no saturar)
+                                if (jqXHR.responseText && jqXHR.responseText.length > 0) {
+                                    let truncatedResponse = jqXHR.responseText.substring(0, 200);
+                                    console.log("🔍 Raw Response:", truncatedResponse);
+                                    errorMessage += "Revise la consola para más detalles.";
+                                }
+                            }
+                            
+                            errorMessage += " Intente nuevamente.";
+                            
                             mensajeContainer.removeClass("d-none alert-success alert-warning").addClass("alert alert-danger")
-                                .html("❌ Error en la consulta. Intente nuevamente.");
+                                .html(errorMessage);
                             $("#btnEnviar").prop("disabled", false);
                         }
                     });
