@@ -356,6 +356,7 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                     generoGroup.append(generoSelect);
                     fieldsContainer.append(generoGroup);
 
+                    /*
                     var orientacionGroup = $("<div>").addClass("form-group-dinamico");
                     orientacionGroup.append($("<label>").text("Orientación Sexual"));
                     var OrientacionSexual = $("<select>")
@@ -370,6 +371,7 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                         .append('<option value="Otro">Otro</option>');
                     orientacionGroup.append(OrientacionSexual);
                     fieldsContainer.append(orientacionGroup);
+                    */
 
                     var rangoEdadGroup = $("<div>").addClass("form-group-dinamico");
                     rangoEdadGroup.append($("<label>").text("Rango de Edad"));
@@ -388,6 +390,7 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                     rangoEdadGroup.append(rangoEdadSelect);
                     fieldsContainer.append(rangoEdadGroup);
 
+                    /*
                     var discapacidadGroup = $("<div>").addClass("form-group-dinamico");
                     discapacidadGroup.append($("<label>").text("Condición de Discapacidad"));
                     var condicionDiscapacidad = $("<select>")
@@ -399,7 +402,9 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                         .append('<option value="No">No</option>');
                     discapacidadGroup.append(condicionDiscapacidad);
                     fieldsContainer.append(discapacidadGroup);
+                    */
 
+                    /*
                     var tipoDiscapacidadGroup = $("<div>").addClass("form-group-dinamico");
                     tipoDiscapacidadGroup.append($("<label>").text("Tipo de Discapacidad"));
                     var discapacidadSelect = $("<select>")
@@ -416,7 +421,9 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                         .hide();
                     tipoDiscapacidadGroup.append(discapacidadSelect);
                     fieldsContainer.append(tipoDiscapacidadGroup);
+                    */
 
+                    /*
                     var grupoEtnicoGroup = $("<div>").addClass("form-group-dinamico");
                     grupoEtnicoGroup.append($("<label>").text("Grupo Étnico"));
                     var GrupoEtnico = $("<select>")
@@ -433,7 +440,9 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                         .append('<option value="Ninguno">Ninguno</option>');
                     grupoEtnicoGroup.append(GrupoEtnico);
                     fieldsContainer.append(grupoEtnicoGroup);
+                    */
 
+                    /*
                     var victimaGroup = $("<div>").addClass("form-group-dinamico");
                     victimaGroup.append($("<label>").text("¿Es víctima?"));
                     var victima = $("<select>")
@@ -445,7 +454,9 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                         .append('<option value="No">No</option>');
                     victimaGroup.append(victima);
                     fieldsContainer.append(victimaGroup);
+                    */
 
+                    /*
                     var mujerGestanteGroup = $("<div>").addClass("form-group-dinamico");
                     mujerGestanteGroup.append($("<label>").text("¿Mujer gestante?"));
                     var mujerGestante = $("<select>")
@@ -457,7 +468,9 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                         .append('<option value="No">No</option>');
                     mujerGestanteGroup.append(mujerGestante);
                     fieldsContainer.append(mujerGestanteGroup);
+                    */
 
+                    /*
                     var cabezaFamiliaGroup = $("<div>").addClass("form-group-dinamico");
                     cabezaFamiliaGroup.append($("<label>").text("¿Cabeza de familia?"));
                     var cabezaFamilia = $("<select>")
@@ -469,7 +482,9 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                         .append('<option value="No">No</option>');
                     cabezaFamiliaGroup.append(cabezaFamilia);
                     fieldsContainer.append(cabezaFamiliaGroup);
+                    */
 
+                    /*
                     var experienciaMigratoriaGroup = $("<div>").addClass("form-group-dinamico");
                     experienciaMigratoriaGroup.append($("<label>").text("¿Tiene experiencia migratoria?"));
                     var experienciaMigratoria = $("<select>")
@@ -481,7 +496,9 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                         .append('<option value="No">No</option>');
                     experienciaMigratoriaGroup.append(experienciaMigratoria);
                     fieldsContainer.append(experienciaMigratoriaGroup);
+                    */
 
+                    /*
                     var seguridadSaludGroup = $("<div>").addClass("form-group-dinamico");
                     seguridadSaludGroup.append($("<label>").text("Seguridad en salud"));
                     var seguridadSalud = $("<select>")
@@ -495,7 +512,9 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                         .append('<option value="Ninguno">Ninguno</option>');
                     seguridadSaludGroup.append(seguridadSalud);
                     fieldsContainer.append(seguridadSaludGroup);
+                    */
 
+                    /*
                     var nivelEducativoGroup = $("<div>").addClass("form-group-dinamico");
                     nivelEducativoGroup.append($("<label>").text("Nivel educativo"));
                     var nivelEducativo = $("<select>")
@@ -517,7 +536,9 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                         .append('<option value="Especializacion">Especializacion</option>');
                     nivelEducativoGroup.append(nivelEducativo);
                     fieldsContainer.append(nivelEducativoGroup);
+                    */
 
+                    /*
                     var condicionOcupacionGroup = $("<div>").addClass("form-group-dinamico");
                     condicionOcupacionGroup.append($("<label>").text("Condición de ocupación"));
                     var condicionOcupacion = $("<select>")
@@ -535,6 +556,7 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                         .append('<option value="Ninguno">Ninguno</option>');
                     condicionOcupacionGroup.append(condicionOcupacion);
                     fieldsContainer.append(condicionOcupacionGroup);
+                    */
 
                     var eliminarBtn = $("<button>")
                         .attr("type", "button")
@@ -549,6 +571,7 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                     integranteDiv.append(fieldsContainer);
                     integranteDiv.append(eliminarBtn);
 
+                    /*
                     condicionDiscapacidad.on("change", function() {
                         const valor = $(this).val();
                         if (valor === "Si") {
@@ -557,6 +580,7 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                             $(this).closest('.formulario-dinamico').find('.tipo-discapacidad').hide().val("");
                         }
                     });
+                    */
 
                     $("#integrantes-container").append(integranteDiv);
                 }
@@ -600,6 +624,7 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                 generoGroup.append(generoSelect);
                 fieldsContainer.append(generoGroup);
 
+                /*
                 var orientacionGroup = $("<div>").addClass("form-group-dinamico");
                 orientacionGroup.append($("<label>").text("Orientación Sexual *"));
                 var OrientacionSexual = $("<select>")
@@ -614,6 +639,7 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                     .append('<option value="Otro">Otro</option>');
                 orientacionGroup.append(OrientacionSexual);
                 fieldsContainer.append(orientacionGroup);
+                */
 
                 var rangoEdadGroup = $("<div>").addClass("form-group-dinamico");
                 rangoEdadGroup.append($("<label>").text("Rango de Edad *"));
@@ -632,6 +658,7 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                 rangoEdadGroup.append(rangoEdadSelect);
                 fieldsContainer.append(rangoEdadGroup);
 
+                /*
                 var discapacidadGroup = $("<div>").addClass("form-group-dinamico");
                 discapacidadGroup.append($("<label>").text("Condición de Discapacidad *"));
                 var condicionDiscapacidad = $("<select>")
@@ -643,7 +670,9 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                     .append('<option value="No">No</option>');
                 discapacidadGroup.append(condicionDiscapacidad);
                 fieldsContainer.append(discapacidadGroup);
+                */
 
+                /*
                 var tipoDiscapacidadGroup = $("<div>").addClass("form-group-dinamico");
                 tipoDiscapacidadGroup.append($("<label>").text("Tipo de Discapacidad"));
                 var discapacidadSelect = $("<select>")
@@ -660,7 +689,9 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                     .hide();
                 tipoDiscapacidadGroup.append(discapacidadSelect);
                 fieldsContainer.append(tipoDiscapacidadGroup);
+                */
 
+                /*
                 var grupoEtnicoGroup = $("<div>").addClass("form-group-dinamico");
                 grupoEtnicoGroup.append($("<label>").text("Grupo Étnico *"));
                 var GrupoEtnico = $("<select>")
@@ -677,7 +708,9 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                     .append('<option value="Ninguno">Ninguno</option>');
                 grupoEtnicoGroup.append(GrupoEtnico);
                 fieldsContainer.append(grupoEtnicoGroup);
+                */
 
+                /*
                 var victimaGroup = $("<div>").addClass("form-group-dinamico");
                 victimaGroup.append($("<label>").text("¿Es víctima? *"));
                 var victima = $("<select>")
@@ -689,7 +722,9 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                     .append('<option value="No">No</option>');
                 victimaGroup.append(victima);
                 fieldsContainer.append(victimaGroup);
+                */
 
+                /*
                 var mujerGestanteGroup = $("<div>").addClass("form-group-dinamico");
                 mujerGestanteGroup.append($("<label>").text("¿Mujer gestante? *"));
                 var mujerGestante = $("<select>")
@@ -701,7 +736,9 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                     .append('<option value="No">No</option>');
                 mujerGestanteGroup.append(mujerGestante);
                 fieldsContainer.append(mujerGestanteGroup);
+                */
 
+                /*
                 var cabezaFamiliaGroup = $("<div>").addClass("form-group-dinamico");
                 cabezaFamiliaGroup.append($("<label>").text("¿Cabeza de familia? *"));
                 var cabezaFamilia = $("<select>")
@@ -713,7 +750,9 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                     .append('<option value="No">No</option>');
                 cabezaFamiliaGroup.append(cabezaFamilia);
                 fieldsContainer.append(cabezaFamiliaGroup);
+                */
 
+                /*
                 var experienciaMigratoriaGroup = $("<div>").addClass("form-group-dinamico");
                 experienciaMigratoriaGroup.append($("<label>").text("¿Tiene experiencia migratoria? *"));
                 var experienciaMigratoria = $("<select>")
@@ -725,7 +764,9 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                     .append('<option value="No">No</option>');
                 experienciaMigratoriaGroup.append(experienciaMigratoria);
                 fieldsContainer.append(experienciaMigratoriaGroup);
+                */
 
+                /*
                 var seguridadSaludGroup = $("<div>").addClass("form-group-dinamico");
                 seguridadSaludGroup.append($("<label>").text("Seguridad en salud *"));
                 var seguridadSalud = $("<select>")
@@ -739,7 +780,9 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                     .append('<option value="Ninguno">Ninguno</option>');
                 seguridadSaludGroup.append(seguridadSalud);
                 fieldsContainer.append(seguridadSaludGroup);
+                */
 
+                /*
                 var nivelEducativoGroup = $("<div>").addClass("form-group-dinamico");
                 nivelEducativoGroup.append($("<label>").text("Nivel educativo *"));
                 var nivelEducativo = $("<select>")
@@ -761,7 +804,9 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                     .append('<option value="Especializacion">Especializacion</option>');
                 nivelEducativoGroup.append(nivelEducativo);
                 fieldsContainer.append(nivelEducativoGroup);
+                */
 
+                /*
                 var condicionOcupacionGroup = $("<div>").addClass("form-group-dinamico");
                 condicionOcupacionGroup.append($("<label>").text("Condición de ocupación *"));
                 var condicionOcupacion = $("<select>")
@@ -779,12 +824,14 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                     .append('<option value="Ninguno">Ninguno</option>');
                 condicionOcupacionGroup.append(condicionOcupacion);
                 fieldsContainer.append(condicionOcupacionGroup);
+                */
 
                 integranteDiv.append(cantidadInput);
                 integranteDiv.append(fieldsContainer);
                 // No agregamos botón de eliminar al primer integrante
 
                 // Agregar funcionalidad de mostrar/ocultar tipo de discapacidad
+                /*
                 condicionDiscapacidad.on("change", function() {
                     const valor = $(this).val();
                     if (valor === "Si") {
@@ -793,6 +840,7 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                         $(this).closest('.formulario-dinamico').find('.tipo-discapacidad').hide().val("");
                     }
                 });
+                */
 
                 $("#integrantes-container").append(integranteDiv);
                 actualizarTotal();

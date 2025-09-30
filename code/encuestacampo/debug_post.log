@@ -310,3 +310,134 @@
     [obs_encVenta] => 
 )
 
+2025-09-30 17:09:17 POST: Array
+(
+    [doc_encVenta] => 3333
+    [tipo_documento] => cedula
+    [nom_encVenta] => TEST HOY
+    [fecha_nacimiento] => 1996-12-17
+    [fecha_preregistro] => 2025-09-30
+    [dir_encVenta] => sdsfg
+    [id_bar] => 662
+    [id_com] => 4
+    [otro_bar_ver_encVenta] => 
+    [zona_encVenta] => URBANA
+    [tram_solic_encVenta] => ENCUESTA NUEVA POR VERIFICACION
+    [num_ficha_encVenta] => 12312
+    [num_visita] => 12
+    [estado_ficha] => Direccion incompleta
+    [integra_encVenta] => 2
+    [cant_integVenta] => Array
+        (
+            [0] => 1
+            [1] => 1
+        )
+
+    [gen_integVenta] => Array
+        (
+            [0] => M
+            [1] => F
+        )
+
+    [rango_integVenta] => Array
+        (
+            [0] => 0 - 6
+            [1] => 
+        )
+
+    [orientacionSexual] => Array
+        (
+            [0] => Asexual
+        )
+
+    [condicionDiscapacidad] => Array
+        (
+            [0] => 
+        )
+
+    [tipoDiscapacidad] => Array
+        (
+            [0] => 
+        )
+
+    [grupoEtnico] => Array
+        (
+            [0] => 
+        )
+
+    [victima] => Array
+        (
+            [0] => 
+        )
+
+    [mujerGestante] => Array
+        (
+            [0] => 
+        )
+
+    [cabezaFamilia] => Array
+        (
+            [0] => 
+        )
+
+    [experienciaMigratoria] => Array
+        (
+            [0] => 
+        )
+
+    [seguridadSalud] => Array
+        (
+            [0] => 
+        )
+
+    [nivelEducativo] => Array
+        (
+            [0] => 
+        )
+
+    [condicionOcupacion] => Array
+        (
+            [0] => 
+        )
+
+    [obs_encVenta] => 
+)
+
+2025-09-30 17:12:14 POST: Array
+(
+    [doc_encVenta] => 444
+    [tipo_documento] => tarjeta identidad
+    [nom_encVenta] => TEST HOY
+    [fecha_nacimiento] => 1996-12-17
+    [fecha_preregistro] => 2025-09-30
+    [dir_encVenta] => sdsfg
+    [id_bar] => 662
+    [id_com] => 4
+    [otro_bar_ver_encVenta] => 
+    [zona_encVenta] => URBANA
+    [tram_solic_encVenta] => ENCUESTA NUEVA
+    [num_ficha_encVenta] => 123
+    [num_visita] => 1
+    [estado_ficha] => Direccion errada
+    [integra_encVenta] => 2
+    [cant_integVenta] => Array
+        (
+            [0] => 1
+            [1] => 1
+        )
+
+    [gen_integVenta] => Array
+        (
+            [0] => M
+            [1] => M
+        )
+
+    [rango_integVenta] => Array
+        (
+            [0] => 0 - 6
+            [1] => 6 - 12
+        )
+
+    [obs_encVenta] => 
+)
+

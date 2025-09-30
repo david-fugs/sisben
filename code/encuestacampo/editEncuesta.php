@@ -344,7 +344,7 @@ if (!empty($encuesta)) {
                                     <option value="<?php echo $encuesta['id_com']; ?>" selected>
                                         <?php 
                                         // Obtener el nombre de la comuna seleccionada
-                                        $query_comuna = "SELECT nombre FROM comunas WHERE id = " . $encuesta['id_com'];
+                                        $query_comuna = "SELECT nombre_com FROM comunas WHERE id_com = " . $encuesta['id_com'];
                                         $result_comuna = mysqli_query($mysqli, $query_comuna);
                                         if ($result_comuna && $row_comuna = mysqli_fetch_assoc($result_comuna)) {
                                             echo $row_comuna['nombre'];

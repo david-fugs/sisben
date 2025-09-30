@@ -883,7 +883,7 @@ $tipo_usu     = $_SESSION['tipo_usu'];
           <?php } ?>
 
           <?php if ($tipo_usu == 2) { ?>
-            <a href="code/ecampo/addsurvey1.php" class="action-btn">
+            <a href="code/encuestacampo/encuesta_campo.php" class="action-btn">
               <i class="fas fa-clipboard-check"></i>
               Digitación Encuesta Campo
             </a>
