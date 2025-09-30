@@ -485,7 +485,7 @@ header("Content-Type: text/html;charset=utf-8");
                     generoGroup.append(generoSelect);
                     fieldsContainer.append(generoGroup);
 
-                    /* var orientacionGroup = $("<div>").addClass("form-group-dinamico");
+                    var orientacionGroup = $("<div>").addClass("form-group-dinamico");
                     orientacionGroup.append($("<label>").text("Orientación Sexual"));
                     var OrientacionSexual = $("<select>")
                         .attr("name", "orientacionSexual[]")
@@ -498,7 +498,7 @@ header("Content-Type: text/html;charset=utf-8");
                         .append('<option value="Homosexual">Homosexual</option>')
                         .append('<option value="Otro">Otro</option>');
                     orientacionGroup.append(OrientacionSexual);
-                    fieldsContainer.append(orientacionGroup); */
+                    fieldsContainer.append(orientacionGroup);
 
                     var rangoEdadGroup = $("<div>").addClass("form-group-dinamico");
                     rangoEdadGroup.append($("<label>").text("Rango de Edad"));
@@ -517,7 +517,7 @@ header("Content-Type: text/html;charset=utf-8");
                     rangoEdadGroup.append(rangoEdadSelect);
                     fieldsContainer.append(rangoEdadGroup);
 
-                    /* var discapacidadGroup = $("<div>").addClass("form-group-dinamico");
+                    var discapacidadGroup = $("<div>").addClass("form-group-dinamico");
                     discapacidadGroup.append($("<label>").text("Condición de Discapacidad"));
                     var condicionDiscapacidad = $("<select>")
                         .attr("name", "condicionDiscapacidad[]")
@@ -628,7 +628,7 @@ header("Content-Type: text/html;charset=utf-8");
                         .append('<option value="Independiente">Independiente</option>')
                         .append('<option value="Estudiante">Estudiante</option>')
                         .append('<option value="Pensionado">Pensionado</option>')
-                        .append('<option value="Ninguno">Ninguno</option>') */
+                        .append('<option value="Ninguno">Ninguno</option>')
 
                     var eliminarBtn = $("<button>")
                         .attr("type", "button")
@@ -639,7 +639,7 @@ header("Content-Type: text/html;charset=utf-8");
                             actualizarTotal(); // Esta llamada ahora actualizará ambos campos
                         });
 
-                    /* // Agregar evento para mostrar/ocultar el select de discapacidad
+                    // Agregar evento para mostrar/ocultar el select de discapacidad
                     condicionDiscapacidad.on("change", function() {
                         // Encuentra el select de discapacidad específico para este contenedor
                         var currentDiscapacidadSelect = $(this).closest('.formulario-dinamico').find('.tipo-discapacidad');
@@ -648,12 +648,9 @@ header("Content-Type: text/html;charset=utf-8");
                         } else {
                             currentDiscapacidadSelect.hide();
                         }
-                    }); */
+                    });
 
-                    // Solo agregar los campos de género, rango de edad, el input oculto de cantidad y el botón eliminar
-                    integranteDiv.append(cantidadInput);
-                    integranteDiv.append(fieldsContainer);
-                    integranteDiv.append(eliminarBtn);
+                    integranteDiv.append(cantidadInput, generoSelect, rangoEdadSelect, OrientacionSexual, condicionDiscapacidad, discapacidadSelect, GrupoEtnico, victima, mujerGestante, cabezaFamilia, experienciaMigratoria, seguridadSalud, nivelEducativo, condicionOcupacion, eliminarBtn);
                     $("#integrantes-container").append(integranteDiv);
                 }
 
