@@ -449,6 +449,31 @@ header("Content-Type: text/html;charset=utf-8");
             }
         });
     });
+
+    // Control para habilitar/deshabilitar tipoDiscapacidad según condicionDiscapacidad
+    $(document).ready(function() {
+        function actualizarTipoDiscapacidad() {
+            var cond = $('#condicionDiscapacidad').val();
+            var tipo = $('#tipoDiscapacidad');
+
+            if (cond === 'No' || cond === '') {
+                // Limpiar y deshabilitar para que no pueda modificarse
+                tipo.val('');
+                tipo.prop('disabled', true);
+            } else {
+                // Habilitar para permitir selección
+                tipo.prop('disabled', false);
+            }
+        }
+
+        // Inicializar al cargar la página (respeta valor cargado desde PHP)
+        actualizarTipoDiscapacidad();
+
+        // Manejar cambios del select
+        $('#condicionDiscapacidad').on('change', function() {
+            actualizarTipoDiscapacidad();
+        });
+    });
 </script>
 
 </html>

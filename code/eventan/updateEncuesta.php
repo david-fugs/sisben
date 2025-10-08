@@ -205,16 +205,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     throw new Exception("Error al insertar integrante $key: " . $mysqli->error);
                 }
             }
-        }        // Registrar movimiento en la tabla movimientos (NUEVA ESTRUCTURA)
-        $fecha_movimiento = date('Y-m-d H:i:s');
-        
-        // Crear registro individual del movimiento
-        $sql_movimiento = "INSERT INTO movimientos 
-            (doc_encVenta, tipo_movimiento, fecha_movimiento, observacion, id_usu, id_encuesta)
-            VALUES ('$doc_encVenta', '$movimientos', '$fecha_movimiento', '$obs_encVenta', '$id_usu', '$id_encVenta')";
+        }
 
-        if (!$mysqli->query($sql_movimiento)) {
-            throw new Exception("Error al registrar movimiento: " . $mysqli->error);
+        // Registrar movimiento en la tabla movimientos (NUEVA ESTRUCTURA)
+        // Si el tipo de trámite es 'Actualizar solo información' NO se debe registrar un movimiento
+        $mensaje_movimiento = '';
+        if (trim($movimientos) !== 'Actualizar solo información') {
+            $fecha_movimiento = date('Y-m-d H:i:s');
+
+            // Crear registro individual del movimiento
+            $sql_movimiento = "INSERT INTO movimientos 
+                (doc_encVenta, tipo_movimiento, fecha_movimiento, observacion, id_usu, id_encuesta)
+                VALUES ('$doc_encVenta', '$movimientos', '$fecha_movimiento', '$obs_encVenta', '$id_usu', '$id_encVenta')";
+
+            if (!$mysqli->query($sql_movimiento)) {
+                throw new Exception("Error al registrar movimiento: " . $mysqli->error);
+            }
+
+            $mensaje_movimiento = "<p><b>Movimiento registrado:</b> " . htmlspecialchars($movimientos) . "</p>";
+        } else {
+            // No registrar movimiento para este caso
+            $mensaje_movimiento = "<p><b>No se registró movimiento:</b> Actualización solo de información</p>";
         }
 
         // Confirmar transacción
@@ -247,7 +258,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div class='container'>
                         <br />
                         <h3><b><i class='fas fa-check-circle'></i> SE ACTUALIZÓ DE FORMA EXITOSA LA ENCUESTA</b></h3>
-                        <p><b>Movimiento registrado:</b> $movimientos</p>
+                        " . $mensaje_movimiento . "
                         <br />
                         <p align='center'><a href='../../access.php'><img src='../../img/atras.png' width=96 height=96></a></p>
                     </div>

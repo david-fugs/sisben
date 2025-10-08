@@ -441,3 +441,38 @@
     [obs_encVenta] => 
 )
 
+2025-10-07 21:58:56 POST: Array
+(
+    [doc_encVenta] => 999
+    [tipo_documento] => cedula
+    [nom_encVenta] => TEST HOY
+    [fecha_nacimiento] => 1996-12-12
+    [fecha_preregistro] => 2025-10-07
+    [dir_encVenta] => sdsfg
+    [id_bar] => 662
+    [id_com] => 4
+    [otro_bar_ver_encVenta] => 
+    [zona_encVenta] => URBANA
+    [tram_solic_encVenta] => ENCUESTA NUEVA POR VERIFICACION
+    [num_ficha_encVenta] => 660011645615000188012
+    [num_visita] => 1
+    [estado_ficha] => Zona insegura
+    [integra_encVenta] => 1
+    [cant_integVenta] => Array
+        (
+            [0] => 1
+        )
+
+    [gen_integVenta] => Array
+        (
+            [0] => M
+        )
+
+    [rango_integVenta] => Array
+        (
+            [0] => 6 - 12
+        )
+
+    [obs_encVenta] => 
+)
+

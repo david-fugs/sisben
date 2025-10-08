@@ -38,7 +38,6 @@ header("Content-Type: text/html;charset=utf-8");
     $mysqli->set_charset('utf8');
 
     if (isset($_POST['btn-update'])) {
-
         $id_informacion = $_POST['id_informacion'];
         $fecha_edit_info = date('Y-m-d');
         $id_usu = $_SESSION['id_usu'];
@@ -120,7 +119,7 @@ header("Content-Type: text/html;charset=utf-8");
                     mysqli_query($mysqli, $update_mov);
                 } else {
                     // No existe, insertar nuevo
-                    $insert_mov = "INSERT INTO movimientos (id_informacion, doc_info, id_usu, cantidad_informacion, observacion) 
+                    $insert_mov = "INSERT INTO movimientos (id_informacion, doc_encVenta, id_usu, cantidad_informacion, observacion) 
                                    VALUES ('$id_informacion', '$doc_info', '$id_usu', 1, '$nueva_obs')";
                     mysqli_query($mysqli, $insert_mov);
                 }

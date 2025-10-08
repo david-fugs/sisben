@@ -39,6 +39,10 @@ if ($resultado->num_rows == 0) {
 
 $encuesta = $resultado->fetch_assoc();
 
+// Normalizar valores que se usarán en selects para evitar problemas por mayúsculas/minúsculas o espacios
+$enc_tipo_documento = isset($encuesta['tipo_documento']) ? strtoupper(trim($encuesta['tipo_documento'])) : '';
+$enc_zona_encVenta = isset($encuesta['zona_encVenta']) ? trim($encuesta['zona_encVenta']) : '';
+
 // Obtener integrantes de la encuesta
 $sql_integrantes = "SELECT * FROM integventanilla 
                     WHERE id_encVenta = ? 
@@ -219,11 +223,10 @@ header("Content-Type: text/html;charset=utf-8");
                         <label for="tipo_documento" class="form-label">Tipo de Documento</label>
                         <select class="form-select" id="tipo_documento" name="tipo_documento">
                             <option value="">Seleccione...</option>
-                            <option value="CC" <?php echo ($encuesta['tipo_documento'] == 'CC') ? 'selected' : ''; ?>>Cédula de Ciudadanía</option>
-                            <option value="TI" <?php echo ($encuesta['tipo_documento'] == 'TI') ? 'selected' : ''; ?>>Tarjeta de Identidad</option>
-                            <option value="CE" <?php echo ($encuesta['tipo_documento'] == 'CE') ? 'selected' : ''; ?>>Cédula de Extranjería</option>
-                            <option value="RC" <?php echo ($encuesta['tipo_documento'] == 'RC') ? 'selected' : ''; ?>>Registro Civil</option>
-                            <option value="PA" <?php echo ($encuesta['tipo_documento'] == 'PA') ? 'selected' : ''; ?>>Pasaporte</option>
+                            <option value="CC" <?php echo ($enc_tipo_documento == 'CEDULA') ? 'selected' : ''; ?>>Cédula de Ciudadanía</option>
+                            <option value="TI" <?php echo ($enc_tipo_documento == 'PPT') ? 'selected' : ''; ?>>PPT</option>
+                            <option value="CE" <?php echo ($enc_tipo_documento == 'CEDULA_EXTRANJERIA') ? 'selected' : ''; ?>>Cédula de Extranjería</option>
+                            <option value="otro" <?php echo ($enc_tipo_documento == 'OTRO') ? 'selected' : ''; ?>>Otro</option>
                         </select>
                     </div>
                     <div class="col-md-4">
@@ -282,8 +285,8 @@ header("Content-Type: text/html;charset=utf-8");
                         <label for="zona_encVenta" class="form-label">Zona <span class="text-danger">*</span></label>
                         <select class="form-select" id="zona_encVenta" name="zona_encVenta" required>
                             <option value="">Seleccione...</option>
-                            <option value="Urbana" <?php echo ($encuesta['zona_encVenta'] == 'Urbana') ? 'selected' : ''; ?>>Urbana</option>
-                            <option value="Rural" <?php echo ($encuesta['zona_encVenta'] == 'Rural') ? 'selected' : ''; ?>>Rural</option>
+                            <option value="Urbana" <?php echo (strtolower($enc_zona_encVenta) == strtolower('Urbana')) ? 'selected' : ''; ?>>Urbana</option>
+                            <option value="Rural" <?php echo (strtolower($enc_zona_encVenta) == strtolower('Rural')) ? 'selected' : ''; ?>>Rural</option>
                         </select>
                     </div>
                     <div class="col-md-3">
@@ -329,6 +332,7 @@ header("Content-Type: text/html;charset=utf-8");
                             <option value="Modificación" <?php echo ($encuesta['tram_solic_encVenta'] == 'Modificación') ? 'selected' : ''; ?>>Modificación</option>
                             <option value="Retiro" <?php echo ($encuesta['tram_solic_encVenta'] == 'Retiro') ? 'selected' : ''; ?>>Retiro</option>
                             <option value="Actualización" <?php echo ($encuesta['tram_solic_encVenta'] == 'Actualización') ? 'selected' : ''; ?>>Actualización</option>
+                            <option value="Actualizar solo información" <?php echo ($encuesta['tram_solic_encVenta'] == 'Actualizar solo información') ? 'selected' : ''; ?>>Actualizar solo información</option>
                         </select>
                     </div>
                 </div>
