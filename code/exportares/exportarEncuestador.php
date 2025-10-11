@@ -103,7 +103,7 @@ try {
     ];
 
     // Aplicar estilos a la hoja 1
-    $sheet1->getStyle('A1:AF1')->applyFromArray($styleHeader);
+    $sheet1->getStyle('A1:AG1')->applyFromArray($styleHeader);
 
     // Encabezados para ENCUESTAS
     $sheet1->setCellValue('A1', 'FECHA ENCUESTA');
@@ -140,6 +140,7 @@ try {
     $sheet1->setCellValue('AD1', 'CONDICION OCUPACION');
     $sheet1->setCellValue('AE1', 'ASESOR');
     $sheet1->setCellValue('AF1', 'EDAD');
+    $sheet1->setCellValue('AG1', 'FECHA NACIMIENTO');
 
     // Si el filtro es TODOS, usamos datos de integrantes, sino dejamos vacío
     $isTodos = (!isset($_GET['id_usu']) || $_GET['id_usu'] == '' || $_GET['id_usu'] == 'todos');
@@ -152,7 +153,7 @@ try {
         $sheet1->getColumnDimension($col)->setWidth(20);
     }
     // Ajustar ancho específico para columnas de caracterización
-    foreach(['R','S','T','U','V','W','X','Y','Z','AA','AB','AC','AD'] as $col) {
+    foreach(['R','S','T','U','V','W','X','Y','Z','AA','AB','AC','AD','AG'] as $col) {
         $sheet1->getColumnDimension($col)->setWidth(30);
     }
     // Ajustar ancho específico para ASESOR
@@ -282,6 +283,7 @@ if (!function_exists('limpiarTexto')) {
         // ASESOR en AE y EDAD en AF
         $sheet1->setCellValue('AE' . $rowIndex1, $row['nombre_usuario'] ?? '');
         $sheet1->setCellValue('AF' . $rowIndex1, $edad_enc);
+        $sheet1->setCellValue('AG' . $rowIndex1, $row['fecha_nacimiento'] ?? '');
         $rowIndex1++;
     }
     logError("Datos de encuestas escritos en la hoja 1");
@@ -327,7 +329,7 @@ if (!function_exists('limpiarTexto')) {
     }    logError("Consulta de información ejecutada correctamente");
 
     // Aplicar estilos a la hoja 2 - INFORMACIÓN (mismo orden que ENCUESTAS)
-    $sheet2->getStyle('A1:AF1')->applyFromArray($styleHeader);
+    $sheet2->getStyle('A1:AG1')->applyFromArray($styleHeader);
 
     // Encabezados para INFORMACIÓN (mismo orden que ENCUESTAS)
     $sheet2->setCellValue('A1', 'FECHA REGISTRO');
@@ -362,16 +364,17 @@ if (!function_exists('limpiarTexto')) {
     $sheet2->setCellValue('AD1', 'CONDICION OCUPACION');
     $sheet2->setCellValue('AE1', 'ASESOR');
     $sheet2->setCellValue('AF1', 'EDAD');
+    $sheet2->setCellValue('AG1', 'FECHA NACIMIENTO');
 
     // Ajustar ancho de columnas para INFORMACIÓN (mismo que ENCUESTAS)
     foreach ([
         'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R',
-        'S','T','U','V','W','X','Y','Z','AA','AB','AC','AD','AE','AF'
+        'S','T','U','V','W','X','Y','Z','AA','AB','AC','AD','AE','AF','AG'
     ] as $col) {
         $sheet2->getColumnDimension($col)->setWidth(20);
     }
     // Ajustar ancho específico para columnas de caracterización
-    foreach(['R','S','T','U','V','W','X','Y','Z','AA','AB','AC','AD'] as $col) {
+    foreach(['R','S','T','U','V','W','X','Y','Z','AA','AB','AC','AD','AG'] as $col) {
         $sheet2->getColumnDimension($col)->setWidth(30);
     }
     // Ajustar ancho específico para ASESOR
@@ -439,6 +442,7 @@ if (!function_exists('limpiarTexto')) {
         // ASESOR siempre al final y EDAD en AF
         $sheet2->setCellValue('AE' . $rowIndex2, $row['nombre_usuario'] ?? '');
         $sheet2->setCellValue('AF' . $rowIndex2, $edad_info);
+        $sheet2->setCellValue('AG' . $rowIndex2, $row['fecha_nacimiento'] ?? '');
         $rowIndex2++;
     }
     logError("Datos de información escritos en la hoja 2");    // ===============================================
@@ -488,7 +492,7 @@ if (!function_exists('limpiarTexto')) {
         exit;
     }
     logError("Consulta de movimientos ejecutada correctamente");    // Aplicar estilos a la hoja 3 - MOVIMIENTOS con todas las columnas
-    $sheet3->getStyle('A1:AF1')->applyFromArray($styleHeader);
+    $sheet3->getStyle('A1:AG1')->applyFromArray($styleHeader);
 
     // Encabezados para MOVIMIENTOS (igual que ENCUESTAS, con FECHA MOVIMIENTO al inicio)
     $sheet3->setCellValue('A1', 'FECHA MOVIMIENTO');
@@ -523,16 +527,17 @@ if (!function_exists('limpiarTexto')) {
     $sheet3->setCellValue('AD1', 'CONDICION OCUPACION');
     $sheet3->setCellValue('AE1', 'ASESOR');
     $sheet3->setCellValue('AF1', 'EDAD');
+    $sheet3->setCellValue('AG1', 'FECHA NACIMIENTO');
 
     // Ajustar ancho de columnas para MOVIMIENTOS (mismo que ENCUESTAS pero sin FECHA ALTA)
     foreach ([
         'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R',
-        'S','T','U','V','W','X','Y','Z','AA','AB','AC','AD','AE','AF'
+        'S','T','U','V','W','X','Y','Z','AA','AB','AC','AD','AE','AF','AG'
     ] as $col) {
         $sheet3->getColumnDimension($col)->setWidth(20);
     }
     // Ajustar ancho específico para columnas de caracterización
-    foreach(['R','S','T','U','V','W','X','Y','Z','AA','AB','AC','AD'] as $col) {
+    foreach(['R','S','T','U','V','W','X','Y','Z','AA','AB','AC','AD','AG'] as $col) {
         $sheet3->getColumnDimension($col)->setWidth(30);
     }
     // Ajustar ancho específico para ASESOR
@@ -642,6 +647,7 @@ if (!function_exists('limpiarTexto')) {
         // ASESOR siempre al final y EDAD en AF
         $sheet3->setCellValue('AE' . $rowIndex3, $row['nombre_usuario'] ?? '');
         $sheet3->setCellValue('AF' . $rowIndex3, $edad_mov);
+        $sheet3->setCellValue('AG' . $rowIndex3, $integ_mov['fecha_nacimiento'] ?? $row['fecha_nacimiento'] ?? '');
         $rowIndex3++;
     }
     logError("Datos de movimientos escritos en la hoja 3");

@@ -283,7 +283,7 @@ if (!empty($encuesta)) {
                         <div class="col-md-3 mb-3">
                             <label for="fecha_nacimiento" class="form-label">Fecha de Nacimiento</label>
                 <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento" 
-                    value="<?php echo $fecha_nacimiento_val; ?>">
+                    value="<?php echo $fecha_nacimiento_val; ?>" required>
                         </div>
                     </div>
 
