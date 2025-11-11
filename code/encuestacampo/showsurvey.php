@@ -331,6 +331,23 @@ header("Content-Type: text/html;charset=utf-8");
 			$num_registros = $row_count['total'];
 			$resul_x_pagina = 50;
 
+			// Mostrar información de registros encontrados
+			if ($num_registros == 0) {
+				echo "<div class='alert alert-info'>";
+				echo "<i class='fas fa-info-circle'></i> <strong>No se encontraron encuestas con los filtros aplicados.</strong>";
+				echo "<br>Documento: " . (empty($doc_encVenta) ? "<em>Todos</em>" : "<strong>$doc_encVenta</strong>");
+				echo " | Ficha: " . (empty($num_ficha_encVenta) ? "<em>Todas</em>" : "<strong>$num_ficha_encVenta</strong>");
+				echo " | Nombre: " . (empty($nom_encVenta) ? "<em>Todos</em>" : "<strong>$nom_encVenta</strong>");
+				if ($tipo_usu != '1') {
+					echo "<br><small>Nota: Solo se muestran las encuestas creadas por ti (Usuario ID: $id_usu)</small>";
+				}
+				echo "</div>";
+			} else {
+				echo "<div class='alert alert-success'>";
+				echo "<i class='fas fa-check-circle'></i> <strong>$num_registros</strong> encuesta(s) encontrada(s).";
+				echo "</div>";
+			}
+
 			echo "<div class='table-container'>";
 			echo "<div class='table-responsive'>";
 			echo "<table class='table table-hover align-middle'>";
@@ -375,8 +392,22 @@ header("Content-Type: text/html;charset=utf-8");
 			// Validar que la consulta fue exitosa
 			if (!$result) {
 				echo "<tr><td colspan='8' class='text-center text-danger'>Error en la consulta: " . mysqli_error($mysqli) . "</td></tr>";
+				// Debug: Mostrar la consulta que falló
+				echo "<tr><td colspan='8' class='text-center'><small>Consulta: " . htmlspecialchars($consulta) . "</small></td></tr>";
 			} else {
 				$i = 1;
+				$total_rows = mysqli_num_rows($result);
+				
+				// Debug: Mostrar si no hay resultados
+				if ($total_rows == 0) {
+					echo "<tr><td colspan='8' class='text-center text-warning'>";
+					echo "<i class='fas fa-exclamation-triangle'></i> No se encontraron encuestas registradas.";
+					echo "<br><small>Filtros aplicados - Doc: '$doc_encVenta', Ficha: '$num_ficha_encVenta', Nombre: '$nom_encVenta'</small>";
+					if ($tipo_usu != '1') {
+						echo "<br><small>Mostrando solo tus encuestas (Usuario: $id_usu)</small>";
+					}
+					echo "</td></tr>";
+				}
 				
 				while ($row = mysqli_fetch_array($result)) {
 					$estadoClase = ($row['estado_ficha'] == '0') ? 'estado-retirada' : 'estado-activa';

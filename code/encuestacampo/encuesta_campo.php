@@ -1022,6 +1022,7 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                             
                             // Habilitar formulario y botón
                             $("#form_contacto :input").prop("disabled", false);
+                            $("#fec_reg_encVenta").prop("disabled", true); // Fecha registro siempre deshabilitada
                             $("#btnEnviar").prop("disabled", false);
                         } else if (response.status === 'no_existe' || response.status === 'not_found' || response.status === 'empty') {
                             window.documentoYaExiste = false;
@@ -1030,7 +1031,7 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                                 .html('⚠️ No se encontró encuesta previa con ese documento.');
                             $("#fec_reg_encVenta").val("<?php echo date('Y-m-d'); ?>");
                             
-                            // Limpiar todos los campos del formulario excepto el documento
+                            // Limpiar todos los campos del formulario exceptao el documento
                             $("#nom_encVenta").val("");
                             $("#tipo_documento").val("");
                             $("#fecha_nacimiento").val("");
@@ -1058,6 +1059,7 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                             
                             // Habilitar formulario y botón
                             $("#form_contacto :input").prop("disabled", false);
+                            $("#fec_reg_encVenta").prop("disabled", true); // Fecha registro siempre deshabilitada
                             $("#btnEnviar").prop("disabled", false);
                         } else if (response.status === 'error') {
                             window.documentoYaExiste = false;
@@ -1097,6 +1099,7 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                             
                             // Habilitar formulario y botón
                             $("#form_contacto :input").prop("disabled", false);
+                            $("#fec_reg_encVenta").prop("disabled", true); // Fecha registro siempre deshabilitada
                             $("#btnEnviar").prop("disabled", false);
                         } else {
                             window.documentoYaExiste = false;
@@ -1128,6 +1131,7 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                             
                             // Habilitar formulario y botón
                             $("#form_contacto :input").prop("disabled", false);
+                            $("#fec_reg_encVenta").prop("disabled", true); // Fecha registro siempre deshabilitada
                             $("#btnEnviar").prop("disabled", false);
                         }
                     },
@@ -1180,6 +1184,7 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                         
                         // Habilitar formulario y botón
                         $("#form_contacto :input").prop("disabled", false);
+                        $("#fec_reg_encVenta").prop("disabled", true); // Fecha registro siempre deshabilitada
                         $("#btnEnviar").prop("disabled", false);
                     }
                 });
