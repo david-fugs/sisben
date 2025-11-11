@@ -476,3 +476,57 @@
     [obs_encVenta] => 
 )
 
+2025-11-11 16:03:33 POST: Array
+(
+    [doc_encVenta] => 1088243215
+    [tipo_documento] => cedula
+    [nom_encVenta] => test
+    [fecha_nacimiento] => 1990-02-25
+    [fecha_preregistro] => 2025-11-11
+    [dir_encVenta] => MZ 6 CASA 8 ALTA VISTA
+    [id_bar] => 1005
+    [id_com] => 19
+    [otro_bar_ver_encVenta] => 
+    [zona_encVenta] => URBANA
+    [tram_solic_encVenta] => CAMBIO DIRECCION
+    [num_ficha_encVenta] => 660015257895
+    [num_visita] => 1
+    [estado_ficha] => Visita fallida
+    [integra_encVenta] => 2
+    [cant_integVenta] => Array
+        (
+            [0] => 1
+            [1] => 1
+        )
+
+    [obs_encVenta] => 
+)
+
+2025-11-11 16:03:33 ERROR: Duplicate entry '1088243215' for key 'doc_encVenta'
+2025-11-11 16:08:38 POST: Array
+(
+    [doc_encVenta] => 1088243215
+    [tipo_documento] => cedula
+    [nom_encVenta] => test
+    [fecha_nacimiento] => 1990-02-25
+    [fecha_preregistro] => 2025-11-11
+    [dir_encVenta] => MZ 6 CASA 8 ALTA VISTA
+    [id_bar] => 1005
+    [id_com] => 19
+    [otro_bar_ver_encVenta] => 
+    [zona_encVenta] => URBANA
+    [tram_solic_encVenta] => CAMBIO DIRECCION
+    [num_ficha_encVenta] => 660015257895
+    [num_visita] => 1
+    [estado_ficha] => Visita fallida
+    [integra_encVenta] => 2
+    [cant_integVenta] => Array
+        (
+            [0] => 1
+            [1] => 1
+        )
+
+    [obs_encVenta] => 
+)
+
+2025-11-11 16:08:38 ERROR: Duplicate entry '1088243215' for key 'doc_encVenta'

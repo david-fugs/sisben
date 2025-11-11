@@ -420,9 +420,6 @@ include("../../conexion.php");
                                     <a href="editMovimiento.php?id_movimiento=' . $row['id_movimiento'] . '" class="btn btn-sm btn-outline-primary" title="Editar">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    <a href="verMovimiento.php?id_movimiento=' . $row['id_movimiento'] . '" class="btn btn-sm btn-outline-info" title="Ver detalles">
-                                        <i class="fas fa-eye"></i>
-                                    </a>
                                     <form method="post" action="" style="display:inline;" class="form-borrar-movimiento">
                                         <input type="hidden" name="borrar_movimiento" value="1">
                                         <input type="hidden" name="id_movimiento" value="' . $row['id_movimiento'] . '">

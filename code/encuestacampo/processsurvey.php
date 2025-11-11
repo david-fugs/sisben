@@ -129,17 +129,88 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Confirmar transacción
         mysqli_commit($mysqli);
 
-        echo "<script>
-            alert('Encuesta de campo registrada exitosamente');
-            window.location.href = 'showsurvey.php';
-        </script>";
+        echo "<!DOCTYPE html>
+        <html>
+        <head>
+            <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+        </head>
+        <body>
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: '¡Éxito!',
+                text: 'Encuesta de campo registrada exitosamente',
+                confirmButtonColor: '#28a745',
+                confirmButtonText: 'Aceptar'
+            }).then((result) => {
+                window.location.href = 'showsurvey.php';
+            });
+        </script>
+        </body>
+        </html>";
+        exit();
     } catch (Exception $e) {
         // Revertir transacción
         mysqli_rollback($mysqli);
         // Log error to file for debugging
         @file_put_contents(__DIR__ . '/debug_post.log', date('Y-m-d H:i:s') . " ERROR: " . $e->getMessage() . PHP_EOL, FILE_APPEND);
-        // Also show a plain error message (helps when JS alerts are not visible)
-        echo "Error al registrar la encuesta: " . htmlspecialchars($e->getMessage());
+        
+        // Verificar si es un error de duplicado de cédula
+        $errorMessage = $e->getMessage();
+        $errorMySQL = mysqli_error($mysqli);
+        
+        // Detectar error de duplicado
+        if (strpos($errorMessage, "Duplicate entry") !== false && strpos($errorMessage, "doc_encVenta") !== false) {
+            // Extraer el número de cédula del mensaje de error
+            preg_match("/Duplicate entry '(\d+)'/", $errorMessage, $matches);
+            $cedula = isset($matches[1]) ? $matches[1] : '';
+            
+            echo "<!DOCTYPE html>
+            <html>
+            <head>
+                <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+            </head>
+            <body>
+            <script>
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Cédula Duplicada',
+                    text: 'La cédula " . htmlspecialchars($cedula) . " ya existe en el sistema.',
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'Aceptar'
+                }).then((result) => {
+                    window.location.href = 'encuesta_campo.php';
+                });
+            </script>
+            </body>
+            </html>";
+            exit();
+        } else {
+            // Para otros errores, mostrar mensaje genérico con SweetAlert
+            echo "<!DOCTYPE html>
+            <html>
+            <head>
+                <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+            </head>
+            <body>
+            <script>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error al Registrar',
+                    text: 'Ocurrió un error al registrar la encuesta. Por favor, intente nuevamente.',
+                    confirmButtonColor: '#d33',
+                    confirmButtonText: 'Aceptar'
+                }).then((result) => {
+                    window.location.href = 'encuesta_campo.php';
+                });
+            </script>
+            </body>
+            </html>";
+            
+            // Log error to console (visible in browser console for debugging)
+            echo "<script>console.error('Error details: " . addslashes(htmlspecialchars($e->getMessage())) . "');</script>";
+            exit();
+        }
     }
 
     mysqli_autocommit($mysqli, true);
