@@ -44,6 +44,7 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../barrios.js"> </script>
     <style>
         .responsive {
@@ -856,6 +857,9 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
     <script>
         // AJAX para consulta de documento al perder foco o al presionar Enter
         $(document).ready(function() {
+            // Variable global para rastrear si el documento ya existe
+            window.documentoYaExiste = false;
+            
             var buscarEncuesta = function() {
                 var documento = $("#doc_encVenta").val().toString().trim();
                 console.log('buscarEncuesta triggered for documento:', documento);
@@ -863,6 +867,7 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                 // evitar búsquedas muy cortas (mínimo 3 caracteres)
                 if (documento.length < 3) {
                     console.log('documento demasiado corto (<3), se omite la búsqueda');
+                    window.documentoYaExiste = false;
                     return;
                 }
                 var mensajeContainer = $("#mensajeDocumentoContainer");
@@ -872,6 +877,7 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                     mensajeContainer.addClass("d-none").html("");
                     limpiarIntegrantesPrecargados();
                     $("#btnEnviar").prop("disabled", false);
+                    window.documentoYaExiste = false;
                     return;
                 }
 
@@ -886,8 +892,11 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                     success: function(response) {
                         if (response.status === 'existe_encuesta') {
                             var d = response.data;
-                            mensajeContainer.removeClass('alert-info alert-warning alert-danger').addClass('alert alert-success')
-                                .html('✅ Encuesta previa encontrada: ' + (d.nom_encVenta || ''));
+                            // Marcar que el documento ya existe
+                            window.documentoYaExiste = true;
+                            
+                            mensajeContainer.removeClass('alert-info alert-warning alert-danger').addClass('alert alert-danger')
+                                .html('❌ Esta cédula ya tiene una encuesta registrada: ' + (d.nom_encVenta || '') + '. No se puede duplicar.');
 
                             // Prefill main fields
                             $("#nom_encVenta").val(d.nom_encVenta || "");
@@ -972,33 +981,17 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                             $("#sisben_nocturno").val(d.sisben_nocturno || "");
                             $("#obs_encVenta").val(d.obs_encVenta || "");
 
-                            // Cargar integrantes existentes como solo lectura
-                            if (d.integrantes && d.integrantes.length > 0) {
-                                // Limpiar container de integrantes
-                                $("#integrantes-container").empty();
-                                
-                                // Crear integrantes como solo lectura
-                                d.integrantes.forEach(function(integ, index) {
-                                    crearIntegranteReadOnly(integ, index + 1);
-                                });
-                                
-                                // Actualizar contador total
-                                $("#total_integrantes").val(d.integrantes.length);
-                                
-                                // NO deshabilitar el botón - permitir agregar más integrantes
-                                $("#agregar").text("Agregar Más +")
-                                    .removeClass("btn-secondary")
-                                    .addClass("btn-primary");
-                                $("#cant_integVenta").prop("disabled", false);
-                                
-                                // Mostrar mensaje informativo
-                                var infoMessage = $('<div class="alert alert-info mt-3">')
-                                    .html('<i class="fas fa-info-circle"></i> <strong>Integrantes Precargados:</strong> Se encontraron ' + d.integrantes.length + ' integrante(s) existente(s). Puede agregar integrantes adicionales si es necesario.');
-                                $("#integrantes-container").prepend(infoMessage);
-                            }
-
-                            $("#btnEnviar").prop("disabled", false);
+                            // Deshabilitar el botón de enviar para evitar duplicados
+                            $("#btnEnviar").prop("disabled", true);
+                            
+                            // Deshabilitar el formulario completo
+                            $("#form_contacto :input").not("#doc_encVenta").prop("disabled", true);
+                            
+                            // Limpiar integrantes precargados
+                            limpiarIntegrantesPrecargados();
                         } else if (response.status === 'existe_info') {
+                            window.documentoYaExiste = false;
+                            
                             mensajeContainer.removeClass('alert-info alert-warning alert-danger').addClass('alert alert-success')
                                 .html('✅ Documento encontrado en Información.');
                             
@@ -1006,40 +999,187 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                             $("#fec_reg_encVenta").val("<?php echo date('Y-m-d'); ?>");
                             $("#nom_encVenta").val(d.nom_info || "");
                             $("#tipo_documento").val(d.tipo_documento || "");
-                            
-                            // departamento/ciudad expedicion and fecha_expedicion removed from form; no prefill
                             $("#fecha_nacimiento").val(d.fecha_nacimiento || "");
+                            $("#fecha_preregistro").val("");
+                            
+                            // Limpiar campos que no vienen de información
+                            $("#dir_encVenta").val("");
+                            $("#id_barrios").val(null).trigger('change');
+                            $("#id_comunas").val("").prop("disabled", true);
+                            $("#otro_bar_ver_encVenta").val("");
+                            $("#otro_barrio_container").hide();
+                            $("#zona_encVenta").val("");
+                            $("#selectEF").val("");
+                            $("#num_ficha_encVenta").val("");
+                            $("#num_visita").val("");
+                            $("#estado_ficha").val("");
+                            $("#tipo_proceso").val("");
+                            $("#total_integrantes").val("");
+                            $("#exampleFormControlTextarea1").val("");
                             
                             // Limpiar integrantes precargados ya que es información nueva
                             limpiarIntegrantesPrecargados();
                             
+                            // Habilitar formulario y botón
+                            $("#form_contacto :input").prop("disabled", false);
                             $("#btnEnviar").prop("disabled", false);
                         } else if (response.status === 'no_existe' || response.status === 'not_found' || response.status === 'empty') {
+                            window.documentoYaExiste = false;
+                            
                             mensajeContainer.removeClass('alert-info alert-success alert-danger').addClass('alert alert-warning')
                                 .html('⚠️ No se encontró encuesta previa con ese documento.');
                             $("#fec_reg_encVenta").val("<?php echo date('Y-m-d'); ?>");
                             
+                            // Limpiar todos los campos del formulario excepto el documento
+                            $("#nom_encVenta").val("");
+                            $("#tipo_documento").val("");
+                            $("#fecha_nacimiento").val("");
+                            $("#fecha_preregistro").val("");
+                            $("#dir_encVenta").val("");
+                            
+                            // Limpiar select2 de barrios y comunas
+                            $("#id_barrios").val(null).trigger('change');
+                            $("#id_comunas").val("").prop("disabled", true);
+                            $("#otro_bar_ver_encVenta").val("");
+                            $("#otro_barrio_container").hide();
+                            
+                            // Limpiar campos de trámite
+                            $("#zona_encVenta").val("");
+                            $("#selectEF").val("");
+                            $("#num_ficha_encVenta").val("");
+                            $("#num_visita").val("");
+                            $("#estado_ficha").val("");
+                            $("#tipo_proceso").val("");
+                            $("#total_integrantes").val("");
+                            $("#exampleFormControlTextarea1").val("");
+                            
                             // Limpiar integrantes precargados y rehabilitar controles
                             limpiarIntegrantesPrecargados();
                             
+                            // Habilitar formulario y botón
+                            $("#form_contacto :input").prop("disabled", false);
+                            $("#btnEnviar").prop("disabled", false);
+                        } else if (response.status === 'error') {
+                            window.documentoYaExiste = false;
+                            
+                            var errorMsg = '❌ Error en el servidor';
+                            if (response.message) {
+                                errorMsg += ': ' + response.message;
+                            }
+                            if (response.debug) {
+                                console.error('Error debug:', response.debug);
+                            }
+                            
+                            mensajeContainer.removeClass('alert-info alert-success alert-warning').addClass('alert alert-danger')
+                                .html(errorMsg);
+                            
+                            // Limpiar todos los campos excepto documento
+                            $("#nom_encVenta").val("");
+                            $("#tipo_documento").val("");
+                            $("#fecha_nacimiento").val("");
+                            $("#fecha_preregistro").val("");
+                            $("#dir_encVenta").val("");
+                            $("#id_barrios").val(null).trigger('change');
+                            $("#id_comunas").val("").prop("disabled", true);
+                            $("#otro_bar_ver_encVenta").val("");
+                            $("#otro_barrio_container").hide();
+                            $("#zona_encVenta").val("");
+                            $("#selectEF").val("");
+                            $("#num_ficha_encVenta").val("");
+                            $("#num_visita").val("");
+                            $("#estado_ficha").val("");
+                            $("#tipo_proceso").val("");
+                            $("#total_integrantes").val("");
+                            $("#exampleFormControlTextarea1").val("");
+                            
+                            // Limpiar integrantes precargados y rehabilitar controles
+                            limpiarIntegrantesPrecargados();
+                            
+                            // Habilitar formulario y botón
+                            $("#form_contacto :input").prop("disabled", false);
                             $("#btnEnviar").prop("disabled", false);
                         } else {
+                            window.documentoYaExiste = false;
+                            
                             mensajeContainer.removeClass('alert-info alert-success alert-warning').addClass('alert alert-danger')
                                 .html('❌ Error en la búsqueda de la encuesta.');
                             
+                            // Limpiar todos los campos excepto documento
+                            $("#nom_encVenta").val("");
+                            $("#tipo_documento").val("");
+                            $("#fecha_nacimiento").val("");
+                            $("#fecha_preregistro").val("");
+                            $("#dir_encVenta").val("");
+                            $("#id_barrios").val(null).trigger('change');
+                            $("#id_comunas").val("").prop("disabled", true);
+                            $("#otro_bar_ver_encVenta").val("");
+                            $("#otro_barrio_container").hide();
+                            $("#zona_encVenta").val("");
+                            $("#selectEF").val("");
+                            $("#num_ficha_encVenta").val("");
+                            $("#num_visita").val("");
+                            $("#estado_ficha").val("");
+                            $("#tipo_proceso").val("");
+                            $("#total_integrantes").val("");
+                            $("#exampleFormControlTextarea1").val("");
+                            
                             // Limpiar integrantes precargados y rehabilitar controles
                             limpiarIntegrantesPrecargados();
                             
+                            // Habilitar formulario y botón
+                            $("#form_contacto :input").prop("disabled", false);
                             $("#btnEnviar").prop("disabled", false);
                         }
                     },
-                    error: function() {
+                    error: function(xhr, status, error) {
+                        window.documentoYaExiste = false;
+                        
+                        console.error('Error en AJAX:', status, error);
+                        console.error('Response:', xhr.responseText);
+                        
+                        var mensajeError = '❌ Error en la consulta. Intente nuevamente.';
+                        
+                        // Intentar parsear la respuesta para obtener más información
+                        try {
+                            var respuesta = JSON.parse(xhr.responseText);
+                            if (respuesta.message) {
+                                mensajeError = '❌ Error: ' + respuesta.message;
+                            }
+                            if (respuesta.debug) {
+                                console.error('Debug info:', respuesta.debug);
+                            }
+                        } catch(e) {
+                            // Si no se puede parsear, usar el mensaje por defecto
+                            console.error('No se pudo parsear la respuesta:', e);
+                        }
+                        
                         mensajeContainer.removeClass('alert-info alert-success alert-warning').addClass('alert alert-danger')
-                            .html('❌ Error en la consulta. Intente nuevamente.');
+                            .html(mensajeError);
+                        
+                        // Limpiar todos los campos excepto documento
+                        $("#nom_encVenta").val("");
+                        $("#tipo_documento").val("");
+                        $("#fecha_nacimiento").val("");
+                        $("#fecha_preregistro").val("");
+                        $("#dir_encVenta").val("");
+                        $("#id_barrios").val(null).trigger('change');
+                        $("#id_comunas").val("").prop("disabled", true);
+                        $("#otro_bar_ver_encVenta").val("");
+                        $("#otro_barrio_container").hide();
+                        $("#zona_encVenta").val("");
+                        $("#selectEF").val("");
+                        $("#num_ficha_encVenta").val("");
+                        $("#num_visita").val("");
+                        $("#estado_ficha").val("");
+                        $("#tipo_proceso").val("");
+                        $("#total_integrantes").val("");
+                        $("#exampleFormControlTextarea1").val("");
                         
                         // Limpiar integrantes precargados y rehabilitar controles
                         limpiarIntegrantesPrecargados();
                         
+                        // Habilitar formulario y botón
+                        $("#form_contacto :input").prop("disabled", false);
                         $("#btnEnviar").prop("disabled", false);
                     }
                 });
@@ -1364,6 +1504,20 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
 
         $(document).ready(function() {
             $("#form_contacto").on("submit", function(e) {
+                // Verificar si el documento ya existe
+                if (window.documentoYaExiste) {
+                    e.preventDefault();
+                    var cedula = $("#doc_encVenta").val();
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Cédula Duplicada',
+                        text: 'La cédula ' + cedula + ' ya existe en el sistema. No se puede registrar nuevamente.',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'Aceptar'
+                    });
+                    return false;
+                }
+                
                 if (!validarIntegrantes()) {
                     e.preventDefault();
                     return false;

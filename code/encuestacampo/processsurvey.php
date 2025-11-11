@@ -64,7 +64,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         ) VALUES ('" . $doc_encVenta . "', NOW(), '" . $tipo_documento . "', '" . $nom_encVenta . "', '" . $fecha_nacimiento . "', '" . $dir_encVenta . "', '" . $id_bar . "', '" . $id_com . "', '" . $otro_bar_ver_encVenta . "', '" . $zona_encVenta . "', '" . $tram_solic_encVenta . "', '" . $num_ficha_encVenta . "', '" . $num_visita . "', '" . $estado_ficha . "', '" . $integra_encVenta . "', '" . $obs_encVenta . "', NOW(), '" . $fecha_preregistro . "', " . intval($id_usu) . ")";
 
         if (!mysqli_query($mysqli, $sql_encuesta)) {
-            throw new Exception("Error al insertar encuesta: " . mysqli_error($mysqli) . " - SQL: " . $sql_encuesta);
+            $mysql_error = mysqli_error($mysqli);
+            $mysql_errno = mysqli_errno($mysqli);
+            
+            // Código 1062 es para entrada duplicada (Duplicate entry)
+            if ($mysql_errno == 1062 && strpos($mysql_error, "doc_encVenta") !== false) {
+                throw new Exception("Duplicate entry '" . $doc_encVenta . "' for key 'doc_encVenta'");
+            }
+            
+            throw new Exception("Error al insertar encuesta: " . $mysql_error . " - SQL: " . $sql_encuesta);
         }
 
         $id_encuesta = mysqli_insert_id($mysqli);
