@@ -252,26 +252,31 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
     </style>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const departamentoSelect = document.getElementById('departamento_expedicion');
+        // Función global para cargar municipios
+        window.ciudadSeleccionada = null;
+        
+        window.cargarMunicipios = function(departamento, ciudadPreseleccionada = null) {
             const ciudadSelect = document.getElementById('ciudad_expedicion');
+            
+            if (!ciudadSelect) {
+                console.error('No se encontró el select de ciudad');
+                return;
+            }
+            
+            ciudadSelect.innerHTML = '<option value="">Seleccione un municipio</option>';
 
-            window.ciudadSeleccionada = null;
+            if (departamento === '' || !departamento) {
+                ciudadSelect.disabled = true;
+                return;
+            }
 
-            window.cargarMunicipios = function(departamento, ciudadPreseleccionada = null) {
-                ciudadSelect.innerHTML = '<option value="">Seleccione una ciudad</option>';
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', '../obtener_municipios.php', true);
+            xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 
-                if (departamento === '' || !departamento) {
-                    ciudadSelect.disabled = true;
-                    return;
-                }
-
-                const xhr = new XMLHttpRequest();
-                xhr.open('POST', '../obtener_municipios.php', true);
-                xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-
-                xhr.onload = function() {
-                    if (xhr.status === 200) {
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    try {
                         const municipios = JSON.parse(xhr.responseText);
                         municipios.forEach(function(municipio) {
                             const option = document.createElement('option');
@@ -280,29 +285,48 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                             ciudadSelect.appendChild(option);
                         });
 
+                        // IMPORTANTE: Habilitar el select después de cargar las opciones
                         ciudadSelect.disabled = false;
 
                         // Seleccionar la ciudad preseleccionada
                         if (ciudadPreseleccionada) {
-                            ciudadSelect.value = ciudadPreseleccionada;
-                            window.ciudadSeleccionada = null;
-                        } else if (window.ciudadSeleccionada) {
-                            ciudadSelect.value = window.ciudadSeleccionada;
-                            window.ciudadSeleccionada = null;
+                            setTimeout(() => {
+                                ciudadSelect.value = ciudadPreseleccionada;
+                            }, 100);
                         }
+                    } catch (e) {
+                        console.error('Error al parsear municipios:', e);
                     }
-                };
+                }
+            };
 
-                xhr.send('departamento=' + departamento);
-            }
+            xhr.onerror = function() {
+                console.error('Error en la petición de municipios');
+            };
 
-            departamentoSelect.addEventListener('change', function() {
-                cargarMunicipios(this.value);
-            });
+            xhr.send('cod_departamento=' + encodeURIComponent(departamento));
+        };
 
-            // Cargar municipios si hay un departamento preseleccionado
-            if (departamentoSelect.value) {
-                cargarMunicipios(departamentoSelect.value);
+        document.addEventListener('DOMContentLoaded', function() {
+            const departamentoSelect = document.getElementById('departamento_expedicion');
+            const ciudadSelect = document.getElementById('ciudad_expedicion');
+
+            if (departamentoSelect) {
+                departamentoSelect.addEventListener('change', function() {
+                    const deptoValue = this.value;
+                    console.log('Departamento seleccionado:', deptoValue);
+                    if (deptoValue) {
+                        cargarMunicipios(deptoValue);
+                    } else {
+                        ciudadSelect.innerHTML = '<option value="">Seleccione un municipio</option>';
+                        ciudadSelect.disabled = true;
+                    }
+                });
+
+                // Cargar municipios si hay un departamento preseleccionado al cargar la página
+                if (departamentoSelect.value) {
+                    cargarMunicipios(departamentoSelect.value);
+                }
             }
         });
     </script>
@@ -636,12 +660,19 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
 
                                             // Cargar departamento y municipio
                                             if (response.data.departamento_expedicion) {
+                                                console.log('📍 Cargando departamento:', response.data.departamento_expedicion);
+                                                console.log('📍 Cargando municipio:', response.data.ciudad_expedicion);
+                                                
                                                 $("#departamento_expedicion").val(response.data.departamento_expedicion);
                                                 
                                                 // Cargar municipios del departamento con el municipio preseleccionado
-                                                if (typeof window.cargarMunicipios === 'function') {
-                                                    window.cargarMunicipios(response.data.departamento_expedicion, response.data.ciudad_expedicion);
-                                                }
+                                                setTimeout(function() {
+                                                    if (typeof window.cargarMunicipios === 'function') {
+                                                        window.cargarMunicipios(response.data.departamento_expedicion, response.data.ciudad_expedicion);
+                                                    } else {
+                                                        console.error('⚠️ La función cargarMunicipios no está disponible');
+                                                    }
+                                                }, 200);
                                             }
 
                                             if (response.data.id_bar) {

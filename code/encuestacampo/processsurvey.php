@@ -67,10 +67,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $mysql_error = mysqli_error($mysqli);
             $mysql_errno = mysqli_errno($mysqli);
             
-            // Código 1062 es para entrada duplicada (Duplicate entry)
-            if ($mysql_errno == 1062 && strpos($mysql_error, "doc_encVenta") !== false) {
-                throw new Exception("Duplicate entry '" . $doc_encVenta . "' for key 'doc_encVenta'");
-            }
+            // PERMITIR múltiples encuestas con el mismo documento
+            // Código 1062 es para entrada duplicada - pero ahora esto es válido
+            // Si hay restricción UNIQUE en doc_encVenta, debe eliminarse de la BD
+            // Por ahora lanzamos un error descriptivo si el problema persiste
             
             throw new Exception("Error al insertar encuesta: " . $mysql_error . " - SQL: " . $sql_encuesta);
         }
@@ -78,6 +78,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $id_encuesta = mysqli_insert_id($mysqli);
 
         // Insertar integrantes (consultas planas)
+        // Solo insertar integrantes NUEVOS (marcados como data-es-nuevo="true" en el frontend)
+        // Los integrantes precargados NO deben insertarse de nuevo
         if (isset($_POST['gen_integVenta']) && is_array($_POST['gen_integVenta'])) {
             $gen_integVenta = $_POST['gen_integVenta'];
             $orientacionSexual = $_POST['orientacionSexual'];
@@ -92,11 +94,30 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $seguridadSalud = $_POST['seguridadSalud'];
             $nivelEducativo = $_POST['nivelEducativo'];
             $mysqlidicionOcupacion = $_POST['condicionOcupacion'];
+            
+            // Recibir array de marcadores de integrantes nuevos vs precargados
+            $es_nuevo = isset($_POST['es_nuevo']) ? $_POST['es_nuevo'] : array();
 
             for ($i = 0; $i < count($gen_integVenta); $i++) {
+                // Solo insertar si es un integrante nuevo (no precargado)
+                // Si no viene el array es_nuevo, asumir que todos son nuevos (compatibilidad)
+                $es_integrante_nuevo = empty($es_nuevo) || (isset($es_nuevo[$i]) && $es_nuevo[$i] === 'true');
+                
+                if (!$es_integrante_nuevo) {
+                    // Saltar este integrante porque es precargado
+                    continue;
+                }
+                
                 $gen = mysqli_real_escape_string($mysqli, $gen_integVenta[$i]);
-                $orient = mysqli_real_escape_string($mysqli, $orientacionSexual[$i] ?? '');
                 $rango = mysqli_real_escape_string($mysqli, $rango_integVenta[$i] ?? '');
+                
+                // Solo insertar si tiene género Y rango de edad (campos mínimos obligatorios)
+                if (empty($gen) || empty($rango)) {
+                    // Saltar este integrante porque está incompleto
+                    continue;
+                }
+                
+                $orient = mysqli_real_escape_string($mysqli, $orientacionSexual[$i] ?? '');
                 $cond_disc = mysqli_real_escape_string($mysqli, $mysqlidicionDiscapacidad[$i] ?? '');
                 $tipo_disc = mysqli_real_escape_string($mysqli, $tipoDiscapacidad[$i] ?? '');
                 $grupo = mysqli_real_escape_string($mysqli, $grupoEtnico[$i] ?? '');
@@ -163,62 +184,33 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Log error to file for debugging
         @file_put_contents(__DIR__ . '/debug_post.log', date('Y-m-d H:i:s') . " ERROR: " . $e->getMessage() . PHP_EOL, FILE_APPEND);
         
-        // Verificar si es un error de duplicado de cédula
+        // Mostrar error genérico (ya no bloqueamos por documento duplicado)
         $errorMessage = $e->getMessage();
-        $errorMySQL = mysqli_error($mysqli);
         
-        // Detectar error de duplicado
-        if (strpos($errorMessage, "Duplicate entry") !== false && strpos($errorMessage, "doc_encVenta") !== false) {
-            // Extraer el número de cédula del mensaje de error
-            preg_match("/Duplicate entry '(\d+)'/", $errorMessage, $matches);
-            $cedula = isset($matches[1]) ? $matches[1] : '';
-            
-            echo "<!DOCTYPE html>
-            <html>
-            <head>
-                <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
-            </head>
-            <body>
-            <script>
-                Swal.fire({
-                    icon: 'warning',
-                    title: 'Cédula Duplicada',
-                    text: 'La cédula " . htmlspecialchars($cedula) . " ya existe en el sistema.',
-                    confirmButtonColor: '#3085d6',
-                    confirmButtonText: 'Aceptar'
-                }).then((result) => {
-                    window.location.href = 'encuesta_campo.php';
-                });
-            </script>
-            </body>
-            </html>";
-            exit();
-        } else {
-            // Para otros errores, mostrar mensaje genérico con SweetAlert
-            echo "<!DOCTYPE html>
-            <html>
-            <head>
-                <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
-            </head>
-            <body>
-            <script>
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error al Registrar',
-                    text: 'Ocurrió un error al registrar la encuesta. Por favor, intente nuevamente.',
-                    confirmButtonColor: '#d33',
-                    confirmButtonText: 'Aceptar'
-                }).then((result) => {
-                    window.location.href = 'encuesta_campo.php';
-                });
-            </script>
-            </body>
-            </html>";
-            
-            // Log error to console (visible in browser console for debugging)
-            echo "<script>console.error('Error details: " . addslashes(htmlspecialchars($e->getMessage())) . "');</script>";
-            exit();
-        }
+        // Mostrar mensaje genérico con SweetAlert
+        echo "<!DOCTYPE html>
+        <html>
+        <head>
+            <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+        </head>
+        <body>
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Error al Registrar',
+                text: 'Ocurrió un error al registrar la encuesta. Por favor, intente nuevamente.',
+                confirmButtonColor: '#d33',
+                confirmButtonText: 'Aceptar'
+            }).then((result) => {
+                window.location.href = 'encuesta_campo.php';
+            });
+        </script>
+        </body>
+        </html>";
+        
+        // Log error to console (visible in browser console for debugging)
+        echo "<script>console.error('Error details: " . addslashes(htmlspecialchars($e->getMessage())) . "');</script>";
+        exit();
     }
 
     mysqli_autocommit($mysqli, true);

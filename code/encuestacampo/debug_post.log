@@ -1,0 +1,166 @@
+2025-11-21 16:04:15 POST: Array
+(
+    [doc_encVenta] => 123
+    [tipo_documento] => tarjeta identidad
+    [nom_encVenta] => TEST HOY
+    [fecha_nacimiento] => 1996-12-12
+    [fecha_preregistro] => 2025-11-21
+    [dir_encVenta] => sdsfg
+    [id_bar] => 662
+    [id_com] => 4
+    [otro_bar_ver_encVenta] => 
+    [zona_encVenta] => URBANA
+    [tram_solic_encVenta] => ENCUESTA NUEVA POR VERIFICACION
+    [num_ficha_encVenta] => 12312
+    [num_visita] => 1
+    [estado_ficha] => Direccion errada
+    [integra_encVenta] => 1
+    [cant_integVenta] => Array
+        (
+            [0] => 1
+        )
+
+    [gen_integVenta] => Array
+        (
+            [0] => O
+        )
+
+    [rango_integVenta] => Array
+        (
+            [0] => 13 - 17
+        )
+
+    [obs_encVenta] => test
+)
+
+2025-11-21 16:08:17 POST: Array
+(
+    [doc_encVenta] => 123
+    [tipo_documento] => tarjeta identidad
+    [nom_encVenta] => TEST HOY
+    [fecha_nacimiento] => 1996-12-12
+    [fecha_preregistro] => 2025-11-21
+    [dir_encVenta] => sdsfg
+    [id_bar] => 662
+    [id_com] => 4
+    [otro_bar_ver_encVenta] => 
+    [zona_encVenta] => URBANA
+    [tram_solic_encVenta] =>  DESCENTRALIZADO
+    [num_ficha_encVenta] => 12312
+    [num_visita] => 1
+    [estado_ficha] => Direccion errada
+    [integra_encVenta] => 2
+    [cant_integVenta] => Array
+        (
+            [0] => 1
+            [1] => 1
+        )
+
+    [gen_integVenta] => Array
+        (
+            [0] => M
+            [1] => F
+        )
+
+    [rango_integVenta] => Array
+        (
+            [0] => 13 - 17
+            [1] => 29 - 45
+        )
+
+    [es_nuevo] => Array
+        (
+            [0] => true
+            [1] => true
+        )
+
+    [obs_encVenta] => 
+)
+
+2025-11-21 16:08:17 ERROR: Duplicate entry '123' for key 'doc_encVenta'
+2025-11-21 16:21:48 POST: Array
+(
+    [doc_encVenta] => 123
+    [tipo_documento] => tarjeta identidad
+    [nom_encVenta] => TEST HOY
+    [fecha_nacimiento] => 1996-12-12
+    [fecha_preregistro] => 
+    [dir_encVenta] => sdsfg
+    [id_bar] => 662
+    [id_com] => 4
+    [otro_bar_ver_encVenta] => 
+    [zona_encVenta] => URBANA
+    [tram_solic_encVenta] => FAVORES
+    [num_ficha_encVenta] => 12312
+    [num_visita] => 1
+    [estado_ficha] => Direccion errada
+    [integra_encVenta] => 2
+    [cant_integVenta] => Array
+        (
+            [0] => 1
+            [1] => 1
+        )
+
+    [gen_integVenta] => Array
+        (
+            [0] => 
+        )
+
+    [rango_integVenta] => Array
+        (
+            [0] => 
+        )
+
+    [es_nuevo] => Array
+        (
+            [0] => true
+            [1] => false
+        )
+
+    [obs_encVenta] => 
+)
+
+2025-11-21 16:48:51 POST: Array
+(
+    [doc_encVenta] => 123
+    [tipo_documento] => tarjeta identidad
+    [nom_encVenta] => TEST HOY
+    [fecha_nacimiento] => 1996-12-12
+    [fecha_preregistro] => 
+    [dir_encVenta] => sdsfg
+    [id_bar] => 662
+    [id_com] => 4
+    [otro_bar_ver_encVenta] => 
+    [zona_encVenta] => URBANA
+    [tram_solic_encVenta] => 
+    [num_ficha_encVenta] => 12312
+    [num_visita] => 1
+    [estado_ficha] => Direccion errada
+    [integra_encVenta] => 3
+    [cant_integVenta] => Array
+        (
+            [0] => 1
+            [1] => 1
+            [2] => 1
+        )
+
+    [gen_integVenta] => Array
+        (
+            [0] => 
+        )
+
+    [rango_integVenta] => Array
+        (
+            [0] => 
+        )
+
+    [es_nuevo] => Array
+        (
+            [0] => true
+            [1] => false
+            [2] => false
+        )
+
+    [obs_encVenta] => 
+)
+

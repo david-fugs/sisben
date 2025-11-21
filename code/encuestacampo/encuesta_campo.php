@@ -328,7 +328,7 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                 
                 for (var i = 0; i < cantidadValor; i++) {
                     var numeroIntegrante = integrantesExistentes + i + 1;
-                    var integranteDiv = $("<div>").addClass("formulario-dinamico integrante-adicional");
+                    var integranteDiv = $("<div>").addClass("formulario-dinamico integrante-adicional").attr("data-es-nuevo", "true");
 
                     var integranteHeader = $("<div>").addClass("integrante-header").text("Integrante " + numeroIntegrante + " (Opcional)");
                     integranteDiv.append(integranteHeader);
@@ -591,11 +591,19 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
             });
 
             // Función para crear el primer integrante con campos requeridos
-            function crearPrimerIntegrante() {
-                var integranteDiv = $("<div>").addClass("formulario-dinamico primer-integrante");
+            function crearPrimerIntegrante(esRequerido) {
+                // Si no se especifica, es requerido solo si no hay integrantes precargados
+                if (typeof esRequerido === 'undefined') {
+                    esRequerido = (window.integrantesPrecargados && window.integrantesPrecargados.length > 0) ? false : true;
+                }
+                
+                var integranteDiv = $("<div>").addClass("formulario-dinamico primer-integrante").attr("data-es-nuevo", "true");
 
-                var integranteHeader = $("<div>").addClass("integrante-header").text("Integrante 1 (Requerido)").css({
-                    'color': '#dc3545',
+                var headerText = esRequerido ? "Integrante 1 (Requerido)" : "Integrante 1";
+                var headerColor = esRequerido ? '#dc3545' : '#007bff';
+                
+                var integranteHeader = $("<div>").addClass("integrante-header").text(headerText).css({
+                    'color': headerColor,
                     'font-weight': 'bold',
                     'margin-bottom': '1rem'
                 });
@@ -617,7 +625,7 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                 var generoSelect = $("<select>")
                     .attr("name", "gen_integVenta[]")
                     .addClass("form-control smaller-input")
-                    .attr("required", true)
+                    .attr("required", esRequerido)
                     .append('<option value="">Identidad Genero</option>')
                     .append('<option value="F">F</option>')
                     .append('<option value="M">M</option>')
@@ -647,7 +655,7 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                 var rangoEdadSelect = $("<select>")
                     .attr("name", "rango_integVenta[]")
                     .addClass("form-control smaller-input")
-                    .attr("required", true)
+                    .attr("required", esRequerido)
                     .append('<option value="">Rango Edad</option>')
                     .append('<option value="0 - 6">0 - 5</option>')
                     .append('<option value="6 - 12">6 - 12</option>')
@@ -860,6 +868,9 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
             // Variable global para rastrear si el documento ya existe
             window.documentoYaExiste = false;
             
+            // Array para almacenar IDs de integrantes precargados (no deben insertarse de nuevo)
+            window.integrantesPrecargados = [];
+            
             var buscarEncuesta = function() {
                 var documento = $("#doc_encVenta").val().toString().trim();
                 console.log('buscarEncuesta triggered for documento:', documento);
@@ -892,11 +903,11 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                     success: function(response) {
                         if (response.status === 'existe_encuesta') {
                             var d = response.data;
-                            // Marcar que el documento ya existe
-                            window.documentoYaExiste = true;
+                            // Marcar que el documento ya existe pero permitir nueva encuesta
+                            window.documentoYaExiste = false;
                             
-                            mensajeContainer.removeClass('alert-info alert-warning alert-danger').addClass('alert alert-danger')
-                                .html('❌ Esta cédula ya tiene una encuesta registrada: ' + (d.nom_encVenta || '') + '. No se puede duplicar.');
+                            mensajeContainer.removeClass('alert-info alert-warning alert-danger').addClass('alert alert-info')
+                                .html('ℹ️ Este documento ya tiene una encuesta registrada. Los datos se han precargado pero puede agregar una nueva encuesta.');
 
                             // Prefill main fields
                             $("#nom_encVenta").val(d.nom_encVenta || "");
@@ -981,14 +992,35 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                             $("#sisben_nocturno").val(d.sisben_nocturno || "");
                             $("#obs_encVenta").val(d.obs_encVenta || "");
 
-                            // Deshabilitar el botón de enviar para evitar duplicados
-                            $("#btnEnviar").prop("disabled", true);
+                            // PERMITIR nueva encuesta - habilitar formulario y botón
+                            $("#form_contacto :input").prop("disabled", false);
+                            $("#fec_reg_encVenta").prop("disabled", true); // Fecha registro siempre deshabilitada
+                            $("#btnEnviar").prop("disabled", false);
                             
-                            // Deshabilitar el formulario completo
-                            $("#form_contacto :input").not("#doc_encVenta").prop("disabled", true);
-                            
-                            // Limpiar integrantes precargados
+                            // Limpiar integrantes precargados anteriores
                             limpiarIntegrantesPrecargados();
+                            
+                            // Cargar integrantes precargados si existen
+                            if (response.data.integrantes && response.data.integrantes.length > 0) {
+                                console.log('📋 Cargando ' + response.data.integrantes.length + ' integrantes precargados');
+                                window.integrantesPrecargados = response.data.integrantes;
+                                response.data.integrantes.forEach(function(integ, index) {
+                                    crearIntegranteReadOnly(integ, index + 1);
+                                });
+                                actualizarTotal();
+                                
+                                // Si existe el primer integrante nuevo, actualizar su header a "NO requerido"
+                                var primerIntegrante = $(".primer-integrante");
+                                if (primerIntegrante.length > 0) {
+                                    primerIntegrante.find(".integrante-header")
+                                        .text("Integrante 1")
+                                        .css('color', '#007bff');
+                                    
+                                    // Hacer los campos NO requeridos ya que hay precargados
+                                    primerIntegrante.find("select[name='gen_integVenta[]']").attr("required", false);
+                                    primerIntegrante.find("select[name='rango_integVenta[]']").attr("required", false);
+                                }
+                            }
                         } else if (response.status === 'existe_info') {
                             window.documentoYaExiste = false;
                             
@@ -1450,48 +1482,77 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
         // Función para validar los integrantes antes del envío
         function validarIntegrantes() {
             var integrantesContainer = $("#integrantes-container");
-            var primerIntegrante = integrantesContainer.find(".primer-integrante").first(); // Solo el primer integrante
             var formulariosDinamicos = integrantesContainer.find(".formulario-dinamico:not(.readonly-integrante)"); // Excluir integrantes de solo lectura
-
-            // Si solo hay integrantes de solo lectura, no es necesario validar
-            var totalIntegrantes = integrantesContainer.find(".formulario-dinamico").length;
             var integrantesReadOnly = integrantesContainer.find(".readonly-integrante").length;
-            
-            if (totalIntegrantes === integrantesReadOnly && integrantesReadOnly > 0) {
+
+            // Si solo hay integrantes de solo lectura, es válido (no requiere agregar más)
+            if (formulariosDinamicos.length === 0 && integrantesReadOnly > 0) {
                 return true; // Válido si solo hay integrantes precargados
             }
 
+            // Si no hay integrantes en absoluto (ni precargados ni nuevos), requerir al menos uno
             if (formulariosDinamicos.length === 0 && integrantesReadOnly === 0) {
                 alert("Debe agregar al menos un integrante antes de enviar el formulario.");
                 return false;
             }
 
             var errores = [];
+            var hayAlMenosUnIntegranteCompleto = false;
 
-            // Solo validar el primer integrante (que tiene campos requeridos)
-            if (primerIntegrante.length > 0) {
-                var camposRequeridos = primerIntegrante.find("select[required]");
-
-                camposRequeridos.each(function() {
-                    var campo = $(this);
-                    var valor = campo.val();
-                    var nombre = campo.attr("name");
-
-                    if (!valor || valor === "") {
-                        var label = campo.closest('.form-group-dinamico').find('label').text() || nombre;
-                        // Limpiar el asterisco del label para el mensaje de error
-                        label = label.replace(' *', '');
-                        errores.push("Integrante 1 (Requerido): " + label + " es requerido");
-
-                        campo.addClass("is-invalid");
-                    } else {
-                        campo.removeClass("is-invalid");
+            // Validar solo integrantes que estén PARCIALMENTE llenos
+            formulariosDinamicos.each(function(index) {
+                var integranteDiv = $(this);
+                var numeroIntegrante = index + 1 + integrantesReadOnly;
+                
+                var genero = integranteDiv.find("select[name='gen_integVenta[]']");
+                var rangoEdad = integranteDiv.find("select[name='rango_integVenta[]']");
+                
+                var generoVal = genero.val() || "";
+                var rangoVal = rangoEdad.val() || "";
+                
+                // Verificar si el integrante tiene ALGÚN campo lleno
+                var tieneCamposLlenos = false;
+                integranteDiv.find("select, input[type='text'], input[type='number']").each(function() {
+                    if ($(this).val() && $(this).val() !== "") {
+                        tieneCamposLlenos = true;
+                        return false; // break
                     }
                 });
+                
+                // Si el integrante está completamente vacío, ignorarlo (no validar)
+                if (!tieneCamposLlenos) {
+                    return true; // continue al siguiente integrante
+                }
+                
+                // Si tiene algún campo lleno, validar que tenga género Y rango de edad
+                if (generoVal === "") {
+                    errores.push("Integrante " + numeroIntegrante + ": Identidad de Género es requerida");
+                    genero.addClass("is-invalid");
+                } else {
+                    genero.removeClass("is-invalid");
+                }
+                
+                if (rangoVal === "") {
+                    errores.push("Integrante " + numeroIntegrante + ": Rango de Edad es requerido");
+                    rangoEdad.addClass("is-invalid");
+                } else {
+                    rangoEdad.removeClass("is-invalid");
+                }
+                
+                // Si este integrante está completo (tiene género y rango), marcarlo
+                if (generoVal !== "" && rangoVal !== "") {
+                    hayAlMenosUnIntegranteCompleto = true;
+                }
+            });
+
+            // Si hay integrantes precargados, no requerir que haya nuevos completos
+            if (integrantesReadOnly === 0 && !hayAlMenosUnIntegranteCompleto && errores.length === 0) {
+                alert("Debe completar al menos un integrante antes de enviar el formulario.");
+                return false;
             }
 
             if (errores.length > 0) {
-                var mensajeError = "Por favor complete los siguientes campos obligatorios del primer integrante:\n\n" + errores.join("\n");
+                var mensajeError = "Por favor complete los siguientes campos obligatorios:\n\n" + errores.join("\n");
                 alert(mensajeError);
 
                 var primerCampoError = $(".is-invalid").first();
@@ -1626,18 +1687,54 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
             $("#integrantes-container").append(integranteDiv);
         }
 
-        // Función para limpiar integrantes precargados y rehabilitar controles
-        function limpiarIntegrantesPrecargados() {
-            $(".readonly-integrante").remove();
+            // Función para limpiar integrantes precargados y rehabilitar controles
+            function limpiarIntegrantesPrecargados() {
+                $(".readonly-integrante").remove();
+                
+                // Resetear array de integrantes precargados
+                if (typeof window.integrantesPrecargados !== 'undefined') {
+                    window.integrantesPrecargados = [];
+                }
+                
+                // Si existe el primer integrante, actualizar su header a "Requerido"
+                var primerIntegrante = $(".primer-integrante");
+                if (primerIntegrante.length > 0) {
+                    primerIntegrante.find(".integrante-header")
+                        .text("Integrante 1 (Requerido)")
+                        .css('color', '#dc3545');
+                    
+                    // Hacer los campos requeridos nuevamente
+                    primerIntegrante.find("select[name='gen_integVenta[]']").attr("required", true);
+                    primerIntegrante.find("select[name='rango_integVenta[]']").attr("required", true);
+                }
+                
+                // Recalcular el total sin los integrantes precargados
+                actualizarTotal();
+                
+                $("#cant_integVenta").prop("disabled", false);
+                $("#agregar").text("Agregar +")
+                    .removeClass("btn-secondary")
+                    .addClass("btn-primary");
+            }        // Antes de enviar el formulario, agregar marcadores de integrantes nuevos vs precargados
+        $("#form_contacto").on("submit", function(e) {
+            // Eliminar marcadores anteriores si existen
+            $("input[name='es_nuevo[]']").remove();
             
-            // Recalcular el total sin los integrantes precargados
-            actualizarTotal();
+            // Recorrer todos los integrantes y agregar un input hidden con el marcador
+            $("#integrantes-container .formulario-dinamico").each(function(index) {
+                var esNuevo = $(this).attr("data-es-nuevo") === "true" ? "true" : "false";
+                
+                // Agregar input hidden después de cada integrante
+                var marcador = $("<input>")
+                    .attr("type", "hidden")
+                    .attr("name", "es_nuevo[]")
+                    .val(esNuevo);
+                $(this).append(marcador);
+            });
             
-            $("#cant_integVenta").prop("disabled", false);
-            $("#agregar").text("Agregar +")
-                .removeClass("btn-secondary")
-                .addClass("btn-primary");
-        }
+            // Permitir que el formulario se envíe normalmente
+            return true;
+        });
     </script>
 
 </body>

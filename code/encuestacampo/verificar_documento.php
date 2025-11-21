@@ -43,12 +43,15 @@ try {
             
             // Buscar integrantes asociados
             $integrantes = [];
-            $sql_integ = "SELECT * FROM integcampo WHERE documento = " . $doc_encVenta . " ORDER BY id_integCampo ASC";
+            $sql_integ = "SELECT * FROM integcampo WHERE documento = '" . $doc_encVenta . "' ORDER BY id_integCampo ASC";
             $res_integ = mysqli_query($mysqli, $sql_integ);
             if ($res_integ) {
                 while ($integ = mysqli_fetch_assoc($res_integ)) {
                     $integrantes[] = $integ;
                 }
+            } else {
+                // Log error si falla la consulta de integrantes
+                @error_log("Error consultando integrantes: " . mysqli_error($mysqli));
             }
             
             if (!empty($integrantes)) {

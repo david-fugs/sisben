@@ -128,7 +128,7 @@ try {
     ];
 
     // Aplicar estilos a la hoja 1
-    $sheet1->getStyle('A1:X1')->applyFromArray($styleHeader);
+    $sheet1->getStyle('A1:U1')->applyFromArray($styleHeader);
 
     // Encabezados para MOVIMIENTOS
     $sheet1->setCellValue('A1', 'ID MOVIMIENTO');
@@ -146,16 +146,15 @@ try {
     $sheet1->setCellValue('M1', 'ZONA');
     $sheet1->setCellValue('N1', 'COMUNA');
     $sheet1->setCellValue('O1', 'BARRIO');
-    $sheet1->setCellValue('P1', 'QUE OTRO BARRIO');
+    $sheet1->setCellValue('P1', 'OTRO BARRIO');
     $sheet1->setCellValue('Q1', 'CANTIDAD INTEGRANTES');
     $sheet1->setCellValue('R1', 'NUMERO FICHA');
-    $sheet1->setCellValue('S1', 'SISBEN NOCTURNO');
-    $sheet1->setCellValue('T1', 'OBSERVACIONES');
-    $sheet1->setCellValue('U1', 'USUARIO REGISTRO');
-    $sheet1->setCellValue('V1', 'FECHA REGISTRO');
+    $sheet1->setCellValue('S1', 'OBSERVACIONES');
+    $sheet1->setCellValue('T1', 'USUARIO REGISTRO');
+    $sheet1->setCellValue('U1', 'FECHA REGISTRO');
 
     // Ajustar el ancho de las columnas
-    $columns = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V'];
+    $columns = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U'];
     foreach ($columns as $col) {
         $sheet1->getColumnDimension($col)->setWidth(20);
     }
@@ -178,80 +177,211 @@ try {
         $sheet1->setCellValue('M' . $row, $movimiento['zona_encCampo']);
         $sheet1->setCellValue('N' . $row, $movimiento['comuna_nombre'] ?? '');
         $sheet1->setCellValue('O' . $row, $movimiento['barrio_nombre'] ?? '');
-        $sheet1->setCellValue('P' . $row, $movimiento['que_otro_bar_encCampo']);
-        $sheet1->setCellValue('Q' . $row, $movimiento['cant_integrantes_encCampo']);
+        $sheet1->setCellValue('P' . $row, $movimiento['otro_bar_ver_encCampo'] ?? '');
+        $sheet1->setCellValue('Q' . $row, $movimiento['integra_encCampo'] ?? '');
         $sheet1->setCellValue('R' . $row, $movimiento['num_ficha_encCampo']);
-        $sheet1->setCellValue('S' . $row, $movimiento['sisben_nocturno']);
-        $sheet1->setCellValue('T' . $row, $movimiento['obs_encCampo']);
-        $sheet1->setCellValue('U' . $row, $movimiento['nombre_usuario']);
-        $sheet1->setCellValue('V' . $row, $movimiento['fecha_registro']);
+        $sheet1->setCellValue('S' . $row, $movimiento['obs_encCampo']);
+        $sheet1->setCellValue('T' . $row, $movimiento['nombre_usuario']);
+        $sheet1->setCellValue('U' . $row, $movimiento['fec_reg_encCampo'] ?? $movimiento['fecha_alta_movimiento'] ?? '');
         $row++;
     }
 
     logError("Datos de movimientos llenados en el Excel. Total filas: " . ($row - 2));
 
     // ===============================================
-    // HOJA 2: ESTADÍSTICAS DE MOVIMIENTOS
+    // HOJA 2: ENCUESTAS CAMPO
     // ===============================================
     $sheet2 = $spreadsheet->createSheet();
-    $sheet2->setTitle('ESTADISTICAS');
-    logError("Hoja 2 - ESTADISTICAS creada");
+    $sheet2->setTitle('ENCUESTAS CAMPO');
+    logError("Hoja 2 - ENCUESTAS CAMPO creada");
+    
+    // Condiciones WHERE para encuestas (usar las mismas condiciones de filtro)
+    $condiciones_encuestas = [];
+    if (!empty($fecha_inicio) && !empty($fecha_fin)) {
+        $condiciones_encuestas[] = "ec.fecha_alta_encCampo BETWEEN '$fecha_inicio_completa' AND '$fecha_fin_completa'";
+    }
+    
+    if (isset($_GET['id_usu']) && $_GET['id_usu'] != '' && $_GET['id_usu'] != 'todos') {
+        $condiciones_encuestas[] = "ec.id_usu = '$id_usu'";
+    }
+    
+    $where_encuestas = '';
+    if (count($condiciones_encuestas) > 0) {
+        $where_encuestas = 'WHERE ' . implode(' AND ', $condiciones_encuestas);
+    }
+    
+    // Consulta para encuestas campo
+    $sql_encuestas = "
+    SELECT ec.*, 
+           b.nombre_bar AS barrio_nombre, 
+           c.nombre_com AS comuna_nombre,
+           u.nombre AS nombre_usuario,
+           CASE 
+               WHEN ec.zona_encCampo = 'U' THEN 'URBANA'
+               WHEN ec.zona_encCampo = 'R' THEN 'RURAL'
+               ELSE ec.zona_encCampo
+           END as zona_texto
+    FROM encCampo ec
+    LEFT JOIN barrios b ON ec.id_bar = b.id_bar
+    LEFT JOIN comunas c ON ec.id_com = c.id_com
+    LEFT JOIN usuarios u ON ec.id_usu = u.id_usu
+    $where_encuestas
+    ORDER BY ec.fecha_alta_encCampo DESC
+    ";
+    $res_encuestas = mysqli_query($mysqli, $sql_encuestas);
+    if ($res_encuestas === false) {
+        logError("Error en la consulta de encuestas: " . mysqli_error($mysqli));
+        echo "Error en la consulta de encuestas: " . mysqli_error($mysqli);
+        exit;
+    }
+    
+    $num_rows_enc = mysqli_num_rows($res_encuestas);
+    logError("Consulta de encuestas ejecutada correctamente. Filas encontradas: " . $num_rows_enc);
     
     // Aplicar estilos a la hoja 2
-    $sheet2->getStyle('A1:B1')->applyFromArray($styleHeader);
-    $sheet2->getColumnDimension('A')->setWidth(40);
-    $sheet2->getColumnDimension('B')->setWidth(15);
+    $sheet2->getStyle('A1:T1')->applyFromArray($styleHeader);
 
-    // Consultas para estadísticas
-    $sql_stats = "
-    SELECT 
-        COUNT(*) as total_movimientos,
-        COUNT(CASE WHEN tipo_movimiento = 'inclusion' THEN 1 END) as total_inclusion,
-        COUNT(CASE WHEN tipo_movimiento = 'Inconformidad por clasificacion' THEN 1 END) as total_inconformidad,
-        COUNT(CASE WHEN tipo_movimiento = 'modificacion datos persona' THEN 1 END) as total_modificacion,
-        COUNT(CASE WHEN tipo_movimiento = 'Retiro ficha' THEN 1 END) as total_retiro_ficha,
-        COUNT(CASE WHEN tipo_movimiento = 'Retiro personas' THEN 1 END) as total_retiro_personas,
-        COUNT(CASE WHEN estado_ficha = '1' THEN 1 END) as total_activas,
-        COUNT(CASE WHEN estado_ficha = '0' THEN 1 END) as total_retiradas,
-        SUM(cant_integrantes_encCampo) as total_integrantes
-    FROM movimientos_encuesta_campo m
-    $where_movimientos
+    // Encabezados para ENCUESTAS
+    $sheet2->setCellValue('A1', 'ID ENCUESTA');
+    $sheet2->setCellValue('B1', 'FECHA PRESENTACION');
+    $sheet2->setCellValue('C1', 'FECHA REALIZACION');
+    $sheet2->setCellValue('D1', 'DOCUMENTO');
+    $sheet2->setCellValue('E1', 'NOMBRE');
+    $sheet2->setCellValue('F1', 'DIRECCION');
+    $sheet2->setCellValue('G1', 'ZONA');
+    $sheet2->setCellValue('H1', 'COMUNA');
+    $sheet2->setCellValue('I1', 'BARRIO');
+    $sheet2->setCellValue('J1', 'CORREGIMIENTO');
+    $sheet2->setCellValue('K1', 'VEREDA');
+    $sheet2->setCellValue('L1', 'OTRO BARRIO/VEREDA');
+    $sheet2->setCellValue('M1', 'ESTADO FICHA');
+    $sheet2->setCellValue('N1', 'CANTIDAD INTEGRANTES');
+    $sheet2->setCellValue('O1', 'NUMERO FICHA');
+    $sheet2->setCellValue('P1', 'PROCEDENCIA');
+    $sheet2->setCellValue('Q1', 'OBSERVACIONES');
+    $sheet2->setCellValue('R1', 'ESTADO');
+    $sheet2->setCellValue('S1', 'USUARIO REGISTRO');
+    $sheet2->setCellValue('T1', 'FECHA REGISTRO');
+
+    // Ajustar ancho de columnas
+    $columns2 = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T'];
+    foreach ($columns2 as $col) {
+        $sheet2->getColumnDimension($col)->setWidth(20);
+    }
+
+    // Llenar datos de encuestas
+    $row2 = 2;
+    while ($encuesta = mysqli_fetch_assoc($res_encuestas)) {
+        $sheet2->setCellValue('A' . $row2, $encuesta['id_encCampo']);
+        $sheet2->setCellValue('B' . $row2, $encuesta['fec_pre_encCampo']);
+        $sheet2->setCellValue('C' . $row2, $encuesta['fec_rea_encCampo']);
+        $sheet2->setCellValue('D' . $row2, $encuesta['doc_encCampo']);
+        $sheet2->setCellValue('E' . $row2, $encuesta['nom_encCampo']);
+        $sheet2->setCellValue('F' . $row2, $encuesta['dir_encCampo']);
+        $sheet2->setCellValue('G' . $row2, $encuesta['zona_texto']);
+        $sheet2->setCellValue('H' . $row2, $encuesta['comuna_nombre'] ?? '');
+        $sheet2->setCellValue('I' . $row2, $encuesta['barrio_nombre'] ?? '');
+        $sheet2->setCellValue('J' . $row2, $encuesta['id_correg'] ?? '');
+        $sheet2->setCellValue('K' . $row2, $encuesta['id_vere'] ?? '');
+        $sheet2->setCellValue('L' . $row2, $encuesta['otro_bar_ver_encCampo'] ?? '');
+        $sheet2->setCellValue('M' . $row2, $encuesta['est_fic_encCampo'] ?? '');
+        $sheet2->setCellValue('N' . $row2, $encuesta['integra_encCampo'] ?? '');
+        $sheet2->setCellValue('O' . $row2, $encuesta['num_ficha_encCampo']);
+        $sheet2->setCellValue('P' . $row2, $encuesta['proc_encCampo'] ?? '');
+        $sheet2->setCellValue('Q' . $row2, $encuesta['obs_encCampo'] ?? '');
+        $sheet2->setCellValue('R' . $row2, $encuesta['estado_encCampo'] == 1 ? 'ACTIVO' : 'INACTIVO');
+        $sheet2->setCellValue('S' . $row2, $encuesta['nombre_usuario']);
+        $sheet2->setCellValue('T' . $row2, $encuesta['fecha_alta_encCampo']);
+        $row2++;
+    }
+
+    logError("Datos de encuestas llenados en el Excel. Total filas: " . ($row2 - 2));
+    
+    // ===============================================
+    // HOJA 3: INTEGRANTES
+    // ===============================================
+    $sheet3 = $spreadsheet->createSheet();
+    $sheet3->setTitle('INTEGRANTES');
+    logError("Hoja 3 - INTEGRANTES creada");
+    
+    // Consulta para integrantes relacionados con los movimientos Y las encuestas
+    $sql_integrantes = "
+    SELECT ic.*, 
+           ec.doc_encCampo,
+           ec.nom_encCampo,
+           ec.num_ficha_encCampo,
+           ec.fecha_alta_encCampo,
+           u.nombre AS nombre_usuario,
+           CASE 
+               WHEN ic.rango_integCampo = '1' THEN '0 - 6'
+               WHEN ic.rango_integCampo = '2' THEN '7 - 12'
+               WHEN ic.rango_integCampo = '3' THEN '13 - 17'
+               WHEN ic.rango_integCampo = '4' THEN '18 - 28'
+               WHEN ic.rango_integCampo = '5' THEN '29 - 45'
+               WHEN ic.rango_integCampo = '6' THEN '46 - 64'
+               WHEN ic.rango_integCampo = '7' THEN 'Mayor o igual a 65'
+               ELSE ic.rango_integCampo
+           END as rango_texto
+    FROM integCampo ic
+    INNER JOIN encCampo ec ON ic.id_encCampo = ec.id_encCampo
+    LEFT JOIN usuarios u ON ic.id_usu = u.id_usu
+    $where_encuestas
+    ORDER BY ec.fecha_alta_encCampo DESC, ic.id_integCampo ASC
     ";
+    $res_integrantes = mysqli_query($mysqli, $sql_integrantes);
+    if ($res_integrantes === false) {
+        logError("Error en la consulta de integrantes: " . mysqli_error($mysqli));
+        echo "Error en la consulta de integrantes: " . mysqli_error($mysqli);
+        exit;
+    }
     
-    $res_stats = mysqli_query($mysqli, $sql_stats);
-    $stats = mysqli_fetch_assoc($res_stats);
+    $num_rows_integ = mysqli_num_rows($res_integrantes);
+    logError("Consulta de integrantes ejecutada correctamente. Filas encontradas: " . $num_rows_integ);
     
-    // Encabezados de estadísticas
-    $sheet2->setCellValue('A1', 'CONCEPTO');
-    $sheet2->setCellValue('B1', 'CANTIDAD');
-    
-    // Datos de estadísticas
-    $sheet2->setCellValue('A2', 'TOTAL MOVIMIENTOS');
-    $sheet2->setCellValue('B2', $stats['total_movimientos']);
-    $sheet2->setCellValue('A3', 'TOTAL INCLUSIONES');
-    $sheet2->setCellValue('B3', $stats['total_inclusion']);
-    $sheet2->setCellValue('A4', 'TOTAL INCONFORMIDADES');
-    $sheet2->setCellValue('B4', $stats['total_inconformidad']);
-    $sheet2->setCellValue('A5', 'TOTAL MODIFICACIONES');
-    $sheet2->setCellValue('B5', $stats['total_modificacion']);
-    $sheet2->setCellValue('A6', 'TOTAL RETIROS DE FICHA');
-    $sheet2->setCellValue('B6', $stats['total_retiro_ficha']);
-    $sheet2->setCellValue('A7', 'TOTAL RETIROS DE PERSONAS');
-    $sheet2->setCellValue('B7', $stats['total_retiro_personas']);
-    $sheet2->setCellValue('A8', '');
-    $sheet2->setCellValue('A9', 'FICHAS ACTIVAS');
-    $sheet2->setCellValue('B9', $stats['total_activas']);
-    $sheet2->setCellValue('A10', 'FICHAS RETIRADAS');
-    $sheet2->setCellValue('B10', $stats['total_retiradas']);
-    $sheet2->setCellValue('A11', '');
-    $sheet2->setCellValue('A12', 'TOTAL INTEGRANTES');
-    $sheet2->setCellValue('B12', $stats['total_integrantes'] ?? 0);
+    // Aplicar estilos a la hoja 3
+    $sheet3->getStyle('A1:K1')->applyFromArray($styleHeader);
 
-    logError("Estadísticas generadas correctamente");
+    // Encabezados para INTEGRANTES
+    $sheet3->setCellValue('A1', 'ID INTEGRANTE');
+    $sheet3->setCellValue('B1', 'DOCUMENTO TITULAR');
+    $sheet3->setCellValue('C1', 'NOMBRE TITULAR');
+    $sheet3->setCellValue('D1', 'NUMERO FICHA');
+    $sheet3->setCellValue('E1', 'FECHA ENCUESTA');
+    $sheet3->setCellValue('F1', 'CANTIDAD');
+    $sheet3->setCellValue('G1', 'GENERO');
+    $sheet3->setCellValue('H1', 'RANGO EDAD');
+    $sheet3->setCellValue('I1', 'ESTADO');
+    $sheet3->setCellValue('J1', 'USUARIO REGISTRO');
+    $sheet3->setCellValue('K1', 'FECHA REGISTRO');
+
+    // Ajustar ancho de columnas
+    $columns3 = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K'];
+    foreach ($columns3 as $col) {
+        $sheet3->getColumnDimension($col)->setWidth(20);
+    }
+
+    // Llenar datos de integrantes
+    $row3 = 2;
+    while ($integrante = mysqli_fetch_assoc($res_integrantes)) {
+        $sheet3->setCellValue('A' . $row3, $integrante['id_integCampo']);
+        $sheet3->setCellValue('B' . $row3, $integrante['doc_encCampo']);
+        $sheet3->setCellValue('C' . $row3, $integrante['nom_encCampo']);
+        $sheet3->setCellValue('D' . $row3, $integrante['num_ficha_encCampo']);
+        $sheet3->setCellValue('E' . $row3, $integrante['fecha_alta_encCampo']);
+        $sheet3->setCellValue('F' . $row3, $integrante['cant_integCampo']);
+        $sheet3->setCellValue('G' . $row3, $integrante['gen_integCampo']);
+        $sheet3->setCellValue('H' . $row3, $integrante['rango_texto']);
+        $sheet3->setCellValue('I' . $row3, $integrante['estado_integCampo'] == 1 ? 'ACTIVO' : 'INACTIVO');
+        $sheet3->setCellValue('J' . $row3, $integrante['nombre_usuario']);
+        $sheet3->setCellValue('K' . $row3, $integrante['fecha_alta_integCampo']);
+        $row3++;
+    }
+
+    logError("Datos de integrantes llenados en el Excel. Total filas: " . ($row3 - 2));
 
     // Generar el archivo Excel
     $writer = new Xlsx($spreadsheet);
-    $filename = 'Movimientos_Encuesta_Campo_' . date('Ymd_His') . '.xlsx';
+    $filename = 'Encuestas_Movimientos_Campo_' . date('Ymd_His') . '.xlsx';
     
     header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
     header('Content-Disposition: attachment;filename="' . $filename . '"');

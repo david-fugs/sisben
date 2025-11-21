@@ -314,6 +314,7 @@ $tipo_usu     = $_SESSION['tipo_usu'];
               <a href="code/encuestacampo/encuesta_campo.php" class="nav_link sublink"><i class="fa-solid fa-file-circle-plus me-2"></i>Nueva Encuesta</a>
               <a href="code/encuestacampo/showsurvey.php" class="nav_link sublink"><i class="fa-solid fa-list me-2"></i>Lista Encuesta campo</a>
             </ul>
+
           </li>
           <!-- start -->
           <li class="item">
