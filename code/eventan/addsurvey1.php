@@ -459,10 +459,15 @@ header("Content-Type: text/html;charset=utf-8");
                     return;
                 }
                 for (var i = 0; i < cantidadValor; i++) {
+                    // Determinar el número del integrante actual
+                    var integrantesActuales = $("#integrantes-container .formulario-dinamico").length;
+                    var numeroIntegrante = integrantesActuales + 1;
+                    var esPrimerIntegrante = (numeroIntegrante === 1);
+
                     var integranteDiv = $("<div>").addClass("formulario-dinamico");
 
                     // Agregar header del integrante
-                    var integranteHeader = $("<div>").addClass("integrante-header").text("Integrante " + (i + 1));
+                    var integranteHeader = $("<div>").addClass("integrante-header").text("Integrante " + numeroIntegrante);
                     integranteDiv.append(integranteHeader);
 
                     // Crear contenedor para los campos en grid
@@ -496,7 +501,7 @@ header("Content-Type: text/html;charset=utf-8");
                     var OrientacionSexual = $("<select>")
                         .attr("name", "orientacionSexual[]")
                         .addClass("form-control smaller-input")
-                        .attr("required", true)
+                        .attr("required", esPrimerIntegrante)
                         .append('<option value="">Orientacion Sexual</option>')
                         .append('<option value="Asexual">Asexual</option>')
                         .append('<option value="Bisexual">Bisexual</option>')
@@ -528,7 +533,7 @@ header("Content-Type: text/html;charset=utf-8");
                     var condicionDiscapacidad = $("<select>")
                         .attr("name", "condicionDiscapacidad[]")
                         .addClass("form-control smaller-input")
-                        .attr("required", true)
+                        .attr("required", esPrimerIntegrante)
                         .append('<option value="">Condicion Discapacidad</option>')
                         .append('<option value="Si">Si</option>')
                         .append('<option value="No">No</option>');
@@ -553,7 +558,7 @@ header("Content-Type: text/html;charset=utf-8");
                     var GrupoEtnico = $("<select>")
                         .attr("name", "grupoEtnico[]")
                         .addClass("form-control smaller-input")
-                        .attr("required", true)
+                        .attr("required", esPrimerIntegrante)
                         .append('<option value="">Grupo Etnico</option>')
                         .append('<option value="Indigena">Indigena</option>')
                         .append('<option value="Negro(a) / Mulato(a) / Afrocolombiano(a)">Negro(a) / Mulato(a) / Afrocolombiano(a)</option>')
@@ -566,14 +571,14 @@ header("Content-Type: text/html;charset=utf-8");
                     var victima = $("<select>")
                         .attr("name", "victima[]")
                         .addClass("form-control smaller-input")
-                        .attr("required", true)
+                        .attr("required", esPrimerIntegrante)
                         .append('<option value="">Victima</option>')
                         .append('<option value="Si">Si</option>')
                         .append('<option value="No">No</option>');
                     var mujerGestante = $("<select>")
                         .attr("name", "mujerGestante[]")
                         .addClass("form-control smaller-input")
-                        .attr("required", true)
+                        .attr("required", esPrimerIntegrante)
                         .append('<option value="">Mujer Gestante</option>')
                         .append('<option value="Si">Si</option>')
                         .append('<option value="No">No</option>');
@@ -581,7 +586,7 @@ header("Content-Type: text/html;charset=utf-8");
                     var cabezaFamilia = $("<select>")
                         .attr("name", "cabezaFamilia[]")
                         .addClass("form-control smaller-input")
-                        .attr("required", true)
+                        .attr("required", esPrimerIntegrante)
                         .append('<option value="">Cabeza de Familia</option>')
                         .append('<option value="Si">Si</option>')
                         .append('<option value="No">No</option>');
@@ -589,7 +594,7 @@ header("Content-Type: text/html;charset=utf-8");
                     var experienciaMigratoria = $("<select>")
                         .attr("name", "experienciaMigratoria[]")
                         .addClass("form-control smaller-input")
-                        .attr("required", true)
+                        .attr("required", esPrimerIntegrante)
                         .append('<option value="">Experiencia Migratoria</option>')
                         .append('<option value="Si">Si</option>')
                         .append('<option value="No">No</option>');
@@ -597,7 +602,7 @@ header("Content-Type: text/html;charset=utf-8");
                     var seguridadSalud = $("<select>")
                         .attr("name", "seguridadSalud[]")
                         .addClass("form-control smaller-input")
-                        .attr("required", true)
+                        .attr("required", esPrimerIntegrante)
                         .append('<option value="">Seguridad Salud</option>')
                         .append('<option value="Regimen Contributivo">Regimen Contributivo</option>')
                         .append('<option value="Regimen Subsidiado">Regimen Subsidiado</option>')
@@ -607,7 +612,7 @@ header("Content-Type: text/html;charset=utf-8");
                     var nivelEducativo = $("<select>")
                         .attr("name", "nivelEducativo[]")
                         .addClass("form-control smaller-input")
-                        .attr("required", true)
+                        .attr("required", esPrimerIntegrante)
                         .append('<option value="">Nivel Educativo</option>')
                         .append('<option value="Ninguno">Ninguno</option>')
                         .append('<option value="Preescolar">Preescolar</option>')
@@ -625,7 +630,7 @@ header("Content-Type: text/html;charset=utf-8");
                     var condicionOcupacion = $("<select>")
                         .attr("name", "condicionOcupacion[]")
                         .addClass("form-control smaller-input")
-                        .attr("required", true)
+                        .attr("required", esPrimerIntegrante)
                         .append('<option value="">Condicion Ocupacion</option>')
                         .append('<option value="Ama de casa">Ama de casa</option>')
                         .append('<option value="Buscando Empleo">Buscando Empleo</option>')
@@ -1752,25 +1757,50 @@ header("Content-Type: text/html;charset=utf-8");
 
         formulariosDinamicos.each(function(index) {
             var formulario = $(this);
-            var camposRequeridos = formulario.find("select[required]");
+            var esPrimerIntegrante = (index === 0);
 
-            camposRequeridos.each(function() {
-                var campo = $(this);
-                var valor = campo.val();
-                var nombre = campo.attr("name");
+            if (esPrimerIntegrante) {
+                // Para el primer integrante, validar TODOS los campos con required
+                var camposRequeridos = formulario.find("select[required]");
 
-                if (!valor || valor === "") {
-                    // Obtener el label del campo para un mensaje más amigable
-                    var label = campo.closest('.form-group-dinamico').find('label').text() || nombre;
-                    errores.push("Integrante " + integranteNumero + ": " + label + " es requerido");
+                camposRequeridos.each(function() {
+                    var campo = $(this);
+                    var valor = campo.val();
+                    var nombre = campo.attr("name");
 
-                    // Agregar clase de error visual
-                    campo.addClass("is-invalid");
+                    if (!valor || valor === "") {
+                        // Obtener el label del campo para un mensaje más amigable
+                        var label = campo.closest('.form-group-dinamico').find('label').text() || nombre;
+                        errores.push("Integrante " + integranteNumero + ": " + label + " es requerido");
+
+                        // Agregar clase de error visual
+                        campo.addClass("is-invalid");
+                    } else {
+                        // Remover clase de error si el campo está completo
+                        campo.removeClass("is-invalid");
+                    }
+                });
+            } else {
+                // Para integrantes adicionales, solo validar género y rango de edad
+                var generoSelect = formulario.find("select[name='gen_integVenta[]']");
+                var rangoEdadSelect = formulario.find("select[name='rango_integVenta[]']");
+
+                // Validar género
+                if (!generoSelect.val() || generoSelect.val() === "") {
+                    errores.push("Integrante " + integranteNumero + ": Identidad de Género es requerido");
+                    generoSelect.addClass("is-invalid");
                 } else {
-                    // Remover clase de error si el campo está completo
-                    campo.removeClass("is-invalid");
+                    generoSelect.removeClass("is-invalid");
                 }
-            });
+
+                // Validar rango de edad
+                if (!rangoEdadSelect.val() || rangoEdadSelect.val() === "") {
+                    errores.push("Integrante " + integranteNumero + ": Rango de Edad es requerido");
+                    rangoEdadSelect.addClass("is-invalid");
+                } else {
+                    rangoEdadSelect.removeClass("is-invalid");
+                }
+            }
 
             integranteNumero++;
         });
