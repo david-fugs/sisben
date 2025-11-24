@@ -298,6 +298,12 @@ header("Content-Type: text/html;charset=utf-8");
             box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
         }
 
+        /* Estilos para Select2 con error */
+        .select2-container.is-invalid .select2-selection {
+            border-color: #dc3545 !important;
+            box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25) !important;
+        }
+
         /* Estilos para campos de solo lectura */
         .readonly-integrante {
             position: relative;
@@ -448,8 +454,8 @@ header("Content-Type: text/html;charset=utf-8");
                 var inputCantidad = $("#cant_integVenta");
                 var cantidadValor = parseInt(inputCantidad.val());
 
-                if (!cantidadValor || cantidadValor <= 0) {
-                    alert("Por favor, ingresa una cantidad válida de integrantes.");
+                if (!cantidadValor || cantidadValor < 1) {
+                    alert("Por favor, ingresa una cantidad válida de integrantes (mínimo 1).");
                     return;
                 }
                 for (var i = 0; i < cantidadValor; i++) {
@@ -1283,15 +1289,15 @@ header("Content-Type: text/html;charset=utf-8");
                         <div class="row">
                             <div class="form-group col-md-4">
                                 <label for="dir_encVenta">* DIRECCIÓN:</label>
-                                <input type='text' name='dir_encVenta' id="dir_encVenta" class='form-control' />
+                                <input type='text' name='dir_encVenta' id="dir_encVenta" class='form-control' required />
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="id_barrios">* BARRIO O VEREDA:</label>
-                                <select id="id_barrios" class="form-control" name="id_bar" style="width: 100%;min-height: 55px; "></select>
+                                <select id="id_barrios" class="form-control" name="id_bar" style="width: 100%;min-height: 55px; " required></select>
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="id_comunas">* COMUNA O CORREGIMIENTO:</label>
-                                <select id="id_comunas" class="form-control" name="id_com" disabled>
+                                <select id="id_comunas" class="form-control" name="id_com" disabled required>
                                     <option value="" disabled>Seleccione comuna</option>
                                 </select>
                             </div>
@@ -1368,8 +1374,8 @@ header("Content-Type: text/html;charset=utf-8");
                                     </select>
                                 </div>
                                 <div class="form-group col-md-2">
-                                    <label for="cant_integVenta">CANTIDAD:</label>
-                                    <input type="number" id="cant_integVenta" name="cant_integVenta" class="form-control" />
+                                    <label for="cant_integVenta">* CANTIDAD:</label>
+                                    <input type="number" id="cant_integVenta" name="cant_integVenta" class="form-control" required min="1" />
                                 </div>
                                 <div class="form-group col-md-2 d-flex flex-column align-items-start">
                                     <label for=""></label>
@@ -1787,20 +1793,104 @@ header("Content-Type: text/html;charset=utf-8");
         return true;
     }
 
+    // Función para validar campos de ubicación
+    function validarUbicacion() {
+        var errores = [];
+        var dirEncVenta = $("#dir_encVenta");
+        var idBarrios = $("#id_barrios");
+        var idComunas = $("#id_comunas");
+
+        if (!dirEncVenta.val() || dirEncVenta.val().trim() === "") {
+            errores.push("La dirección es obligatoria");
+            dirEncVenta.addClass("is-invalid");
+        } else {
+            dirEncVenta.removeClass("is-invalid");
+        }
+
+        if (!idBarrios.val() || idBarrios.val() === "" || idBarrios.val() === null) {
+            errores.push("El barrio o vereda es obligatorio");
+            idBarrios.addClass("is-invalid");
+            // También agregar clase al contenedor de Select2
+            idBarrios.next('.select2-container').addClass('is-invalid');
+        } else {
+            idBarrios.removeClass("is-invalid");
+            idBarrios.next('.select2-container').removeClass('is-invalid');
+        }
+
+        if (!idComunas.val() || idComunas.val() === "") {
+            errores.push("La comuna o corregimiento es obligatoria");
+            idComunas.addClass("is-invalid");
+        } else {
+            idComunas.removeClass("is-invalid");
+        }
+
+        if (errores.length > 0) {
+            var mensajeError = "Por favor complete los siguientes campos:\n\n" + errores.join("\n");
+            alert(mensajeError);
+
+            // Scroll al primer campo con error en la sección de ubicación
+            var primerCampoError = $("#dir_encVenta.is-invalid, #id_barrios.is-invalid, #id_comunas.is-invalid").first();
+            if (primerCampoError.length > 0) {
+                $('html, body').animate({
+                    scrollTop: primerCampoError.offset().top - 100
+                }, 500);
+            }
+
+            return false;
+        }
+
+        return true;
+    }
+
+    // Función para validar cantidad mínima de integrantes
+    function validarCantidadIntegrantes() {
+        var integrantesContainer = $("#integrantes-container");
+        var formulariosDinamicos = integrantesContainer.find(".formulario-dinamico");
+
+        if (formulariosDinamicos.length === 0) {
+            alert("Debe agregar al menos un (1) integrante antes de enviar el formulario.");
+            $("#cant_integVenta").addClass("is-invalid");
+            $('html, body').animate({
+                scrollTop: $("#cant_integVenta").offset().top - 100
+            }, 500);
+            return false;
+        }
+
+        $("#cant_integVenta").removeClass("is-invalid");
+        return true;
+    }
+
     // Agregar evento de validación al formulario
     $(document).ready(function() {
         $("#form_contacto").on("submit", function(e) {
-            if (!validarIntegrantes()) {
+            var validacionUbicacion = validarUbicacion();
+            var validacionCantidad = validarCantidadIntegrantes();
+            var validacionIntegrantes = validarIntegrantes();
+
+            if (!validacionUbicacion || !validacionCantidad || !validacionIntegrantes) {
                 e.preventDefault();
                 return false;
             }
         });
 
         // Remover clase de error cuando el usuario selecciona un valor
-        $(document).on("change", "select.is-invalid", function() {
-            if ($(this).val() !== "") {
+        $(document).on("change", "select.is-invalid, input.is-invalid", function() {
+            if ($(this).val() !== "" && $(this).val() !== null) {
                 $(this).removeClass("is-invalid");
             }
+        });
+
+        // Remover clase de error cuando el usuario escribe en un input
+        $(document).on("input", "input.is-invalid", function() {
+            if ($(this).val().trim() !== "") {
+                $(this).removeClass("is-invalid");
+            }
+        });
+
+        // Remover clase de error cuando se selecciona un valor en Select2
+        $('#id_barrios').on('select2:select', function() {
+            $(this).removeClass("is-invalid");
+            $(this).next('.select2-container').removeClass('is-invalid');
         });
     });
 </script>
