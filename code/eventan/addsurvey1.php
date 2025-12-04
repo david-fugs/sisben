@@ -1334,7 +1334,7 @@ header("Content-Type: text/html;charset=utf-8");
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="tram_solic_encVenta">* TRÁMITE SOLICITADO:</label>
-                                <select class="form-control" name="tram_solic_encVenta" id="selectEF">
+                                <select class="form-control" name="tram_solic_encVenta" id="selectEF" required>
                                     <option value=""></option>
                                     <option value="ENCUESTA NUEVA">ENCUESTA NUEVA</option>
                                     <option value="ENCUESTA NUEVA POR VERIFICACION">ENCUESTA NUEVA POR VERIFICACION</option>
