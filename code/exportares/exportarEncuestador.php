@@ -576,7 +576,16 @@ if (!function_exists('limpiarTexto')) {
             $sheet3->setCellValue('Q' . $rowIndex3, $row['observacion'] ?? '');
 
             // Datos de caracterización del primer integrante
-            $sheet3->setCellValue('R' . $rowIndex3, $integ_mov['gen_integMovIndep'] ?? '');
+            // Normalizar género: M -> Masculino, F -> Femenino
+            $genero_mov = $integ_mov['gen_integMovIndep'] ?? '';
+            if ($genero_mov === 'M') {
+                $genero_mov = 'Masculino';
+            } elseif ($genero_mov === 'F') {
+                $genero_mov = 'Femenino';
+            } elseif ($genero_mov === 'O') {
+                $genero_mov = 'Otro';
+            }
+            $sheet3->setCellValue('R' . $rowIndex3, $genero_mov);
             $sheet3->setCellValue('S' . $rowIndex3, $integ_mov['rango_integMovIndep'] ?? '');
             $sheet3->setCellValue('T' . $rowIndex3, $integ_mov['victima'] ?? '');
             $sheet3->setCellValue('U' . $rowIndex3, $integ_mov['condicionDiscapacidad'] ?? '');

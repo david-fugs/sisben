@@ -450,6 +450,13 @@ header("Content-Type: text/html;charset=utf-8");
                 $("#cant_integVenta").val($("input[name='cant_integVenta[]']").length);
             }
 
+            // Precargar automáticamente 1 integrante al cargar la página
+            setTimeout(function() {
+                if ($("#integrantes-container .formulario-dinamico").length === 0) {
+                    $("#agregar").trigger('click');
+                }
+            }, 500);
+
             $("#agregar").click(function() {
                 var inputCantidad = $("#cant_integVenta");
                 var cantidadValor = parseInt(inputCantidad.val());
@@ -1151,6 +1158,15 @@ header("Content-Type: text/html;charset=utf-8");
 
                                 // Mantener la fecha actual cuando el documento no existe
                                 $("#fec_reg_encVenta").val("<?php echo date('Y-m-d'); ?>");
+                                
+                                // Limpiar integrantes y agregar 1 nuevo
+                                $("#integrantes-container").empty();
+                                $("#cant_integVenta").val("1");
+                                setTimeout(function() {
+                                    if ($("#integrantes-container .formulario-dinamico").length === 0) {
+                                        $("#agregar").trigger('click');
+                                    }
+                                }, 100);
                             } else {
                                 mensajeContainer.removeClass("d-none alert-danger alert-success").addClass("alert alert-warning")
                                     .html("⚠️ El documento no está registrado.");
@@ -1159,6 +1175,15 @@ header("Content-Type: text/html;charset=utf-8");
                                 // Mantener la fecha actual y vaciar solo los demás campos
                                 $("#fec_reg_encVenta").val("<?php echo date('Y-m-d'); ?>");
                                 $("#nom_encVenta, #tipo_documento, #ciudad_expedicion, #fecha_expedicion, #obs1_encInfo, #obs2_encInfo").val("");
+                                
+                                // Limpiar integrantes y agregar 1 nuevo
+                                $("#integrantes-container").empty();
+                                $("#cant_integVenta").val("1");
+                                setTimeout(function() {
+                                    if ($("#integrantes-container .formulario-dinamico").length === 0) {
+                                        $("#agregar").trigger('click');
+                                    }
+                                }, 100);
                             }
                         },
                         error: function(jqXHR, textStatus, errorThrown) {
@@ -1208,6 +1233,15 @@ header("Content-Type: text/html;charset=utf-8");
                     $("#btnEnviar").prop("disabled", false);
                     $("#fec_reg_encVenta").val("<?php echo date('Y-m-d'); ?>");
                     $("#nom_encVenta, #tipo_documento, #ciudad_expedicion, #fecha_expedicion, #obs1_encInfo, #obs2_encInfo").val("");
+                    
+                    // Limpiar integrantes y agregar 1 nuevo
+                    $("#integrantes-container").empty();
+                    $("#cant_integVenta").val("1");
+                    setTimeout(function() {
+                        if ($("#integrantes-container .formulario-dinamico").length === 0) {
+                            $("#agregar").trigger('click');
+                        }
+                    }, 100);
                 }
             });
         });
@@ -1253,7 +1287,7 @@ header("Content-Type: text/html;charset=utf-8");
                         <div class="row">
                             <div class="form-group col-md-3">
                                 <label for="departamento_expedicion">* DEPARTAMENTO EXPEDICION:</label>
-                                <select class="form-control" name="departamento_expedicion" id="departamento_expedicion">
+                                <select class="form-control" name="departamento_expedicion" id="departamento_expedicion" required >
                                     <option value="">Seleccione un departamento</option>
                                     <?php
                                     foreach ($departamentos as $departamento) {
@@ -1380,7 +1414,7 @@ header("Content-Type: text/html;charset=utf-8");
                                 </div>
                                 <div class="form-group col-md-2">
                                     <label for="cant_integVenta">* CANTIDAD:</label>
-                                    <input type="number" id="cant_integVenta" name="cant_integVenta" class="form-control" required min="1" />
+                                    <input type="number" id="cant_integVenta" name="cant_integVenta" class="form-control" required min="1" value="1" />
                                 </div>
                                 <div class="form-group col-md-2 d-flex flex-column align-items-start">
                                     <label for=""></label>

@@ -518,6 +518,13 @@ header("Content-Type: text/html;charset=utf-8");
 
         $(document).ready(function() {
 
+            // Precargar automáticamente 1 integrante al cargar la página
+            setTimeout(function() {
+                if ($("#integrantes-container .formulario-dinamico").length === 0) {
+                    $("#agregar").trigger('click');
+                }
+            }, 500);
+
             $("#agregar").click(function() {
                 var inputCantidad = $("#cant_integVenta");
                 var cantidadValor = parseInt(inputCantidad.val());
@@ -756,7 +763,15 @@ header("Content-Type: text/html;charset=utf-8");
 
                         // Limpiar integrantes
                         $("#integrantes-container").empty();
-                        $("#total_integrantes, #cant_integVenta").val("");
+                        $("#total_integrantes").val("");
+                        
+                        // Restablecer cantidad a 1 y agregar 1 integrante automáticamente
+                        $("#cant_integVenta").val("1");
+                        setTimeout(function() {
+                            if ($("#integrantes-container .formulario-dinamico").length === 0) {
+                                $("#agregar").trigger('click');
+                            }
+                        }, 100);
 
                         // Ocultar campo otro barrio
                         $("#otro_barrio_container").hide();
@@ -1003,12 +1018,26 @@ header("Content-Type: text/html;charset=utf-8");
                                             mensajeContainer.removeClass("d-none alert-danger alert-success").addClass("alert alert-warning")
                                                 .html("⚠️ El documento no está registrado en la base de encuestas. Puede crear un nuevo movimiento.");
                                             $("#btnEnviar").prop("disabled", false);
-                                            // Mantener formulario limpio para nueva entrada
+                                            // Limpiar integrantes y agregar 1 nuevo
+                                            $("#integrantes-container").empty();
+                                            $("#cant_integVenta").val("1");
+                                            setTimeout(function() {
+                                                if ($("#integrantes-container .formulario-dinamico").length === 0) {
+                                                    $("#agregar").trigger('click');
+                                                }
+                                            }, 100);
                                         } else {
                                             mensajeContainer.removeClass("d-none alert-danger alert-success").addClass("alert alert-warning")
                                                 .html("⚠️ El documento no está registrado. Puede crear un nuevo movimiento.");
                                             $("#btnEnviar").prop("disabled", false);
-                                            // Mantener formulario limpio para nueva entrada
+                                            // Limpiar integrantes y agregar 1 nuevo
+                                            $("#integrantes-container").empty();
+                                            $("#cant_integVenta").val("1");
+                                            setTimeout(function() {
+                                                if ($("#integrantes-container .formulario-dinamico").length === 0) {
+                                                    $("#agregar").trigger('click');
+                                                }
+                                            }, 100);
                                         }
                                     },
                                     error: function(jqXHR, textStatus, errorThrown) {
@@ -1176,7 +1205,7 @@ header("Content-Type: text/html;charset=utf-8");
                             <div class="row g-3 align-items-end">
                                 <div class="col-md-3">
                                     <label for="cant_integVenta" class="form-label">Cantidad a Agregar</label>
-                                    <input type="number" id="cant_integVenta" name="cant_integVenta" class="form-control" min="1" max="20" />
+                                    <input type="number" id="cant_integVenta" name="cant_integVenta" class="form-control" min="1" max="20" value="1" />
                                 </div>
                                 <div class="col-md-3">
                                     <button type="button" class="btn btn-primary" id="agregar">
