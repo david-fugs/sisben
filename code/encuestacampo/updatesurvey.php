@@ -87,6 +87,56 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             throw new Exception("Error al actualizar encuesta: " . mysqli_error($mysqli));
         }
 
+        // Gestión de la foto del encuestado
+        $foto_actual = mysqli_real_escape_string($mysqli, $_POST['foto_actual'] ?? '');
+        $eliminar_foto = isset($_POST['eliminar_foto_flag']) && $_POST['eliminar_foto_flag'] == '1';
+        
+        // Si se marca para eliminar la foto
+        if ($eliminar_foto && !empty($foto_actual)) {
+            $ruta_completa = '../../' . $foto_actual;
+            if (file_exists($ruta_completa)) {
+                unlink($ruta_completa);
+            }
+            // Actualizar BD para eliminar referencia
+            $sql_eliminar_foto = "UPDATE encuestacampo SET foto_encuestado = NULL WHERE id_encCampo = $id_encuesta";
+            mysqli_query($mysqli, $sql_eliminar_foto);
+        }
+        
+        // Si se sube una nueva foto
+        if (isset($_FILES['foto_encuestado']) && $_FILES['foto_encuestado']['error'] === UPLOAD_ERR_OK) {
+            $foto = $_FILES['foto_encuestado'];
+            $extension = strtolower(pathinfo($foto['name'], PATHINFO_EXTENSION));
+            $extensiones_permitidas = ['jpg', 'jpeg', 'png', 'gif'];
+            
+            if (in_array($extension, $extensiones_permitidas)) {
+                // Eliminar foto anterior si existe
+                if (!empty($foto_actual)) {
+                    $ruta_completa = '../../' . $foto_actual;
+                    if (file_exists($ruta_completa)) {
+                        unlink($ruta_completa);
+                    }
+                }
+                
+                // Crear carpeta con el número de documento
+                $carpeta_doc = '../../documentos/' . $doc_encVenta;
+                if (!file_exists($carpeta_doc)) {
+                    mkdir($carpeta_doc, 0777, true);
+                }
+                
+                // Nombre del archivo: foto_encuesta_{id_encuesta}.{extension}
+                $nombre_archivo = 'foto_encuesta_' . $id_encuesta . '.' . $extension;
+                $ruta_destino = $carpeta_doc . '/' . $nombre_archivo;
+                
+                // Mover el archivo
+                if (move_uploaded_file($foto['tmp_name'], $ruta_destino)) {
+                    // Actualizar la base de datos con la ruta de la foto
+                    $ruta_foto = 'documentos/' . $doc_encVenta . '/' . $nombre_archivo;
+                    $sql_update_foto = "UPDATE encuestacampo SET foto_encuestado = '" . mysqli_real_escape_string($mysqli, $ruta_foto) . "' WHERE id_encCampo = $id_encuesta";
+                    mysqli_query($mysqli, $sql_update_foto);
+                }
+            }
+        }
+
         // Actualizar integrantes
         if (isset($_POST['integrante_id']) && is_array($_POST['integrante_id'])) {
             $integrante_ids = $_POST['integrante_id'];

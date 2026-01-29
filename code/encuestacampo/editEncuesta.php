@@ -227,7 +227,7 @@ if (!empty($encuesta)) {
                 <p class="mb-0">Sistema SISBEN - Actualización de datos</p>
             </div>
 
-            <form action="updatesurvey.php" method="post" id="form_contacto">
+            <form action="updatesurvey.php" method="post" id="form_contacto" enctype="multipart/form-data">
                 <input type="hidden" name="id_encuesta" value="<?php echo $id_encuesta; ?>">
 
                 <!-- Sección Información Personal -->
@@ -280,10 +280,14 @@ if (!empty($encuesta)) {
                 <input type="date" class="form-control" id="fecha_expedicion" name="fecha_expedicion" 
                     value="<?php echo $fecha_expedicion_val; ?>" required>
                         </div>
-                        <div class="col-md-3 mb-3">
+                        <div class="col-md-2 mb-3">
                             <label for="fecha_nacimiento" class="form-label">Fecha de Nacimiento</label>
                 <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento" 
                     value="<?php echo $fecha_nacimiento_val; ?>" required>
+                        </div>
+                        <div class="col-md-2 mb-3">
+                            <label for="edad_calculada" class="form-label">Edad</label>
+                            <input type="text" class="form-control" id="edad_calculada" readonly style="background-color: #e9ecef; font-weight: bold;" placeholder="Calculada">
                         </div>
                     </div>
 
@@ -292,6 +296,53 @@ if (!empty($encuesta)) {
                             <label for="nom_encVenta" class="form-label">Nombre Completo *</label>
                             <input type="text" class="form-control" id="nom_encVenta" name="nom_encVenta" 
                                    value="<?php echo $encuesta['nom_encVenta']; ?>" required style="text-transform:uppercase;">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sección Fotografía del Encuestado -->
+                <div class="form-section">
+                    <h5 class="section-title">Fotografía del Encuestado</h5>
+                    <?php
+                    $ruta_foto = isset($encuesta['foto_encuestado']) && !empty($encuesta['foto_encuestado']) ? '../../' . $encuesta['foto_encuestado'] : '';
+                    $tiene_foto = !empty($ruta_foto) && file_exists($ruta_foto);
+                    ?>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="foto_encuestado" class="form-label">
+                                <i class="fas fa-camera"></i> Tomar o Subir Foto
+                            </label>
+                            <input type="file" name="foto_encuestado" id="foto_encuestado" class="form-control" accept="image/*" capture="camera">
+                            <small class="form-text text-muted">
+                                Puede usar la cámara del dispositivo o seleccionar una imagen existente
+                            </small>
+                            <?php if ($tiene_foto): ?>
+                                <input type="hidden" name="foto_actual" value="<?php echo htmlspecialchars($encuesta['foto_encuestado']); ?>">
+                            <?php endif; ?>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Vista Actual:</label>
+                            <div id="preview_foto" style="border: 2px dashed #007bff; border-radius: 8px; min-height: 200px; display: flex; align-items: center; justify-content: center; background-color: #f8f9fa; position: relative;">
+                                <?php if ($tiene_foto): ?>
+                                    <div style="text-align: center; width: 100%;">
+                                        <img src="<?php echo $ruta_foto; ?>" style="max-width: 100%; max-height: 300px; border-radius: 8px;" alt="Foto encuestado" id="foto_actual_img">
+                                        <div class="mt-2">
+                                            <a href="<?php echo $ruta_foto; ?>" download class="btn btn-sm btn-info" title="Descargar foto">
+                                                <i class="fas fa-download"></i> Descargar
+                                            </a>
+                                            <button type="button" class="btn btn-sm btn-danger" id="eliminar_foto" title="Eliminar foto">
+                                                <i class="fas fa-trash"></i> Eliminar
+                                            </button>
+                                            <input type="hidden" name="eliminar_foto_flag" id="eliminar_foto_flag" value="0">
+                                        </div>
+                                    </div>
+                                <?php else: ?>
+                                    <span style="color: #6c757d;">
+                                        <i class="fas fa-image fa-3x"></i><br>
+                                        Sin foto registrada
+                                    </span>
+                                <?php endif; ?>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -827,6 +878,60 @@ if (!empty($encuesta)) {
 
             // Actualizar total de integrantes al cargar
             actualizarTotal();
+
+            // Calcular edad automáticamente cuando cambie la fecha de nacimiento
+            function calcularEdad() {
+                var fechaNac = $("#fecha_nacimiento").val();
+                if (fechaNac) {
+                    var hoy = new Date();
+                    var nacimiento = new Date(fechaNac);
+                    var edad = hoy.getFullYear() - nacimiento.getFullYear();
+                    var mes = hoy.getMonth() - nacimiento.getMonth();
+                    
+                    // Ajustar si aún no ha cumplido años este año
+                    if (mes < 0 || (mes === 0 && hoy.getDate() < nacimiento.getDate())) {
+                        edad--;
+                    }
+                    
+                    $("#edad_calculada").val(edad + " años");
+                } else {
+                    $("#edad_calculada").val("");
+                }
+            }
+
+            // Calcular edad al cargar la página
+            calcularEdad();
+
+            $("#fecha_nacimiento").on("change", calcularEdad);
+
+            // Vista previa de la foto al seleccionar nueva
+            $("#foto_encuestado").on("change", function(e) {
+                var file = e.target.files[0];
+                if (file) {
+                    var reader = new FileReader();
+                    reader.onload = function(event) {
+                        $("#preview_foto").html(
+                            '<div style="text-align: center; width: 100%;">' +
+                            '<img src="' + event.target.result + '" style="max-width: 100%; max-height: 300px; border-radius: 8px;">' +
+                            '<div class="mt-2"><small class="text-success"><i class="fas fa-check-circle"></i> Nueva foto seleccionada (guardar para aplicar cambios)</small></div>' +
+                            '</div>'
+                        );
+                        $("#eliminar_foto_flag").val("0");
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            // Eliminar foto
+            $("#eliminar_foto").on("click", function() {
+                if (confirm("¿Está seguro de eliminar la foto actual?")) {
+                    $("#eliminar_foto_flag").val("1");
+                    $("#preview_foto").html(
+                        '<span style="color: #dc3545;"><i class="fas fa-trash fa-3x"></i><br>Foto marcada para eliminar (guardar para aplicar cambios)</span>'
+                    );
+                    $("#foto_encuestado").val("");
+                }
+            });
         });
     </script>
 </body>

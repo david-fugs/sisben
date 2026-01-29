@@ -294,22 +294,22 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                 let total = 0;
                 let totalReadOnly = 0;
                 let totalEditables = 0;
-                
+
                 // Contar integrantes precargados (solo lectura)
                 $(".readonly-integrante input[name='cant_integVenta[]']").each(function() {
                     let valor = parseInt($(this).val()) || 0;
                     totalReadOnly += valor;
                 });
-                
+
                 // Contar integrantes editables (nuevos)
                 $(".formulario-dinamico:not(.readonly-integrante) input[name='cant_integVenta[]']").each(function() {
                     let valor = parseInt($(this).val()) || 0;
                     totalEditables += valor;
                 });
-                
+
                 total = totalReadOnly + totalEditables;
                 $("#total_integrantes").val(total);
-                
+
                 // Actualizar solo el contador de formularios dinámicos (editables)
                 $("#cant_integVenta").val($(".formulario-dinamico:not(.readonly-integrante)").length);
             }
@@ -322,10 +322,10 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                     alert("Por favor, ingresa una cantidad válida de integrantes.");
                     return;
                 }
-                
+
                 // Contar integrantes existentes para la numeración
                 var integrantesExistentes = $("#integrantes-container .formulario-dinamico").length;
-                
+
                 for (var i = 0; i < cantidadValor; i++) {
                     var numeroIntegrante = integrantesExistentes + i + 1;
                     var integranteDiv = $("<div>").addClass("formulario-dinamico integrante-adicional").attr("data-es-nuevo", "true");
@@ -596,12 +596,12 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                 if (typeof esRequerido === 'undefined') {
                     esRequerido = (window.integrantesPrecargados && window.integrantesPrecargados.length > 0) ? false : true;
                 }
-                
+
                 var integranteDiv = $("<div>").addClass("formulario-dinamico primer-integrante").attr("data-es-nuevo", "true");
 
                 var headerText = esRequerido ? "Integrante 1 (Requerido)" : "Integrante 1";
                 var headerColor = esRequerido ? '#dc3545' : '#007bff';
-                
+
                 var integranteHeader = $("<div>").addClass("integrante-header").text(headerText).css({
                     'color': headerColor,
                     'font-weight': 'bold',
@@ -867,10 +867,10 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
         $(document).ready(function() {
             // Variable global para rastrear si el documento ya existe
             window.documentoYaExiste = false;
-            
+
             // Array para almacenar IDs de integrantes precargados (no deben insertarse de nuevo)
             window.integrantesPrecargados = [];
-            
+
             var buscarEncuesta = function() {
                 var documento = $("#doc_encVenta").val().toString().trim();
                 console.log('buscarEncuesta triggered for documento:', documento);
@@ -899,13 +899,15 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                     url: 'verificar_documento.php',
                     type: 'POST',
                     dataType: 'json',
-                    data: { doc_encVenta: documento },
+                    data: {
+                        doc_encVenta: documento
+                    },
                     success: function(response) {
                         if (response.status === 'existe_encuesta') {
                             var d = response.data;
                             // Marcar que el documento ya existe pero permitir nueva encuesta
                             window.documentoYaExiste = false;
-                            
+
                             mensajeContainer.removeClass('alert-info alert-warning alert-danger').addClass('alert alert-info')
                                 .html('ℹ️ Este documento ya tiene una encuesta registrada. Los datos se han precargado pero puede agregar una nueva encuesta.');
 
@@ -920,29 +922,31 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                             // Barrio/vereda (select2) - precarga correcta con nombre real
                             if (d.id_bar) {
                                 var idbar = d.id_bar;
-                                
+
                                 // Buscar el nombre real del barrio desde la base de datos
                                 $.ajax({
                                     url: '../buscar_barrios.php',
                                     type: 'GET',
-                                    data: { id: idbar },
+                                    data: {
+                                        id: idbar
+                                    },
                                     dataType: 'json',
                                     success: function(barrioData) {
                                         if (barrioData && barrioData.length > 0) {
                                             var barrio = barrioData[0];
                                             var labelBar = barrio.text;
-                                            
+
                                             // Crear la opción con el nombre real
-                                            if ($("#id_barrios").find("option[value='"+idbar+"']").length === 0) {
+                                            if ($("#id_barrios").find("option[value='" + idbar + "']").length === 0) {
                                                 var newOpt = new Option(labelBar, idbar, true, true);
                                                 $("#id_barrios").append(newOpt);
                                             } else {
                                                 $("#id_barrios").val(idbar);
                                             }
-                                            
+
                                             // Disparar el evento de cambio para cargar las comunas correspondientes
                                             $("#id_barrios").trigger('change');
-                                            
+
                                             // Configurar comuna después de que se carguen
                                             setTimeout(function() {
                                                 if (d.id_com) {
@@ -954,14 +958,14 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                                     error: function() {
                                         console.log('Error al obtener nombre del barrio, usando fallback');
                                         var labelBar = d.id_bar_nombre || 'Barrio ID: ' + idbar;
-                                        
-                                        if ($("#id_barrios").find("option[value='"+idbar+"']").length === 0) {
+
+                                        if ($("#id_barrios").find("option[value='" + idbar + "']").length === 0) {
                                             var newOpt = new Option(labelBar, idbar, true, true);
                                             $("#id_barrios").append(newOpt);
                                         } else {
                                             $("#id_barrios").val(idbar);
                                         }
-                                        
+
                                         $("#id_barrios").trigger('change');
                                         setTimeout(function() {
                                             if (d.id_com) {
@@ -971,11 +975,11 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                                     }
                                 });
                             }
-                            
+
                             // Comuna/corregimiento - fallback si no hay barrio pero sí comuna
                             if (d.id_com && !d.id_bar) {
                                 var labelCom = (d.id_com_nombre && d.id_com_nombre !== '') ? d.id_com_nombre : 'Cargado';
-                                if ($("#id_comunas").find("option[value='"+d.id_com+"']").length === 0) {
+                                if ($("#id_comunas").find("option[value='" + d.id_com + "']").length === 0) {
                                     $("#id_comunas").append(new Option(labelCom, d.id_com, true, true));
                                 } else {
                                     $("#id_comunas").val(d.id_com);
@@ -996,10 +1000,10 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                             $("#form_contacto :input").prop("disabled", false);
                             $("#fec_reg_encVenta").prop("disabled", true); // Fecha registro siempre deshabilitada
                             $("#btnEnviar").prop("disabled", false);
-                            
+
                             // Limpiar integrantes precargados anteriores
                             limpiarIntegrantesPrecargados();
-                            
+
                             // Cargar integrantes precargados si existen
                             if (response.data.integrantes && response.data.integrantes.length > 0) {
                                 console.log('📋 Cargando ' + response.data.integrantes.length + ' integrantes precargados');
@@ -1008,14 +1012,14 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                                     crearIntegranteReadOnly(integ, index + 1);
                                 });
                                 actualizarTotal();
-                                
+
                                 // Si existe el primer integrante nuevo, actualizar su header a "NO requerido"
                                 var primerIntegrante = $(".primer-integrante");
                                 if (primerIntegrante.length > 0) {
                                     primerIntegrante.find(".integrante-header")
                                         .text("Integrante 1")
                                         .css('color', '#007bff');
-                                    
+
                                     // Hacer los campos NO requeridos ya que hay precargados
                                     primerIntegrante.find("select[name='gen_integVenta[]']").attr("required", false);
                                     primerIntegrante.find("select[name='rango_integVenta[]']").attr("required", false);
@@ -1023,17 +1027,17 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                             }
                         } else if (response.status === 'existe_info') {
                             window.documentoYaExiste = false;
-                            
+
                             mensajeContainer.removeClass('alert-info alert-warning alert-danger').addClass('alert alert-success')
                                 .html('✅ Documento encontrado en Información.');
-                            
+
                             var d = response.data;
                             $("#fec_reg_encVenta").val("<?php echo date('Y-m-d'); ?>");
                             $("#nom_encVenta").val(d.nom_info || "");
                             $("#tipo_documento").val(d.tipo_documento || "");
                             $("#fecha_nacimiento").val(d.fecha_nacimiento || "");
                             $("#fecha_preregistro").val("");
-                            
+
                             // Limpiar campos que no vienen de información
                             $("#dir_encVenta").val("");
                             $("#id_barrios").val(null).trigger('change');
@@ -1048,34 +1052,34 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                             $("#tipo_proceso").val("");
                             $("#total_integrantes").val("");
                             $("#exampleFormControlTextarea1").val("");
-                            
+
                             // Limpiar integrantes precargados ya que es información nueva
                             limpiarIntegrantesPrecargados();
-                            
+
                             // Habilitar formulario y botón
                             $("#form_contacto :input").prop("disabled", false);
                             $("#fec_reg_encVenta").prop("disabled", true); // Fecha registro siempre deshabilitada
                             $("#btnEnviar").prop("disabled", false);
                         } else if (response.status === 'no_existe' || response.status === 'not_found' || response.status === 'empty') {
                             window.documentoYaExiste = false;
-                            
+
                             mensajeContainer.removeClass('alert-info alert-success alert-danger').addClass('alert alert-warning')
                                 .html('⚠️ No se encontró encuesta previa con ese documento.');
                             $("#fec_reg_encVenta").val("<?php echo date('Y-m-d'); ?>");
-                            
+
                             // Limpiar todos los campos del formulario exceptao el documento
                             $("#nom_encVenta").val("");
                             $("#tipo_documento").val("");
                             $("#fecha_nacimiento").val("");
                             $("#fecha_preregistro").val("");
                             $("#dir_encVenta").val("");
-                            
+
                             // Limpiar select2 de barrios y comunas
                             $("#id_barrios").val(null).trigger('change');
                             $("#id_comunas").val("").prop("disabled", true);
                             $("#otro_bar_ver_encVenta").val("");
                             $("#otro_barrio_container").hide();
-                            
+
                             // Limpiar campos de trámite
                             $("#zona_encVenta").val("");
                             $("#selectEF").val("");
@@ -1085,17 +1089,17 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                             $("#tipo_proceso").val("");
                             $("#total_integrantes").val("");
                             $("#exampleFormControlTextarea1").val("");
-                            
+
                             // Limpiar integrantes precargados y rehabilitar controles
                             limpiarIntegrantesPrecargados();
-                            
+
                             // Habilitar formulario y botón
                             $("#form_contacto :input").prop("disabled", false);
                             $("#fec_reg_encVenta").prop("disabled", true); // Fecha registro siempre deshabilitada
                             $("#btnEnviar").prop("disabled", false);
                         } else if (response.status === 'error') {
                             window.documentoYaExiste = false;
-                            
+
                             var errorMsg = '❌ Error en el servidor';
                             if (response.message) {
                                 errorMsg += ': ' + response.message;
@@ -1103,10 +1107,10 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                             if (response.debug) {
                                 console.error('Error debug:', response.debug);
                             }
-                            
+
                             mensajeContainer.removeClass('alert-info alert-success alert-warning').addClass('alert alert-danger')
                                 .html(errorMsg);
-                            
+
                             // Limpiar todos los campos excepto documento
                             $("#nom_encVenta").val("");
                             $("#tipo_documento").val("");
@@ -1125,20 +1129,20 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                             $("#tipo_proceso").val("");
                             $("#total_integrantes").val("");
                             $("#exampleFormControlTextarea1").val("");
-                            
+
                             // Limpiar integrantes precargados y rehabilitar controles
                             limpiarIntegrantesPrecargados();
-                            
+
                             // Habilitar formulario y botón
                             $("#form_contacto :input").prop("disabled", false);
                             $("#fec_reg_encVenta").prop("disabled", true); // Fecha registro siempre deshabilitada
                             $("#btnEnviar").prop("disabled", false);
                         } else {
                             window.documentoYaExiste = false;
-                            
+
                             mensajeContainer.removeClass('alert-info alert-success alert-warning').addClass('alert alert-danger')
                                 .html('❌ Error en la búsqueda de la encuesta.');
-                            
+
                             // Limpiar todos los campos excepto documento
                             $("#nom_encVenta").val("");
                             $("#tipo_documento").val("");
@@ -1157,10 +1161,10 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                             $("#tipo_proceso").val("");
                             $("#total_integrantes").val("");
                             $("#exampleFormControlTextarea1").val("");
-                            
+
                             // Limpiar integrantes precargados y rehabilitar controles
                             limpiarIntegrantesPrecargados();
-                            
+
                             // Habilitar formulario y botón
                             $("#form_contacto :input").prop("disabled", false);
                             $("#fec_reg_encVenta").prop("disabled", true); // Fecha registro siempre deshabilitada
@@ -1169,12 +1173,12 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                     },
                     error: function(xhr, status, error) {
                         window.documentoYaExiste = false;
-                        
+
                         console.error('Error en AJAX:', status, error);
                         console.error('Response:', xhr.responseText);
-                        
+
                         var mensajeError = '❌ Error en la consulta. Intente nuevamente.';
-                        
+
                         // Intentar parsear la respuesta para obtener más información
                         try {
                             var respuesta = JSON.parse(xhr.responseText);
@@ -1184,14 +1188,14 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                             if (respuesta.debug) {
                                 console.error('Debug info:', respuesta.debug);
                             }
-                        } catch(e) {
+                        } catch (e) {
                             // Si no se puede parsear, usar el mensaje por defecto
                             console.error('No se pudo parsear la respuesta:', e);
                         }
-                        
+
                         mensajeContainer.removeClass('alert-info alert-success alert-warning').addClass('alert alert-danger')
                             .html(mensajeError);
-                        
+
                         // Limpiar todos los campos excepto documento
                         $("#nom_encVenta").val("");
                         $("#tipo_documento").val("");
@@ -1210,10 +1214,10 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                         $("#tipo_proceso").val("");
                         $("#total_integrantes").val("");
                         $("#exampleFormControlTextarea1").val("");
-                        
+
                         // Limpiar integrantes precargados y rehabilitar controles
                         limpiarIntegrantesPrecargados();
-                        
+
                         // Habilitar formulario y botón
                         $("#form_contacto :input").prop("disabled", false);
                         $("#fec_reg_encVenta").prop("disabled", true); // Fecha registro siempre deshabilitada
@@ -1243,7 +1247,7 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
         <div class="container">
             <div class="main-container">
                 <div class="header-info">
-                    <h1><b style="color:black"><i class="fa-solid fa-building " ></i> REGISTRO ENCUESTAS DE CAMPO</b></h1>
+                    <h1><b style="color:black"><i class="fa-solid fa-building "></i> REGISTRO ENCUESTAS DE CAMPO</b></h1>
                     <p><i><b>*Datos obligatorios</b></i></p>
                 </div>
 
@@ -1287,18 +1291,24 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                                 <label for="nom_encVenta">* NOMBRES COMPLETOS:</label>
                                 <input type='text' name='nom_encVenta' id="nom_encVenta" class='form-control' required style="text-transform:uppercase;" />
                             </div>
-                            <div class="form-group col-md-3">
-                                <label for="fecha_nacimiento">FECHA DE NACIMIENTO:</label>
+                            <div class="form-group col-md-2">
+                                <label for="fecha_nacimiento">FECHA NACIMIENTO:</label>
                                 <input type='date' name='fecha_nacimiento' id="fecha_nacimiento" class='form-control' />
                             </div>
+                            <div class="form-group col-md-2">
+                                <label for="edad_calculada">EDAD:</label>
+                                <input type='text' id="edad_calculada" class='form-control' readonly style="background-color: #e9ecef; font-weight: bold;" placeholder="Calculada" />
+                            </div>
                             <div class="form-group col-md-3">
-                                <label for="fecha_preregistro">FECHA DE PREREGISTRO:</label>
+                                <label for="fecha_preregistro">FECHA PREREGISTRO:</label>
                                 <input type='date' name='fecha_preregistro' id="fecha_preregistro" class='form-control' />
                             </div>
-                            
+
                         </div>
                     </div>
                 </div>
+
+
 
                 <div class="form-section">
                     <h5 class="section-title">Información de Ubicación</h5>
@@ -1423,7 +1433,32 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                     <div class="form-row">
                         <div class="form-group col-md-12">
                             <label for="obs_encVenta">OBSERVACIONES y/o COMENTARIOS ADICIONALES:</label>
-                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="2" name="obs_encVenta" style="text-transform:uppercase;"></textarea>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="2" name="obs_encVenta" style="text-transform:uppercase;" required></textarea>
+                        </div>
+                    </div>
+                    <div class="form-section">
+                        <h5 class="section-title">Fotografía del Encuestado</h5>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label for="foto_encuestado">
+                                        <i class="fas fa-camera"></i> Tomar o Subir Foto (Opcional)
+                                    </label>
+                                    <input type="file" name="foto_encuestado" id="foto_encuestado" class="form-control" accept="image/*" capture="camera">
+                                    <small class="form-text text-muted">
+                                        Puede usar la cámara del dispositivo o seleccionar una imagen existente
+                                    </small>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>Vista Previa:</label>
+                                    <div id="preview_foto" style="border: 2px dashed #007bff; border-radius: 8px; min-height: 150px; display: flex; align-items: center; justify-content: center; background-color: #f8f9fa;">
+                                        <span style="color: #6c757d;">
+                                            <i class="fas fa-image fa-3x"></i><br>
+                                            Sin imagen seleccionada
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -1453,8 +1488,7 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
             $("#btnEnviar").prop("disabled", false);
 
             $('#id_bar').on('change', function() {
-                $('#id_bar option:selected').each(function() {
-                });
+                $('#id_bar option:selected').each(function() {});
 
                 let selectedText = $("#id_bar option:selected").text().trim();
                 if (selectedText.toUpperCase() === "OTRO") {
@@ -1503,13 +1537,13 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
             formulariosDinamicos.each(function(index) {
                 var integranteDiv = $(this);
                 var numeroIntegrante = index + 1 + integrantesReadOnly;
-                
+
                 var genero = integranteDiv.find("select[name='gen_integVenta[]']");
                 var rangoEdad = integranteDiv.find("select[name='rango_integVenta[]']");
-                
+
                 var generoVal = genero.val() || "";
                 var rangoVal = rangoEdad.val() || "";
-                
+
                 // Verificar si el integrante tiene ALGÚN campo lleno
                 var tieneCamposLlenos = false;
                 integranteDiv.find("select, input[type='text'], input[type='number']").each(function() {
@@ -1518,12 +1552,12 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                         return false; // break
                     }
                 });
-                
+
                 // Si el integrante está completamente vacío, ignorarlo (no validar)
                 if (!tieneCamposLlenos) {
                     return true; // continue al siguiente integrante
                 }
-                
+
                 // Si tiene algún campo lleno, validar que tenga género Y rango de edad
                 if (generoVal === "") {
                     errores.push("Integrante " + numeroIntegrante + ": Identidad de Género es requerida");
@@ -1531,14 +1565,14 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                 } else {
                     genero.removeClass("is-invalid");
                 }
-                
+
                 if (rangoVal === "") {
                     errores.push("Integrante " + numeroIntegrante + ": Rango de Edad es requerido");
                     rangoEdad.addClass("is-invalid");
                 } else {
                     rangoEdad.removeClass("is-invalid");
                 }
-                
+
                 // Si este integrante está completo (tiene género y rango), marcarlo
                 if (generoVal !== "" && rangoVal !== "") {
                     hayAlMenosUnIntegranteCompleto = true;
@@ -1583,7 +1617,7 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                     });
                     return false;
                 }
-                
+
                 if (!validarIntegrantes()) {
                     e.preventDefault();
                     return false;
@@ -1611,7 +1645,12 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
 
             var header = $("<div>").addClass("integrante-header")
                 .html('<i class="fas fa-user-check text-success"></i> Integrante ' + numero + ' (Precargado)')
-                .css({'color': '#28a745', 'font-weight': 'bold', 'margin-bottom': '1.5rem', 'font-size': '1.1rem'});
+                .css({
+                    'color': '#28a745',
+                    'font-weight': 'bold',
+                    'margin-bottom': '1.5rem',
+                    'font-size': '1.1rem'
+                });
 
             var fieldsContainer = $("<div>").addClass("row"); // Usar row de Bootstrap
 
@@ -1624,7 +1663,11 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
             // Función para crear campos de solo lectura más anchos
             function createReadOnlyField(label, value, colSize = "col-md-4") {
                 var group = $("<div>").addClass("form-group mb-3 " + colSize);
-                group.append($("<label>").text(label).css({'font-weight': '600', 'color': '#495057', 'margin-bottom': '0.5rem'}));
+                group.append($("<label>").text(label).css({
+                    'font-weight': '600',
+                    'color': '#495057',
+                    'margin-bottom': '0.5rem'
+                }));
                 var input = $("<input>")
                     .addClass("form-control form-control-lg")
                     .attr("readonly", true)
@@ -1645,7 +1688,7 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
             fila1.append(createReadOnlyField("Identidad de Género", integ.gen_integVenta, "col-md-4"));
             fila1.append(createReadOnlyField("Rango de Edad", integ.rango_integVenta, "col-md-4"));
             fila1.append(createReadOnlyField("Orientación Sexual", integ.orientacionSexual, "col-md-4"));
-            
+
             var fila2 = $("<div>").addClass("row");
             fila2.append(createReadOnlyField("Condición Discapacidad", integ.condicionDiscapacidad, "col-md-4"));
             if (integ.condicionDiscapacidad === 'Si') {
@@ -1654,17 +1697,17 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
             } else {
                 fila2.append(createReadOnlyField("Grupo Étnico", integ.grupoEtnico, "col-md-8"));
             }
-            
+
             var fila3 = $("<div>").addClass("row");
             fila3.append(createReadOnlyField("¿Es víctima?", integ.victima, "col-md-3"));
             fila3.append(createReadOnlyField("¿Mujer gestante?", integ.mujerGestante, "col-md-3"));
             fila3.append(createReadOnlyField("¿Cabeza de familia?", integ.cabezaFamilia, "col-md-3"));
             fila3.append(createReadOnlyField("Experiencia migratoria", integ.experienciaMigratoria, "col-md-3"));
-            
+
             var fila4 = $("<div>").addClass("row");
             fila4.append(createReadOnlyField("Seguridad en salud", integ.seguridadSalud, "col-md-6"));
             fila4.append(createReadOnlyField("Nivel educativo", integ.nivelEducativo, "col-md-6"));
-            
+
             var fila5 = $("<div>").addClass("row");
             fila5.append(createReadOnlyField("Condición de ocupación", integ.condicionOcupacion, "col-md-12"));
 
@@ -1687,43 +1730,43 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
             $("#integrantes-container").append(integranteDiv);
         }
 
-            // Función para limpiar integrantes precargados y rehabilitar controles
-            function limpiarIntegrantesPrecargados() {
-                $(".readonly-integrante").remove();
-                
-                // Resetear array de integrantes precargados
-                if (typeof window.integrantesPrecargados !== 'undefined') {
-                    window.integrantesPrecargados = [];
-                }
-                
-                // Si existe el primer integrante, actualizar su header a "Requerido"
-                var primerIntegrante = $(".primer-integrante");
-                if (primerIntegrante.length > 0) {
-                    primerIntegrante.find(".integrante-header")
-                        .text("Integrante 1 (Requerido)")
-                        .css('color', '#dc3545');
-                    
-                    // Hacer los campos requeridos nuevamente
-                    primerIntegrante.find("select[name='gen_integVenta[]']").attr("required", true);
-                    primerIntegrante.find("select[name='rango_integVenta[]']").attr("required", true);
-                }
-                
-                // Recalcular el total sin los integrantes precargados
-                actualizarTotal();
-                
-                $("#cant_integVenta").prop("disabled", false);
-                $("#agregar").text("Agregar +")
-                    .removeClass("btn-secondary")
-                    .addClass("btn-primary");
-            }        // Antes de enviar el formulario, agregar marcadores de integrantes nuevos vs precargados
+        // Función para limpiar integrantes precargados y rehabilitar controles
+        function limpiarIntegrantesPrecargados() {
+            $(".readonly-integrante").remove();
+
+            // Resetear array de integrantes precargados
+            if (typeof window.integrantesPrecargados !== 'undefined') {
+                window.integrantesPrecargados = [];
+            }
+
+            // Si existe el primer integrante, actualizar su header a "Requerido"
+            var primerIntegrante = $(".primer-integrante");
+            if (primerIntegrante.length > 0) {
+                primerIntegrante.find(".integrante-header")
+                    .text("Integrante 1 (Requerido)")
+                    .css('color', '#dc3545');
+
+                // Hacer los campos requeridos nuevamente
+                primerIntegrante.find("select[name='gen_integVenta[]']").attr("required", true);
+                primerIntegrante.find("select[name='rango_integVenta[]']").attr("required", true);
+            }
+
+            // Recalcular el total sin los integrantes precargados
+            actualizarTotal();
+
+            $("#cant_integVenta").prop("disabled", false);
+            $("#agregar").text("Agregar +")
+                .removeClass("btn-secondary")
+                .addClass("btn-primary");
+        } // Antes de enviar el formulario, agregar marcadores de integrantes nuevos vs precargados
         $("#form_contacto").on("submit", function(e) {
             // Eliminar marcadores anteriores si existen
             $("input[name='es_nuevo[]']").remove();
-            
+
             // Recorrer todos los integrantes y agregar un input hidden con el marcador
             $("#integrantes-container .formulario-dinamico").each(function(index) {
                 var esNuevo = $(this).attr("data-es-nuevo") === "true" ? "true" : "false";
-                
+
                 // Agregar input hidden después de cada integrante
                 var marcador = $("<input>")
                     .attr("type", "hidden")
@@ -1731,9 +1774,47 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                     .val(esNuevo);
                 $(this).append(marcador);
             });
-            
+
             // Permitir que el formulario se envíe normalmente
             return true;
+        });
+
+        // Calcular edad automáticamente cuando cambie la fecha de nacimiento
+        $("#fecha_nacimiento").on("change", function() {
+            var fechaNac = $(this).val();
+            if (fechaNac) {
+                var hoy = new Date();
+                var nacimiento = new Date(fechaNac);
+                var edad = hoy.getFullYear() - nacimiento.getFullYear();
+                var mes = hoy.getMonth() - nacimiento.getMonth();
+
+                // Ajustar si aún no ha cumplido años este año
+                if (mes < 0 || (mes === 0 && hoy.getDate() < nacimiento.getDate())) {
+                    edad--;
+                }
+
+                $("#edad_calculada").val(edad + " años");
+            } else {
+                $("#edad_calculada").val("");
+            }
+        });
+
+        // Vista previa de la foto
+        $("#foto_encuestado").on("change", function(e) {
+            var file = e.target.files[0];
+            if (file) {
+                var reader = new FileReader();
+                reader.onload = function(event) {
+                    $("#preview_foto").html(
+                        '<img src="' + event.target.result + '" style="max-width: 100%; max-height: 300px; border-radius: 8px;">'
+                    );
+                };
+                reader.readAsDataURL(file);
+            } else {
+                $("#preview_foto").html(
+                    '<span style="color: #6c757d;"><i class="fas fa-image fa-3x"></i><br>Sin imagen seleccionada</span>'
+                );
+            }
         });
     </script>
 

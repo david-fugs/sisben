@@ -212,3 +212,43 @@
     [obs_encVenta] => 
 )
 
+2026-01-29 21:56:34 POST: Array
+(
+    [doc_encVenta] => 48949
+    [tipo_documento] => cedula
+    [nom_encVenta] => test provee
+    [fecha_nacimiento] => 1996-12-17
+    [fecha_preregistro] => 2026-01-29
+    [dir_encVenta] => asdasdtestete
+    [id_bar] => 662
+    [id_com] => 4
+    [otro_bar_ver_encVenta] => 
+    [zona_encVenta] => URBANA
+    [tram_solic_encVenta] => ENCUESTA NUEVA
+    [num_ficha_encVenta] => 123132
+    [num_visita] => 1
+    [estado_ficha] => Visita fallida
+    [integra_encVenta] => 1
+    [cant_integVenta] => Array
+        (
+            [0] => 1
+        )
+
+    [gen_integVenta] => Array
+        (
+            [0] => F
+        )
+
+    [rango_integVenta] => Array
+        (
+            [0] => 29 - 45
+        )
+
+    [es_nuevo] => Array
+        (
+            [0] => true
+        )
+
+    [obs_encVenta] => test
+)
+

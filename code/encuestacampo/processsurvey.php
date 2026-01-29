@@ -77,6 +77,33 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         $id_encuesta = mysqli_insert_id($mysqli);
 
+        // Procesar foto si fue enviada
+        if (isset($_FILES['foto_encuestado']) && $_FILES['foto_encuestado']['error'] === UPLOAD_ERR_OK) {
+            $foto = $_FILES['foto_encuestado'];
+            $extension = strtolower(pathinfo($foto['name'], PATHINFO_EXTENSION));
+            $extensiones_permitidas = ['jpg', 'jpeg', 'png', 'gif'];
+            
+            if (in_array($extension, $extensiones_permitidas)) {
+                // Crear carpeta con el número de documento
+                $carpeta_doc = '../../documentos/' . $doc_encVenta;
+                if (!file_exists($carpeta_doc)) {
+                    mkdir($carpeta_doc, 0777, true);
+                }
+                
+                // Nombre del archivo: foto_encuesta_{id_encuesta}.{extension}
+                $nombre_archivo = 'foto_encuesta_' . $id_encuesta . '.' . $extension;
+                $ruta_destino = $carpeta_doc . '/' . $nombre_archivo;
+                
+                // Mover el archivo
+                if (move_uploaded_file($foto['tmp_name'], $ruta_destino)) {
+                    // Actualizar la base de datos con la ruta de la foto
+                    $ruta_foto = 'documentos/' . $doc_encVenta . '/' . $nombre_archivo;
+                    $sql_update_foto = "UPDATE encuestacampo SET foto_encuestado = '" . mysqli_real_escape_string($mysqli, $ruta_foto) . "' WHERE id_encCampo = " . intval($id_encuesta);
+                    mysqli_query($mysqli, $sql_update_foto);
+                }
+            }
+        }
+
         // Insertar integrantes (consultas planas)
         // Solo insertar integrantes NUEVOS (marcados como data-es-nuevo="true" en el frontend)
         // Los integrantes precargados NO deben insertarse de nuevo
