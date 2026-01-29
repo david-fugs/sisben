@@ -488,21 +488,21 @@ header("Content-Type: text/html;charset=utf-8");
 								$result_users = mysqli_query($mysqli, $sql_users);
 								
 								// Determinar qué opciones mostrar según el tipo de usuario
-								$mostrar_todos = ($tipo_usu != 3); // Solo mostrar "Todos" si NO es tipo_usu 3
-								$solo_usuario_actual = ($tipo_usu == 3); // Si es tipo_usu 3, solo mostrar el usuario actual
-								
-								if ($mostrar_todos) {
-									echo '<option value="todos">Todos los usuarios</option>';
+							$mostrar_todos = ($tipo_usu != 2 && $tipo_usu != 3); // Solo mostrar "Todos" si NO es tipo_usu 2 ni 3
+							$solo_usuario_actual = ($tipo_usu == 2 || $tipo_usu == 3); // Si es tipo_usu 2 o 3, solo mostrar el usuario actual
+							
+							if ($mostrar_todos) {
+								echo '<option value="todos">Todos los usuarios</option>';
+							}
+							
+							while ($user = mysqli_fetch_assoc($result_users)) {
+								if ($solo_usuario_actual && $user['id_usu'] != $id_usu) {
+									continue; // Skip otros usuarios si es tipo_usu 2 o 3
 								}
-								
-								while ($user = mysqli_fetch_assoc($result_users)) {
-									if ($solo_usuario_actual && $user['id_usu'] != $id_usu) {
-										continue; // Skip otros usuarios si es tipo_usu 3
-									}
-									$selected = ($user['id_usu'] == $id_usu) ? 'selected' : '';
-									echo '<option value="' . $user['id_usu'] . '" ' . $selected . '>' . $user['nombre'] . '</option>';
-								}
-								?>
+								$selected = ($user['id_usu'] == $id_usu) ? 'selected' : '';
+								echo '<option value="' . $user['id_usu'] . '" ' . $selected . '>' . $user['nombre'] . '</option>';
+							}
+							?>
 							</select>
 						</div>
 					</div>
@@ -569,7 +569,7 @@ header("Content-Type: text/html;charset=utf-8");
 								
 								while ($user = mysqli_fetch_assoc($result_users_int)) {
 									if ($solo_usuario_actual && $user['id_usu'] != $id_usu) {
-										continue;
+									continue; // Skip otros usuarios si es tipo_usu 2 o 3
 									}
 									$selected = ($user['id_usu'] == $id_usu) ? 'selected' : '';
 									echo '<option value="' . $user['id_usu'] . '" ' . $selected . '>' . $user['nombre'] . '</option>';

@@ -128,56 +128,56 @@ try {
     $sheet1->setCellValue('F1', 'CIUDAD EXPEDICION');
     $sheet1->setCellValue('G1', 'NOMBRE');
     $sheet1->setCellValue('H1', 'FECHA NACIMIENTO');
-    $sheet1->setCellValue('I1', 'DIRECCION');
-    $sheet1->setCellValue('J1', 'ZONA');
-    $sheet1->setCellValue('K1', 'COMUNA');
-    $sheet1->setCellValue('L1', 'BARRIO');
-    $sheet1->setCellValue('M1', 'QUE OTRO BARRIO');
-    $sheet1->setCellValue('N1', 'TRAMITE SOLICITADO');
-    $sheet1->setCellValue('O1', 'CANTIDAD INTEGRANTES');
-    $sheet1->setCellValue('P1', 'NUMERO FICHA');
-    $sheet1->setCellValue('Q1', 'SISBEN NOCTURNO');
-    $sheet1->setCellValue('R1', 'OBSERVACIONES');
+    $sheet1->setCellValue('I1', 'EDAD');
+    $sheet1->setCellValue('J1', 'DIRECCION');
+    $sheet1->setCellValue('K1', 'ZONA');
+    $sheet1->setCellValue('L1', 'COMUNA');
+    $sheet1->setCellValue('M1', 'BARRIO');
+    $sheet1->setCellValue('N1', 'QUE OTRO BARRIO');
+    $sheet1->setCellValue('O1', 'TRAMITE SOLICITADO');
+    $sheet1->setCellValue('P1', 'CANTIDAD INTEGRANTES');
+    $sheet1->setCellValue('Q1', 'NUMERO FICHA');
+    $sheet1->setCellValue('R1', 'SISBEN NOCTURNO');
+    $sheet1->setCellValue('S1', 'OBSERVACIONES');
 
     // Siempre agregar encabezados de caracterización para mantener consistencia
-    $sheet1->setCellValue('S1', 'GÉNERO');
-    $sheet1->setCellValue('T1', 'RANGO EDAD');
-    $sheet1->setCellValue('U1', 'VICTIMA');
-    $sheet1->setCellValue('V1', 'CONDICION DISCAPACIDAD');
-    $sheet1->setCellValue('W1', 'TIPO DISCAPACIDAD');
-    $sheet1->setCellValue('X1', 'MUJER GESTANTE');
-    $sheet1->setCellValue('Y1', 'CABEZA FAMILIA');
-    $sheet1->setCellValue('Z1', 'ORIENTACION SEXUAL');
-    $sheet1->setCellValue('AA1', 'EXPERIENCIA MIGRATORIA');
-    $sheet1->setCellValue('AB1', 'GRUPO ETNICO');
-    $sheet1->setCellValue('AC1', 'SEGURIDAD SALUD');
-    $sheet1->setCellValue('AD1', 'NIVEL EDUCATIVO');
-    $sheet1->setCellValue('AE1', 'CONDICION OCUPACION');
-    $sheet1->setCellValue('AF1', 'ASESOR');
-    $sheet1->setCellValue('AG1', 'EDAD');
+    $sheet1->setCellValue('T1', 'GÉNERO');
+    $sheet1->setCellValue('U1', 'RANGO EDAD');
+    $sheet1->setCellValue('V1', 'VICTIMA');
+    $sheet1->setCellValue('W1', 'CONDICION DISCAPACIDAD');
+    $sheet1->setCellValue('X1', 'TIPO DISCAPACIDAD');
+    $sheet1->setCellValue('Y1', 'MUJER GESTANTE');
+    $sheet1->setCellValue('Z1', 'CABEZA FAMILIA');
+    $sheet1->setCellValue('AA1', 'ORIENTACION SEXUAL');
+    $sheet1->setCellValue('AB1', 'EXPERIENCIA MIGRATORIA');
+    $sheet1->setCellValue('AC1', 'GRUPO ETNICO');
+    $sheet1->setCellValue('AD1', 'SEGURIDAD SALUD');
+    $sheet1->setCellValue('AE1', 'NIVEL EDUCATIVO');
+    $sheet1->setCellValue('AF1', 'CONDICION OCUPACION');
     
     // NUEVOS CAMPOS ESPECÍFICOS DE ENCUESTA DE CAMPO
-    $sheet1->setCellValue('AH1', 'NUMERO DE VISITA');
-    $sheet1->setCellValue('AI1', 'ESTADO DE LA FICHA');
-    $sheet1->setCellValue('AJ1', 'FECHA PREREGISTRO');
+    $sheet1->setCellValue('AG1', 'NUMERO DE VISITA');
+    $sheet1->setCellValue('AH1', 'ESTADO DE LA FICHA');
+    $sheet1->setCellValue('AI1', 'FECHA PREREGISTRO');
+    $sheet1->setCellValue('AJ1', 'ENCUESTADOR');
 
 
     // Para cada encuesta intentaremos obtener el primer integrante (si existe)
 
     // Ajustar ancho de columnas para ENCUESTAS DE CAMPO
     foreach ([
-        'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R',
-        'S','T','U','V','W','X','Y','Z','AA','AB','AC','AD','AE','AF','AG','AH','AI','AJ'
+        'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S',
+        'T','U','V','W','X','Y','Z','AA','AB','AC','AD','AE','AF','AG','AH','AI','AJ'
     ] as $col) {
         $sheet1->getColumnDimension($col)->setWidth(20);
     }
     // Ajustar ancho específico para columnas de caracterización
-    foreach(['S','T','U','V','W','X','Y','Z','AA','AB','AC','AD'] as $col) {
+    foreach(['T','U','V','W','X','Y','Z','AA','AB','AC','AD'] as $col) {
         $sheet1->getColumnDimension($col)->setWidth(30);
     }
-    // Ajustar ancho específico para ASESOR y nuevos campos
-    $sheet1->getColumnDimension('AF')->setWidth(25);
-    $sheet1->getColumnDimension('AH')->setWidth(18);
+    // Ajustar ancho específico para ENCUESTADOR y nuevos campos
+    $sheet1->getColumnDimension('AG')->setWidth(18);
+    $sheet1->getColumnDimension('AH')->setWidth(25);
     $sheet1->getColumnDimension('AI')->setWidth(25);
     $sheet1->getColumnDimension('AJ')->setWidth(25);
     $sheet1->getDefaultRowDimension()->setRowHeight(25);
@@ -212,16 +212,31 @@ try {
         $sheet1->setCellValue('F' . $rowIndex1, $row['ciudad_nombre']);
         $sheet1->setCellValue('G' . $rowIndex1, $row['nom_encVenta']);
         $sheet1->setCellValue('H' . $rowIndex1, $row['fecha_nacimiento']);
-        $sheet1->setCellValue('I' . $rowIndex1, $row['dir_encVenta']);
-        $sheet1->setCellValue('J' . $rowIndex1, $row['zona_encVenta']);
-        $sheet1->setCellValue('K' . $rowIndex1, $row['comuna_nombre']);
-        $sheet1->setCellValue('L' . $rowIndex1, $row['barrio_nombre']);
-        $sheet1->setCellValue('M' . $rowIndex1, $row['otro_bar_ver_encVenta']);
-        $sheet1->setCellValue('N' . $rowIndex1, $row['tram_solic_encVenta']);
-        $sheet1->setCellValue('O' . $rowIndex1, $row['integra_encVenta']);
-        $sheet1->setCellValue('P' . $rowIndex1, $row['num_ficha_encVenta']);
-        $sheet1->setCellValue('Q' . $rowIndex1, $row['sisben_nocturno']);
-        $sheet1->setCellValue('R' . $rowIndex1, $row['obs_encVenta']);
+        // Calcular edad a partir de fecha_nacimiento respecto a fecha_alta_encVenta
+        $edad = '';
+        $fechaNac = !empty($row['fecha_nacimiento']) ? $row['fecha_nacimiento'] : null;
+        $fechaRef = !empty($row['fecha_alta_encVenta']) ? $row['fecha_alta_encVenta'] : date('Y-m-d');
+        if ($fechaNac) {
+            try {
+                $dn = new DateTime(substr($fechaNac,0,10));
+                $dr = new DateTime(substr($fechaRef,0,10));
+                $diff = $dn->diff($dr);
+                $edad = $diff->y;
+            } catch (Exception $e) {
+                $edad = '';
+            }
+        }
+        $sheet1->setCellValue('I' . $rowIndex1, $edad);
+        $sheet1->setCellValue('J' . $rowIndex1, $row['dir_encVenta']);
+        $sheet1->setCellValue('K' . $rowIndex1, $row['zona_encVenta']);
+        $sheet1->setCellValue('L' . $rowIndex1, $row['comuna_nombre']);
+        $sheet1->setCellValue('M' . $rowIndex1, $row['barrio_nombre']);
+        $sheet1->setCellValue('N' . $rowIndex1, $row['otro_bar_ver_encVenta']);
+        $sheet1->setCellValue('O' . $rowIndex1, $row['tram_solic_encVenta']);
+        $sheet1->setCellValue('P' . $rowIndex1, $row['integra_encVenta']);
+        $sheet1->setCellValue('Q' . $rowIndex1, $row['num_ficha_encVenta']);
+        $sheet1->setCellValue('R' . $rowIndex1, $row['sisben_nocturno']);
+        $sheet1->setCellValue('S' . $rowIndex1, $row['obs_encVenta']);
         
         // Buscar el primer integrante asociado a esta encuesta (si existe)
         $integ = null;
@@ -235,47 +250,31 @@ try {
             // Limpiar tipo discapacidad si existe
             $tipoDiscapacidad = isset($integ['tipoDiscapacidad']) ? limpiarTexto($integ['tipoDiscapacidad']) : '';
             
-            $sheet1->setCellValue('S' . $rowIndex1, $integ['gen_integVenta']);
-            $sheet1->setCellValue('T' . $rowIndex1, $integ['rango_integVenta']);
-            $sheet1->setCellValue('U' . $rowIndex1, $integ['victima']);
-            $sheet1->setCellValue('V' . $rowIndex1, $integ['condicionDiscapacidad']);
-            $sheet1->setCellValue('W' . $rowIndex1, $tipoDiscapacidad);
-            $sheet1->setCellValue('X' . $rowIndex1, $integ['mujerGestante']);
-            $sheet1->setCellValue('Y' . $rowIndex1, $integ['cabezaFamilia']);
-            $sheet1->setCellValue('Z' . $rowIndex1, $integ['orientacionSexual']);
-            $sheet1->setCellValue('AA' . $rowIndex1, $integ['experienciaMigratoria']);
-            $sheet1->setCellValue('AB' . $rowIndex1, $integ['grupoEtnico']);
-            $sheet1->setCellValue('AC' . $rowIndex1, $integ['seguridadSalud']);
-            $sheet1->setCellValue('AD' . $rowIndex1, $integ['nivelEducativo']);
-            $sheet1->setCellValue('AE' . $rowIndex1, $integ['condicionOcupacion']);
-            $sheet1->setCellValue('AF' . $rowIndex1, $row['nombre_usuario']);
-            // Calcular edad a partir de fecha_nacimiento (campo en encuestacampo) respecto a fecha_alta_encVenta si existe
-            $edad = '';
-            $fechaNac = !empty($row['fecha_nacimiento']) ? $row['fecha_nacimiento'] : null;
-            $fechaRef = !empty($row['fecha_alta_encVenta']) ? $row['fecha_alta_encVenta'] : date('Y-m-d');
-            if ($fechaNac) {
-                try {
-                    $dn = new DateTime(substr($fechaNac,0,10));
-                    $dr = new DateTime(substr($fechaRef,0,10));
-                    $diff = $dn->diff($dr);
-                    $edad = $diff->y;
-                } catch (Exception $e) {
-                    $edad = '';
-                }
-            }
-            $sheet1->setCellValue('AG' . $rowIndex1, $edad);
+            $sheet1->setCellValue('T' . $rowIndex1, $integ['gen_integVenta']);
+            $sheet1->setCellValue('U' . $rowIndex1, $integ['rango_integVenta']);
+            $sheet1->setCellValue('V' . $rowIndex1, $integ['victima']);
+            $sheet1->setCellValue('W' . $rowIndex1, $integ['condicionDiscapacidad']);
+            $sheet1->setCellValue('X' . $rowIndex1, $tipoDiscapacidad);
+            $sheet1->setCellValue('Y' . $rowIndex1, $integ['mujerGestante']);
+            $sheet1->setCellValue('Z' . $rowIndex1, $integ['cabezaFamilia']);
+            $sheet1->setCellValue('AA' . $rowIndex1, $integ['orientacionSexual']);
+            $sheet1->setCellValue('AB' . $rowIndex1, $integ['experienciaMigratoria']);
+            $sheet1->setCellValue('AC' . $rowIndex1, $integ['grupoEtnico']);
+            $sheet1->setCellValue('AD' . $rowIndex1, $integ['seguridadSalud']);
+            $sheet1->setCellValue('AE' . $rowIndex1, $integ['nivelEducativo']);
+            $sheet1->setCellValue('AF' . $rowIndex1, $integ['condicionOcupacion']);
         } else {
             // Dejar campos vacíos si no hay integrantes
-            for ($col = 19; $col <= 33; $col++) { // Columnas S a AG
+            for ($col = 20; $col <= 32; $col++) { // Columnas T a AF
                 $sheet1->setCellValue(Coordinate::stringFromColumnIndex($col) . $rowIndex1, '');
             }
-            $sheet1->setCellValue('AF' . $rowIndex1, $row['nombre_usuario']); // Siempre mostrar asesor
         }
         
         // NUEVOS CAMPOS ESPECÍFICOS DE ENCUESTA DE CAMPO
-        $sheet1->setCellValue('AH' . $rowIndex1, $row['num_visita']);
-        $sheet1->setCellValue('AI' . $rowIndex1, $row['estado_ficha']);
-        $sheet1->setCellValue('AJ' . $rowIndex1, $row['fecha_preregistro']);
+        $sheet1->setCellValue('AG' . $rowIndex1, $row['num_visita']);
+        $sheet1->setCellValue('AH' . $rowIndex1, $row['estado_ficha']);
+        $sheet1->setCellValue('AI' . $rowIndex1, $row['fecha_preregistro']);
+        $sheet1->setCellValue('AJ' . $rowIndex1, $row['nombre_usuario']); // ENCUESTADOR al final
 
         $rowIndex1++;
     }

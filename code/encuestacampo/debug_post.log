@@ -164,3 +164,51 @@
     [obs_encVenta] => 
 )
 
+2026-01-29 15:43:24 POST: Array
+(
+    [doc_encVenta] => 9999
+    [tipo_documento] => cedula
+    [nom_encVenta] => test
+    [fecha_nacimiento] => 1996-12-17
+    [fecha_preregistro] => 2025-01-29
+    [dir_encVenta] => callee
+    [id_bar] => 662
+    [id_com] => 4
+    [otro_bar_ver_encVenta] => 
+    [zona_encVenta] => URBANA
+    [tram_solic_encVenta] => CAMBIO DIRECCION
+    [num_ficha_encVenta] => 12313123
+    [num_visita] => 1
+    [estado_ficha] => Visita fallida
+    [integra_encVenta] => 3
+    [cant_integVenta] => Array
+        (
+            [0] => 1
+            [1] => 1
+            [2] => 1
+        )
+
+    [gen_integVenta] => Array
+        (
+            [0] => M
+            [1] => F
+            [2] => M
+        )
+
+    [rango_integVenta] => Array
+        (
+            [0] => 29 - 45
+            [1] => 0 - 6
+            [2] => 13 - 17
+        )
+
+    [es_nuevo] => Array
+        (
+            [0] => true
+            [1] => true
+            [2] => true
+        )
+
+    [obs_encVenta] => 
+)
+

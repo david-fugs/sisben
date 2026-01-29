@@ -461,7 +461,7 @@ if (!empty($encuesta)) {
                             <div class="row">
                                 <div class="col-md-3 form-group-dinamico">
                                     <label>Identidad de Género</label>
-                                    <select name="gen_integVenta[]" class="form-control smaller-input" required>
+                                    <select name="gen_integVenta[]" class="form-control smaller-input" >
                                         <option value="">Identidad Género</option>
                                         <option value="F" <?php echo ($integrante['gen_integVenta'] == 'F') ? 'selected' : ''; ?>>F</option>
                                         <option value="M" <?php echo ($integrante['gen_integVenta'] == 'M') ? 'selected' : ''; ?>>M</option>
@@ -471,7 +471,7 @@ if (!empty($encuesta)) {
                                 
                                 <div class="col-md-3 form-group-dinamico">
                                     <label>Orientación Sexual</label>
-                                    <select name="orientacionSexual[]" class="form-control smaller-input" required>
+                                    <select name="orientacionSexual[]" class="form-control smaller-input" >
                                         <option value="">Orientación Sexual</option>
                                         <option value="Asexual" <?php echo ($integrante['orientacionSexual'] == 'Asexual') ? 'selected' : ''; ?>>Asexual</option>
                                         <option value="Bisexual" <?php echo ($integrante['orientacionSexual'] == 'Bisexual') ? 'selected' : ''; ?>>Bisexual</option>
@@ -483,7 +483,7 @@ if (!empty($encuesta)) {
                                 
                                 <div class="col-md-3 form-group-dinamico">
                                     <label>Rango de Edad</label>
-                                    <select name="rango_integVenta[]" class="form-control smaller-input" required>
+                                    <select name="rango_integVenta[]" class="form-control smaller-input" >
                                         <option value="">Rango Edad</option>
                                         <option value="0 - 6" <?php echo ($integrante['rango_integVenta'] == '0 - 6') ? 'selected' : ''; ?>>0 - 5</option>
                                         <option value="6 - 12" <?php echo ($integrante['rango_integVenta'] == '6 - 12') ? 'selected' : ''; ?>>6 - 12</option>
@@ -497,7 +497,7 @@ if (!empty($encuesta)) {
                                 
                                 <div class="col-md-3 form-group-dinamico">
                                     <label>Condición de Discapacidad</label>
-                                    <select name="condicionDiscapacidad[]" class="form-control smaller-input condicion-discapacidad" required>
+                                    <select name="condicionDiscapacidad[]" class="form-control smaller-input condicion-discapacidad" >
                                         <option value="">Condición Discapacidad</option>
                                         <option value="Si" <?php echo ($integrante['condicionDiscapacidad'] == 'Si') ? 'selected' : ''; ?>>Sí</option>
                                         <option value="No" <?php echo ($integrante['condicionDiscapacidad'] == 'No') ? 'selected' : ''; ?>>No</option>
@@ -522,7 +522,7 @@ if (!empty($encuesta)) {
                                 
                                 <div class="col-md-3 form-group-dinamico">
                                     <label>Grupo Étnico</label>
-                                    <select name="grupoEtnico[]" class="form-control smaller-input" required>
+                                    <select name="grupoEtnico[]" class="form-control smaller-input" >
                                         <option value="">Grupo Étnico</option>
                                         <option value="Indigena" <?php echo ($integrante['grupoEtnico'] == 'Indigena') ? 'selected' : ''; ?>>Indígena</option>
                                         <option value="Negro(a) / Mulato(a) / Afrocolombiano(a)" <?php echo ($integrante['grupoEtnico'] == 'Negro(a) / Mulato(a) / Afrocolombiano(a)') ? 'selected' : ''; ?>>Negro(a) / Mulato(a) / Afrocolombiano(a)</option>
@@ -536,7 +536,7 @@ if (!empty($encuesta)) {
                                 
                                 <div class="col-md-3 form-group-dinamico">
                                     <label>¿Es víctima del conflicto?</label>
-                                    <select name="victima[]" class="form-control smaller-input" required>
+                                    <select name="victima[]" class="form-control smaller-input" >
                                         <option value="">¿Es víctima?</option>
                                         <option value="Si" <?php echo ($integrante['victima'] == 'Si') ? 'selected' : ''; ?>>Sí</option>
                                         <option value="No" <?php echo ($integrante['victima'] == 'No') ? 'selected' : ''; ?>>No</option>
@@ -545,7 +545,7 @@ if (!empty($encuesta)) {
                                 
                                 <div class="col-md-3 form-group-dinamico">
                                     <label>¿Es mujer gestante?</label>
-                                    <select name="mujerGestante[]" class="form-control smaller-input" required>
+                                    <select name="mujerGestante[]" class="form-control smaller-input" >
                                         <option value="">¿Es gestante?</option>
                                         <option value="Si" <?php echo ($integrante['mujerGestante'] == 'Si') ? 'selected' : ''; ?>>Sí</option>
                                         <option value="No" <?php echo ($integrante['mujerGestante'] == 'No') ? 'selected' : ''; ?>>No</option>
@@ -556,7 +556,7 @@ if (!empty($encuesta)) {
                             <div class="row">
                                 <div class="col-md-4 form-group-dinamico">
                                     <label>¿Es cabeza de familia?</label>
-                                    <select name="cabezaFamilia[]" class="form-control smaller-input" required>
+                                    <select name="cabezaFamilia[]" class="form-control smaller-input" >
                                         <option value="">¿Es cabeza familia?</option>
                                         <option value="Si" <?php echo ($integrante['cabezaFamilia'] == 'Si') ? 'selected' : ''; ?>>Sí</option>
                                         <option value="No" <?php echo ($integrante['cabezaFamilia'] == 'No') ? 'selected' : ''; ?>>No</option>
@@ -565,7 +565,7 @@ if (!empty($encuesta)) {
                                 
                                 <div class="col-md-4 form-group-dinamico">
                                     <label>¿Experiencia migratoria?</label>
-                                    <select name="experienciaMigratoria[]" class="form-control smaller-input" required>
+                                    <select name="experienciaMigratoria[]" class="form-control smaller-input" >
                                         <option value="">¿Experiencia migratoria?</option>
                                         <option value="Si" <?php echo ($integrante['experienciaMigratoria'] == 'Si') ? 'selected' : ''; ?>>Sí</option>
                                         <option value="No" <?php echo ($integrante['experienciaMigratoria'] == 'No') ? 'selected' : ''; ?>>No</option>
@@ -574,7 +574,7 @@ if (!empty($encuesta)) {
                                 
                                 <div class="col-md-4 form-group-dinamico">
                                     <label>Seguridad en Salud</label>
-                                    <select name="seguridadSalud[]" class="form-control smaller-input" required>
+                                    <select name="seguridadSalud[]" class="form-control smaller-input" >
                                         <option value="">Seguridad Salud</option>
                                         <option value="Regimen Contributivo" <?php echo ($integrante['seguridadSalud'] == 'Regimen Contributivo') ? 'selected' : ''; ?>>Regimen Contributivo</option>
                                         <option value="Regimen Subsidiado" <?php echo ($integrante['seguridadSalud'] == 'Regimen Subsidiado') ? 'selected' : ''; ?>>Regimen Subsidiado</option>
@@ -587,7 +587,7 @@ if (!empty($encuesta)) {
                             <div class="row">
                                 <div class="col-md-6 form-group-dinamico">
                                     <label>Nivel Educativo</label>
-                                    <select name="nivelEducativo[]" class="form-control smaller-input" required>
+                                    <select name="nivelEducativo[]" class="form-control smaller-input" >
                                         <option value="">Nivel Educativo</option>
                                         <option value="Ninguno" <?php echo ($integrante['nivelEducativo'] == 'Ninguno') ? 'selected' : ''; ?>>Ninguno</option>
                                         <option value="Preescolar" <?php echo ($integrante['nivelEducativo'] == 'Preescolar') ? 'selected' : ''; ?>>Preescolar</option>
@@ -606,7 +606,7 @@ if (!empty($encuesta)) {
                                 
                                 <div class="col-md-6 form-group-dinamico">
                                     <label>Condición de Ocupación</label>
-                                    <select name="condicionOcupacion[]" class="form-control smaller-input" required>
+                                    <select name="condicionOcupacion[]" class="form-control smaller-input" >
                                         <option value="">Condición Ocupación</option>
                                         <option value="Ama de casa" <?php echo ($integrante['condicionOcupacion'] == 'Ama de casa') ? 'selected' : ''; ?>>Ama de casa</option>
                                         <option value="Buscando Empleo" <?php echo ($integrante['condicionOcupacion'] == 'Buscando Empleo') ? 'selected' : ''; ?>>Buscando Empleo</option>

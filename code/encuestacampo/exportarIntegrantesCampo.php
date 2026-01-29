@@ -135,10 +135,11 @@ try {
     $sheet1->getStyle('A1:B1')->applyFromArray($styleHeader);
     $sheet1->getStyle('A4:B4')->applyFromArray($styleHeader);
     $sheet1->getStyle('A9:B9')->applyFromArray($styleHeader);
-    $sheet1->getStyle('A14:B14')->applyFromArray($styleHeader);
-    $sheet1->getStyle('A19:B19')->applyFromArray($styleHeader);
-    $sheet1->getStyle('A28:B28')->applyFromArray($styleHeader);
+    $sheet1->getStyle('A18:B18')->applyFromArray($styleHeader);
+    $sheet1->getStyle('A24:B24')->applyFromArray($styleHeader);
+    $sheet1->getStyle('A26:B26')->applyFromArray($styleHeader);
     $sheet1->getStyle('A35:B35')->applyFromArray($styleHeader);
+    $sheet1->getStyle('A44:B44')->applyFromArray($styleHeader);
 
     // Ajustar el ancho de las columnas
     $sheet1->getColumnDimension('A')->setWidth(40);
@@ -150,8 +151,6 @@ try {
     
     $sheet1->setCellValue('A2', 'Total Integrantes');
     $sheet1->setCellValue('B2', $totales['total_integrantes']);
-    $sheet1->setCellValue('A3', 'Total Masculino');
-    $sheet1->setCellValue('B3', $totales['total_masculino']);
     
     // ===== SECCIÓN 2: GÉNERO =====
     $sheet1->setCellValue('A4', 'POR GÉNERO');
@@ -176,70 +175,81 @@ try {
     $sheet1->setCellValue('B12', $totales['total_13_17']);
     $sheet1->setCellValue('A13', '18 - 28 años');
     $sheet1->setCellValue('B13', $totales['total_18_28']);
+    $sheet1->setCellValue('A14', '29 - 45 años');
+    $sheet1->setCellValue('B14', $totales['total_29_45']);
+    $sheet1->setCellValue('A15', '46 - 64 años');
+    $sheet1->setCellValue('B15', $totales['total_46_64']);
+    $sheet1->setCellValue('A16', 'Mayor o igual a 65 años');
+    $sheet1->setCellValue('B16', $totales['total_mayor_65']);
     
     // ===== SECCIÓN 4: ORIENTACIÓN SEXUAL =====
-    $sheet1->setCellValue('A14', 'POR ORIENTACIÓN SEXUAL');
-    $sheet1->setCellValue('B14', 'CANTIDAD');
+    $sheet1->setCellValue('A18', 'POR ORIENTACIÓN SEXUAL');
+    $sheet1->setCellValue('B18', 'CANTIDAD');
     
-    $sheet1->setCellValue('A15', 'Heterosexual');
-    $sheet1->setCellValue('B15', $totales['total_heterosexual']);
-    $sheet1->setCellValue('A16', 'Homosexual');
-    $sheet1->setCellValue('B16', $totales['total_homosexual']);
-    $sheet1->setCellValue('A17', 'Bisexual');
-    $sheet1->setCellValue('B17', $totales['total_bisexual']);
-    $sheet1->setCellValue('A18', 'Asexual');
-    $sheet1->setCellValue('B18', $totales['total_asexual']);
+    $sheet1->setCellValue('A19', 'Heterosexual');
+    $sheet1->setCellValue('B19', $totales['total_heterosexual']);
+    $sheet1->setCellValue('A20', 'Homosexual');
+    $sheet1->setCellValue('B20', $totales['total_homosexual']);
+    $sheet1->setCellValue('A21', 'Bisexual');
+    $sheet1->setCellValue('B21', $totales['total_bisexual']);
+    $sheet1->setCellValue('A22', 'Asexual');
+    $sheet1->setCellValue('B22', $totales['total_asexual']);
     
     // ===== SECCIÓN 5: DISCAPACIDAD =====
-    $sheet1->setCellValue('A19', 'CONDICIÓN DE DISCAPACIDAD');
-    $sheet1->setCellValue('B19', 'CANTIDAD');
+    $sheet1->setCellValue('A24', 'CONDICIÓN DE DISCAPACIDAD');
+    $sheet1->setCellValue('B24', 'CANTIDAD');
     
-    $sheet1->setCellValue('A20', 'Con Discapacidad');
-    $sheet1->setCellValue('B20', $totales['total_con_discapacidad']);
-    $sheet1->setCellValue('A21', 'Visual');
-    $sheet1->setCellValue('B21', $totales['total_visual']);
-    $sheet1->setCellValue('A22', 'Auditiva');
-    $sheet1->setCellValue('B22', $totales['total_auditiva']);
-    $sheet1->setCellValue('A23', 'Física');
-    $sheet1->setCellValue('B23', $totales['total_fisica']);
-    $sheet1->setCellValue('A24', 'Intelectual');
-    $sheet1->setCellValue('B24', $totales['total_intelectual']);
-    $sheet1->setCellValue('A25', 'Psicosocial');
-    $sheet1->setCellValue('B25', $totales['total_psicosocial']);
-    $sheet1->setCellValue('A26', 'Múltiple');
-    $sheet1->setCellValue('B26', $totales['total_multiple']);
-    $sheet1->setCellValue('A27', 'Sordoceguera');
-    $sheet1->setCellValue('B27', $totales['total_sordoceguera']);
+    $sheet1->setCellValue('A25', 'Cantidad con Discapacidad');
+    $sheet1->setCellValue('B25', $totales['total_con_discapacidad']);
+    
+    $sheet1->setCellValue('A26', 'TIPO DE DISCAPACIDAD');
+    $sheet1->setCellValue('B26', 'CANTIDAD');
+    $sheet1->setCellValue('A27', 'Visual');
+    $sheet1->setCellValue('B27', $totales['total_visual']);
+    $sheet1->setCellValue('A28', 'Auditiva');
+    $sheet1->setCellValue('B28', $totales['total_auditiva']);
+    $sheet1->setCellValue('A29', 'Física');
+    $sheet1->setCellValue('B29', $totales['total_fisica']);
+    $sheet1->setCellValue('A30', 'Intelectual');
+    $sheet1->setCellValue('B30', $totales['total_intelectual']);
+    $sheet1->setCellValue('A31', 'Psicosocial');
+    $sheet1->setCellValue('B31', $totales['total_psicosocial']);
+    $sheet1->setCellValue('A32', 'Múltiple');
+    $sheet1->setCellValue('B32', $totales['total_multiple']);
+    $sheet1->setCellValue('A33', 'Sordoceguera');
+    $sheet1->setCellValue('B33', $totales['total_sordoceguera']);
     
     // ===== SECCIÓN 6: GRUPO ÉTNICO =====
-    $sheet1->setCellValue('A28', 'POR GRUPO ÉTNICO');
-    $sheet1->setCellValue('B28', 'CANTIDAD');
-    
-    $sheet1->setCellValue('A29', 'Afrocolombiano');
-    $sheet1->setCellValue('B29', $totales['total_afrocolombiano']);
-    $sheet1->setCellValue('A30', 'Indígena');
-    $sheet1->setCellValue('B30', $totales['total_indigena']);
-    $sheet1->setCellValue('A31', 'Raizal');
-    $sheet1->setCellValue('B31', $totales['total_raizal']);
-    $sheet1->setCellValue('A32', 'Palenquero');
-    $sheet1->setCellValue('B32', $totales['total_palenquero']);
-    $sheet1->setCellValue('A33', 'Gitano (ROM)');
-    $sheet1->setCellValue('B33', $totales['total_gitanorom']);
-    $sheet1->setCellValue('A34', 'Mestizo');
-    $sheet1->setCellValue('B34', $totales['total_mestizo']);
-    
-    // ===== SECCIÓN 7: CARACTERÍSTICAS ESPECIALES =====
-    $sheet1->setCellValue('A35', 'CARACTERÍSTICAS ESPECIALES');
+    $sheet1->setCellValue('A35', 'POR GRUPO ÉTNICO');
     $sheet1->setCellValue('B35', 'CANTIDAD');
     
-    $sheet1->setCellValue('A36', 'Víctimas');
-    $sheet1->setCellValue('B36', $totales['total_victimas']);
-    $sheet1->setCellValue('A37', 'Mujeres Gestantes');
-    $sheet1->setCellValue('B37', $totales['total_mujeres_gestantes']);
-    $sheet1->setCellValue('A38', 'Cabezas de Familia');
-    $sheet1->setCellValue('B38', $totales['total_cabezas_familia']);
-    $sheet1->setCellValue('A39', 'Con Experiencia Migratoria');
-    $sheet1->setCellValue('B39', $totales['total_experiencia_migratoria']);
+    $sheet1->setCellValue('A36', 'Afrocolombiano');
+    $sheet1->setCellValue('B36', $totales['total_afrocolombiano']);
+    $sheet1->setCellValue('A37', 'Indígena');
+    $sheet1->setCellValue('B37', $totales['total_indigena']);
+    $sheet1->setCellValue('A38', 'Raizal');
+    $sheet1->setCellValue('B38', $totales['total_raizal']);
+    $sheet1->setCellValue('A39', 'Palenquero');
+    $sheet1->setCellValue('B39', $totales['total_palenquero']);
+    $sheet1->setCellValue('A40', 'Gitano (ROM)');
+    $sheet1->setCellValue('B40', $totales['total_gitanorom']);
+    $sheet1->setCellValue('A41', 'Mestizo');
+    $sheet1->setCellValue('B41', $totales['total_mestizo']);
+    $sheet1->setCellValue('A42', 'Ninguno');
+    $sheet1->setCellValue('B42', $totales['total_ninguno_etnico']);
+    
+    // ===== SECCIÓN 7: CARACTERÍSTICAS ESPECIALES =====
+    $sheet1->setCellValue('A44', 'CARACTERÍSTICAS ESPECIALES');
+    $sheet1->setCellValue('B44', 'CANTIDAD');
+    
+    $sheet1->setCellValue('A45', 'Víctimas');
+    $sheet1->setCellValue('B45', $totales['total_victimas']);
+    $sheet1->setCellValue('A46', 'Mujeres Gestantes');
+    $sheet1->setCellValue('B46', $totales['total_mujeres_gestantes']);
+    $sheet1->setCellValue('A47', 'Cabezas de Familia');
+    $sheet1->setCellValue('B47', $totales['total_cabezas_familia']);
+    $sheet1->setCellValue('A48', 'Con Experiencia Migratoria');
+    $sheet1->setCellValue('B48', $totales['total_experiencia_migratoria']);
 
     // ===============================================
     // HOJA 2: DETALLE POR BARRIO
