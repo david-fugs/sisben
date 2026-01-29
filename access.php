@@ -820,6 +820,7 @@ $tipo_usu     = $_SESSION['tipo_usu'];
             }
             ?>
 
+    <?php if ($tipo_usu != 2) { ?>
     <!-- Statistics Cards -->
     <div class="row mb-4">
       <div class="col-xl-3 col-md-6 mb-4">
@@ -852,6 +853,7 @@ $tipo_usu     = $_SESSION['tipo_usu'];
         </div>
       </div>
     </div>
+    <?php } ?>
 
     <div class="row">
       <!-- Quick Actions -->
@@ -947,6 +949,7 @@ $tipo_usu     = $_SESSION['tipo_usu'];
         </div>
       </div>
     </div> <!-- Recent Activity -->
+    <?php if ($tipo_usu != 2) { ?>
     <div class="welcome-card">
       <h3 class="section-title">
         <i class="fas fa-chart-line"></i>
@@ -976,6 +979,7 @@ $tipo_usu     = $_SESSION['tipo_usu'];
         </div>
       </div>
     </div>
+    <?php } ?>
   </main>
 
   <!-- JavaScript -->
