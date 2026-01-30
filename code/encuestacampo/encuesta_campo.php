@@ -1441,12 +1441,23 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                         <div class="form-group">
                             <div class="row">
                                 <div class="form-group col-md-6">
-                                    <label for="foto_encuestado">
-                                        <i class="fas fa-camera"></i> Tomar o Subir Foto (Opcional)
+                                    <label>
+                                        <i class="fas fa-camera"></i> Foto del Encuestado (Opcional)
                                     </label>
-                                    <input type="file" name="foto_encuestado" id="foto_encuestado" class="form-control" accept="image/*" capture="camera">
-                                    <small class="form-text text-muted">
-                                        Puede usar la cámara del dispositivo o seleccionar una imagen existente
+                                    <div class="mb-3">
+                                        <label for="foto_camara" class="btn btn-primary btn-block mb-2">
+                                            <i class="fas fa-camera"></i> Tomar Foto con Cámara
+                                        </label>
+                                        <input type="file" name="foto_encuestado" id="foto_camara" class="d-none" accept="image/*" capture="environment">
+                                    </div>
+                                    <div>
+                                        <label for="foto_galeria" class="btn btn-success btn-block">
+                                            <i class="fas fa-images"></i> Seleccionar de Galería
+                                        </label>
+                                        <input type="file" id="foto_galeria" class="d-none" accept="image/*">
+                                    </div>
+                                    <small class="form-text text-muted mt-2">
+                                        Elija tomar una foto nueva o seleccionar una existente
                                     </small>
                                 </div>
                                 <div class="form-group col-md-6">
@@ -1799,9 +1810,8 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
             }
         });
 
-        // Vista previa de la foto
-        $("#foto_encuestado").on("change", function(e) {
-            var file = e.target.files[0];
+        // Vista previa de la foto - Función común para ambos inputs
+        function mostrarVistaPrevia(file) {
             if (file) {
                 var reader = new FileReader();
                 reader.onload = function(event) {
@@ -1814,6 +1824,25 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                 $("#preview_foto").html(
                     '<span style="color: #6c757d;"><i class="fas fa-image fa-3x"></i><br>Sin imagen seleccionada</span>'
                 );
+            }
+        }
+
+        // Input de cámara
+        $("#foto_camara").on("change", function(e) {
+            var file = e.target.files[0];
+            mostrarVistaPrevia(file);
+        });
+
+        // Input de galería - transferir archivo al input principal
+        $("#foto_galeria").on("change", function(e) {
+            var file = e.target.files[0];
+            if (file) {
+                // Transferir el archivo al input principal que se enviará
+                var dataTransfer = new DataTransfer();
+                dataTransfer.items.add(file);
+                document.getElementById('foto_camara').files = dataTransfer.files;
+                
+                mostrarVistaPrevia(file);
             }
         });
     </script>
