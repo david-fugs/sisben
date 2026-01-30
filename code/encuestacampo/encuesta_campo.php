@@ -1388,6 +1388,7 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                                     <option value="Ya le realizo la encuesta">Ya le realizo la encuesta</option>
                                     <option value="Ya no vive en la direccion">Ya no vive en la direccion</option>
                                     <option value="Zona insegura">Zona insegura</option>
+                                    <option value="Nadie en el hogar">Nadie en el hogar</option>
                                 </select>
                             </div>
                             <!-- Tipo de Proceso removed per request -->

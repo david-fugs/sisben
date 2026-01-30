@@ -470,6 +470,7 @@ if (!empty($encuesta)) {
                                 <option value="Ya le realizo la encuesta" <?php echo ($encuesta['estado_ficha'] == 'Ya le realizo la encuesta') ? 'selected' : ''; ?>>Ya le realizo la encuesta</option>
                                 <option value="Ya no vive en la direccion" <?php echo ($encuesta['estado_ficha'] == 'Ya no vive en la direccion') ? 'selected' : ''; ?>>Ya no vive en la direccion</option>
                                 <option value="Zona insegura" <?php echo ($encuesta['estado_ficha'] == 'Zona insegura') ? 'selected' : ''; ?>>Zona insegura</option>
+                                <option value="Nadie en el hogar" <?php echo ($encuesta['estado_ficha'] == 'Nadie en el hogar') ? 'selected' : ''; ?>>Nadie en el hogar</option>
                             </select>
                         </div>
                         <div class="col-md-4 mb-3">
