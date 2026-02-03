@@ -167,6 +167,7 @@ if (!function_exists('limpiarTexto')) {
         // $texto = mb_convert_encoding($texto, 'UTF-8', 'auto');
         // Reemplaza casos conocidos
         $texto = str_replace(['FÃ­sica', 'Física', 'FISICA', 'FÍSICA'], 'Fisica', $texto);
+        $texto = str_replace('MOULTIPLE', 'MULTIPLE', $texto);
         // Elimina tildes
         $texto = strtr($texto, 'áéíóúÁÉÍÓÚ', 'aeiouAEIOU');
         // Elimina otros caracteres raros
