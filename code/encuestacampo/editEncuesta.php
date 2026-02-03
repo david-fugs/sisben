@@ -309,12 +309,23 @@ if (!empty($encuesta)) {
                     ?>
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label for="foto_encuestado" class="form-label">
-                                <i class="fas fa-camera"></i> Tomar o Subir Foto
+                            <label class="form-label">
+                                <i class="fas fa-camera"></i> Foto del Encuestado
                             </label>
-                            <input type="file" name="foto_encuestado" id="foto_encuestado" class="form-control" accept="image/*" capture="camera">
-                            <small class="form-text text-muted">
-                                Puede usar la cámara del dispositivo o seleccionar una imagen existente
+                            <div class="mb-3">
+                                <label for="foto_camara" class="btn btn-primary btn-block mb-2">
+                                    <i class="fas fa-camera"></i> Tomar Foto con Cámara
+                                </label>
+                                <input type="file" name="foto_encuestado" id="foto_camara" class="d-none" accept="image/*" capture="environment">
+                            </div>
+                            <div>
+                                <label for="foto_galeria" class="btn btn-success btn-block">
+                                    <i class="fas fa-images"></i> Seleccionar de Galería
+                                </label>
+                                <input type="file" id="foto_galeria" class="d-none" accept="image/*">
+                            </div>
+                            <small class="form-text text-muted mt-2">
+                                Elija tomar una foto nueva o seleccionar una existente
                             </small>
                             <?php if ($tiene_foto): ?>
                                 <input type="hidden" name="foto_actual" value="<?php echo htmlspecialchars($encuesta['foto_encuestado']); ?>">
@@ -905,9 +916,8 @@ if (!empty($encuesta)) {
 
             $("#fecha_nacimiento").on("change", calcularEdad);
 
-            // Vista previa de la foto al seleccionar nueva
-            $("#foto_encuestado").on("change", function(e) {
-                var file = e.target.files[0];
+            // Vista previa de la foto - Función común para ambos inputs
+            function mostrarVistaPrevia(file) {
                 if (file) {
                     var reader = new FileReader();
                     reader.onload = function(event) {
@@ -920,8 +930,34 @@ if (!empty($encuesta)) {
                         $("#eliminar_foto_flag").val("0");
                     };
                     reader.readAsDataURL(file);
+                } else {
+                    $("#preview_foto").html(
+                        '<span style="color: #6c757d;"><i class="fas fa-image fa-3x"></i><br>Sin imagen seleccionada</span>'
+                    );
+                }
+            }
+
+            // Input de cámara
+            $("#foto_camara").on("change", function(e) {
+                var file = e.target.files[0];
+                mostrarVistaPrevia(file);
+            });
+
+            // Input de galería - transferir archivo al input principal
+            $("#foto_galeria").on("change", function(e) {
+                var file = e.target.files[0];
+                if (file) {
+                    // Transferir el archivo al input principal que se enviará
+                    var dataTransfer = new DataTransfer();
+                    dataTransfer.items.add(file);
+                    document.getElementById('foto_camara').files = dataTransfer.files;
+                    
+                    mostrarVistaPrevia(file);
                 }
             });
+
+            // Vista previa de la foto al seleccionar nueva (código anterior - eliminado y reemplazado por función común)
+            // $("#foto_encuestado").on("change", function(e) { ... });
 
             // Eliminar foto
             $("#eliminar_foto").on("click", function() {
@@ -930,7 +966,8 @@ if (!empty($encuesta)) {
                     $("#preview_foto").html(
                         '<span style="color: #dc3545;"><i class="fas fa-trash fa-3x"></i><br>Foto marcada para eliminar (guardar para aplicar cambios)</span>'
                     );
-                    $("#foto_encuestado").val("");
+                    $("#foto_camara").val("");
+                    $("#foto_galeria").val("");
                 }
             });
         });
