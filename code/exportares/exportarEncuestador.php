@@ -545,6 +545,17 @@ if (!function_exists('limpiarTexto')) {
     $sheet3->getColumnDimension('AE')->setWidth(25);
     $sheet3->getDefaultRowDimension()->setRowHeight(25);
 
+    // Mapeo de rango edad (mismo que en ENCUESTAS e INFORMACIÓN)
+    $rangoEdadMap = [
+        1 => "0 - 6",
+        2 => "7 - 12", 
+        3 => "13 - 17",
+        4 => "18 - 28",
+        5 => "29 - 45",
+        6 => "46 - 64",
+        7 => "Mayor o igual a 65"
+    ];
+    
     // Escribir datos de MOVIMIENTOS (basado en integmovimientos_independiente)
     $rowIndex3 = 2;
     while ($row = mysqli_fetch_array($res_movimientos, MYSQLI_ASSOC)) {
@@ -553,6 +564,24 @@ if (!function_exists('limpiarTexto')) {
         $sql_integ_mov = "SELECT * FROM integmovimientos_independiente WHERE id_movimiento = '$id_movimiento' ORDER BY id_integmov_indep ASC LIMIT 1";
         $res_integ_mov = mysqli_query($mysqli, $sql_integ_mov);
         $integ_mov = mysqli_fetch_assoc($res_integ_mov);
+        
+        // Si no hay datos en integmovimientos_independiente, buscar en integventanilla
+        $integ_fallback = null;
+        if (!$integ_mov) {
+            // Primero buscar el id_encVenta en la tabla encventanilla usando el documento
+            $doc_encVenta = $row['doc_encVenta'];
+            $sql_enc = "SELECT id_encVenta FROM encventanilla WHERE doc_encVenta = '$doc_encVenta' LIMIT 1";
+            $res_enc = mysqli_query($mysqli, $sql_enc);
+            $enc_data = mysqli_fetch_assoc($res_enc);
+            
+            // Si se encontró la encuesta, buscar sus integrantes
+            if ($enc_data && isset($enc_data['id_encVenta'])) {
+                $id_encVenta = $enc_data['id_encVenta'];
+                $sql_integ_fallback = "SELECT * FROM integventanilla WHERE id_encVenta = '$id_encVenta' ORDER BY id_integVenta ASC LIMIT 1";
+                $res_integ_fallback = mysqli_query($mysqli, $sql_integ_fallback);
+                $integ_fallback = mysqli_fetch_assoc($res_integ_fallback);
+            }
+        }
 
         // FECHA MOVIMIENTO siempre de la tabla movimientos
         $sheet3->setCellValue('A' . $rowIndex3, $row['fecha_movimiento'] ?? '');
@@ -620,34 +649,65 @@ if (!function_exists('limpiarTexto')) {
             $sheet3->setCellValue('P' . $rowIndex3, $row['sisben_nocturno'] ?? '');
             $sheet3->setCellValue('Q' . $rowIndex3, $row['observacion'] ?? '');
 
-            // Dejar vacías las columnas de caracterización si no hay datos
-            $sheet3->setCellValue('R' . $rowIndex3, '');
-            $sheet3->setCellValue('S' . $rowIndex3, '');
-            $sheet3->setCellValue('T' . $rowIndex3, '');
-            $sheet3->setCellValue('U' . $rowIndex3, '');
-            $sheet3->setCellValue('V' . $rowIndex3, '');
-            $sheet3->setCellValue('W' . $rowIndex3, '');
-            $sheet3->setCellValue('X' . $rowIndex3, '');
-            $sheet3->setCellValue('Y' . $rowIndex3, '');
-            $sheet3->setCellValue('Z' . $rowIndex3, '');
-            $sheet3->setCellValue('AA' . $rowIndex3, '');
-            $sheet3->setCellValue('AB' . $rowIndex3, '');
-            $sheet3->setCellValue('AC' . $rowIndex3, '');
-            $sheet3->setCellValue('AD' . $rowIndex3, '');
+            // Si hay datos en integventanilla (fallback), usarlos para caracterización
+            if ($integ_fallback) {
+                // Normalizar género: M -> Masculino, F -> Femenino
+                $genero_fallback = $integ_fallback['gen_integVenta'] ?? '';
+                if ($genero_fallback === 'M') {
+                    $genero_fallback = 'Masculino';
+                } elseif ($genero_fallback === 'F') {
+                    $genero_fallback = 'Femenino';
+                } elseif ($genero_fallback === 'O') {
+                    $genero_fallback = 'Otro';
+                }
+                $sheet3->setCellValue('R' . $rowIndex3, $genero_fallback);
+                // Aplicar mapeo de rango edad (en integventanilla se guarda como número)
+                $sheet3->setCellValue('S' . $rowIndex3, isset($rangoEdadMap[$integ_fallback['rango_integVenta'] ?? null]) ? $rangoEdadMap[$integ_fallback['rango_integVenta']] : '');
+                $sheet3->setCellValue('T' . $rowIndex3, $integ_fallback['victima'] ?? '');
+                $sheet3->setCellValue('U' . $rowIndex3, $integ_fallback['condicionDiscapacidad'] ?? '');
+                // Aplicar limpieza a tipoDiscapacidad
+                $tipoDiscapacidadLimpioFallback = isset($integ_fallback['tipoDiscapacidad']) ? limpiarTexto($integ_fallback['tipoDiscapacidad']) : '';
+                $sheet3->setCellValue('V' . $rowIndex3, $tipoDiscapacidadLimpioFallback);
+                $sheet3->setCellValue('W' . $rowIndex3, $integ_fallback['mujerGestante'] ?? '');
+                $sheet3->setCellValue('X' . $rowIndex3, $integ_fallback['cabezaFamilia'] ?? '');
+                $sheet3->setCellValue('Y' . $rowIndex3, $integ_fallback['orientacionSexual'] ?? '');
+                $sheet3->setCellValue('Z' . $rowIndex3, $integ_fallback['experienciaMigratoria'] ?? '');
+                $sheet3->setCellValue('AA' . $rowIndex3, $integ_fallback['grupoEtnico'] ?? '');
+                $sheet3->setCellValue('AB' . $rowIndex3, $integ_fallback['seguridadSalud'] ?? '');
+                $sheet3->setCellValue('AC' . $rowIndex3, $integ_fallback['nivelEducativo'] ?? '');
+                $sheet3->setCellValue('AD' . $rowIndex3, $integ_fallback['condicionOcupacion'] ?? '');
+            } else {
+                // Dejar vacías las columnas de caracterización si no hay datos en ninguna tabla
+                $sheet3->setCellValue('R' . $rowIndex3, '');
+                $sheet3->setCellValue('S' . $rowIndex3, '');
+                $sheet3->setCellValue('T' . $rowIndex3, '');
+                $sheet3->setCellValue('U' . $rowIndex3, '');
+                $sheet3->setCellValue('V' . $rowIndex3, '');
+                $sheet3->setCellValue('W' . $rowIndex3, '');
+                $sheet3->setCellValue('X' . $rowIndex3, '');
+                $sheet3->setCellValue('Y' . $rowIndex3, '');
+                $sheet3->setCellValue('Z' . $rowIndex3, '');
+                $sheet3->setCellValue('AA' . $rowIndex3, '');
+                $sheet3->setCellValue('AB' . $rowIndex3, '');
+                $sheet3->setCellValue('AC' . $rowIndex3, '');
+                $sheet3->setCellValue('AD' . $rowIndex3, '');
+            }
         }
 
-        // Calcular edad: preferir fecha_nacimiento del integ_mov o del registro base
+        // Calcular edad: preferir fecha_nacimiento del integ_mov, luego integ_fallback, o del registro base
         $edad_mov = '';
+        $fecha_nac_mov = '';
         if (!empty($integ_mov) && !empty($integ_mov['fecha_nacimiento'])) {
-            try {
-                $dob = new DateTime($integ_mov['fecha_nacimiento']);
-                $edad_mov = $dob->diff(new DateTime())->y;
-            } catch (Exception $e) {
-                $edad_mov = '';
-            }
+            $fecha_nac_mov = $integ_mov['fecha_nacimiento'];
+        } elseif (!empty($integ_fallback) && !empty($integ_fallback['fecha_nacimiento'])) {
+            $fecha_nac_mov = $integ_fallback['fecha_nacimiento'];
         } elseif (!empty($row['fecha_nacimiento'])) {
+            $fecha_nac_mov = $row['fecha_nacimiento'];
+        }
+        
+        if (!empty($fecha_nac_mov)) {
             try {
-                $dob = new DateTime($row['fecha_nacimiento']);
+                $dob = new DateTime($fecha_nac_mov);
                 $edad_mov = $dob->diff(new DateTime())->y;
             } catch (Exception $e) {
                 $edad_mov = '';
@@ -657,7 +717,7 @@ if (!function_exists('limpiarTexto')) {
         // ASESOR siempre al final y EDAD en AF
         $sheet3->setCellValue('AE' . $rowIndex3, $row['nombre_usuario'] ?? '');
         $sheet3->setCellValue('AF' . $rowIndex3, $edad_mov);
-        $sheet3->setCellValue('AG' . $rowIndex3, $integ_mov['fecha_nacimiento'] ?? $row['fecha_nacimiento'] ?? '');
+        $sheet3->setCellValue('AG' . $rowIndex3, $fecha_nac_mov);
         $rowIndex3++;
     }
     logError("Datos de movimientos escritos en la hoja 3");
