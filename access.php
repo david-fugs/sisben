@@ -857,6 +857,7 @@ $tipo_usu     = $_SESSION['tipo_usu'];
 
     <div class="row">
       <!-- Quick Actions -->
+      <?php if ($tipo_usu != 5 && $tipo_usu != 6) { ?>
       <div class="col-lg-4 mb-4">
         <div class="quick-actions">
           <h3 class="section-title">
@@ -897,8 +898,10 @@ $tipo_usu     = $_SESSION['tipo_usu'];
             Generar Reportes
           </a>
         </div>
-      </div> <!-- System Information -->
-      <div class="col-lg-8 mb-4">
+      </div>
+      <?php } ?>
+      <!-- System Information -->
+      <div class="col-lg-<?php echo ($tipo_usu == 5 || $tipo_usu == 6) ? '12' : '8'; ?> mb-4">
         <div class="welcome-card">
           <h3 class="section-title">
             <i class="fas fa-info-circle"></i>
