@@ -104,6 +104,8 @@
                                 <option value=2 <?php if($row['tipo_usu']==2){echo 'selected';} ?>>ENCUESTADOR CAMPO</option>
                                 <option value=3 <?php if($row['tipo_usu']==3){echo 'selected';} ?>>VENTANILLA</option>
                                 <option value=4 <?php if($row['tipo_usu']==4){echo 'selected';} ?>>ENCUESTADOR Y REVISIOR</option>
+                                <option value=5 <?php if($row['tipo_usu']==5){echo 'selected';} ?>>SUPERVISOR CAMPO</option>
+                                <option value=6 <?php if($row['tipo_usu']==6){echo 'selected';} ?>>SUPERVISOR VENTANILLA</option>
                                 <option value=10 <?php if($row['tipo_usu']==10){echo 'selected';} ?>>SIN ACCESO</option>
                             </select>
                         </div>
