@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         
     // Verificar permisos (usar id_encCampo)
     $check_query = "SELECT id_encCampo FROM encuestacampo WHERE id_encCampo = $id_encuesta";
-        if ($tipo_usu != '1') {
+        if ($tipo_usu != '1' && $tipo_usu != '5') {
             $check_query .= " AND id_usu = $id_usu";
         }
         $check_result = mysqli_query($mysqli, $check_query);

@@ -566,34 +566,19 @@ $tipo_usu     = $_SESSION['tipo_usu'];
               <span class="navlink_icon">
                 <i class="fa-solid fa-magnifying-glass"></i>
               </span>
-              <span class="navlink"><i class="fa-solid fa-eye me-2"></i>Supervisión</span>
+              <span class="navlink">Encuestas Campo</span>
               <i class="bx bx-chevron-right arrow-left"></i>
             </div>
 
             <ul class="menu_items submenu">
-              <a href="code/supervisor/campo/showEncCampo.php" class="nav_link sublink"><i class="fa-solid fa-map me-2"></i>Campo</a>
+              <a href="code/encuestacampo/showsurvey.php" class="nav_link sublink"><i class="fa-solid fa-map me-2"></i>Campo</a>
               <!--<a href="code/users/addsurvey.php" class="nav_link sublink">Nueva</a>
               <a href="code/users//addsurvey.php" class="nav_link sublink">Movimientos</a>
               <a href="code/users/addsurvey.php" class="nav_link sublink">Información</a>
               <a href="code/users/addsurvey.php" class="nav_link sublink">Portal Ciudadano</a>-->
             </ul>
           </li>
-          <li class="item">
-            <div href="#" class="nav_link submenu_item">
-              <span class="navlink_icon">
-                <i class="fa-solid fa-chart-pie"></i>
-              </span>
-              <span class="navlink"><i class="fa-solid fa-chart-pie me-2"></i>Informes</span>
-              <i class="bx bx-chevron-right arrow-left"></i>
-            </div>
 
-            <ul class="menu_items submenu">
-              <a href="code/report/report1.php" class="nav_link sublink"><i class="fa-solid fa-chart-line me-2"></i>Campo</a>
-            </ul>
-          </li>
-
-
-          <!-- duplicate this li tag if you want to add or remove  navlink with submenu -->
           <!-- start -->
           <li class="item">
             <div href="#" class="nav_link submenu_item">
@@ -645,7 +630,7 @@ $tipo_usu     = $_SESSION['tipo_usu'];
             </div>
 
             <ul class="menu_items submenu">
-              <a href="code/supervisor/ventan/showEncVentanilla.php" class="nav_link sublink">Ventanilla</a>
+              <a href="code/eventan/showsurvey.php" class="nav_link sublink">Ventanilla</a>
               <!--<a href="code/users/addsurvey.php" class="nav_link sublink">Nueva</a>
               <a href="code/users//addsurvey.php" class="nav_link sublink">Movimientos</a>
               <a href="code/users/addsurvey.php" class="nav_link sublink">Información</a>
@@ -657,12 +642,12 @@ $tipo_usu     = $_SESSION['tipo_usu'];
               <span class="navlink_icon">
                 <i class="fa-solid fa-chart-pie"></i>
               </span>
-              <span class="navlink">Informesxx</span>
+              <span class="navlink">Informes</span>
               <i class="bx bx-chevron-right arrow-left"></i>
             </div>
 
             <ul class="menu_items submenu">
-              <a href="code/report/report7.php" class="nav_link sublink">Ventanilla</a>
+              <a href="code/exportares/exportar.php" class="nav_link sublink">Ventanilla</a>
             </ul>
           </li>
 

@@ -28,7 +28,7 @@ if ($id_encuesta == 0) {
 
 // Obtener datos de la encuesta
 $query_encuesta = "SELECT * FROM encuestacampo WHERE id_encCampo = $id_encuesta";
-if ($tipo_usu != '1') {
+if ($tipo_usu != '1' && $tipo_usu != '5') {
     $query_encuesta .= " AND id_usu = $id_usu";
 }
 

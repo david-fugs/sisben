@@ -5,7 +5,6 @@ if (!isset($_SESSION['id_usu'])) {
 	header("Location: ../../index.php");
 	exit();
 }
-
 $id_usu 	= $_SESSION['id_usu'];
 $nombre     = $_SESSION['nombre'];
 $tipo_usu   = $_SESSION['tipo_usu'];
@@ -312,7 +311,7 @@ header("Content-Type: text/html;charset=utf-8");
 						AND (encuestacampo.num_ficha_encVenta LIKE '%$num_ficha_encVenta%')
 						AND (encuestacampo.nom_encVenta LIKE '%$nom_encVenta%')";
 
-			if ($tipo_usu != '1') {
+			if ($tipo_usu != '1' && $tipo_usu != '5') {
 				$query .= " AND encuestacampo.id_usu = $id_usu";
 			}
 
@@ -338,7 +337,7 @@ header("Content-Type: text/html;charset=utf-8");
 				echo "<br>Documento: " . (empty($doc_encVenta) ? "<em>Todos</em>" : "<strong>$doc_encVenta</strong>");
 				echo " | Ficha: " . (empty($num_ficha_encVenta) ? "<em>Todas</em>" : "<strong>$num_ficha_encVenta</strong>");
 				echo " | Nombre: " . (empty($nom_encVenta) ? "<em>Todos</em>" : "<strong>$nom_encVenta</strong>");
-				if ($tipo_usu != '1') {
+				if ($tipo_usu != '1' && $tipo_usu != '5') {
 					echo "<br><small>Nota: Solo se muestran las encuestas creadas por ti (Usuario ID: $id_usu)</small>";
 				}
 				echo "</div>";
@@ -380,7 +379,7 @@ header("Content-Type: text/html;charset=utf-8");
 						AND (num_ficha_encVenta LIKE '%" . $num_ficha_encVenta . "%')
 						AND (nom_encVenta LIKE '%" . $nom_encVenta . "%')";
 
-			if ($tipo_usu != '1') {
+			if ($tipo_usu != '1' && $tipo_usu != '5') {
 				$consulta .= " AND id_usu = $id_usu";
 			}
 
@@ -403,7 +402,7 @@ header("Content-Type: text/html;charset=utf-8");
 					echo "<tr><td colspan='8' class='text-center text-warning'>";
 					echo "<i class='fas fa-exclamation-triangle'></i> No se encontraron encuestas registradas.";
 					echo "<br><small>Filtros aplicados - Doc: '$doc_encVenta', Ficha: '$num_ficha_encVenta', Nombre: '$nom_encVenta'</small>";
-					if ($tipo_usu != '1') {
+					if ($tipo_usu != '1' && $tipo_usu != '5') {
 						echo "<br><small>Mostrando solo tus encuestas (Usuario: $id_usu)</small>";
 					}
 					echo "</td></tr>";

@@ -19,6 +19,7 @@ $usuario    = $_SESSION['usuario'];
 $nombre     = $_SESSION['nombre'];
 $tipo_usu    = $_SESSION['tipo_usu'];
 
+
 header("Content-Type: text/html;charset=utf-8");
 
 ?>

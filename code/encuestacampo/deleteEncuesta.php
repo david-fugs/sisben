@@ -26,7 +26,7 @@ if ($id_encuesta == 0) {
 
 // Verificar permisos y obtener datos de la encuesta (usar id_encCampo)
 $query_encuesta = "SELECT doc_encVenta, nom_encVenta FROM encuestacampo WHERE id_encCampo = $id_encuesta";
-if ($tipo_usu != '1') {
+if ($tipo_usu != '1' && $tipo_usu != '5') {
     $query_encuesta .= " AND id_usu = $id_usu";
 }
 
@@ -52,7 +52,7 @@ if (isset($_POST['confirmar_eliminacion'])) {
         
     // Eliminar la encuesta
     $sql_delete_encuesta = "DELETE FROM encuestacampo WHERE id_encCampo = $id_encuesta";
-        if ($tipo_usu != '1') {
+        if ($tipo_usu != '1' && $tipo_usu != '5') {
             $sql_delete_encuesta .= " AND id_usu = $id_usu";
         }
         

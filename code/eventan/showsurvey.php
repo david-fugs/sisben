@@ -294,7 +294,7 @@ header("Content-Type: text/html;charset=utf-8");
 						WHERE (encventanilla.doc_encVenta LIKE '%$doc_encVenta%') 
 						AND (encventanilla.num_ficha_encVenta LIKE '%$num_ficha_encVenta%')";
 
-			if ($tipo_usu != '1') {
+			if ($tipo_usu != '1' && $tipo_usu != '6') {
 				$query .= " AND encventanilla.id_usu = $id_usu";
 			}
 
@@ -337,7 +337,7 @@ header("Content-Type: text/html;charset=utf-8");
 						WHERE (encventanilla.doc_encVenta LIKE '%" . $doc_encVenta . "%') 
 						AND (encventanilla.num_ficha_encVenta LIKE '%" . $num_ficha_encVenta . "%')";
 
-			if ($tipo_usu != '1') {
+			if ($tipo_usu != '1' && $tipo_usu != '6') {
 				$consulta .= " AND encventanilla.id_usu = $id_usu";
 			}			$consulta .= " ORDER BY encventanilla.fec_reg_encVenta ASC 
 						LIMIT " . (($paginacion->get_page() - 1) * $resul_x_pagina) . "," . $resul_x_pagina;

@@ -75,7 +75,7 @@ while ($integrante = $resultado_integrantes->fetch_assoc()) {
 }
 
 // Verificar permisos: solo el usuario que creó la encuesta o admin puede editarla
-if ($tipo_usu != 1 && $encuesta['id_usu'] != $id_usu) {
+if ($tipo_usu != 1 && $encuesta['id_usu'] != $id_usu && $tipo_usu != '6')  {
     header("Location: showEncuestas.php");
     exit();
 }
