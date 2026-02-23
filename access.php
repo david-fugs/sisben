@@ -877,11 +877,13 @@ $tipo_usu     = $_SESSION['tipo_usu'];
               Digitación Encuesta Campo
             </a>
           <?php } ?>
-
+                
+          <?php if ($tipo_usu != 2) { ?>
           <a href="code/exportares/exportar.php" class="action-btn">
             <i class="fas fa-download"></i>
             Generar Reportes
           </a>
+          <?php } ?>
         </div>
       </div>
       <?php } ?>
