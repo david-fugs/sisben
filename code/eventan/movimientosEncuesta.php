@@ -1125,7 +1125,7 @@ header("Content-Type: text/html;charset=utf-8");
                         <div class="row g-3 mb-3">
                             <div class="col-md-12">
                                 <label for="nom_encVenta" class="form-label">Nombres Completos <span class="text-danger">*</span></label>
-                                <input type='text' name='nom_encVenta' id="nom_encVenta" class='form-control' required style="text-transform:uppercase;" />
+                                <input type='text' name='nom_encVenta' id="nom_encVenta" class='form-control' required style="text-transform:uppercase;"  />
                             </div>
                         </div>
                         <div class="row g-3 mb-3">
@@ -1158,7 +1158,7 @@ header("Content-Type: text/html;charset=utf-8");
                         <div class="row">
                             <div class="form-group col-md-4">
                                 <label for="zona_encVenta">* ZONA:</label>
-                                <select id="zona_encVenta" class="form-control" name="zona_encVenta">
+                                <select id="zona_encVenta" class="form-control" name="zona_encVenta" required >
                                     <option value="">* SELECCIONE LA ZONA:</option>
                                     <option value="URBANA">URBANA</option>
                                     <option value="RURAL">RURAL</option>
@@ -1166,7 +1166,7 @@ header("Content-Type: text/html;charset=utf-8");
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="movimientos">* MOVIMIENTOS:</label>
-                                <select class="form-control" name="movimientos" id="selectEF">
+                                <select class="form-control" name="movimientos" id="selectEF" required >
                                     <option value=""></option>
                                     <option value="inclusion">Inclusion</option>
                                     <option value="Inconformidad por clasificacion">Inconformidad por clasificación</option>
