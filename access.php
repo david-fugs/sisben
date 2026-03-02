@@ -970,6 +970,7 @@ $tipo_usu     = $_SESSION['tipo_usu'];
       </div>
     </div>
     <?php } ?>
+    
   </main>
 
   <!-- JavaScript -->
