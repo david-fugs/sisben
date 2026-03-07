@@ -147,6 +147,47 @@ if ($res_integrantes === false) {
     exit;
 }
 
+// Consulta 3: Totales de INFORMACION
+$sql_totales_informacion = "
+SELECT
+    COUNT(*) AS total_registros_info
+FROM informacion i
+" . (!empty($fecha_inicio) && !empty($fecha_fin) ? "WHERE i.fecha_alta_info BETWEEN '$fecha_inicio_completa' AND '$fecha_fin_completa'" : "") . "
+";
+$res_info = mysqli_query($mysqli, $sql_totales_informacion);
+if ($res_info === false) {
+    echo "Error en la consulta de información: " . mysqli_error($mysqli);
+    exit;
+}
+
+// Consulta 4: Totales de MOVIMIENTOS
+$sql_totales_movimientos = "
+SELECT
+    COUNT(*) AS total_registros_mov
+FROM movimientos m
+" . (!empty($fecha_inicio) && !empty($fecha_fin) ? "WHERE m.fecha_movimiento BETWEEN '$fecha_inicio_completa' AND '$fecha_fin_completa'" : "") . "
+";
+$res_mov = mysqli_query($mysqli, $sql_totales_movimientos);
+if ($res_mov === false) {
+    echo "Error en la consulta de movimientos: " . mysqli_error($mysqli);
+    exit;
+}
+
+// Consulta 5: Totales de integrantes de MOVIMIENTOS
+$sql_integrantes_movimientos = "
+SELECT 
+    COUNT(*) AS total_integrantes_mov
+FROM integmovimientos_independiente im
+" . (!empty($fecha_inicio) && !empty($fecha_fin) ? "
+JOIN movimientos m ON im.id_movimiento = m.id_movimiento 
+WHERE m.fecha_movimiento BETWEEN '$fecha_inicio_completa' AND '$fecha_fin_completa'" : "") . "
+";
+$res_integ_mov = mysqli_query($mysqli, $sql_integrantes_movimientos);
+if ($res_integ_mov === false) {
+    echo "Error en la consulta de integrantes movimientos: " . mysqli_error($mysqli);
+    exit;
+}
+
 // Aplicar color de fondo a las celdas A1 a 
 $sheet->getStyle('A1:L1')->applyFromArray([
     'fill' => [
@@ -226,7 +267,7 @@ $sheet->getStyle('A9:S9')->applyFromArray(['font' => $styleHeader, 'fill' => $st
 
 // // Definir los encabezados de columna
 
-$sheet->setCellValue('A1', 'TOTAL REGISTROS');
+$sheet->setCellValue('A1', 'TOTAL REGISTROS VENTANILLA');
 $sheet->setCellValue('B1', 'CAMBIO DIRECCION');
 $sheet->setCellValue('C1', 'ENCUESTA NUEVA');
 $sheet->setCellValue('D1', 'DESCENTRALIZADAS');
@@ -237,7 +278,23 @@ $sheet->setCellValue('H1', 'SISBEN NOCTURNO SI');
 $sheet->setCellValue('I1', 'SISBEN NOCTURNO NO');
 $sheet->setCellValue('J1', 'ZONA URBANA');
 $sheet->setCellValue('K1', 'ZONA RURAL');
-$sheet->setCellValue('L1', 'TOTAL INTEGRANTES');
+$sheet->setCellValue('L1', 'TOTAL INTEGRANTES VENTANILLA');
+$sheet->setCellValue('M1', 'TOTAL REGISTROS INFORMACIÓN');
+$sheet->setCellValue('N1', 'TOTAL REGISTROS MOVIMIENTOS');
+
+// Ajustar el ancho de las nuevas columnas
+$sheet->getColumnDimension('M')->setWidth(25);
+$sheet->getColumnDimension('N')->setWidth(25);
+
+// Aplicar color y estilo a las nuevas columnas
+$sheet->getStyle('A1:N1')->applyFromArray([
+    'fill' => [
+        'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+        'startColor' => [
+            'rgb' => 'ffd880',
+        ],
+    ],
+]);
 
 
 
@@ -259,11 +316,18 @@ while ($row = mysqli_fetch_array($res, MYSQLI_ASSOC)) {
     $rowIndex++;
 }
 
+// Agregar totales de informacion y movimientos en la fila 2
+$row_info = mysqli_fetch_array($res_info, MYSQLI_ASSOC);
+$row_mov = mysqli_fetch_array($res_mov, MYSQLI_ASSOC);
+$sheet->setCellValue('M2', $row_info['total_registros_info']);
+$sheet->setCellValue('N2', $row_mov['total_registros_mov']);
+$sheet->getStyle('M2:N2')->applyFromArray(['font' => $boldFontStyle]);
+
 
 // Título de totales generales de integrantes en la fila 4
 $tituloRow = 4;
 $sheet->mergeCells("A$tituloRow:P$tituloRow");
-$sheet->setCellValue("A$tituloRow", "TOTALES GENERALES DE INTEGRANTES");
+$sheet->setCellValue("A$tituloRow", "TOTALES GENERALES DE INTEGRANTES VENTANILLA");
 $sheet->getStyle("A$tituloRow")->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
 $sheet->getStyle("A$tituloRow")->getFont()->setBold(true)->setSize(14);
 
@@ -292,13 +356,36 @@ foreach ($rowIntegrante as $nombreCampo => $valorTotal) {
     $colIndex++;
 }
 
+// Calcular la siguiente fila después de integrantes ventanilla
+$siguienteFilaLibre = $rowIntegranteIndex + 2;
+
+// NUEVA SECCIÓN: Totales de integrantes de MOVIMIENTOS
+$sheet->mergeCells("A$siguienteFilaLibre:P$siguienteFilaLibre");
+$sheet->setCellValue("A$siguienteFilaLibre", "TOTALES GENERALES DE INTEGRANTES MOVIMIENTOS");
+$sheet->getStyle("A$siguienteFilaLibre")->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+$sheet->getStyle("A$siguienteFilaLibre")->getFont()->setBold(true)->setSize(14);
+$sheet->getStyle("A$siguienteFilaLibre:P$siguienteFilaLibre")->applyFromArray([
+    'fill' => [
+        'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+        'startColor' => [
+            'rgb' => 'ffd880',
+        ],
+    ],
+]);
+
+$siguienteFilaLibre++;
+$row_integ_mov = mysqli_fetch_assoc($res_integ_mov);
+$sheet->setCellValue("A$siguienteFilaLibre", "Total Integrantes Movimientos");
+$sheet->setCellValue("B$siguienteFilaLibre", $row_integ_mov['total_integrantes_mov']);
+$sheet->getStyle("A$siguienteFilaLibre:B$siguienteFilaLibre")->applyFromArray(['font' => $boldFontStyle]);
+
 //titulo de rangos de edad por barrio
 // Fila donde se escribirá el título 
-$tituloRow = 9;
+$tituloRow = $siguienteFilaLibre + 2;
 // Unir celdas de A a S para abarcar todas las columnas necesarias
 $sheet->mergeCells("A$tituloRow:S$tituloRow");
 // Escribir el título
-$sheet->setCellValue("A$tituloRow", "RANGOS DE EDAD POR BARRIO Y GÉNERO");
+$sheet->setCellValue("A$tituloRow", "RANGOS DE EDAD POR BARRIO Y GÉNERO - VENTANILLA");
 // Centrar el texto
 $sheet->getStyle("A$tituloRow")->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
 // (Opcional) Negrita y tamaño de fuente
@@ -437,6 +524,472 @@ $sheet->getStyle("A$rowBarrioIndex:S$rowBarrioIndex")->applyFromArray([
         'startColor' => [
             'rgb' => 'ffcc99', // Color diferente para los totales
         ],
+    ],
+]);
+
+// ============================================
+// CREAR SEGUNDA HOJA: RANGOS DE EDAD POR BARRIO - INFORMACION
+// ============================================
+$sheet2 = $spreadsheet->createSheet();
+$sheet2->setTitle('Rangos Barrio - Información');
+
+// Consulta para rangos de edad por barrio para INFORMACION
+$sql_barrio_info = "
+SELECT 
+    b.nombre_bar,
+    c.nombre_com,
+    COUNT(CASE WHEN i.gen_integVenta = 'M' AND i.rango_integVenta LIKE '0 -%' THEN 1 END) AS masculino_0_6,
+    COUNT(CASE WHEN i.gen_integVenta = 'F' AND i.rango_integVenta LIKE '0 -%' THEN 1 END) AS femenino_0_6,
+    COUNT(CASE WHEN i.gen_integVenta = 'M' AND i.rango_integVenta LIKE '7 -%' THEN 1 END) AS masculino_7_12,
+    COUNT(CASE WHEN i.gen_integVenta = 'F' AND i.rango_integVenta LIKE '7 -%' THEN 1 END) AS femenino_7_12,
+    COUNT(CASE WHEN i.gen_integVenta = 'M' AND i.rango_integVenta LIKE '13 -%' THEN 1 END) AS masculino_13_17,
+    COUNT(CASE WHEN i.gen_integVenta = 'F' AND i.rango_integVenta LIKE '13 -%' THEN 1 END) AS femenino_13_17,
+    COUNT(CASE WHEN i.gen_integVenta = 'M' AND i.rango_integVenta LIKE '18 -%' THEN 1 END) AS masculino_18_28,
+    COUNT(CASE WHEN i.gen_integVenta = 'F' AND i.rango_integVenta LIKE '18 -%' THEN 1 END) AS femenino_18_28,
+    COUNT(CASE WHEN i.gen_integVenta = 'M' AND i.rango_integVenta LIKE '29 -%' THEN 1 END) AS masculino_29_45,
+    COUNT(CASE WHEN i.gen_integVenta = 'F' AND i.rango_integVenta LIKE '29 -%' THEN 1 END) AS femenino_29_45,
+    COUNT(CASE WHEN i.gen_integVenta = 'M' AND i.rango_integVenta LIKE '46 -%' THEN 1 END) AS masculino_46_64,
+    COUNT(CASE WHEN i.gen_integVenta = 'F' AND i.rango_integVenta LIKE '46 -%' THEN 1 END) AS femenino_46_64,
+    COUNT(CASE WHEN i.gen_integVenta = 'M' AND i.rango_integVenta LIKE 'Mayor%' THEN 1 END) AS masculino_mayor_65,
+    COUNT(CASE WHEN i.gen_integVenta = 'F' AND i.rango_integVenta LIKE 'Mayor%' THEN 1 END) AS femenino_mayor_65,
+    COUNT(*) AS total_por_barrio
+FROM informacion i
+LEFT JOIN barrios b ON i.id_bar = b.id_bar
+LEFT JOIN comunas c ON b.id_com = c.id_com
+" . (!empty($fecha_inicio) && !empty($fecha_fin) ? "WHERE i.fecha_alta_info BETWEEN '$fecha_inicio_completa' AND '$fecha_fin_completa'" : "") . "
+GROUP BY b.nombre_bar, b.id_bar, c.nombre_com
+ORDER BY total_por_barrio DESC
+";
+$res_barrio_info = mysqli_query($mysqli, $sql_barrio_info);
+
+// Configurar columnas de la hoja 2
+foreach (range('A', 'S') as $col) {
+    $sheet2->getColumnDimension($col)->setWidth($col == 'A' ? 25 : ($col == 'B' ? 20 : 12));
+}
+$sheet2->getDefaultRowDimension()->setRowHeight(25);
+
+// Título
+$sheet2->mergeCells('A1:S1');
+$sheet2->setCellValue('A1', 'RANGOS DE EDAD POR BARRIO Y GÉNERO - INFORMACIÓN');
+$sheet2->getStyle('A1')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+$sheet2->getStyle('A1')->getFont()->setBold(true)->setSize(14);
+$sheet2->getStyle('A1:S1')->applyFromArray([
+    'fill' => [
+        'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+        'startColor' => ['rgb' => 'ffd880'],
+    ],
+]);
+
+// Encabezados
+$row2 = 2;
+$sheet2->setCellValue('A' . $row2, 'BARRIO');
+$sheet2->setCellValue('B' . $row2, 'COMUNA');
+$sheet2->setCellValue('C' . $row2, 'M 0-5');
+$sheet2->setCellValue('D' . $row2, 'M 6-12');
+$sheet2->setCellValue('E' . $row2, 'M 13-17');
+$sheet2->setCellValue('F' . $row2, 'M 18-28');
+$sheet2->setCellValue('G' . $row2, 'M 29-45');
+$sheet2->setCellValue('H' . $row2, 'M 46-64');
+$sheet2->setCellValue('I' . $row2, 'M +65');
+$sheet2->setCellValue('J' . $row2, 'TOTAL M');
+$sheet2->setCellValue('K' . $row2, 'F 0-5');
+$sheet2->setCellValue('L' . $row2, 'F 6-12');
+$sheet2->setCellValue('M' . $row2, 'F 13-17');
+$sheet2->setCellValue('N' . $row2, 'F 18-28');
+$sheet2->setCellValue('O' . $row2, 'F 29-45');
+$sheet2->setCellValue('P' . $row2, 'F 46-64');
+$sheet2->setCellValue('Q' . $row2, 'F +65');
+$sheet2->setCellValue('R' . $row2, 'TOTAL F');
+$sheet2->setCellValue('S' . $row2, 'TOTAL');
+$sheet2->getStyle("A$row2:S$row2")->applyFromArray(['font' => $boldFontStyle]);
+$sheet2->getStyle("A$row2:S$row2")->applyFromArray([
+    'fill' => [
+        'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+        'startColor' => ['rgb' => 'ffd880'],
+    ],
+]);
+
+// Datos
+$row2++;
+$totales_info = [
+    'masculino_0_6' => 0, 'masculino_7_12' => 0, 'masculino_13_17' => 0, 'masculino_18_28' => 0,
+    'masculino_29_45' => 0, 'masculino_46_64' => 0, 'masculino_mayor_65' => 0,
+    'femenino_0_6' => 0, 'femenino_7_12' => 0, 'femenino_13_17' => 0, 'femenino_18_28' => 0,
+    'femenino_29_45' => 0, 'femenino_46_64' => 0, 'femenino_mayor_65' => 0,
+    'total_masculino' => 0, 'total_femenino' => 0, 'total_general' => 0
+];
+
+while ($rowBarrio = mysqli_fetch_assoc($res_barrio_info)) {
+    $totalMasculino = $rowBarrio['masculino_0_6'] + $rowBarrio['masculino_7_12'] + $rowBarrio['masculino_13_17'] + 
+                     $rowBarrio['masculino_18_28'] + $rowBarrio['masculino_29_45'] + $rowBarrio['masculino_46_64'] + 
+                     $rowBarrio['masculino_mayor_65'];
+    
+    $totalFemenino = $rowBarrio['femenino_0_6'] + $rowBarrio['femenino_7_12'] + $rowBarrio['femenino_13_17'] + 
+                    $rowBarrio['femenino_18_28'] + $rowBarrio['femenino_29_45'] + $rowBarrio['femenino_46_64'] + 
+                    $rowBarrio['femenino_mayor_65'];
+    
+    // Acumular totales
+    $totales_info['masculino_0_6'] += $rowBarrio['masculino_0_6'];
+    $totales_info['masculino_7_12'] += $rowBarrio['masculino_7_12'];
+    $totales_info['masculino_13_17'] += $rowBarrio['masculino_13_17'];
+    $totales_info['masculino_18_28'] += $rowBarrio['masculino_18_28'];
+    $totales_info['masculino_29_45'] += $rowBarrio['masculino_29_45'];
+    $totales_info['masculino_46_64'] += $rowBarrio['masculino_46_64'];
+    $totales_info['masculino_mayor_65'] += $rowBarrio['masculino_mayor_65'];
+    $totales_info['femenino_0_6'] += $rowBarrio['femenino_0_6'];
+    $totales_info['femenino_7_12'] += $rowBarrio['femenino_7_12'];
+    $totales_info['femenino_13_17'] += $rowBarrio['femenino_13_17'];
+    $totales_info['femenino_18_28'] += $rowBarrio['femenino_18_28'];
+    $totales_info['femenino_29_45'] += $rowBarrio['femenino_29_45'];
+    $totales_info['femenino_46_64'] += $rowBarrio['femenino_46_64'];
+    $totales_info['femenino_mayor_65'] += $rowBarrio['femenino_mayor_65'];
+    $totales_info['total_masculino'] += $totalMasculino;
+    $totales_info['total_femenino'] += $totalFemenino;
+    $totales_info['total_general'] += ($totalMasculino + $totalFemenino);
+    
+    // Escribir datos
+    $sheet2->setCellValue('A' . $row2, $rowBarrio['nombre_bar']);
+    $sheet2->setCellValue('B' . $row2, $rowBarrio['nombre_com']);
+    $sheet2->setCellValue('C' . $row2, $rowBarrio['masculino_0_6']);
+    $sheet2->setCellValue('D' . $row2, $rowBarrio['masculino_7_12']);
+    $sheet2->setCellValue('E' . $row2, $rowBarrio['masculino_13_17']);
+    $sheet2->setCellValue('F' . $row2, $rowBarrio['masculino_18_28']);
+    $sheet2->setCellValue('G' . $row2, $rowBarrio['masculino_29_45']);
+    $sheet2->setCellValue('H' . $row2, $rowBarrio['masculino_46_64']);
+    $sheet2->setCellValue('I' . $row2, $rowBarrio['masculino_mayor_65']);
+    $sheet2->setCellValue('J' . $row2, $totalMasculino);
+    $sheet2->setCellValue('K' . $row2, $rowBarrio['femenino_0_6']);
+    $sheet2->setCellValue('L' . $row2, $rowBarrio['femenino_7_12']);
+    $sheet2->setCellValue('M' . $row2, $rowBarrio['femenino_13_17']);
+    $sheet2->setCellValue('N' . $row2, $rowBarrio['femenino_18_28']);
+    $sheet2->setCellValue('O' . $row2, $rowBarrio['femenino_29_45']);
+    $sheet2->setCellValue('P' . $row2, $rowBarrio['femenino_46_64']);
+    $sheet2->setCellValue('Q' . $row2, $rowBarrio['femenino_mayor_65']);
+    $sheet2->setCellValue('R' . $row2, $totalFemenino);
+    $sheet2->setCellValue('S' . $row2, $totalMasculino + $totalFemenino);
+    
+    $row2++;
+}
+
+// Agregar fila de totales generales para información
+$sheet2->setCellValue('A' . $row2, 'TOTALES GENERALES');
+$sheet2->setCellValue('B' . $row2, '');
+$sheet2->setCellValue('C' . $row2, $totales_info['masculino_0_6']);
+$sheet2->setCellValue('D' . $row2, $totales_info['masculino_7_12']);
+$sheet2->setCellValue('E' . $row2, $totales_info['masculino_13_17']);
+$sheet2->setCellValue('F' . $row2, $totales_info['masculino_18_28']);
+$sheet2->setCellValue('G' . $row2, $totales_info['masculino_29_45']);
+$sheet2->setCellValue('H' . $row2, $totales_info['masculino_46_64']);
+$sheet2->setCellValue('I' . $row2, $totales_info['masculino_mayor_65']);
+$sheet2->setCellValue('J' . $row2, $totales_info['total_masculino']);
+$sheet2->setCellValue('K' . $row2, $totales_info['femenino_0_6']);
+$sheet2->setCellValue('L' . $row2, $totales_info['femenino_7_12']);
+$sheet2->setCellValue('M' . $row2, $totales_info['femenino_13_17']);
+$sheet2->setCellValue('N' . $row2, $totales_info['femenino_18_28']);
+$sheet2->setCellValue('O' . $row2, $totales_info['femenino_29_45']);
+$sheet2->setCellValue('P' . $row2, $totales_info['femenino_46_64']);
+$sheet2->setCellValue('Q' . $row2, $totales_info['femenino_mayor_65']);
+$sheet2->setCellValue('R' . $row2, $totales_info['total_femenino']);
+$sheet2->setCellValue('S' . $row2, $totales_info['total_general']);
+$sheet2->getStyle("A$row2:S$row2")->applyFromArray(['font' => $boldFontStyle]);
+$sheet2->getStyle("A$row2:S$row2")->applyFromArray([
+    'fill' => [
+        'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+        'startColor' => ['rgb' => 'ffcc99'],
+    ],
+]);
+
+// ============================================
+// CREAR TERCERA HOJA: RANGOS DE EDAD POR BARRIO - MOVIMIENTOS
+// ============================================
+$sheet3 = $spreadsheet->createSheet();
+$sheet3->setTitle('Rangos Barrio - Movimientos');
+
+// Consulta para rangos de edad por barrio para MOVIMIENTOS
+// NOTA: Solo cuenta integrantes de integmovimientos_independiente, 
+// porque la tabla movimientos no almacena género/edad de la persona principal
+$sql_barrio_mov = "
+SELECT 
+    b.nombre_bar,
+    c.nombre_com,
+    SUM(CASE WHEN im.gen_integMovIndep = 'M' AND im.rango_integMovIndep LIKE '0 -%' THEN 1 ELSE 0 END) AS masculino_0_6,
+    SUM(CASE WHEN im.gen_integMovIndep = 'F' AND im.rango_integMovIndep LIKE '0 -%' THEN 1 ELSE 0 END) AS femenino_0_6,
+    SUM(CASE WHEN im.gen_integMovIndep = 'M' AND im.rango_integMovIndep LIKE '7 -%' THEN 1 ELSE 0 END) AS masculino_7_12,
+    SUM(CASE WHEN im.gen_integMovIndep = 'F' AND im.rango_integMovIndep LIKE '7 -%' THEN 1 ELSE 0 END) AS femenino_7_12,
+    SUM(CASE WHEN im.gen_integMovIndep = 'M' AND im.rango_integMovIndep LIKE '13 -%' THEN 1 ELSE 0 END) AS masculino_13_17,
+    SUM(CASE WHEN im.gen_integMovIndep = 'F' AND im.rango_integMovIndep LIKE '13 -%' THEN 1 ELSE 0 END) AS femenino_13_17,
+    SUM(CASE WHEN im.gen_integMovIndep = 'M' AND im.rango_integMovIndep LIKE '18 -%' THEN 1 ELSE 0 END) AS masculino_18_28,
+    SUM(CASE WHEN im.gen_integMovIndep = 'F' AND im.rango_integMovIndep LIKE '18 -%' THEN 1 ELSE 0 END) AS femenino_18_28,
+    SUM(CASE WHEN im.gen_integMovIndep = 'M' AND im.rango_integMovIndep LIKE '29 -%' THEN 1 ELSE 0 END) AS masculino_29_45,
+    SUM(CASE WHEN im.gen_integMovIndep = 'F' AND im.rango_integMovIndep LIKE '29 -%' THEN 1 ELSE 0 END) AS femenino_29_45,
+    SUM(CASE WHEN im.gen_integMovIndep = 'M' AND im.rango_integMovIndep LIKE '46 -%' THEN 1 ELSE 0 END) AS masculino_46_64,
+    SUM(CASE WHEN im.gen_integMovIndep = 'F' AND im.rango_integMovIndep LIKE '46 -%' THEN 1 ELSE 0 END) AS femenino_46_64,
+    SUM(CASE WHEN im.gen_integMovIndep = 'M' AND im.rango_integMovIndep LIKE 'Mayor%' THEN 1 ELSE 0 END) AS masculino_mayor_65,
+    SUM(CASE WHEN im.gen_integMovIndep = 'F' AND im.rango_integMovIndep LIKE 'Mayor%' THEN 1 ELSE 0 END) AS femenino_mayor_65,
+    COUNT(DISTINCT m.id_movimiento) AS total_por_barrio
+FROM movimientos m
+LEFT JOIN integmovimientos_independiente im ON m.id_movimiento = im.id_movimiento
+LEFT JOIN barrios b ON m.id_bar = b.id_bar
+LEFT JOIN comunas c ON b.id_com = c.id_com
+" . (!empty($fecha_inicio) && !empty($fecha_fin) ? "WHERE m.fecha_movimiento BETWEEN '$fecha_inicio_completa' AND '$fecha_fin_completa'" : "") . "
+GROUP BY b.nombre_bar, b.id_bar, c.nombre_com
+ORDER BY total_por_barrio DESC
+";
+$res_barrio_mov = mysqli_query($mysqli, $sql_barrio_mov);
+
+// Configurar columnas de la hoja 3
+foreach (range('A', 'S') as $col) {
+    $sheet3->getColumnDimension($col)->setWidth($col == 'A' ? 25 : ($col == 'B' ? 20 : 12));
+}
+$sheet3->getDefaultRowDimension()->setRowHeight(25);
+
+// Título
+$sheet3->mergeCells('A1:S1');
+$sheet3->setCellValue('A1', 'RANGOS DE EDAD POR BARRIO Y GÉNERO - MOVIMIENTOS');
+$sheet3->getStyle('A1')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+$sheet3->getStyle('A1')->getFont()->setBold(true)->setSize(14);
+$sheet3->getStyle('A1:S1')->applyFromArray([
+    'fill' => [
+        'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+        'startColor' => ['rgb' => 'ffd880'],
+    ],
+]);
+
+// Encabezados
+$row3 = 2;
+$sheet3->setCellValue('A' . $row3, 'BARRIO');
+$sheet3->setCellValue('B' . $row3, 'COMUNA');
+$sheet3->setCellValue('C' . $row3, 'M 0-5');
+$sheet3->setCellValue('D' . $row3, 'M 6-12');
+$sheet3->setCellValue('E' . $row3, 'M 13-17');
+$sheet3->setCellValue('F' . $row3, 'M 18-28');
+$sheet3->setCellValue('G' . $row3, 'M 29-45');
+$sheet3->setCellValue('H' . $row3, 'M 46-64');
+$sheet3->setCellValue('I' . $row3, 'M +65');
+$sheet3->setCellValue('J' . $row3, 'TOTAL M');
+$sheet3->setCellValue('K' . $row3, 'F 0-5');
+$sheet3->setCellValue('L' . $row3, 'F 6-12');
+$sheet3->setCellValue('M' . $row3, 'F 13-17');
+$sheet3->setCellValue('N' . $row3, 'F 18-28');
+$sheet3->setCellValue('O' . $row3, 'F 29-45');
+$sheet3->setCellValue('P' . $row3, 'F 46-64');
+$sheet3->setCellValue('Q' . $row3, 'F +65');
+$sheet3->setCellValue('R' . $row3, 'TOTAL F');
+$sheet3->setCellValue('S' . $row3, 'TOTAL');
+$sheet3->getStyle("A$row3:S$row3")->applyFromArray(['font' => $boldFontStyle]);
+$sheet3->getStyle("A$row3:S$row3")->applyFromArray([
+    'fill' => [
+        'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+        'startColor' => ['rgb' => 'ffd880'],
+    ],
+]);
+
+// Datos
+$row3++;
+$totales_mov = [
+    'masculino_0_6' => 0, 'masculino_7_12' => 0, 'masculino_13_17' => 0, 'masculino_18_28' => 0,
+    'masculino_29_45' => 0, 'masculino_46_64' => 0, 'masculino_mayor_65' => 0,
+    'femenino_0_6' => 0, 'femenino_7_12' => 0, 'femenino_13_17' => 0, 'femenino_18_28' => 0,
+    'femenino_29_45' => 0, 'femenino_46_64' => 0, 'femenino_mayor_65' => 0,
+    'total_masculino' => 0, 'total_femenino' => 0, 'total_general' => 0
+];
+
+while ($rowBarrio = mysqli_fetch_assoc($res_barrio_mov)) {
+    $totalMasculino = $rowBarrio['masculino_0_6'] + $rowBarrio['masculino_7_12'] + $rowBarrio['masculino_13_17'] + 
+                     $rowBarrio['masculino_18_28'] + $rowBarrio['masculino_29_45'] + $rowBarrio['masculino_46_64'] + 
+                     $rowBarrio['masculino_mayor_65'];
+    
+    $totalFemenino = $rowBarrio['femenino_0_6'] + $rowBarrio['femenino_7_12'] + $rowBarrio['femenino_13_17'] + 
+                    $rowBarrio['femenino_18_28'] + $rowBarrio['femenino_29_45'] + $rowBarrio['femenino_46_64'] + 
+                    $rowBarrio['femenino_mayor_65'];
+    
+    // Acumular totales
+    $totales_mov['masculino_0_6'] += $rowBarrio['masculino_0_6'];
+    $totales_mov['masculino_7_12'] += $rowBarrio['masculino_7_12'];
+    $totales_mov['masculino_13_17'] += $rowBarrio['masculino_13_17'];
+    $totales_mov['masculino_18_28'] += $rowBarrio['masculino_18_28'];
+    $totales_mov['masculino_29_45'] += $rowBarrio['masculino_29_45'];
+    $totales_mov['masculino_46_64'] += $rowBarrio['masculino_46_64'];
+    $totales_mov['masculino_mayor_65'] += $rowBarrio['masculino_mayor_65'];
+    $totales_mov['femenino_0_6'] += $rowBarrio['femenino_0_6'];
+    $totales_mov['femenino_7_12'] += $rowBarrio['femenino_7_12'];
+    $totales_mov['femenino_13_17'] += $rowBarrio['femenino_13_17'];
+    $totales_mov['femenino_18_28'] += $rowBarrio['femenino_18_28'];
+    $totales_mov['femenino_29_45'] += $rowBarrio['femenino_29_45'];
+    $totales_mov['femenino_46_64'] += $rowBarrio['femenino_46_64'];
+    $totales_mov['femenino_mayor_65'] += $rowBarrio['femenino_mayor_65'];
+    $totales_mov['total_masculino'] += $totalMasculino;
+    $totales_mov['total_femenino'] += $totalFemenino;
+    $totales_mov['total_general'] += ($totalMasculino + $totalFemenino);
+    
+    // Escribir datos
+    $sheet3->setCellValue('A' . $row3, $rowBarrio['nombre_bar']);
+    $sheet3->setCellValue('B' . $row3, $rowBarrio['nombre_com']);
+    $sheet3->setCellValue('C' . $row3, $rowBarrio['masculino_0_6']);
+    $sheet3->setCellValue('D' . $row3, $rowBarrio['masculino_7_12']);
+    $sheet3->setCellValue('E' . $row3, $rowBarrio['masculino_13_17']);
+    $sheet3->setCellValue('F' . $row3, $rowBarrio['masculino_18_28']);
+    $sheet3->setCellValue('G' . $row3, $rowBarrio['masculino_29_45']);
+    $sheet3->setCellValue('H' . $row3, $rowBarrio['masculino_46_64']);
+    $sheet3->setCellValue('I' . $row3, $rowBarrio['masculino_mayor_65']);
+    $sheet3->setCellValue('J' . $row3, $totalMasculino);
+    $sheet3->setCellValue('K' . $row3, $rowBarrio['femenino_0_6']);
+    $sheet3->setCellValue('L' . $row3, $rowBarrio['femenino_7_12']);
+    $sheet3->setCellValue('M' . $row3, $rowBarrio['femenino_13_17']);
+    $sheet3->setCellValue('N' . $row3, $rowBarrio['femenino_18_28']);
+    $sheet3->setCellValue('O' . $row3, $rowBarrio['femenino_29_45']);
+    $sheet3->setCellValue('P' . $row3, $rowBarrio['femenino_46_64']);
+    $sheet3->setCellValue('Q' . $row3, $rowBarrio['femenino_mayor_65']);
+    $sheet3->setCellValue('R' . $row3, $totalFemenino);
+    $sheet3->setCellValue('S' . $row3, $totalMasculino + $totalFemenino);
+    
+    $row3++;
+}
+
+// Agregar fila de totales generales para movimientos
+$sheet3->setCellValue('A' . $row3, 'TOTALES GENERALES');
+$sheet3->setCellValue('B' . $row3, '');
+$sheet3->setCellValue('C' . $row3, $totales_mov['masculino_0_6']);
+$sheet3->setCellValue('D' . $row3, $totales_mov['masculino_7_12']);
+$sheet3->setCellValue('E' . $row3, $totales_mov['masculino_13_17']);
+$sheet3->setCellValue('F' . $row3, $totales_mov['masculino_18_28']);
+$sheet3->setCellValue('G' . $row3, $totales_mov['masculino_29_45']);
+$sheet3->setCellValue('H' . $row3, $totales_mov['masculino_46_64']);
+$sheet3->setCellValue('I' . $row3, $totales_mov['masculino_mayor_65']);
+$sheet3->setCellValue('J' . $row3, $totales_mov['total_masculino']);
+$sheet3->setCellValue('K' . $row3, $totales_mov['femenino_0_6']);
+$sheet3->setCellValue('L' . $row3, $totales_mov['femenino_7_12']);
+$sheet3->setCellValue('M' . $row3, $totales_mov['femenino_13_17']);
+$sheet3->setCellValue('N' . $row3, $totales_mov['femenino_18_28']);
+$sheet3->setCellValue('O' . $row3, $totales_mov['femenino_29_45']);
+$sheet3->setCellValue('P' . $row3, $totales_mov['femenino_46_64']);
+$sheet3->setCellValue('Q' . $row3, $totales_mov['femenino_mayor_65']);
+$sheet3->setCellValue('R' . $row3, $totales_mov['total_femenino']);
+$sheet3->setCellValue('S' . $row3, $totales_mov['total_general']);
+$sheet3->getStyle("A$row3:S$row3")->applyFromArray(['font' => $boldFontStyle]);
+$sheet3->getStyle("A$row3:S$row3")->applyFromArray([
+    'fill' => [
+        'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+        'startColor' => ['rgb' => 'ffcc99'],
+    ],
+]);
+
+// ============================================
+// CREAR CUARTA HOJA: TOTALES CONSOLIDADOS
+// ============================================
+$sheet4 = $spreadsheet->createSheet();
+$sheet4->setTitle('Totales Consolidados');
+
+// Configurar columnas
+$sheet4->getColumnDimension('A')->setWidth(30);
+$sheet4->getColumnDimension('B')->setWidth(15);
+$sheet4->getColumnDimension('C')->setWidth(15);
+$sheet4->getColumnDimension('D')->setWidth(15);
+$sheet4->getColumnDimension('E')->setWidth(15);
+$sheet4->getDefaultRowDimension()->setRowHeight(25);
+
+// Título principal
+$sheet4->mergeCells('A1:E1');
+$sheet4->setCellValue('A1', 'TOTALES CONSOLIDADOS GENERAL');
+$sheet4->getStyle('A1')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+$sheet4->getStyle('A1')->getFont()->setBold(true)->setSize(16);
+$sheet4->getStyle('A1:E1')->applyFromArray([
+    'fill' => [
+        'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+        'startColor' => ['rgb' => '4472C4'],
+    ],
+    'font' => ['color' => ['rgb' => 'FFFFFF']]
+]);
+
+// Encabezados
+$row4 = 3;
+$sheet4->setCellValue('A' . $row4, 'CATEGORÍA');
+$sheet4->setCellValue('B' . $row4, 'VENTANILLA');
+$sheet4->setCellValue('C' . $row4, 'INFORMACIÓN');
+$sheet4->setCellValue('D' . $row4, 'MOVIMIENTOS');
+$sheet4->setCellValue('E' . $row4, 'TOTAL GENERAL');
+$sheet4->getStyle("A$row4:E$row4")->applyFromArray(['font' => $boldFontStyle]);
+$sheet4->getStyle("A$row4:E$row4")->applyFromArray([
+    'fill' => [
+        'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+        'startColor' => ['rgb' => 'ffd880'],
+    ],
+]);
+
+$row4++;
+
+// Totales por género - Masculino
+$sheet4->setCellValue('A' . $row4, 'Total Masculino');
+$sheet4->setCellValue('B' . $row4, $totales['total_masculino']);
+$sheet4->setCellValue('C' . $row4, $totales_info['total_masculino']);
+$sheet4->setCellValue('D' . $row4, $totales_mov['total_masculino']);
+$sheet4->setCellValue('E' . $row4, $totales['total_masculino'] + $totales_info['total_masculino'] + $totales_mov['total_masculino']);
+$row4++;
+
+// Totales por género - Femenino
+$sheet4->setCellValue('A' . $row4, 'Total Femenino');
+$sheet4->setCellValue('B' . $row4, $totales['total_femenino']);
+$sheet4->setCellValue('C' . $row4, $totales_info['total_femenino']);
+$sheet4->setCellValue('D' . $row4, $totales_mov['total_femenino']);
+$sheet4->setCellValue('E' . $row4, $totales['total_femenino'] + $totales_info['total_femenino'] + $totales_mov['total_femenino']);
+$row4++;
+
+// Separador
+$row4++;
+$sheet4->mergeCells("A$row4:E$row4");
+$sheet4->setCellValue("A$row4", 'TOTALES POR RANGO DE EDAD');
+$sheet4->getStyle("A$row4")->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+$sheet4->getStyle("A$row4")->getFont()->setBold(true)->setSize(12);
+$sheet4->getStyle("A$row4:E$row4")->applyFromArray([
+    'fill' => [
+        'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+        'startColor' => ['rgb' => 'D9E2F3'],
+    ],
+]);
+$row4++;
+
+// Rangos de edad
+$rangos = [
+    '0-5 años' => 'masculino_0_6',
+    '6-12 años' => 'masculino_7_12',
+    '13-17 años' => 'masculino_13_17',
+    '18-28 años' => 'masculino_18_28',
+    '29-45 años' => 'masculino_29_45',
+    '46-64 años' => 'masculino_46_64',
+    '65+ años' => 'masculino_mayor_65'
+];
+
+foreach ($rangos as $rango => $key) {
+    $key_masculino = $key;
+    $key_femenino = str_replace('masculino', 'femenino', $key);
+    
+    $total_vent_masc = $totales[$key_masculino] ?? 0;
+    $total_vent_fem = $totales[$key_femenino] ?? 0;
+    $total_info_masc = $totales_info[$key_masculino] ?? 0;
+    $total_info_fem = $totales_info[$key_femenino] ?? 0;
+    $total_mov_masc = $totales_mov[$key_masculino] ?? 0;
+    $total_mov_fem = $totales_mov[$key_femenino] ?? 0;
+    
+    $sheet4->setCellValue('A' . $row4, $rango);
+    $sheet4->setCellValue('B' . $row4, $total_vent_masc + $total_vent_fem);
+    $sheet4->setCellValue('C' . $row4, $total_info_masc + $total_info_fem);
+    $sheet4->setCellValue('D' . $row4, $total_mov_masc + $total_mov_fem);
+    $sheet4->setCellValue('E' . $row4, $total_vent_masc + $total_vent_fem + $total_info_masc + $total_info_fem + $total_mov_masc + $total_mov_fem);
+    $row4++;
+}
+
+// Fila de gran total
+$row4++;
+$sheet4->setCellValue('A' . $row4, 'TOTAL GENERAL');
+$sheet4->setCellValue('B' . $row4, $totales['total_general']);
+$sheet4->setCellValue('C' . $row4, $totales_info['total_general']);
+$sheet4->setCellValue('D' . $row4, $totales_mov['total_general']);
+$sheet4->setCellValue('E' . $row4, $totales['total_general'] + $totales_info['total_general'] + $totales_mov['total_general']);
+$sheet4->getStyle("A$row4:E$row4")->applyFromArray(['font' => $boldFontStyle]);
+$sheet4->getStyle("A$row4:E$row4")->applyFromArray([
+    'fill' => [
+        'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+        'startColor' => ['rgb' => 'FFD966'],
     ],
 ]);
 

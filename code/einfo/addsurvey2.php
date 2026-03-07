@@ -44,6 +44,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $tipo_solic_encInfo    = $_POST['tipo_solic_encInfo'];
     $obs1_encInfo         = mb_strtoupper($_POST['obs1_encInfo']);
     $obs2_encInfo         = mb_strtoupper($_POST['obs2_encInfo']);
+    $id_bar               = isset($_POST['id_bar']) ? $_POST['id_bar'] : '';
+    $id_com               = isset($_POST['id_com']) ? $_POST['id_com'] : '';
+    $otro_bar_ver_info    = isset($_POST['otro_bar_ver_info']) ? mb_strtoupper($_POST['otro_bar_ver_info']) : '';
     $fecha_alta_encVenta    = date('Y-m-d h:i:s');
     $fecha_edit_encVenta    = '0000-00-00 00:00:00';
     $id_usu                 = $_SESSION['id_usu'];
@@ -73,6 +76,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         seguridadSalud,
         nivelEducativo,
         condicionOcupacion,
+        id_bar,
+        id_com,
+        otro_bar_ver_info,
         fecha_alta_info,
         fecha_edit_info,
         tipo_solic_encInfo,
@@ -101,6 +107,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         '$seguridadSalud',
         '$nivelEducativo',
         '$condicionOcupacion',
+        '$id_bar',
+        '$id_com',
+        '$otro_bar_ver_info',
         '$fecha_alta_encInfo',
         '$fecha_edit_encInfo',
         '$tipo_solic_encInfo',

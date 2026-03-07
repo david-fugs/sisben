@@ -36,6 +36,8 @@ header("Content-Type: text/html;charset=utf-8");
     <!-- Select2 -->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <!-- Barrios script -->
+    <script src="../barrios.js"></script>
     
     <style>
         :root {
@@ -723,6 +725,44 @@ header("Content-Type: text/html;charset=utf-8");
                     </div>
                 </div>
 
+                <!-- Información de Ubicación -->
+                <div class="section-card">
+                    <h2 class="section-title">
+                        <i class="fas fa-map-marker-alt"></i>
+                        Información de Ubicación
+                    </h2>
+
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label for="id_barrios" class="form-label">
+                                <i class="fas fa-map-pin text-primary me-1"></i>
+                                * Barrio o Vereda
+                            </label>
+                            <select id="id_barrios" class="form-control" name="id_bar" style="width: 100%;" required></select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="id_comunas" class="form-label">
+                                <i class="fas fa-map-signs text-primary me-1"></i>
+                                * Comuna o Corregimiento
+                            </label>
+                            <select id="id_comunas" class="form-select" name="id_com" disabled required>
+                                <option value="">Seleccione comuna</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row g-3 mt-2" id="otro_barrio_container" style="display: none;">
+                        <div class="col-md-6">
+                            <label for="otro_bar_ver_info" class="form-label">
+                                <i class="fas fa-edit text-primary me-1"></i>
+                                Especifique Barrio, Vereda o Invasión
+                            </label>
+                            <input type="text" id="otro_bar_ver_info" name="otro_bar_ver_info" class="form-control" 
+                                   placeholder="Ingrese el nombre del barrio" style="text-transform:uppercase;">
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Información Adicional -->
                 <div class="section-card">
                     <h2 class="section-title">
@@ -836,6 +876,23 @@ header("Content-Type: text/html;charset=utf-8");
             };
 
             xhr.send('cod_departamento=' + departamento);
+        });
+    });
+
+    // El archivo barrios.js ya maneja la lógica de Select2 y la carga de comunas
+    // Solo necesitamos manejar el campo "otro barrio" para información
+    $(document).ready(function() {
+        // Verificar si se selecciona el barrio "OTRO" (id 1897 como en eventan)
+        $('#id_barrios').on('change', function() {
+            const selectedValue = $(this).val();
+            
+            // El ID 1897 es el barrio "OTRO" según barrios.js
+            if (selectedValue == "1897") {
+                $('#otro_barrio_container').show();
+            } else {
+                $('#otro_barrio_container').hide();
+                $('#otro_bar_ver_info').val('');
+            }
         });
     });
 </script>
