@@ -1347,6 +1347,22 @@ header("Content-Type: text/html;charset=utf-8");
                     width: '100%',
                     allowClear: false
                 });
+
+                // Validación del formulario: Requerir al menos 1 integrante
+                // El primer integrante representa a la persona principal
+                $('#form_contacto').on('submit', function(e) {
+                    var tipoMovimiento = $('#selectEF').val();
+                    var totalIntegrantes = $('#integrantes-container .formulario-dinamico').length;
+                    
+                    // Solo validar integrantes si NO es "Retiro ficha"
+                    if (tipoMovimiento !== 'Retiro ficha' && totalIntegrantes === 0) {
+                        e.preventDefault();
+                        alert('⚠️ Debe agregar al menos 1 integrante.\n\n' +
+                              'El primer integrante representa a la persona principal del movimiento.\n' +
+                              'Use el botón "Agregar Integrante +" para registrar los datos.');
+                        return false;
+                    }
+                });
             });
         </script>
 

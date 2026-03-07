@@ -706,8 +706,9 @@ $sheet3 = $spreadsheet->createSheet();
 $sheet3->setTitle('Rangos Barrio - Movimientos');
 
 // Consulta para rangos de edad por barrio para MOVIMIENTOS
-// NOTA: Solo cuenta integrantes de integmovimientos_independiente, 
-// porque la tabla movimientos no almacena género/edad de la persona principal
+// NOTA: Cuenta TODOS los integrantes de integmovimientos_independiente
+// El PRIMER integrante agregado es la persona principal, los demás son integrantes adicionales
+// Por lo tanto, el conteo incluye: 1 persona principal + N integrantes adicionales
 $sql_barrio_mov = "
 SELECT 
     b.nombre_bar,
