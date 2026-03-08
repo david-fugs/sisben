@@ -403,20 +403,9 @@ if (!function_exists('limpiarTexto')) {
         $sheet2->setCellValue('P' . $rowIndex2, ''); // SISBEN NOCTURNO - no existe en informacion
         $sheet2->setCellValue('Q' . $rowIndex2, $row['observacion'] ?? ''); // OBSERVACIONES
         
-        // Mapeo de rango edad (mismo que ENCUESTAS)
-        $rangoEdadMap = [
-            1 => "0 - 6",
-            2 => "7 - 12", 
-            3 => "13 - 17",
-            4 => "18 - 28",
-            5 => "29 - 45",
-            6 => "46 - 64",
-            7 => "Mayor o igual a 65"
-        ];
-        
         // Datos de caracterización (que sí existen en información)
         $sheet2->setCellValue('R' . $rowIndex2, $row['gen_integVenta']);
-        $sheet2->setCellValue('S' . $rowIndex2, isset($rangoEdadMap[$row['rango_integVenta'] ?? null]) ? $rangoEdadMap[$row['rango_integVenta']] : '');
+        $sheet2->setCellValue('S' . $rowIndex2, $row['rango_integVenta'] ?? '');
         $sheet2->setCellValue('T' . $rowIndex2, $row['victima']);
         $sheet2->setCellValue('U' . $rowIndex2, $row['condicionDiscapacidad']);
         $sheet2->setCellValue('V' . $rowIndex2, $row['tipoDiscapacidad']);

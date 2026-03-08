@@ -1273,7 +1273,7 @@ header("Content-Type: text/html;charset=utf-8");
 
                             <div class="form-group col-md-6">
                                 <label for="tipo_doc">* TIPO DE DOCUMENTO:</label>
-                                <select name="tipo_documento" class="form-control" id="tipo_documento">
+                                <select name="tipo_documento" class="form-control" id="tipo_documento" required>
                                     <option value="">SELECCIONE:</option>
                                     <option value="cedula">CEDULA</option>
                                     <option value="ppt">PPT</option>
@@ -1313,7 +1313,7 @@ header("Content-Type: text/html;charset=utf-8");
                         <div class="row">
                         <div class="form-group col-md-3">
                             <label for="fecha_nacimiento">FECHA DE NACIMIENTO:</label>
-                            <input type='date' name='fecha_nacimiento' id="fecha_nacimiento" class='form-control' />
+                            <input type='date' name='fecha_nacimiento' id="fecha_nacimiento" class='form-control' required />
                         </div>
                     </div>
                     </div>
@@ -1406,7 +1406,7 @@ header("Content-Type: text/html;charset=utf-8");
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label for="sisben_nocturno">* SISBEN NOCTURNO:</label>
-                                    <select class="form-control" name="sisben_nocturno" id="nocturno">
+                                    <select class="form-control" name="sisben_nocturno" id="nocturno" required>
                                         <option value=""></option>
                                         <option value="SI">SI</option>
                                         <option value="NO">NO</option>

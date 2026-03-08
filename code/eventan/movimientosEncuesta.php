@@ -549,6 +549,7 @@ header("Content-Type: text/html;charset=utf-8");
                     var generoSelect = $("<select>")
                         .attr("name", "gen_integVenta[]")
                         .addClass("form-control smaller-input")
+                        .attr("required", "required")
                         .append('<option value="">Identidad Genero</option>')
                         .append('<option value="F">F</option>')
                         .append('<option value="M">M</option>')
@@ -557,6 +558,7 @@ header("Content-Type: text/html;charset=utf-8");
                     var OrientacionSexual = $("<select>")
                         .attr("name", "orientacionSexual[]")
                         .addClass("form-control smaller-input")
+                        .attr("required", "required")
                         .append('<option value="">Orientiacion Sexual</option>')
                         .append('<option value="Asexual">Asexual</option>')
                         .append('<option value="Bisexual">Bisexual</option>')
@@ -567,6 +569,7 @@ header("Content-Type: text/html;charset=utf-8");
                     var rangoEdadSelect = $("<select>")
                         .attr("name", "rango_integVenta[]")
                         .addClass("form-control smaller-input")
+                        .attr("required", "required")
                         .append('<option value="">Rango de edad</option>')
                         .append('<option value="0 - 6">0 - 5</option>')
                         .append('<option value="7 - 12">6 - 12</option>')
@@ -579,6 +582,7 @@ header("Content-Type: text/html;charset=utf-8");
                     var condicionDiscapacidad = $("<select>")
                         .attr("name", "condicionDiscapacidad[]")
                         .addClass("form-control smaller-input")
+                        .attr("required", "required")
                         .append('<option value="">Condicion Discapacidad</option>')
                         .append('<option value="Si">Si</option>')
                         .append('<option value="No">No</option>');
@@ -599,6 +603,7 @@ header("Content-Type: text/html;charset=utf-8");
                     var GrupoEtnico = $("<select>")
                         .attr("name", "grupoEtnico[]")
                         .addClass("form-control smaller-input")
+                        .attr("required", "required")
                         .append('<option value="">Grupo Etnico</option>')
                         .append('<option value="Indigena">Indigena</option>')
                         .append('<option value="Negro(a) / Mulato(a) / Afrocolombiano(a)">Negro(a) / Mulato(a) / Afrocolombiano(a)</option>')
@@ -611,6 +616,7 @@ header("Content-Type: text/html;charset=utf-8");
                     var victima = $("<select>")
                         .attr("name", "victima[]")
                         .addClass("form-control smaller-input")
+                        .attr("required", "required")
                         .append('<option value="">Victima</option>')
                         .append('<option value="Si">Si</option>')
                         .append('<option value="No">No</option>');
@@ -618,6 +624,7 @@ header("Content-Type: text/html;charset=utf-8");
                     var mujerGestante = $("<select>")
                         .attr("name", "mujerGestante[]")
                         .addClass("form-control smaller-input")
+                        .attr("required", "required")
                         .append('<option value="">Mujer Gestante</option>')
                         .append('<option value="Si">Si</option>')
                         .append('<option value="No">No</option>');
@@ -625,6 +632,7 @@ header("Content-Type: text/html;charset=utf-8");
                     var cabezaFamilia = $("<select>")
                         .attr("name", "cabezaFamilia[]")
                         .addClass("form-control smaller-input")
+                        .attr("required", "required")
                         .append('<option value="">Hombre / mujer  Cabeza de Familia</option>')
                         .append('<option value="Si">Si</option>')
                         .append('<option value="No">No</option>');
@@ -632,6 +640,7 @@ header("Content-Type: text/html;charset=utf-8");
                     var experienciaMigratoria = $("<select>")
                         .attr("name", "experienciaMigratoria[]")
                         .addClass("form-control smaller-input")
+                        .attr("required", "required")
                         .append('<option value="">Experiencia Migratoria</option>')
                         .append('<option value="Si">Si</option>')
                         .append('<option value="No">No</option>');
@@ -639,6 +648,7 @@ header("Content-Type: text/html;charset=utf-8");
                     var seguridadSalud = $("<select>")
                         .attr("name", "seguridadSalud[]")
                         .addClass("form-control smaller-input")
+                        .attr("required", "required")
                         .append('<option value="">Seguridad Salud</option>')
                         .append('<option value="Regimen Contributivo">Regimen Contributivo</option>')
                         .append('<option value="Regimen Subsidiado">Regimen Subsidiado</option>')
@@ -648,6 +658,7 @@ header("Content-Type: text/html;charset=utf-8");
                     var nivelEducativo = $("<select>")
                         .attr("name", "nivelEducativo[]")
                         .addClass("form-control smaller-input")
+                        .attr("required", "required")
                         .append('<option value="">Nivel Educativo</option>')
                         .append('<option value="Ninguno">Ninguno</option>')
                         .append('<option value="Preescolar">Preescolar</option>')
@@ -665,6 +676,7 @@ header("Content-Type: text/html;charset=utf-8");
                     var condicionOcupacion = $("<select>")
                         .attr("name", "condicionOcupacion[]")
                         .addClass("form-control smaller-input")
+                        .attr("required", "required")
                         .append('<option value="">Condicion Ocupacion</option>')
                         .append('<option value="Ama de casa">Ama de casa</option>')
                         .append('<option value="Buscando Empleo">Buscando Empleo</option>')
@@ -1115,7 +1127,7 @@ header("Content-Type: text/html;charset=utf-8");
                             </div>
                             <div class="col-md-4">
                                 <label for="fecha_nacimiento" class="form-label">Fecha de Nacimiento</label>
-                                <input type='date' name='fecha_nacimiento' id="fecha_nacimiento" class='form-control' />
+                                <input type='date' name='fecha_nacimiento' id="fecha_nacimiento" class='form-control' required />
                             </div>
                         </div>
                     </div>
@@ -1190,7 +1202,7 @@ header("Content-Type: text/html;charset=utf-8");
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="sisben_nocturno">* SISBEN NOCTURNO:</label>
-                                <select class="form-control" name="sisben_nocturno" id="nocturno">
+                                <select class="form-control" name="sisben_nocturno" id="nocturno" required >
                                     <option value=""></option>
                                     <option value="SI">SI</option>
                                     <option value="NO">NO</option>
