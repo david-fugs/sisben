@@ -277,7 +277,15 @@ header("Content-Type: text/html;charset=utf-8");
                                 
                                 // Precargar campos demográficos
                                 $('#gen_integVenta').val(response.data.gen_integVenta);
-                                $('#rango_integVenta').val(response.data.rango_integVenta);
+                                // Normalizar rango de edad (manejar valores truncados)
+                                var rangoEdad = response.data.rango_integVenta;
+                                if (rangoEdad && (rangoEdad.indexOf('Mayor') !== -1 || rangoEdad === '65+')) {
+                                    rangoEdad = '>=65';
+                                }
+                                // Normalizar variaciones de rangos con guiones
+                                if (rangoEdad === '29-45') rangoEdad = '29 - 45';
+                                if (rangoEdad === '46-64') rangoEdad = '46 - 64';
+                                $('#rango_integVenta').val(rangoEdad);
                                 $('#victima').val(response.data.victima);
                                 $('#condicionDiscapacidad').val(response.data.condicionDiscapacidad);
                                 $('#tipoDiscapacidad').val(response.data.tipoDiscapacidad);
@@ -539,7 +547,7 @@ header("Content-Type: text/html;charset=utf-8");
                                 <option value="18 - 28">18 - 28 años</option>
                                 <option value="29 - 45">29 - 45 años</option>
                                 <option value="46 - 64">46 - 64 años</option>
-                                <option value="Mayor o igual a 65">Mayor o igual a 65 años</option>
+                                <option value=">=65">Mayor o igual a 65 años</option>
                             </select>
                         </div>
                         <div class="col-md-3">

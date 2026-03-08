@@ -58,7 +58,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             "18 - 28" => 4,
             "29 - 45" => 5,
             "46 - 64" => 6,
-            "Mayor o igual a 65" => 7
+            "Mayor o igual a 65" => 7,
+            ">=65" => 7,
+            "65+" => 7
         );
 
         // Mapeo de descripción del rango de integrantes a valor numérico
@@ -69,7 +71,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             "18 - 28"               => 4,
             "29 - 45"               => 5,
             "46 - 64"               => 6,
-            "Mayor o igual a 65"    => 7
+            "Mayor o igual a 65"    => 7,
+            ">=65"                  => 7,
+            "65+"                   => 7
         );
         $huboCambios = false;
         foreach ($gen_integVenta as $key => $genero) {

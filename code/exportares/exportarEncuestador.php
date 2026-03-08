@@ -405,7 +405,12 @@ if (!function_exists('limpiarTexto')) {
         
         // Datos de caracterización (que sí existen en información)
         $sheet2->setCellValue('R' . $rowIndex2, $row['gen_integVenta']);
-        $sheet2->setCellValue('S' . $rowIndex2, $row['rango_integVenta'] ?? '');
+        // Normalizar rango de edad (manejar valores truncados)
+        $rangoEdad = $row['rango_integVenta'] ?? '';
+        if (strpos($rangoEdad, 'Mayor') !== false || $rangoEdad == '>=65' || $rangoEdad == '65+') {
+            $rangoEdad = '>=65';
+        }
+        $sheet2->setCellValue('S' . $rowIndex2, $rangoEdad);
         $sheet2->setCellValue('T' . $rowIndex2, $row['victima']);
         $sheet2->setCellValue('U' . $rowIndex2, $row['condicionDiscapacidad']);
         $sheet2->setCellValue('V' . $rowIndex2, $row['tipoDiscapacidad']);

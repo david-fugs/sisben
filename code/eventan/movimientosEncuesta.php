@@ -461,7 +461,7 @@ header("Content-Type: text/html;charset=utf-8");
                 4: '18 - 28',
                 5: '29 - 45',
                 6: '46 - 64',
-                7: 'Mayor o igual a 65'
+                7: '>=65'
             };
 
             // 🔧 MAPEO UNIVERSAL - Determinar los valores correctos según la tabla de origen
@@ -469,15 +469,12 @@ header("Content-Type: text/html;charset=utf-8");
             var rangoValue = integrante.rango_integVenta || integrante.rango_integMovIndep || '';
             var cantidadValue = integrante.cant_integVenta || integrante.cant_integMovIndep || 1;
 
-            // Mapear el rango de edad de número a texto
+            // Mapear el rango de edad de número a texto, o normalizar si ya es texto
             var rangoTexto = rangoEdadMap[rangoValue] || rangoValue;
-
-            function createReadOnlyField(name, label, value) {
-                var group = $("<div>").addClass("form-group-dinamico");
-                var labelEl = $("<label>").text(label);
-                var input = $("<input>")
-                    .attr("type", "text")
-                    .attr("name", name)
+            // Normalizar valores truncados o variantes
+            if (rangoTexto && (rangoTexto.indexOf('Mayor') !== -1 || rangoTexto === '65+')) {
+                rangoTexto = '>=65';
+            }
                     .addClass("form-control smaller-input readonly-field")
                     .val(value || "No especificado")
                     .prop("readonly", true);
@@ -577,7 +574,7 @@ header("Content-Type: text/html;charset=utf-8");
                         .append('<option value="18 - 28">18 - 28</option>')
                         .append('<option value="29 - 45">29 - 45</option>')
                         .append('<option value="46 - 64">46 - 64</option>')
-                        .append('<option value="Mayor o igual a 65">Mayor o igual a 65</option>');
+                        .append('<option value=">=65">Mayor o igual a 65</option>');
 
                     var condicionDiscapacidad = $("<select>")
                         .attr("name", "condicionDiscapacidad[]")

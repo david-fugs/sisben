@@ -196,9 +196,9 @@ header("Content-Type: text/html;charset=utf-8");
                                 <option value="7 - 12" <?php echo (isset($row['rango_integVenta']) && $row['rango_integVenta'] == '7 - 12') ? 'selected' : ''; ?>>6 - 12</option>
                                 <option value="13 - 17" <?php echo (isset($row['rango_integVenta']) && $row['rango_integVenta'] == '13 - 17') ? 'selected' : ''; ?>>13 - 17</option>
                                 <option value="18 - 28" <?php echo (isset($row['rango_integVenta']) && $row['rango_integVenta'] == '18 - 28') ? 'selected' : ''; ?>>18 - 28</option>
-                                <option value="29-45" <?php echo (isset($row['rango_integVenta']) && $row['rango_integVenta'] == '29-45') ? 'selected' : ''; ?>>29-45</option>
-                                <option value="46-64" <?php echo (isset($row['rango_integVenta']) && $row['rango_integVenta'] == '46-64') ? 'selected' : ''; ?>>46-64</option>
-                                <option value="Mayor o igual a 65" <?php echo (isset($row['rango_integVenta']) && $row['rango_integVenta'] == 'Mayor o igual a 65') ? 'selected' : ''; ?>>Mayor o igual a 65</option>
+                                <option value="29 - 45" <?php echo (isset($row['rango_integVenta']) && ($row['rango_integVenta'] == '29 - 45' || $row['rango_integVenta'] == '29-45')) ? 'selected' : ''; ?>>29 - 45</option>
+                                <option value="46 - 64" <?php echo (isset($row['rango_integVenta']) && ($row['rango_integVenta'] == '46 - 64' || $row['rango_integVenta'] == '46-64')) ? 'selected' : ''; ?>>46 - 64</option>
+                                <option value=">=65" <?php echo (isset($row['rango_integVenta']) && (strpos($row['rango_integVenta'], 'Mayor') !== false || $row['rango_integVenta'] == '>=65' || $row['rango_integVenta'] == '65+')) ? 'selected' : ''; ?>>Mayor o igual a 65</option>
                             </select>
 
                         </div>

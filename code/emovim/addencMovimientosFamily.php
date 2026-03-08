@@ -141,7 +141,7 @@ header("Content-Type: text/html;charset=utf-8");
                         .append('<option value="18 - 28">18 - 28</option>')
                         .append('<option value="29 - 45">29 - 45</option>')
                         .append('<option value="46 - 64">46 - 64</option>')
-                        .append('<option value="Mayor o igual a 65">Mayor o igual a 65</option>');
+                        .append('<option value=">=65">Mayor o igual a 65</option>');
                     var condicionDiscapacidad = $("<select>")
                         .attr("name", "condicionDiscapacidad[]")
                         .addClass("form-control smaller-input")

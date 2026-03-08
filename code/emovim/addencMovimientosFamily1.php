@@ -61,13 +61,9 @@
                 "18 - 28"               => 4,
                 "29 - 45"               => 5,
                 "46 - 64"               => 6,
-                "Mayor o igual a 65"    => 7
-            );
-
-            foreach ($gen_integMovim as $key => $genero) 
-            {
-                // Verificar que los valores estén definidos y no sean null
-                if (isset($cant_integMovim[$key]) && isset($rango_integMovim[$key])) 
+            "Mayor o igual a 65"    => 7,
+            ">=65"                  => 7,
+            "65+"                   => 7
                 {
                     // Obtener los valores individuales para el integrante actual
                     $cantidad           = $cant_integMovim[$key];
