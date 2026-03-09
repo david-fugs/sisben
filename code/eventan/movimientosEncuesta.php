@@ -475,9 +475,21 @@ header("Content-Type: text/html;charset=utf-8");
             if (rangoTexto && (rangoTexto.indexOf('Mayor') !== -1 || rangoTexto === '65+')) {
                 rangoTexto = '>=65';
             }
-                    .addClass("form-control smaller-input readonly-field")
-                    .val(value || "No especificado")
-                    .prop("readonly", true);
+
+            // Función auxiliar para crear campos de solo lectura
+            function createReadOnlyField(name, label, value) {
+                var group = $('<div>').addClass('form-group mb-3 col-md-4');
+                var labelEl = $('<label>').text(label).css({
+                    'font-weight': '600',
+                    'color': '#495057',
+                    'margin-bottom': '0.5rem'
+                });
+                var input = $('<input>')
+                    .attr('type', 'text')
+                    .attr('name', name)
+                    .addClass('form-control smaller-input readonly-field')
+                    .val(value || 'No especificado')
+                    .prop('readonly', true);
                 group.append(labelEl, input);
                 return group;
             }
@@ -1262,10 +1274,13 @@ header("Content-Type: text/html;charset=utf-8");
         </script>
 
         <script>
-            let agregar = document.getElementById('agregar');
-            let contenido = document.getElementById('contenedor');
-            let boton_enviar = document.querySelector('#enviar_contacto')
-            agregar.addEventListener('click', e => {
+            document.addEventListener('DOMContentLoaded', function() {
+                let agregar = document.getElementById('agregar');
+                let contenido = document.getElementById('contenedor');
+                let boton_enviar = document.querySelector('#enviar_contacto');
+                
+                if (agregar) {
+                    agregar.addEventListener('click', e => {
                 e.preventDefault();
                 let clonado = document.querySelector('.clonar');
                 if (clonado) {
@@ -1276,13 +1291,17 @@ header("Content-Type: text/html;charset=utf-8");
                         remover_ocutar[0].classList.remove('ocultar');
                     }
                 }
-            });
+                    });
+                }
 
-            contenido.addEventListener('click', e => {
-                e.preventDefault();
-                if (e.target.classList.contains('puntero')) {
-                    let contenedor = e.target.parentNode.parentNode;
-                    contenedor.parentNode.removeChild(contenedor);
+                if (contenido) {
+                    contenido.addEventListener('click', e => {
+                        e.preventDefault();
+                        if (e.target.classList.contains('puntero')) {
+                            let contenedor = e.target.parentNode.parentNode;
+                            contenedor.parentNode.removeChild(contenedor);
+                        }
+                    });
                 }
             });
         </script>
