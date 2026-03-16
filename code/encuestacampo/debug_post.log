@@ -252,3 +252,123 @@
     [obs_encVenta] => test
 )
 
+2026-03-16 18:02:34 POST: Array
+(
+    [doc_encVenta] => 564654
+    [tipo_documento] => cedula
+    [nom_encVenta] => test
+    [fecha_nacimiento] => 1996-12-17
+    [fecha_preregistro] => 2026-03-16
+    [dir_encVenta] => asdasdtestete
+    [id_bar] => 662
+    [id_com] => 4
+    [otro_bar_ver_encVenta] => 
+    [zona_encVenta] => URBANA
+    [tram_solic_encVenta] => ENCUESTA NUEVA POR VERIFICACION
+    [num_ficha_encVenta] => 123123
+    [num_visita] => 1
+    [estado_ficha] => Ya le realizo la encuesta
+    [integra_encVenta] => 1
+    [cant_integVenta] => Array
+        (
+            [0] => 1
+        )
+
+    [gen_integVenta] => Array
+        (
+            [0] => M
+        )
+
+    [rango_integVenta] => Array
+        (
+            [0] => 13 - 17
+        )
+
+    [es_nuevo] => Array
+        (
+            [0] => true
+        )
+
+    [obs_encVenta] => test
+)
+
+2026-03-16 18:02:34 POST: Array
+(
+    [doc_encVenta] => 564654
+    [tipo_documento] => cedula
+    [nom_encVenta] => test
+    [fecha_nacimiento] => 1996-12-17
+    [fecha_preregistro] => 2026-03-16
+    [dir_encVenta] => asdasdtestete
+    [id_bar] => 662
+    [id_com] => 4
+    [otro_bar_ver_encVenta] => 
+    [zona_encVenta] => URBANA
+    [tram_solic_encVenta] => ENCUESTA NUEVA POR VERIFICACION
+    [num_ficha_encVenta] => 123123
+    [num_visita] => 1
+    [estado_ficha] => Ya le realizo la encuesta
+    [integra_encVenta] => 1
+    [cant_integVenta] => Array
+        (
+            [0] => 1
+        )
+
+    [gen_integVenta] => Array
+        (
+            [0] => M
+        )
+
+    [rango_integVenta] => Array
+        (
+            [0] => 13 - 17
+        )
+
+    [es_nuevo] => Array
+        (
+            [0] => true
+        )
+
+    [obs_encVenta] => test
+)
+
+2026-03-16 19:28:39 POST: Array
+(
+    [doc_encVenta] => 123
+    [tipo_documento] => cedula
+    [nom_encVenta] => test provee
+    [fecha_nacimiento] => 1212-12-12
+    [fecha_preregistro] => 2026-03-16
+    [dir_encVenta] => asdasdtestete
+    [id_bar] => 662
+    [id_com] => 4
+    [otro_bar_ver_encVenta] => 
+    [zona_encVenta] => URBANA
+    [tram_solic_encVenta] => ENCUESTA NUEVA
+    [num_ficha_encVenta] => 123
+    [num_visita] => 1
+    [estado_ficha] => Visita fallida
+    [integra_encVenta] => 1
+    [cant_integVenta] => Array
+        (
+            [0] => 1
+        )
+
+    [gen_integVenta] => Array
+        (
+            [0] => M
+        )
+
+    [rango_integVenta] => Array
+        (
+            [0] => 6 - 12
+        )
+
+    [es_nuevo] => Array
+        (
+            [0] => true
+        )
+
+    [obs_encVenta] => test
+)
+

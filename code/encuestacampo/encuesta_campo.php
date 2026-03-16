@@ -1616,6 +1616,15 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
 
         $(document).ready(function() {
             $("#form_contacto").on("submit", function(e) {
+                var form = $(this);
+                var submitButton = $("#btnEnviar");
+
+                // Evitar envíos múltiples: si ya se envió, bloquear
+                if (form.data("submitted") === true) {
+                    e.preventDefault();
+                    return false;
+                }
+
                 // Verificar si el documento ya existe
                 if (window.documentoYaExiste) {
                     e.preventDefault();
@@ -1634,6 +1643,10 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                     e.preventDefault();
                     return false;
                 }
+
+                // Si pasó las validaciones, marcar como enviado y deshabilitar el botón
+                form.data("submitted", true);
+                submitButton.prop("disabled", true);
             });
 
             $(document).on("change", "select.is-invalid", function() {
