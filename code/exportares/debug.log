@@ -418,3 +418,39 @@
 [2026-03-08 11:18:28] Datos de movimientos escritos en la hoja 3
 [2026-03-08 11:18:28] Archivo Excel generado: Reporte_Completo_Sisben_2026-02-01_2026-02-28.xlsx
 [2026-03-08 11:18:30] Archivo Excel enviado para descarga
+[2026-03-21 17:34:27] Iniciando exportarEncuestador.php
+[2026-03-21 17:34:27] Autoload cargado correctamente
+[2026-03-21 17:34:27] Sesión iniciada
+[2026-03-21 17:34:27] Conexión incluida
+[2026-03-21 17:34:27] Conexión a BD verificada
+[2026-03-21 11:34:32] Parámetros recibidos - fecha_inicio: 2026-03-01, fecha_fin: 2026-03-31
+[2026-03-21 11:34:32] Hoja 1 - ENCUESTAS creada
+[2026-03-21 11:34:32] Filtrando por usuario específico: 44
+[2026-03-21 11:34:32] Consulta de encuestas ejecutada correctamente
+[2026-03-21 11:34:33] Datos de encuestas escritos en la hoja 1
+[2026-03-21 11:34:33] Hoja 2 - INFORMACIÓN creada
+[2026-03-21 11:34:33] Consulta de información ejecutada correctamente
+[2026-03-21 11:34:33] Datos de información escritos en la hoja 2
+[2026-03-21 11:34:33] Hoja 3 - MOVIMIENTOS creada
+[2026-03-21 11:34:33] Consulta de movimientos ejecutada correctamente
+[2026-03-21 11:34:33] Datos de movimientos escritos en la hoja 3
+[2026-03-21 11:34:35] Archivo Excel generado: Reporte_Completo_Sisben_2026-03-01_2026-03-31.xlsx
+[2026-03-21 11:34:37] Archivo Excel enviado para descarga
+[2026-03-21 17:41:34] Iniciando exportarEncuestador.php
+[2026-03-21 17:41:34] Autoload cargado correctamente
+[2026-03-21 17:41:34] Sesión iniciada
+[2026-03-21 17:41:34] Conexión incluida
+[2026-03-21 17:41:34] Conexión a BD verificada
+[2026-03-21 11:41:34] Parámetros recibidos - fecha_inicio: 2026-03-01, fecha_fin: 2026-03-31
+[2026-03-21 11:41:34] Hoja 1 - ENCUESTAS creada
+[2026-03-21 11:41:34] Filtrando por usuario específico: 44
+[2026-03-21 11:41:34] Consulta de encuestas ejecutada correctamente
+[2026-03-21 11:41:34] Datos de encuestas escritos en la hoja 1
+[2026-03-21 11:41:34] Hoja 2 - INFORMACIÓN creada
+[2026-03-21 11:41:34] Consulta de información ejecutada correctamente
+[2026-03-21 11:41:34] Datos de información escritos en la hoja 2
+[2026-03-21 11:41:34] Hoja 3 - MOVIMIENTOS creada
+[2026-03-21 11:41:35] Consulta de movimientos ejecutada correctamente
+[2026-03-21 11:41:35] Datos de movimientos escritos en la hoja 3
+[2026-03-21 11:41:35] Archivo Excel generado: Reporte_Completo_Sisben_2026-03-01_2026-03-31.xlsx
+[2026-03-21 11:41:35] Archivo Excel enviado para descarga

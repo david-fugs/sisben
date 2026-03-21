@@ -1375,7 +1375,6 @@ header("Content-Type: text/html;charset=utf-8");
                                     <option value="CAMBIO DIRECCION">CAMBIO DIRECCION</option>
                                     <option value="INCONFORMIDAD">INCONFORMIDAD</option>
                                     <option value=" DESCENTRALIZADO"> DESCENTRALIZADO</option>
-                                    <option value="FAVORES">FAVORES</option>
                                 </select>
                             </div>
                             <div class="form-group col-md-4">

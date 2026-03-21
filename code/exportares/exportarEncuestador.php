@@ -473,7 +473,11 @@ if (!function_exists('limpiarTexto')) {
            COALESCE(b.nombre_bar, 'N/A') as barrio_nombre
     FROM movimientos m
     LEFT JOIN usuarios u ON m.id_usu = u.id_usu
-    LEFT JOIN encventanilla ev ON m.doc_encVenta = ev.doc_encVenta
+    LEFT JOIN (
+        SELECT e.* FROM encventanilla e
+        INNER JOIN (SELECT doc_encVenta, MIN(id_encVenta) AS min_id FROM encventanilla GROUP BY doc_encVenta) t
+            ON e.id_encVenta = t.min_id
+    ) ev ON m.doc_encVenta = ev.doc_encVenta
     LEFT JOIN departamentos d ON m.departamento_expedicion = d.cod_departamento
     LEFT JOIN municipios mu ON m.ciudad_expedicion = mu.cod_municipio
     LEFT JOIN comunas c ON m.id_com = c.id_com
