@@ -734,6 +734,22 @@ $tipo_usu     = $_SESSION['tipo_usu'];
             // Incluir conexión para obtener estadísticas
             include("conexion.php");
 
+            // Crear tabla de configuración si no existe
+            $mysqli->query("CREATE TABLE IF NOT EXISTS configuracion (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                clave VARCHAR(100) NOT NULL UNIQUE,
+                valor TINYINT(1) NOT NULL DEFAULT 0
+            )");
+
+            // Obtener permiso bloqueo encuesta campo jueves/viernes
+            $bloqueo_campo = 0;
+            $res_cfg = $mysqli->query("SELECT valor FROM configuracion WHERE clave = 'bloqueo_campo_jue_vie'");
+            if ($res_cfg && $row_cfg = $res_cfg->fetch_assoc()) {
+              $bloqueo_campo = (int)$row_cfg['valor'];
+            }
+            $dia_semana_php = (int)date('N'); // 4=Jueves, 5=Viernes
+            $es_jue_vie = ($dia_semana_php == 4 || $dia_semana_php == 5);
+
             // Obtener estadísticas básicas con manejo de errores
             $total_encuestas = 0;
             $total_movimientos = 0;
@@ -872,7 +888,7 @@ $tipo_usu     = $_SESSION['tipo_usu'];
           <?php } ?>
 
           <?php if ($tipo_usu == 2) { ?>
-            <a href="code/encuestacampo/encuesta_campo.php" class="action-btn">
+            <a href="code/encuestacampo/encuesta_campo.php" class="action-btn" id="btn-nueva-encuesta-campo">
               <i class="fas fa-clipboard-check"></i>
               Digitación Encuesta Campo
             </a>
@@ -886,6 +902,36 @@ $tipo_usu     = $_SESSION['tipo_usu'];
           <?php } ?>
         </div>
       </div>
+
+      <?php if ($tipo_usu == 1) { ?>
+      <!-- Tarjeta de control de acceso campo - solo admin -->
+      <div class="col-lg-4 mb-4">
+        <div class="welcome-card" style="border-left: 4px solid #dc3545;">
+          <h3 class="section-title" style="color:#dc3545;">
+            <i class="fas fa-calendar-times me-2"></i>
+            Control Encuestas Campo
+          </h3>
+          <p class="text-muted" style="font-size:0.88rem;">
+            Activa para <strong>bloquear</strong> a los encuestadores de campo los días
+            <strong>jueves y viernes</strong>.
+          </p>
+          <div class="d-flex align-items-center justify-content-between mt-3">
+            <span class="fw-semibold">Bloqueo Jue/Vie:</span>
+            <div class="form-check form-switch mb-0">
+              <input class="form-check-input" type="checkbox" role="switch"
+                id="toggle-bloqueo-campo" style="width:3rem;height:1.5rem;cursor:pointer;"
+                <?php echo $bloqueo_campo ? 'checked' : ''; ?>>
+            </div>
+          </div>
+          <div class="mt-2">
+            <span id="badge-bloqueo-campo" class="badge <?php echo $bloqueo_campo ? 'bg-danger' : 'bg-success'; ?> ms-1">
+              <?php echo $bloqueo_campo ? 'ACTIVO' : 'INACTIVO'; ?>
+            </span>
+          </div>
+        </div>
+      </div>
+      <?php } ?>
+
       <?php } ?>
       <!-- System Information -->
       <div class="col-lg-<?php echo ($tipo_usu == 5 || $tipo_usu == 6) ? '12' : '8'; ?> mb-4">
@@ -976,6 +1022,53 @@ $tipo_usu     = $_SESSION['tipo_usu'];
   <!-- JavaScript -->
   <script src="menu/script.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <?php if ($tipo_usu == 1): ?>
+  <script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var toggle = document.getElementById('toggle-bloqueo-campo');
+    var badge  = document.getElementById('badge-bloqueo-campo');
+    if (toggle) {
+      toggle.addEventListener('change', function () {
+        var valor = this.checked ? 1 : 0;
+        fetch('code/toggle_permiso_campo.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: 'valor=' + valor
+        })
+        .then(function (r) { return r.json(); })
+        .then(function (data) {
+          if (data.valor == 1) {
+            badge.textContent = 'ACTIVO';
+            badge.className = 'badge bg-danger ms-1';
+          } else {
+            badge.textContent = 'INACTIVO';
+            badge.className = 'badge bg-success ms-1';
+          }
+        })
+        .catch(function () {
+          alert('Error al guardar la configuración. Intenta de nuevo.');
+          toggle.checked = !toggle.checked;
+        });
+      });
+    }
+  });
+  </script>
+  <?php endif; ?>
+
+  <?php if ($tipo_usu == 2 && $bloqueo_campo && $es_jue_vie): ?>
+  <script>
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('a[href*="encuesta_campo.php"]').forEach(function (link) {
+      link.addEventListener('click', function (e) {
+        e.preventDefault();
+        alert('Acceso restringido: El administrador ha bloqueado el ingreso de nuevas encuestas de campo los días jueves y viernes. Por favor, comuníquese con el administrador.');
+      });
+    });
+  });
+  </script>
+  <?php endif; ?>
+
 </body>
 
 </html>

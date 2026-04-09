@@ -20,6 +20,15 @@ include('../../conexion.php');
 // Establecer charset UTF-8 para manejar tildes y ñ
 mysqli_set_charset($mysqli, "utf8");
 
+// Verificar permiso bloqueo encuesta campo jueves/viernes
+$bloqueo_campo_ec = 0;
+$res_cfg_ec = $mysqli->query("SELECT valor FROM configuracion WHERE clave = 'bloqueo_campo_jue_vie'");
+if ($res_cfg_ec && $row_cfg_ec = $res_cfg_ec->fetch_assoc()) {
+    $bloqueo_campo_ec = (int)$row_cfg_ec['valor'];
+}
+$dia_semana_ec = (int)date('N'); // 4=Jueves, 5=Viernes
+$bloqueado_hoy = $bloqueo_campo_ec && ($dia_semana_ec == 4 || $dia_semana_ec == 5);
+
 $query_departamentos = "SELECT cod_departamento, nombre_departamento FROM departamentos ORDER BY nombre_departamento";
 $result_departamentos = mysqli_query($mysqli, $query_departamentos);
 $departamentos = [];
@@ -1474,8 +1483,16 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                         </div>
                     </div>
 
+                    <?php if ($bloqueado_hoy): ?>
+                    <div class="alert alert-danger mt-4 text-center" role="alert">
+                        <i class="fas fa-ban me-2"></i>
+                        <strong>Acceso restringido:</strong> El administrador ha bloqueado el ingreso de encuestas los días jueves y viernes.
+                    </div>
+                    <?php endif; ?>
+
                     <div class="text-center mt-4">
-                        <button type="submit" class="btn btn-success me-3" id="btnEnviar">
+                        <button type="submit" class="btn btn-success me-3" id="btnEnviar"
+                            <?php echo $bloqueado_hoy ? 'disabled title="Bloqueado por el administrador"' : ''; ?>>
                             <span class="spinner-border spinner-border-sm"></span>
                             INGRESAR ENCUESTA
                         </button>
@@ -1497,7 +1514,7 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
 
     <script type="text/javascript">
         $(document).ready(function() {
-            $("#btnEnviar").prop("disabled", false);
+            $("#btnEnviar").prop("disabled", <?php echo $bloqueado_hoy ? 'true' : 'false'; ?>);
 
             $('#id_bar').on('change', function() {
                 $('#id_bar option:selected').each(function() {});
