@@ -272,7 +272,7 @@ $sheet->setCellValue('B1', 'CAMBIO DIRECCION');
 $sheet->setCellValue('C1', 'ENCUESTA NUEVA');
 $sheet->setCellValue('D1', 'DESCENTRALIZADAS');
 $sheet->setCellValue('E1', 'ENCUESTA VERIFICACION');
-$sheet->setCellValue('F1', 'FAVORES');
+$sheet->setCellValue('F1', 'PRIORIDADES');
 $sheet->setCellValue('G1', 'INCONFORMIDAD');
 $sheet->setCellValue('H1', 'SISBEN NOCTURNO SI');
 $sheet->setCellValue('I1', 'SISBEN NOCTURNO NO');

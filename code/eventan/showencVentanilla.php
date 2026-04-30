@@ -298,7 +298,7 @@ header("Content-Type: text/html;charset=utf-8");
 
                             <option value="FAVORES" <?php if ($row['tram_solic_encVenta'] == 'FAVORES') {
                                                         echo 'selected';
-                                                    } ?>>FAVORES</option>
+                                                    } ?>>PRIORIDADES</option>
 
                         </select>
                     </div>

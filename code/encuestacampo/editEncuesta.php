@@ -437,7 +437,7 @@ if (!empty($encuesta)) {
                                 <option value="CAMBIO DIRECCION" <?php echo ($encuesta['tram_solic_encVenta'] == 'CAMBIO DIRECCION') ? 'selected' : ''; ?>>CAMBIO DIRECCION</option>
                                 <option value="INCONFORMIDAD" <?php echo ($encuesta['tram_solic_encVenta'] == 'INCONFORMIDAD') ? 'selected' : ''; ?>>INCONFORMIDAD</option>
                                 <option value="DESCENTRALIZADO" <?php echo ($encuesta['tram_solic_encVenta'] == 'DESCENTRALIZADO') ? 'selected' : ''; ?>>DESCENTRALIZADO</option>
-                                <option value="FAVORES" <?php echo ($encuesta['tram_solic_encVenta'] == 'FAVORES') ? 'selected' : ''; ?>>FAVORES</option>
+                                <option value="FAVORES" <?php echo ($encuesta['tram_solic_encVenta'] == 'FAVORES') ? 'selected' : ''; ?>>PRIORIDADES</option>
                             </select>
                         </div>
                         <div class="col-md-3 mb-3">

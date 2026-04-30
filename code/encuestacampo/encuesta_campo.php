@@ -1371,7 +1371,7 @@ while ($row = mysqli_fetch_assoc($result_departamentos)) {
                                     <option value="CAMBIO DIRECCION">CAMBIO DIRECCION</option>
                                     <option value="INCONFORMIDAD">INCONFORMIDAD</option>
                                     <option value=" DESCENTRALIZADO"> DESCENTRALIZADO</option>
-                                    <option value="FAVORES">FAVORES</option>
+                                    <option value="FAVORES">PRIORIDADES</option>
                                 </select>
                             </div>
                             <div class="form-group col-md-4">
